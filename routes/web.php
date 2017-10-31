@@ -11,6 +11,17 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//$a = app()->make('files');
+////$a = app('files');
+////$a = new \Illuminate\Filesystem\Filesystem;
+//$b = Illuminate\Support\Facades\File::class;
+//$d = new $b;
+//var_dump($a, $b, $d);
+//
+//echo 333;exit;
+
+Route::get('/', 'testController@t');
+
+//Route::get('/', function () {
+//    return view('welcome');
+//});
