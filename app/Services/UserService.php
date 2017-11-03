@@ -1,5 +1,5 @@
 <?php
-namespace App\Libs;
+namespace App\Services;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Cache;
@@ -67,6 +67,30 @@ class UserService
         User::where(['id'=>$uid])->update(['phone'=>$phone]);
 
         Cache::put($token, json_encode($data),120);
+    }
+
+    /**
+     * @param $token
+     * @return bool
+     */
+    public static function getUserInfoByToken($token)
+    {
+        $userInfo = Cache::get($token);
+        $userInfo && $userInfo = json_decode($userInfo, true);
+        return $userInfo;
+    }
+
+    /**
+     * @param $token
+     * @return bool
+     */
+    public static function getPhoneByToken($token)
+    {
+        $userInfo = UserService::getUserInfoByToken($token);
+        if($userInfo && $userInfo['phone']){
+            return $userInfo['phone'];
+        }
+        return false;
     }
 
 }

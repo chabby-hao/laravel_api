@@ -20,6 +20,8 @@ Route::any('/user/checkLogin','Api\UserController@checkLogin');
 
 Route::any('/user/bindPhoneForWx', 'Api\UserController@bindPhoneForWx');
 
+Route::any('/user/login', 'Api\UserController@login');
+
 Route::any('/test', function(){
 
 });

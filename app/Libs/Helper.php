@@ -21,10 +21,10 @@ class Helper{
         $code = 500;
 
         $content = [
-            'code'=>isset($data['code']) ? intval($data['code']) : $code,
+            'code'=>$code,
             'msg'=>$msg,
-            'data'=>$data,
         ];
+        $content = array_merge($content,$data);
         return response($content, $status, $headers);
 
     }
