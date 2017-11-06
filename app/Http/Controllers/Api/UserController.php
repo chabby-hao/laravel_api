@@ -40,9 +40,8 @@ class UserController extends Controller
 
         if(!$userInfo = UserService::getUserInfoByToken($token)){
             return Helper::responeseError('请重新登录');
-        }else{
-            $userInfo = json_decode($userInfo, true);
         }
+
         $sessonKey = $userInfo['session_key'];
 
         $pc = new \WXBizDataCrypt(UserService::WX_APPID, $sessonKey);
@@ -96,8 +95,6 @@ class UserController extends Controller
         }else{
             return Helper::responeseError('验证码有误');
         }
-
-
 
     }
 
