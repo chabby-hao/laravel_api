@@ -129,7 +129,7 @@ class UserController extends Controller
         }
 
         //生成随机6位验证码
-        $code = rand_verify_code(4);
+        $code = Helper::rand_verify_code(4);
 
         //验证码存数据库，有效期30分钟
         $data = array(
@@ -156,7 +156,7 @@ class UserController extends Controller
         //验证码保存成功，则发送验证码给用户
         if ($id) {
             $msg = '您的验证码是' . $code;
-            $ucpaas = send_message($options, $appId, $to, $templateId, $msg);
+            $ucpaas = Helper::send_message($options, $appId, $to, $templateId, $msg);
             $ucpaas_res = json_decode($ucpaas, true);
             var_dump($ucpaas_res);
         }

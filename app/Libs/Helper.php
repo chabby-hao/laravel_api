@@ -2,6 +2,8 @@
 
 namespace App\Libs;
 
+use App\Libs\ucpass\Ucpass;
+
 
 class Helper{
 
@@ -26,6 +28,27 @@ class Helper{
         ];
         $content = array_merge($content,$data);
         return response($content, $status, $headers);
+
+    }
+
+    //生成随机验证码
+    public static function rand_verify_code($num){
+
+        $count = 0;
+        $str = '';
+        while ($count < $num){
+            $str .= rand(0,9);
+            $count++;
+        }
+
+        return $str;
+
+    }
+
+    public static function send_message($options,$appId,$to,$templateId,$msg){
+        $ucpaas = New Ucpass($options);
+        //发送模板短信
+        return $ucpaas->templateSMS($appId,$to,$templateId,$msg);
 
     }
 
