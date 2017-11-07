@@ -98,4 +98,14 @@ class UserController extends Controller
 
     }
 
+    public function checkToken(Request $request)
+    {
+        $token = $request->post('token');
+        if($token && UserService::getUserInfoByToken('token')){
+            return Helper::response([]);
+        }else{
+            return Helper::responeseError(['token失效']);
+        }
+    }
+
 }
