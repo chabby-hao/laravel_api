@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Api;
 use App\Libs\Helper;
 use App\Models\VerifyCode;
 use App\Services\UserService;
+use App\Services\VerifyCodeServices;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use DB;
 
 class UserController extends Controller
 {
@@ -96,6 +98,68 @@ class UserController extends Controller
             return Helper::responeseError('验证码有误');
         }
 
+    }
+
+
+    public function sendMsgCode(Request $request)
+    {
+        $data = $request->post();
+        $phone = $data['phone'];
+
+        //验证手机号码格式
+        $pattern = "/^1[34578]\d{9}/";
+
+        if (!preg_match($pattern, $phone)) {
+            $res = array('code' => 1, 'msg' => '手机号码格式不正确,非11位正确手机号');
+            echo json_encode($res);
+            die;
+        }
+
+        $accountid = config('app')['UCPAAS']['SMS_UCPAAS_ACCOUNT'];
+        $token = config('app')['UCPAAS']['SMS_UCPAAS_TOKEN'];
+        $options = array(
+            'accountsid' => $accountid,
+            'token' => $token,
+        );
+        $appId = config('app')['UCPAAS']['SMS_UCPAAS_APPID'];
+        $to = $data['phone'];
+        $templateId = config('app')['UCPAAS']['SMS_TEMPLATE_REGISTER'];
+        if (env('APP_DEBUG')) {
+            $templateId = '83783';
+        }
+
+        //生成随机6位验证码
+        $code = Helper::rand_verify_code(4);
+
+        //验证码存数据库，有效期30分钟
+        $data = array(
+            'phone' => $phone,
+            'code' => $code,
+            'expire_at' => time() + 30 * 60,
+        );
+
+        //判断手机号是否有未过期的验证码
+        $verifycodeService = new VerifyCodeServices();
+        $verifycodeModel = new VerifyCode();
+
+        $ver_code = $verifycodeService->codeIsExpired($phone);
+        if (!$ver_code) {//新增数据库验证码
+            $id = VerifyCode::create($data);
+        } else {//更新数据库验证码
+            $id = DB::table('verify_code')
+                ->where('phone', $phone)
+                ->where('expire_at', '>', time() - 30 * 60)
+                ->update(['code' => $code, 'expire_at' => time() + 30 * 60]);
+
+        }
+
+        //验证码保存成功，则发送验证码给用户
+        if ($id) {
+            $msg = '您的验证码是' . $code;
+            $ucpaas = Helper::send_message($options, $appId, $to, $templateId, $msg);
+            $ucpaas_res = json_decode($ucpaas, true);
+            var_dump($ucpaas_res);
+        }
     }
 
     public function checkToken(Request $request)

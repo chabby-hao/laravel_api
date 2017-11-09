@@ -65,7 +65,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Shanghai',
 
     /*
     |--------------------------------------------------------------------------
@@ -228,5 +228,22 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
     ],
+
+    //云之讯开放平台的相关参数
+    'UCPAAS'=>[
+        'SMS_PLATFORM_DEF'=>'1',//短信发送平台定义(使用云之讯平台)
+        'SMS_API_URI'=>'http://api.sms7.com.cn/mt/',//API调用地址
+        'SMS_API_USER'=>'care',//用户名
+        'SMS_API_PWD'=>'dea86ae3f4d7bc3df872a09f18a9b05f',//md5(密码+用户名){care/care@0104}
+        'SMS_UCPAAS_APPID'=>'a9c684fed1a347e2b1e1633002f0de41',//云之讯开放平台APPID
+        'SMS_UCPAAS_ACCOUNT'=>'42cc5e5038ddd382de8ab053db0a3f31',//云之讯开放平台Account ID
+        'SMS_UCPAAS_TOKEN'=>'d1868c3dc7c3e506411770f7d640bd98',//云之讯开放平台Auth Token
+
+        //下面是短信模板定义
+        'SMS_TEMPLATE_REGISTER'=>'226863',//手机注册验证码
+        'SMS_TEMPLATE_RESET'=>'83783',//用户重置密码短信验证码
+        'SMS_TEMPLATE_ADMIN_RESET'=>'15720',//客服重置密码, 短信通知用
+
+    ]
 
 ];

@@ -23,9 +23,11 @@ Route::any('/user/bindPhoneForWx', 'Api\UserController@bindPhoneForWx');
 Route::any('/user/login', 'Api\UserController@login');
 
 Route::any('/user/checkToken', 'Api\UserController@checkToken');
+Route::any('/user/sendMsgCode', 'Api\UserController@sendMsgCode');
 
-Route::any('/test', function(){
 
+Route::get('test', function(){
+    phpinfo();
 });
 
 //Route::middleware('auth:api')->get('/user', function (Request $request) {

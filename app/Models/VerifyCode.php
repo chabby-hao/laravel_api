@@ -10,7 +10,7 @@ class VerifyCode extends Model
 
     protected $table = 'verify_code';
     protected $primaryKey = 'id';
-    protected $fillable = ['phone', 'code'];
+    protected $fillable = ['phone', 'code','expire_at'];
 
     /**
      * @param $phone
@@ -27,4 +27,26 @@ class VerifyCode extends Model
         }
     }
 
+
+//    public static function saveVerifyCode($data){
+//        if(!empty($data)){
+//            $id= self::table('')
+//            return $id;
+//        }
+//
+//    }
+
+    public function codeIsExpired($phone,$toarray = true){
+        $verifycodeModel = new VerifyCode();
+        $code = $verifycodeModel->where('phone',$phone)->where('expire_at','>',time()-30*60)->get();
+        if($toarray){
+            $code = $code->toArray();
+        }
+        return $code;
+    }
+
+    public function insertData($data){
+        $id = $this->save($data);
+        return $id;
+    }
 }
