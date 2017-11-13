@@ -65,7 +65,7 @@ class Helper{
         return $xml;
     }
 
-    public function postXmlCurl($url,$xmlData){
+    public static function postXmlCurl($url,$xmlData){
         $header[] = "Content-type: text/xml";      //定义content-type为xml,注意是数组
         $ch = curl_init ($url);
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -80,7 +80,7 @@ class Helper{
         curl_close($ch);
     }
 
-    function xmlToArray($xml)
+    public static function xmlToArray($xml)
     {
         //禁止引用外部xml实体
         libxml_disable_entity_loader(true);
