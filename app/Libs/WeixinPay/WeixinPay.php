@@ -50,6 +50,7 @@ class WeixinPay{
     private function weixinapp(){
         //统一下单接口
         $unifiedorder=$this->unifiedorder();
+        var_dump($unifiedorder);
 
         $parameters=array(
             'appId'=>$this->appid,//小程序ID
