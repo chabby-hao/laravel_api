@@ -15,7 +15,7 @@ class WeixinPayController extends Controller{
 
     //支付费用
     public function payJoinfee(){
-        var_dump(111);die;
+
         $appid='wx888888888';
         $openid='wxa18b666bc3bec5d9';
         $mch_id='141388888';
