@@ -25,6 +25,8 @@ Route::any('/user/login', 'Api\UserController@login');
 Route::any('/user/checkToken', 'Api\UserController@checkToken');
 Route::any('/user/sendMsgCode', 'Api\UserController@sendMsgCode');
 
+Route::any('/WeixinPay/payJoinfee', 'Api\WeixinPay@payJoinfee');
+
 
 Route::get('test', function(){
     phpinfo();
