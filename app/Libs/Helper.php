@@ -78,6 +78,7 @@ class Helper{
             printcurl_error($ch);
         }
         curl_close($ch);
+        return $response;
     }
 
     public static function xmlToArray($xml)
