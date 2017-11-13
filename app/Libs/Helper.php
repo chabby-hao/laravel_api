@@ -52,5 +52,41 @@ class Helper{
 
     }
 
+    public static function  arrayToXml($arr){
+        $xml = "<xml>";
+        foreach ($arr as $key=>$val){
+            if(is_array($val)){
+                $xml.="<".$key.">".arrayToXml($val)."</".$key.">";
+            }else{
+                $xml.="<".$key.">".$val."</".$key.">";
+            }
+        }
+        $xml.="</xml>";
+        return $xml;
+    }
+
+    public function postXmlCurl($url,$xmlData){
+        $header[] = "Content-type: text/xml";      //定义content-type为xml,注意是数组
+        $ch = curl_init ($url);
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER,$header);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch,CURLOPT_POSTFIELDS, $xmlData);
+        $response = curl_exec($ch);
+        if(curl_errno($ch)){
+            printcurl_error($ch);
+        }
+        curl_close($ch);
+    }
+
+    function xmlToArray($xml)
+    {
+        //禁止引用外部xml实体
+        libxml_disable_entity_loader(true);
+        $values = json_decode(json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA)), true);
+        return $values;
+    }
+
 
 }

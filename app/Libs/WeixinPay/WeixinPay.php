@@ -3,6 +3,8 @@
  * 小程序微信支付
  */
 namespace App\Libs\WeixinPay;
+use App\Libs\Helper;
+
 class WeixinPay{
     protected $appid;
     protected $mch_id;
@@ -35,11 +37,13 @@ class WeixinPay{
             'openid'=>$this->openid,//用户id
             'trade_type'=>'JSAPI'//交易类型
         );
+
         //统一下单签名
         $parameters['sign']=$this->getSign($parameters);
-        $xmlData=arrayToXml($parameters);
+        $xmlData=Helper::arrayToXml($parameters);
 
-        $return=xmlToArray(postXmlSSLCurl($xmlData,$url,60));
+        $res = http_post_data();
+        $return=Helper::xmlToArray(Helper::postXmlSSLCurl($xmlData,$url,60));
 
         return $return;
     }
@@ -85,6 +89,7 @@ class WeixinPay{
         $result_ = strtoupper($String);
         return $result_;
     }
+
     ///作用：格式化参数，签名过程需要使用
     private function formatBizQueryParaMap($paraMap, $urlencode){
         $buff = "";
