@@ -41,8 +41,9 @@ class WeixinPay{
         //统一下单签名
         $parameters['sign']=$this->getSign($parameters);
         $xmlData=Helper::arrayToXml($parameters);
-
-        $return=Helper::xmlToArray(Helper::postXmlCurl($url,$xmlData));
+        $res = Helper::postXmlCurl($url,$xmlData);
+        return $res;
+        $return=Helper::xmlToArray($res);
 
         return $return;
     }
