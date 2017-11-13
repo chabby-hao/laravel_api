@@ -25,7 +25,7 @@ class WeixinPayController extends Controller{
         $weixinpay = new WeixinPay($appid,$openid,$mch_id,$key);
         $return=$weixinpay->pay();
 
-        echo Helper::response($return);
+        var_dump($return);
     }
 
 
