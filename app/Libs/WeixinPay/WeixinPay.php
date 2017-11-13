@@ -42,7 +42,7 @@ class WeixinPay{
         $parameters['sign']=$this->getSign($parameters);
         $xmlData=Helper::arrayToXml($parameters);
 
-        $return=Helper::xmlToArray(Helper::postXmlSSLCurl($xmlData,$url,60));
+        $return=Helper::xmlToArray(Helper::postXmlCurl($url,$xmlData));
 
         return $return;
     }
