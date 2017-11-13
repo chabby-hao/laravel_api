@@ -46,8 +46,11 @@ class UserController extends Controller
 
         $sessonKey = $userInfo['session_key'];
 
+        //中间会输出奇怪的字符，用ob消除
+        ob_start();
         $pc = new \WXBizDataCrypt(UserService::WX_APPID, $sessonKey);
         $errCode = $pc->decryptData($encryptedData, $iv, $output );
+        ob_clean();
 
         if ($errCode == 0) {
             //不带区号的手机号
