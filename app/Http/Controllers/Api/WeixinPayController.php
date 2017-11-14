@@ -19,7 +19,7 @@ class WeixinPayController extends Controller{
         $appid='wx5142d88a1e590b37';
         $openid='wxa18b666bc3bec5d9';
         $mch_id='1264801801';
-        $key='9A0A86888888888';
+//        $key='9A0A86888888888';
 
 //        import('Weixin.Lib.WeixinPay');
         $weixinpay = new WeixinPay($appid,$openid,$mch_id,$key);
