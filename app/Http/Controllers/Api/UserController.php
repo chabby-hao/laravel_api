@@ -48,7 +48,7 @@ class UserController extends Controller
 
         //中间会输出奇怪的字符，用ob消除
         ob_start();
-        $pc = new \WXBizDataCrypt(UserService::WX_APPID, $sessonKey);
+        $pc = new \WXBizDataCrypt(config('app.wx_appid'), $sessonKey);
         $errCode = $pc->decryptData($encryptedData, $iv, $output );
         ob_clean();
 

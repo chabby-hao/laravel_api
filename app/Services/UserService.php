@@ -48,7 +48,7 @@ class UserService
             'openid'=>$openid,
             'session_key'=>$data['session_key'],
             'uid'=>$user['id'],
-            'phone'=>$user['phone'],
+            'phone'=>!empty($user['phone']) ? $user['phone'] : '',
         ]),7200/60);
 
         return $token;
