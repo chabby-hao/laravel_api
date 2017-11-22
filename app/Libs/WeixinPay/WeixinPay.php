@@ -29,8 +29,8 @@ class WeixinPay{
             'appid'=>$this->appid,//小程序ID
             'mch_id'=>$this->mch_id,//商户号
             'nonce_str'=>$this->createNoncestr(),//随机字符串
-            'body'=>'测试',//商品描述
-            'out_trade_no'=>'2015450806125346',//商户订单号
+            'body'=>'安心充',//商品描述
+            'out_trade_no'=>time().mt_rand(1000,9999),//商户订单号
             'total_fee'=>floatval(0.01*100),//总金额 单位 分
             'spbill_create_ip'=>$_SERVER['REMOTE_ADDR'],//终端IP
             'notify_url'=>'http://www.weixin.qq.com/wxpay/pay.php',//通知地址
@@ -51,7 +51,6 @@ class WeixinPay{
     private function weixinapp(){
         //统一下单接口
         $unifiedorder=$this->unifiedorder();
-        return $unifiedorder;
 
         $parameters=array(
             'appId'=>$this->appid,//小程序ID
@@ -102,7 +101,7 @@ class WeixinPay{
             }
             $buff .= $k . "=" . $v . "&";
         }
-        $reqPar;
+        $reqPar = null;
         if (strlen($buff) > 0){
             $reqPar = substr($buff, 0, strlen($buff)-1);
         }

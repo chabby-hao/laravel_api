@@ -11,13 +11,10 @@ class UserService
     const LOGIN_TYPE_WEIXIN = 0;
     const LOGIN_TYPE_PHONE = 1;
 
-    const WX_APPID = 'wxa18b666bc3bec5d9';
-    const WX_SECRET = 'f75ba339ea5013cdf82c018f8ff9a75d';
-
     public static function getOpenid($code)
     {
-        $appid = self::WX_APPID;
-        $secert = self::WX_SECRET;
+        $appid = config('app.wx_appid');
+        $secert = config('app.wx_secret');
         $url = "https://api.weixin.qq.com/sns/jscode2session?appid=$appid&secret=$secert&js_code=$code&grant_type=authorization_code";
         $json = file_get_contents($url);
 
@@ -52,7 +49,7 @@ class UserService
             'session_key'=>$data['session_key'],
             'uid'=>$user['id'],
             'phone'=>$user['phone'],
-        ]),$data['expires_in']/60);
+        ]),7200/60);
 
         return $token;
     }
@@ -89,6 +86,15 @@ class UserService
         $userInfo = UserService::getUserInfoByToken($token);
         if($userInfo && $userInfo['phone']){
             return $userInfo['phone'];
+        }
+        return false;
+    }
+
+    public static function getOpenIdByToken($token)
+    {
+        $userInfo = UserService::getUserInfoByToken($token);
+        if($userInfo && $userInfo['openid']){
+            return $userInfo['openid'];
         }
         return false;
     }

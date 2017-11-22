@@ -9,23 +9,32 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Libs\Helper;
 use App\Libs\WeixinPay\WeixinPay;
+use App\Services\UserService;
+use Illuminate\Http\Request;
 
 class WeixinPayController extends Controller{
 
 
     //支付费用
-    public function payJoinfee(){
-
-        $appid='wx5142d88a1e590b37';
-        $openid='wxa18b666bc3bec5d9';
+    public function payJoinfee(Request $request){
+        $token = $request->post('token');
+        if(!$token){
+            return Helper::responeseError('请登录',['token'=>$token]);
+        }
+        $openid = UserService::getPhoneByToken($token);
+        $appid=config('app.config.wx_appid');
         $mch_id='1264801801';
         $key='';
 
-//        import('Weixin.Lib.WeixinPay');
         $weixinpay = new WeixinPay($appid,$openid,$mch_id,$key);
         $return=$weixinpay->pay();
 
         var_dump($return);
+    }
+
+    public function wxNotify()
+    {
+
     }
 
 

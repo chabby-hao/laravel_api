@@ -4,6 +4,23 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Models\VerifyCode
+ *
+ * @property int $id
+ * @property string $phone
+ * @property string $code
+ * @property \Carbon\Carbon $created_at
+ * @property int $expire_at 过期时间
+ * @property \Carbon\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\VerifyCode whereCode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\VerifyCode whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\VerifyCode whereExpireAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\VerifyCode whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\VerifyCode wherePhone($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\VerifyCode whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class VerifyCode extends Model
 {
     //
