@@ -21,7 +21,7 @@ class OrderService
         $order->order_no = $orderNo;
         $order->order_state = Orders::ORDER_STATE_INIT;
         $order->user_id = $userId;
-        $order->order_amount;
+        $order->order_amount = $orderAmount;
         if($order->save()){
             return $orderNo;
         }
