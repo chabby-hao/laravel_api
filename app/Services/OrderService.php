@@ -52,14 +52,18 @@ class OrderService
                 }
             }
         }catch (\Exception $e){
-            Log::error('orderService payment error:' . $e->getMessage());
+            Log::error('orderService payment error with:' . $e->getMessage() ." orderno: $orderNo");
             DB::rollBack();
+            return false;
         }
         //提交
         if($ret){
             DB::commit();
+            return true;
         }else{
             DB::rollBack();
+            Log::error("orderServcie payment error orderNo: $orderNo");
+            return false;
         }
     }
 

@@ -6,6 +6,7 @@
  * Time: 下午6:09
  */
 namespace App\Libs\WeixinPay;
+use App\Services\OrderService;
 use Illuminate\Support\Facades\Log;
 
 require_once app_path() . "/Sdks/WxpayAPI_php_v3.0.1/lib/WxPay.Api.php";
@@ -34,7 +35,6 @@ class PayNotifyCallBack extends \WxPayNotify
     public function NotifyProcess($data, &$msg)
     {
         //Log::DEBUG("call back:" . json_encode($data));
-        $notfiyOutput = array();
         Log::info('callback:' . json_encode($data));
 
         if(!array_key_exists("transaction_id", $data)){
@@ -46,6 +46,11 @@ class PayNotifyCallBack extends \WxPayNotify
             $msg = "订单查询失败";
             return false;
         }
+
+        $orderNo = $data['out_trade_no'];
+        $thirdNo = $data['transaction_id'];
+        OrderService::payment($orderNo, $thirdNo);
+
         Log::debug('callback msg:' . $msg);
         return true;
     }
