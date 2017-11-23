@@ -22,6 +22,12 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Orders whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Orders whereUserId($value)
  * @mixin \Eloquent
+ * @property float|null $order_amount
+ * @property string|null $pay_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Orders whereOrderAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Orders wherePayAt($value)
+ * @property string|null $third_no
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Orders whereThirdNo($value)
  */
 class Orders extends Model
 {
@@ -38,7 +44,7 @@ class Orders extends Model
 
     public static function getOrdersByUserId($userId)
     {
-        return self::whereUserId($userId)->toArray();
+        return self::whereUserId($userId)->get()->toArray();
     }
 
     /**
@@ -55,5 +61,6 @@ class Orders extends Model
         $orderMod = new Orders();
         return $orderMod->create($order);
     }
+
 
 }

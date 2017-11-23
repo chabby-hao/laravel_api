@@ -25,11 +25,20 @@ Route::any('/user/login', 'Api\UserController@login');
 Route::any('/user/checkToken', 'Api\UserController@checkToken');
 Route::any('/user/sendMsgCode', 'Api\UserController@sendMsgCode');
 
-Route::any('/WeixinPay/payJoinfee', 'Api\WeixinPayController@payJoinfee');
+Route::any('/weixinPay/payJoinfee', 'Api\WeixinPayController@payJoinfee');
 
+Route::any('/weixinPay/wxNotify', 'Api\WeixinPayController@wxNotify')->name('wxnotify');
+
+Route::any('/charge/openBox','Api\ChargeController@openBox');
+
+Route::any('/charge/chargeBegin','Api\ChargeController@chargeBegin');
 
 Route::get('test', function(){
-    phpinfo();
+    $c =route('wxnotify');
+    var_dump($c);exit;
+    $b = \App\Services\UserService::addUserBalance(4,3);
+    var_dump($b);
+    //\Illuminate\Support\Facades\Log::info('tttt');exit;
 });
 
 //Route::middleware('auth:api')->get('/user', function (Request $request) {

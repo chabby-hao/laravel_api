@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Libs\ErrorCode;
 use App\Libs\Helper;
 use App\Models\VerifyCode;
 use App\Services\UserService;
@@ -23,7 +24,7 @@ class UserController extends Controller
         $code = $request->post('code');
         $token = UserService::loginByCode($code);
         if(!$token){
-            return Helper::responeseError('请重新登录');
+            return Helper::responeseError(ErrorCode::$codeInvalid);
         }
         return Helper::response(['token'=>$token]);
     }
@@ -41,14 +42,14 @@ class UserController extends Controller
         $token = $data['token'];
 
         if(!$userInfo = UserService::getUserInfoByToken($token)){
-            return Helper::responeseError('请重新登录');
+            return Helper::responeseError(ErrorCode::$tokenExpire);
         }
 
         $sessonKey = $userInfo['session_key'];
 
         //中间会输出奇怪的字符，用ob消除
         ob_start();
-        $pc = new \WXBizDataCrypt(config('app.wx_appid'), $sessonKey);
+        $pc = new \WXBizDataCrypt(\WxPayConfig::APPID, $sessonKey);
         $errCode = $pc->decryptData($encryptedData, $iv, $output );
         ob_clean();
 
@@ -57,7 +58,7 @@ class UserController extends Controller
             $phone = json_decode($output, true)['purePhoneNumber'];
             UserService::bindPhone($token, $phone);
         } else {
-            return Helper::responeseError('用户验证失败');
+            return Helper::responeseError(ErrorCode::$sessionKeyExpire);
         }
 
         return Helper::response(['phone'=>$phone]);
@@ -76,7 +77,7 @@ class UserController extends Controller
                 'phone'=>$phone,
             ]);
         }
-        return Helper::responeseError('请重新登录');
+        return Helper::responeseError(ErrorCode::$tokenExpire);
     }
 
     /**
@@ -91,14 +92,14 @@ class UserController extends Controller
         $verifyCode = $data['verify_code'];
 
         if(!$userInfo = UserService::getUserInfoByToken($token)){
-            return Helper::responeseError('token失效');
+            return Helper::responeseError(ErrorCode::$tokenExpire);
         }
 
         if($verifyCodeRow = VerifyCode::getByPhoneAndCode($phone, $verifyCode)){
             UserService::bindPhone($token, $phone);
             return Helper::response(['phone'=>$phone]);
         }else{
-            return Helper::responeseError('验证码有误');
+            return Helper::responeseError();
         }
 
     }
@@ -171,7 +172,7 @@ class UserController extends Controller
         if($token && UserService::getUserInfoByToken('token')){
             return Helper::response([]);
         }else{
-            return Helper::responeseError(['token失效']);
+            return Helper::responeseError(ErrorCode::$tokenExpire);
         }
     }
 

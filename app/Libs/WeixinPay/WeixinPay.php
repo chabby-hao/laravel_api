@@ -45,6 +45,8 @@ class WeixinPay{
 //        return $res;
         $return=Helper::xmlToArray($res);
 
+        var_dump($return);exit;
+
         return $return;
     }
     //微信小程序接口

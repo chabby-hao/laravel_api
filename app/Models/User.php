@@ -18,6 +18,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User wherePhone($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property float|null $user_balance 用户余额\
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereUserBalance($value)
  */
 class User extends Model
 {

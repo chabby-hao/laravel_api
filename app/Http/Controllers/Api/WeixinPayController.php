@@ -11,6 +11,7 @@ use App\Libs\Helper;
 use App\Libs\WeixinPay\WeixinPay;
 use App\Services\UserService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class WeixinPayController extends Controller{
 
@@ -21,20 +22,31 @@ class WeixinPayController extends Controller{
         if(!$token){
             return Helper::responeseError('请登录',['token'=>$token]);
         }
-        $openid = UserService::getPhoneByToken($token);
-        $appid=config('app.config.wx_appid');
-        $mch_id='1264801801';
-        $key='';
+        $openid = UserService::getOpenIdByToken($token);
 
-        $weixinpay = new WeixinPay($appid,$openid,$mch_id,$key);
-        $return=$weixinpay->pay();
+        //②、统一下单
+        $input = new \WxPayUnifiedOrder();
+        $input->SetBody("充值");
+        $input->SetAttach($token);
+        $input->SetOut_trade_no(\WxPayConfig::MCHID.date("YmdHis"));
+        $input->SetTotal_fee(1);
+        $input->SetTime_start(date("YmdHis"));
+        $input->SetTime_expire(date("YmdHis", time() + 600));
+        $input->SetGoods_tag("余额充值");
+        $input->SetNotify_url(route('wxnotify'));
+        $input->SetTrade_type("JSAPI");
+        $input->SetOpenid($openid);
+        $order = \WxPayApi::unifiedOrder($input);
 
-        var_dump($return);
+        //获取小程序支付参数
+        $parameters = \WxPayApi::getMiniPayArgs($order);
+
+        return Helper::response($parameters);
     }
 
     public function wxNotify()
     {
-
+        Log::info('wxnotify :' . json_encode($_POST));
     }
 
 

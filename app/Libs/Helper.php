@@ -8,6 +8,12 @@ use App\Libs\ucpass\Ucpass;
 class Helper
 {
 
+    /**
+     * @param array $data
+     * @param int $status
+     * @param array $headers
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
     public static function response(array $data = [], $status = 200, array $headers = [])
     {
         $code = 200;
@@ -18,14 +24,18 @@ class Helper
         return response($content, $status, $headers);
     }
 
-    public static function responeseError($msg = '', array $data = [], $status = 200, array $headers = [])
+    /**
+     * @param int $code
+     * @param array $data
+     * @param int $status
+     * @param array $headers
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
+    public static function responeseError($code = 500, array $data = [], $status = 200, array $headers = [])
     {
-
-        $code = 500;
 
         $content = [
             'code' => $code,
-            'msg' => $msg,
         ];
         $content = array_merge($content, $data);
         return response($content, $status, $headers);

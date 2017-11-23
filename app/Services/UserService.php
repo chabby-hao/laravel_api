@@ -13,8 +13,8 @@ class UserService
 
     public static function getOpenid($code)
     {
-        $appid = config('app.wx_appid');
-        $secert = config('app.wx_secret');
+        $appid = \WxPayConfig::APPID;
+        $secert = \WxPayConfig::APPSECRET;
         $url = "https://api.weixin.qq.com/sns/jscode2session?appid=$appid&secret=$secert&js_code=$code&grant_type=authorization_code";
         $json = file_get_contents($url);
 
@@ -49,7 +49,7 @@ class UserService
             'session_key'=>$data['session_key'],
             'uid'=>$user['id'],
             'phone'=>!empty($user['phone']) ? $user['phone'] : '',
-        ]),7200/60);
+        ]),300);
 
         return $token;
     }
@@ -73,6 +73,7 @@ class UserService
     public static function getUserInfoByToken($token)
     {
         $userInfo = Cache::get($token);
+        Cache:
         $userInfo && $userInfo = json_decode($userInfo, true);
         return $userInfo;
     }
@@ -97,6 +98,20 @@ class UserService
             return $userInfo['openid'];
         }
         return false;
+    }
+
+    /**
+     * 增加用户金额数量
+     * @param $userId
+     * @param $amount
+     */
+    public static function addUserBalance($userId, $amount)
+    {
+        $user = User::whereId($userId)->first();
+        $userBalance = $user->user_balance;
+        $userBalance += $amount;
+        $user->user_balance = $userBalance;
+        return $user->save();
     }
 
 }
