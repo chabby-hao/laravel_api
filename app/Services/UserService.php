@@ -122,4 +122,14 @@ class UserService
         return $user->save();
     }
 
+    /**
+     * @param $userId
+     * @return array|bool
+     */
+    public static function getUserByUserId($userId)
+    {
+        $user = User::whereId($userId)->first();
+        return $user ? $user->toArray() : false;
+    }
+
 }

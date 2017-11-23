@@ -176,4 +176,17 @@ class UserController extends Controller
         }
     }
 
+    public function balance(Request $request)
+    {
+        $token = $request->get('token');
+        if(!$userInfo = UserService::getUserInfoByToken($token)){
+            return Helper::responeseError(ErrorCode::$tokenExpire);
+        }
+        $userId = $userInfo['uid'];
+        $user = UserService::getUserByUserId($userId);
+        $balance = $user ? $user['balance'] : 0;
+        $balance = number_format($balance, 1);
+        return Helper::response($balance);
+    }
+
 }

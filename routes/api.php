@@ -25,6 +25,8 @@ Route::any('/user/login', 'Api\UserController@login');
 Route::any('/user/checkToken', 'Api\UserController@checkToken');
 Route::any('/user/sendMsgCode', 'Api\UserController@sendMsgCode');
 
+Route::any('/user/balance', 'Api\UserController@balance');
+
 Route::any('/weixinPay/payJoinfee', 'Api\WeixinPayController@payJoinfee');
 
 Route::any('/weixinPay/wxNotify', 'Api\WeixinPayController@wxNotify')->name('wxnotify');
