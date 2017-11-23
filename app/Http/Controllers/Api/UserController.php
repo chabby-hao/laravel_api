@@ -186,7 +186,7 @@ class UserController extends Controller
         $user = UserService::getUserByUserId($userId);
         $balance = $user ? $user['user_balance'] : 0;
         $balance = number_format($balance, 1);
-        return Helper::response($balance);
+        return Helper::response(['balance'=>$balance]);
     }
 
 }
