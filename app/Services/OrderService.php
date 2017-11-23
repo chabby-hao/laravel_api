@@ -40,11 +40,13 @@ class OrderService
         $ret = false;
         try{
             $order = Orders::whereOrderNo($orderNo)->first();
+            var_dump($order);
             if($order->order_state == Orders::ORDER_STATE_INIT){
                 $order->third_no = $thirdNo;
                 $order->pay_at = date('Y-m-d H:i:s');
                 $order->order_state = Orders::ORDER_STATE_PAY;
                 $res = $order->save();
+                var_dump($order);
                 if($res === true){
                     $userId = $order->user_id;
                     $orderAmount = $order->order_amount;
