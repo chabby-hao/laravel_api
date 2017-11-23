@@ -4,7 +4,6 @@ namespace App\Services;
 use App\Models\Orders;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Phalcon\Paginator\Adapter\Model;
 
 class OrderService
 {
@@ -45,9 +44,12 @@ class OrderService
                 $order->pay_at = date('Y-m-d H:i:s');
                 $order->order_state = Orders::ORDER_STATE_PAY;
                 $res = $order->save();
+                $a = var_export(var_dump($res),true);
+                Log::debug('a:' . $a);
                 if($res === true){
                     $userId = $order->user_id;
                     $orderAmount = $order->order_amount;
+                    Log::debug($userId.'--' . $orderAmount);
                     $ret = UserService::addUserBalance($userId, $orderAmount);
                 }
             }
