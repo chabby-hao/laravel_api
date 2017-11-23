@@ -46,7 +46,7 @@ class WeixinPayController extends Controller{
 
     public function wxNotify()
     {
-        Log::info('wxnotify :' . json_encode(file_get_contents("php://input")));
+        Log::info('wxnotify :' . file_get_contents("php://input"));
     }
 
 
