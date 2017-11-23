@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 use App\Models\User;
@@ -8,8 +9,12 @@ use Ramsey\Uuid\Uuid;
 class UserService
 {
 
-    const LOGIN_TYPE_WEIXIN = 0;
-    const LOGIN_TYPE_PHONE = 1;
+    /*'type'=>User::LOGIN_TYPE_WEIXIN,//0微信登录,1手机登录
+        'openid' => $openid,
+        'session_key' => $data['session_key'],
+        'uid' => $user['id'],
+        'phone' => !empty($user['phone']) ? $user['phone'] : '',*/
+    public static $userInfo = [];
 
     public static function getOpenid($code)
     {
@@ -19,16 +24,16 @@ class UserService
         $json = file_get_contents($url);
 
         $arr = json_decode($json, true);
-        if(isset($arr['openid'])){
+        if (isset($arr['openid'])) {
             return $arr;
-        }else{
+        } else {
             return false;
         }
     }
 
     public static function loginByCode($code)
     {
-        if(!$data = self::getOpenid($code)){
+        if (!$data = self::getOpenid($code)) {
             return false;
         }
 //        "session_key":"siDizJgW82HgNEvnPMZCKg==",
@@ -40,16 +45,17 @@ class UserService
 
         $openid = $data['openid'];
 
-        $user = User::firstOrCreate(['openid'=>$openid])->toArray();
+        $user = User::firstOrCreate(['openid' => $openid])->toArray();
 
         //token缓存
-        Cache::put($token, json_encode([
-            'type'=>self::LOGIN_TYPE_WEIXIN,//0微信登录,1手机登录
-            'openid'=>$openid,
-            'session_key'=>$data['session_key'],
-            'uid'=>$user['id'],
-            'phone'=>!empty($user['phone']) ? $user['phone'] : '',
-        ]),300);
+        $data = [
+            'type' => User::LOGIN_TYPE_WEIXIN,//0微信登录,1手机登录
+            'openid' => $openid,
+            'session_key' => $data['session_key'],
+            'uid' => $user['id'],
+            'phone' => !empty($user['phone']) ? $user['phone'] : '',
+        ];
+        Cache::put($token, json_encode($data), 300);
 
         return $token;
     }
@@ -59,11 +65,12 @@ class UserService
         $data = Cache::get($token);
         $data = json_decode($data, true);
         $data['phone'] = $phone;
+        $data['type'] = User::LOGIN_TYPE_PHONE;
 
         $uid = $data['uid'];
-        User::where(['id'=>$uid])->update(['phone'=>$phone]);
+        User::where(['id' => $uid])->update(['phone' => $phone]);
 
-        Cache::put($token, json_encode($data),120);
+        Cache::put($token, json_encode($data), 120);
     }
 
     /**
@@ -75,6 +82,7 @@ class UserService
         $userInfo = Cache::get($token);
         Cache:
         $userInfo && $userInfo = json_decode($userInfo, true);
+        self::$userInfo = $userInfo;
         return $userInfo;
     }
 
@@ -85,7 +93,7 @@ class UserService
     public static function getPhoneByToken($token)
     {
         $userInfo = UserService::getUserInfoByToken($token);
-        if($userInfo && $userInfo['phone']){
+        if ($userInfo && $userInfo['phone']) {
             return $userInfo['phone'];
         }
         return false;
@@ -94,7 +102,7 @@ class UserService
     public static function getOpenIdByToken($token)
     {
         $userInfo = UserService::getUserInfoByToken($token);
-        if($userInfo && $userInfo['openid']){
+        if ($userInfo && $userInfo['openid']) {
             return $userInfo['openid'];
         }
         return false;

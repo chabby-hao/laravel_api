@@ -24,6 +24,8 @@ use Illuminate\Database\Eloquent\Model;
 class User extends Model
 {
     //
+    const LOGIN_TYPE_WEIXIN = 0;
+    const LOGIN_TYPE_PHONE = 1;
 
     protected $table = 'users';
     protected $primaryKey = 'id';
