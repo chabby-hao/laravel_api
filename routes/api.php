@@ -36,9 +36,9 @@ Route::any('/charge/openBox','Api\ChargeController@openBox');
 Route::any('/charge/chargeBegin','Api\ChargeController@chargeBegin');
 
 Route::get('test', function(){
-    $c =route('wxnotify');
-    var_dump($c);exit;
-    $b = \App\Services\UserService::addUserBalance(4,3);
+//    $c =route('wxnotify');
+//    var_dump($c);exit;
+    $b = \App\Services\UserService::addUserBalance(4,0.01);
     var_dump($b);
     //\Illuminate\Support\Facades\Log::info('tttt');exit;
 });
