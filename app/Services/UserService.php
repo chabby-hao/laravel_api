@@ -9,6 +9,7 @@ use Ramsey\Uuid\Uuid;
 class UserService
 {
 
+    
     /*'type'=>User::LOGIN_TYPE_WEIXIN,//0微信登录,1手机登录
         'openid' => $openid,
         'session_key' => $data['session_key'],

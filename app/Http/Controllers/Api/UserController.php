@@ -169,7 +169,7 @@ class UserController extends Controller
     public function checkToken(Request $request)
     {
         $token = $request->post('token');
-        if($token && UserService::getUserInfoByToken('token')){
+        if($token && UserService::getUserInfoByToken($token)){
             return Helper::response([]);
         }else{
             return Helper::responeseError(ErrorCode::$tokenExpire);
@@ -187,6 +187,10 @@ class UserController extends Controller
         $balance = $user ? $user['user_balance'] : 0;
         $balance = number_format($balance, 2);
         return Helper::response(['balance'=>$balance]);
+    }
+
+    public function orders(Request $request)
+    {
     }
 
 }

@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::middlewareGroup('api',['token_login']);
 
 Route::any('/user/loginByCode', 'Api\UserController@loginByCode');
 
