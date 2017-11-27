@@ -18,7 +18,7 @@ class OrdersController extends Controller
     public function lists(Request $request)
     {
         if (!$userId = UserService::getUid()) {
-            return Helper::responeseError();
+            return Helper::responeseError(ErrorCode::$tokenExpire);
         }
 
         $order = new Orders();
