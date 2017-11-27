@@ -189,8 +189,4 @@ class UserController extends Controller
         return Helper::response(['balance'=>$balance]);
     }
 
-    public function orders(Request $request)
-    {
-    }
-
 }

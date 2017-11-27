@@ -36,6 +36,8 @@ Route::any('/charge/openBox','Api\ChargeController@openBox');
 
 Route::any('/charge/chargeBegin','Api\ChargeController@chargeBegin');
 
+Route::any('/order/lists','Api\OrdersController@lists');
+
 Route::get('test', function(){
 //    $c =route('wxnotify');
 //    var_dump($c);exit;

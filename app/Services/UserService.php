@@ -17,6 +17,15 @@ class UserService
         'phone' => !empty($user['phone']) ? $user['phone'] : '',*/
     public static $userInfo = [];
 
+    public static function getUid()
+    {
+        if(!empty(static::$userInfo['uid'])){
+            return static::$userInfo['uid'];
+        }
+        return false;
+    }
+
+
     public static function getOpenid($code)
     {
         $appid = \WxPayConfig::APPID;
