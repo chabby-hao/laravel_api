@@ -9,6 +9,7 @@ use App\Services\VerifyCodeServices;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
+use Illuminate\Support\Facades\Redis;
 
 class ChargeController extends Controller
 {
@@ -22,6 +23,10 @@ class ChargeController extends Controller
 
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
     public function chargeBegin(Request $request)
     {
         $post = $request->post();
@@ -32,6 +37,15 @@ class ChargeController extends Controller
         }
 
         return Helper::response($post);
+    }
+
+    /**
+     * 结束充电
+     * @param Request $request
+     */
+    public function chargeEnd(Request $request)
+    {
+
     }
 
 

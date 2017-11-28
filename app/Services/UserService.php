@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Cache;
 use Ramsey\Uuid\Uuid;
 
-class UserService
+class UserService extends BaseService
 {
 
     
