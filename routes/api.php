@@ -46,6 +46,10 @@ Route::get('test', function(){
     //\Illuminate\Support\Facades\Log::info('tttt');exit;
 });
 
+Route::get('phpinfo',function(){
+    phpinfo();
+});
+
 //Route::middleware('auth:api')->get('/user', function (Request $request) {
 //    return $request->user();
 //});
