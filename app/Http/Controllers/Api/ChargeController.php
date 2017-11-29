@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Libs\ErrorCode;
 use App\Libs\Helper;
+use App\Models\DeviceInfo;
 use App\Models\VerifyCode;
+use App\Services\BoxService;
+use App\Services\ChargeService;
 use App\Services\UserService;
 use App\Services\VerifyCodeServices;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
 
 class ChargeController extends Controller
@@ -20,7 +25,10 @@ class ChargeController extends Controller
      */
     public function openBox(Request $request)
     {
-
+        if(!BoxService::isOpen()){
+            BoxService::openBox();
+            return $this->responseOk();
+        }
     }
 
     /**
@@ -30,13 +38,19 @@ class ChargeController extends Controller
     public function chargeBegin(Request $request)
     {
         $post = $request->post();
-        $token = $post['token'];
-        $mode = $post['mode']; //0=充满模式
-        if(!$userInfo = UserService::getUserInfoByToken($token)){
-            return Helper::responeseError('请重新登录');
+        $mode = $post['mode']; //0=充满模式,其余为多少小时
+        $deviceId = $post['deviceId'];//设备id
+
+        Log::debug('chargeBegin :'. json_encode($post));
+
+        if(!$userId = UserService::getUid()){
+            return Helper::responeseError(ErrorCode::$tokenExpire);
         }
 
-        return Helper::response($post);
+        //充电
+        ChargeService::startCharge($userId, $deviceId, $mode);
+
+        return $this->responseOk();
     }
 
     /**

@@ -25,7 +25,8 @@ class BoxService extends  BaseService
      */
     public static function openBox()
     {
-
+        //下发开箱命令
+        CommandService::sendCommandBoxOpen();
     }
 
 }

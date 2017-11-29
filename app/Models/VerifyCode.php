@@ -44,15 +44,6 @@ class VerifyCode extends Model
         }
     }
 
-
-//    public static function saveVerifyCode($data){
-//        if(!empty($data)){
-//            $id= self::table('')
-//            return $id;
-//        }
-//
-//    }
-
     public function codeIsExpired($phone,$toarray = true){
         $verifycodeModel = new VerifyCode();
         $code = $verifycodeModel->where('phone',$phone)->where('expire_at','>',time()-30*60)->get();

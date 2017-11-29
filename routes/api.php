@@ -40,6 +40,9 @@ Route::any('/orders/lists','Api\OrdersController@lists');
 
 Route::get('test', function(){
 
+    $a = \App\Models\DeviceInfo::find(1);
+    var_dump($a);exit;
+
     \App\Services\BoxService::isOpen(1,2);
 
 //    $c =route('wxnotify');

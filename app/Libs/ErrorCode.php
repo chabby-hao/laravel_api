@@ -13,4 +13,6 @@ class ErrorCode
 
     public static $sessionKeyExpire = 2003;//微信sessionkey过期
 
+    public static $invalidDeviceId = 2004;//设备id不存在
+
 }

@@ -5,4 +5,6 @@ namespace App\Services;
 class BaseService
 {
 
+
+
 }
