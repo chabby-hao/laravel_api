@@ -49,7 +49,7 @@ class ChargeTasks extends Model
      * @param $deviceNo
      * @param $portNo
      * @param $duration
-     * @return $this|Model
+     * @return bool
      */
     public function createTask($userId, $deviceNo, $portNo, $duration)
     {
@@ -61,6 +61,6 @@ class ChargeTasks extends Model
         $task->device_no = $deviceNo;
         $task->port_no = $portNo;
         $task->task_state = self::TASK_STATE_INIT;
-        return $task->create();
+        return $task->save();
     }
 }
