@@ -39,7 +39,7 @@ class ChargeController extends Controller
     {
         $post = $request->post();
         $mode = $post['mode']; //0=充满模式,其余为多少小时
-        $deviceId = $post['deviceId'];//设备id
+        $deviceId = $post['device_id'];//设备id
 
         Log::debug('chargeBegin :'. json_encode($post));
 
