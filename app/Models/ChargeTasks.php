@@ -56,8 +56,9 @@ class ChargeTasks extends Model
         $nowTime = time();
         $task = new self();
         $task->user_id = $userId;
-        $task->begin_at = $nowTime;
-        $task->expect_end_at = $nowTime + $duration;
+        $task->begin_at = date('Y-m-d H:i:s', $nowTime);
+        $task->expect_time = $duration;
+        $task->expect_end_at = strtotime("+$duration seconds", $nowTime);
         $task->device_no = $deviceNo;
         $task->port_no = $portNo;
         $task->task_state = self::TASK_STATE_INIT;
