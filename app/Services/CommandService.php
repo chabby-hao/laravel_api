@@ -10,10 +10,10 @@ class CommandService extends BaseService
 
     const LIST_COMMAND_PRE = 'AxcCommandList_';
 
-    const CMD_OPEN_BOX = 22001;//开箱
-    const CMD_CLOSE_BOX = 22002;//关箱
-    const CMD_START_CHARGE = 22003;//开始充电
-    const CMD_STOP_CHARGE = 22004;//结束充电
+    const CMD_OPEN_BOX = 20001;//开箱
+    const CMD_CLOSE_BOX = 20002;//关箱
+    const CMD_START_CHARGE = 20003;//开始充电
+    const CMD_STOP_CHARGE = 20004;//结束充电
 
     /**
      * 下发命令

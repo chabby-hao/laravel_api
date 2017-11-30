@@ -43,9 +43,30 @@ class ChargeService extends BaseService
     /**
      * 结束充电
      */
-    public static function endCharge()
+    public static function endCharge($deviceId, $state = ChargeTasks::TASK_STATE_COMPLETE)
     {
+        if(!$deviceModel = DeviceInfo::find($deviceId)){
+            Log::warning('deviceInfo not find deviceId:' . $deviceId);
+            return false;
+        }
+        $deviceNo = $deviceModel->device_no;
+        $portNo = $deviceModel->port_no;
+        $model = ChargeTasks::where(['device_no'=>$deviceNo,'port_no'=>$portNo])->orderBy('id','desc')->first();
+        if(!$model){
+            return false;
+        }
+        $begin = $model->begin_at;
+        $beginTime = strtotime($begin);
+        $model->actual_time = time() - $beginTime;
+        $model->task_state = $state;
+        //此处预留扣费逻辑
 
+        return $model->save();
+    }
+
+    public static function endChargeByUser($deviceId)
+    {
+        return self::endCharge($deviceId, ChargeTasks::TASK_STATE_COMPLETE);
     }
 
 }

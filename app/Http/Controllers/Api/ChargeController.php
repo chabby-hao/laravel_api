@@ -57,9 +57,9 @@ class ChargeController extends Controller
     {
         $deviceId = $request->post('device_id');
 
+        ChargeService::endChargeByUser($deviceId);
 
         return $this->responseOk();
-
     }
 
 

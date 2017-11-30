@@ -36,8 +36,10 @@ class ChargeTasks extends Model
 
     //10-初始化，20-充电任务完成，30-异常中断
     const TASK_STATE_INIT = 10;//初始化
-    const TASK_STATE_COMPLETE = 20;//充电完成
+    const TASK_STATE_COMPLETE = 20;//充电完成,充满
     const TASK_STATE_END_ABMORMAL = 30;//充电异常中断
+    const TASK_STATE_TIME_END = 40;//充电时间到，自动结束充电
+    const TASK_STATE_USER_END = 50;//用户手动中断充电
 
     protected $table = 'charge_tasks';
     protected $primaryKey = 'id';
