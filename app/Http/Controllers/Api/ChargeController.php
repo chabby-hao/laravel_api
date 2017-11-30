@@ -55,7 +55,7 @@ class ChargeController extends Controller
      */
     public function chargeEnd(Request $request)
     {
-        $deviceId = $request->post('device_id');
+        $deviceId = $request->input('device_id');
 
         ChargeService::endChargeByUser($deviceId);
 
