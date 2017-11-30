@@ -4,17 +4,12 @@ namespace App\Http\Controllers\Api;
 
 use App\Libs\ErrorCode;
 use App\Libs\Helper;
-use App\Models\DeviceInfo;
-use App\Models\VerifyCode;
 use App\Services\BoxService;
 use App\Services\ChargeService;
 use App\Services\UserService;
-use App\Services\VerifyCodeServices;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Redis;
 
 class ChargeController extends Controller
 {
@@ -56,9 +51,14 @@ class ChargeController extends Controller
     /**
      * 结束充电
      * @param Request $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
     public function chargeEnd(Request $request)
     {
+        $deviceId = $request->post('device_id');
+
+
+        return $this->responseOk();
 
     }
 

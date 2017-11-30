@@ -36,6 +36,8 @@ Route::any('/charge/openBox','Api\ChargeController@openBox');
 
 Route::any('/charge/chargeBegin','Api\ChargeController@chargeBegin');
 
+Route::any('/charge/chargeEnd','Api\ChargeController@chargeEnd');
+
 Route::any('/orders/lists','Api\OrdersController@lists');
 
 Route::get('test', function(){
