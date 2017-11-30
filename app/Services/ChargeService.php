@@ -37,7 +37,7 @@ class ChargeService extends BaseService
         $portNo = $deviceModel->port_no;
         $chargeTaskMod = new ChargeTasks();
         $chargeTaskMod->createTask($userId, $deviceNo, $portNo, $duration);
-        CommandService::sendCommandChargeStart();
+        CommandService::sendCommandChargeStart($deviceNo, $portNo);
     }
 
     /**

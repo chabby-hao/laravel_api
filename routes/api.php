@@ -42,6 +42,10 @@ Route::any('/orders/lists','Api\OrdersController@lists');
 
 Route::get('test', function(){
 
+    $a =  \App\Services\CommandService::sendCommandChargeStart('99981469','1');
+    var_dump($a);
+    exit;
+
     $a = \App\Models\DeviceInfo::find(1);
     var_dump($a);exit;
 
