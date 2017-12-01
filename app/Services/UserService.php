@@ -35,6 +35,7 @@ class UserService extends BaseService
         $json = file_get_contents($url);
 
         $arr = json_decode($json, true);
+        Log::debug('openid:' . $json);
         if (isset($arr['openid'])) {
             return $arr;
         } else {

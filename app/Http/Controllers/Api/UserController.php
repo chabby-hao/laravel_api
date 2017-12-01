@@ -11,6 +11,7 @@ use App\Services\VerifyCodeServices;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -53,7 +54,7 @@ class UserController extends Controller
         $errCode = $pc->decryptData($encryptedData, $iv, $output );
         ob_clean();
 
-        var_dump($sessonKey,$encryptedData,$iv,$errCode,$output);
+        Log::debug("bindPhone $sessonKey,$encryptedData,$iv,$errCode,$output");
         if ($errCode == 0) {
             //不带区号的手机号
             $phone = json_decode($output, true)['purePhoneNumber'];
