@@ -45,6 +45,7 @@ class UserController extends Controller
         if(!$sessonKey = UserService::getSessionKeyByToken($token)){
             return Helper::responeseError(ErrorCode::$tokenExpire);
         }
+        var_dump($sessonKey);
 
         //中间会输出奇怪的字符，用ob消除
         ob_start();
