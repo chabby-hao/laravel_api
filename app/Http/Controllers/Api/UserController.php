@@ -42,11 +42,9 @@ class UserController extends Controller
         $encryptedData = $detail['encryptedData'];
         $token = $data['token'];
 
-        if(!$userInfo = UserService::getUserInfoByToken($token)){
+        if(!$sessonKey = UserService::getSessionKeyByToken($token)){
             return Helper::responeseError(ErrorCode::$tokenExpire);
         }
-
-        $sessonKey = $userInfo['session_key'];
 
         //中间会输出奇怪的字符，用ob消除
         ob_start();
