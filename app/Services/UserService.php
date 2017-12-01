@@ -70,7 +70,7 @@ class UserService extends BaseService
             'user_id' => $user['id'],
             //'phone' => !empty($user['phone']) ? $user['phone'] : '',
         ];
-        if (UserToken::updateOrInsert(['user_id' => $user['id']], ['session_key' => $data['session_key'], 'token' => $token])) {
+        if (UserToken::updateOrCreate(['user_id' => $user['id']], ['session_key' => $data['session_key'], 'token' => $token])) {
             return $token;
         }
         return false;
@@ -99,7 +99,8 @@ class UserService extends BaseService
 
     public static function getSessionKeyByToken($token)
     {
-
+        $userInfo = self::getUserInfoByToken($token);
+        return $userInfo['session_key'];
     }
 
 
@@ -118,6 +119,7 @@ class UserService extends BaseService
         $userInfo = self::getUserByUserId($userId);
         if ($userInfo['phone']) {
             $userInfo['user_id'] = $userInfo['id'];
+            $userInfo['session_key'] = $userToken->token;
             return self::$userInfo = $userInfo;
         }
         return false;
