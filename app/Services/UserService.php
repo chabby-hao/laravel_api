@@ -119,7 +119,7 @@ class UserService extends BaseService
         $userInfo = self::getUserByUserId($userId);
         if ($userInfo['phone']) {
             $userInfo['user_id'] = $userInfo['id'];
-            $userInfo['session_key'] = $userToken->token;
+            $userInfo['session_key'] = $userToken->session_key;
             return self::$userInfo = $userInfo;
         }
         return false;
