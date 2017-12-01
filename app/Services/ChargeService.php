@@ -61,7 +61,8 @@ class ChargeService extends BaseService
         $model->task_state = $state;
         //此处预留扣费逻辑
 
-        return $model->save();
+        $model->save();
+        CommandService::sendCommandChargeEnd($deviceNo, $portNo);
     }
 
     public static function endChargeByUser($deviceId)

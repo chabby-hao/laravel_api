@@ -3,24 +3,25 @@
 namespace App\Services;
 
 use App\Models\User;
+use App\Models\UserToken;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Ramsey\Uuid\Uuid;
 
 class UserService extends BaseService
 {
 
-    
-    /*'type'=>User::LOGIN_TYPE_WEIXIN,//0微信登录,1手机登录
-        'openid' => $openid,
-        'session_key' => $data['session_key'],
-        'uid' => $user['id'],
+
+    /*  'openid' => $openid,
+        'user_id' => $user['id'],
         'phone' => !empty($user['phone']) ? $user['phone'] : '',*/
     public static $userInfo = [];
 
-    public static function getUid()
+    public static function getUserId()
     {
-        if(!empty(static::$userInfo['uid'])){
-            return static::$userInfo['uid'];
+        if (!empty(static::$userInfo['user_id'])) {
+            return static::$userInfo['user_id'];
         }
         return false;
     }
@@ -41,6 +42,10 @@ class UserService extends BaseService
         }
     }
 
+    /**
+     * @param $code
+     * @return bool|string
+     */
     public static function loginByCode($code)
     {
         if (!$data = self::getOpenid($code)) {
@@ -59,29 +64,44 @@ class UserService extends BaseService
 
         //token缓存
         $data = [
-            'type' => User::LOGIN_TYPE_WEIXIN,//0微信登录,1手机登录
-            'openid' => $openid,
+            //'type' => User::LOGIN_TYPE_WEIXIN,//0微信登录,1手机登录
+            //'openid' => $openid,
             'session_key' => $data['session_key'],
-            'uid' => $user['id'],
-            'phone' => !empty($user['phone']) ? $user['phone'] : '',
+            'user_id' => $user['id'],
+            //'phone' => !empty($user['phone']) ? $user['phone'] : '',
         ];
-        Cache::put($token, json_encode($data), 300);
+        if (UserToken::updateOrInsert(['user_id' => $user['id']], ['session_key' => $data['session_key'], 'token' => $token])) {
+            return $token;
+        }
+        return false;
 
-        return $token;
     }
 
-    public static function bindPhone($token, $phone)
+    /**
+     * @param $token
+     * @param $phone
+     * @param $loginType
+     * @return bool
+     */
+    public static function bindPhone($token, $phone, $loginType = User::LOGIN_TYPE_WEIXIN)
     {
-        $data = Cache::get($token);
-        $data = json_decode($data, true);
-        $data['phone'] = $phone;
-        $data['type'] = User::LOGIN_TYPE_PHONE;
-
-        $uid = $data['uid'];
-        User::where(['id' => $uid])->update(['phone' => $phone]);
-
-        Cache::put($token, json_encode($data), 120);
+        $userToken = UserToken::whereToken($token)->first();
+        if (!$userToken) {
+            Log::error("bindPhonecan not find token:$token,phone:$phone");
+            return false;
+        }
+        $userId = $userToken->user_id;
+        $userToken->type = $loginType;
+        $userToken->token = $token;
+        $userToken->save();
+        User::where(['user_id' => $userId])->update(['phone' => $phone]);
     }
+
+    public static function getSessionKeyByToken($token)
+    {
+
+    }
+
 
     /**
      * @param $token
@@ -89,11 +109,18 @@ class UserService extends BaseService
      */
     public static function getUserInfoByToken($token)
     {
-        $userInfo = Cache::get($token);
-        Cache:
-        $userInfo && $userInfo = json_decode($userInfo, true);
-        self::$userInfo = $userInfo;
-        return $userInfo;
+        $userToken = UserToken::whereToken($token)->first();
+        if (!$userToken) {
+            //Log::error("getUserInfoByToken can not find token:$token");
+            return false;
+        }
+        $userId = $userToken->user_id;
+        $userInfo = self::getUserByUserId($userId);
+        if ($userInfo['phone']) {
+            $userInfo['user_id'] = $userInfo['id'];
+            return self::$userInfo = $userInfo;
+        }
+        return false;
     }
 
     /**

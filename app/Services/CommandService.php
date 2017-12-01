@@ -59,9 +59,10 @@ class CommandService extends BaseService
     /**
      * 结束充电
      */
-    public static function sendCommandChargeEnd()
+    public static function sendCommandChargeEnd($deviceNo, $portNo)
     {
-
+        $cmd = self::CMD_STOP_CHARGE;
+        return self::send($deviceNo, $portNo);
     }
 
 

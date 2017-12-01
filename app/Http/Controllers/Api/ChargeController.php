@@ -38,7 +38,7 @@ class ChargeController extends Controller
 
         Log::debug('chargeBegin :'. json_encode($post));
 
-        if(!$userId = UserService::getUid()){
+        if(!$userId = UserService::getUserId()){
             return Helper::responeseError(ErrorCode::$tokenExpire);
         }
 

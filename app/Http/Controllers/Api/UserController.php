@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Libs\ErrorCode;
 use App\Libs\Helper;
+use App\Models\User;
 use App\Models\VerifyCode;
 use App\Services\UserService;
 use App\Services\VerifyCodeServices;
@@ -56,7 +57,7 @@ class UserController extends Controller
         if ($errCode == 0) {
             //不带区号的手机号
             $phone = json_decode($output, true)['purePhoneNumber'];
-            UserService::bindPhone($token, $phone);
+            UserService::bindPhone($token, $phone, User::LOGIN_TYPE_PHONE);
         } else {
             return Helper::responeseError(ErrorCode::$sessionKeyExpire);
         }
@@ -68,7 +69,7 @@ class UserController extends Controller
      * @param Request $request
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
-    public function checkLogin(Request $request)
+    /*public function checkLogin(Request $request)
     {
         $data = $request->post();
         $token = $data['token'];
@@ -78,7 +79,7 @@ class UserController extends Controller
             ]);
         }
         return Helper::responeseError(ErrorCode::$tokenExpire);
-    }
+    }*/
 
     /**
      * phone+verify_code
@@ -169,8 +170,8 @@ class UserController extends Controller
     public function checkToken(Request $request)
     {
         $token = $request->post('token');
-        if($token && UserService::getUserInfoByToken($token)){
-            return Helper::response([]);
+        if($token && $phone = UserService::getPhoneByToken($token)){
+            return Helper::response(['phone'=>$phone]);
         }else{
             return Helper::responeseError(ErrorCode::$tokenExpire);
         }
@@ -182,7 +183,7 @@ class UserController extends Controller
         if(!$userInfo = UserService::getUserInfoByToken($token)){
             return Helper::responeseError(ErrorCode::$tokenExpire);
         }
-        $userId = $userInfo['uid'];
+        $userId = $userInfo['id'];
         $user = UserService::getUserByUserId($userId);
         $balance = $user ? $user['user_balance'] : 0;
         $balance = number_format($balance, 2);

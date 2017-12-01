@@ -13,15 +13,28 @@ class DeviceService extends BaseService
     public static function isPortUseful($deviceNo, $portNo)
     {
         $key = self::_getStatusKey($deviceNo, $portNo);
-        $val = Redis::hGet($key, 'relay_status');
+        $val = Redis::hGet($key, 'usable');
         Log::debug("isPortUseFul deviceNo: $deviceNo, portno: $portNo, val: $val");
+        return $val ? true : false;
+    }
+
+    /**
+     * 充电是否发送成功
+     * @param $deviceNo
+     * @param $portNo
+     * @return bool
+     */
+    public static function isChargSendOk($deviceNo, $portNo)
+    {
+        $key = self::_getStatusKey($deviceNo, $portNo);
+        $val = Redis::hGet($key, 'rely_status');
         return $val ? true : false;
     }
 
     public static function isCharging($deviceNo, $portNo)
     {
         $key = self::_getStatusKey($deviceNo, $portNo);
-        $val = Redis::hGet($key, 'power_scale');
+        $val = Redis::hGet($key, 'is_charge');
         return $val ? true : false;
     }
 
