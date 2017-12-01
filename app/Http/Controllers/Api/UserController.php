@@ -45,7 +45,7 @@ class UserController extends Controller
         if(!$sessonKey = UserService::getSessionKeyByToken($token)){
             return Helper::responeseError(ErrorCode::$tokenExpire);
         }
-        var_dump($sessonKey);
+
 
         //中间会输出奇怪的字符，用ob消除
         ob_start();
@@ -53,7 +53,7 @@ class UserController extends Controller
         $errCode = $pc->decryptData($encryptedData, $iv, $output );
         ob_clean();
 
-        var_dump($errCode);
+        var_dump($sessonKey,$encryptedData,$iv,$errCode,$output);
         if ($errCode == 0) {
             //不带区号的手机号
             $phone = json_decode($output, true)['purePhoneNumber'];
