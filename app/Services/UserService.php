@@ -70,7 +70,8 @@ class UserService extends BaseService
             'user_id' => $user['id'],
             //'phone' => !empty($user['phone']) ? $user['phone'] : '',
         ];
-        if (UserToken::updateOrCreate(['user_id' => $user['id']], ['session_key' => $data['session_key'], 'token' => $token])) {
+        if ($userToken = UserToken::updateOrCreate(['user_id' => $user['id']], ['session_key' => $data['session_key'], 'token' => $token])) {
+            $userToken->save();
             return $token;
         }
         return false;
