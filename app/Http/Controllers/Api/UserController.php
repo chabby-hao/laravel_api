@@ -53,6 +53,7 @@ class UserController extends Controller
         $errCode = $pc->decryptData($encryptedData, $iv, $output );
         ob_clean();
 
+        var_dump($errCode);
         if ($errCode == 0) {
             //不带区号的手机号
             $phone = json_decode($output, true)['purePhoneNumber'];
