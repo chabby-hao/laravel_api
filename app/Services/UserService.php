@@ -145,6 +145,7 @@ class UserService extends BaseService
         if ($userInfo && $userInfo['phone']) {
             return $userInfo['phone'];
         }
+        Log::debug('getPhoneByToken error with token:' . $token);
         return false;
     }
 
