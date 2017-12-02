@@ -35,7 +35,7 @@ class UserService extends BaseService
         $json = file_get_contents($url);
 
         $arr = json_decode($json, true);
-        Log::debug('openid:' . $json);
+        Log::debug('getOpenid:' . $json);
         if (isset($arr['openid'])) {
             return $arr;
         } else {
@@ -64,14 +64,19 @@ class UserService extends BaseService
         $user = User::firstOrCreate(['openid' => $openid])->toArray();
 
         //token缓存
-        $data = [
-            //'type' => User::LOGIN_TYPE_WEIXIN,//0微信登录,1手机登录
-            //'openid' => $openid,
-            'session_key' => $data['session_key'],
-            'user_id' => $user['id'],
-            //'phone' => !empty($user['phone']) ? $user['phone'] : '',
+//        $data = [
+//            //'type' => User::LOGIN_TYPE_WEIXIN,//0微信登录,1手机登录
+//            //'openid' => $openid,
+//            'session_key' => $data['session_key'],
+//            //'user_id' => $user['id'],
+//            'token'=>$token,
+//            //'phone' => !empty($user['phone']) ? $user['phone'] : '',
+//        ];
+        $update = [
+            'token'=> $token,
+            'session_key'=>$data['session_key'],
         ];
-        if (UserToken::updateOrCreate(['user_id' => $user['id']], ['session_key' => $data['session_key'], 'token' => $token])) {
+        if ($userToken = UserToken::updateOrCreate(['user_id' => $user['id']],$update)) {
             return $token;
         }
         return false;
@@ -95,13 +100,17 @@ class UserService extends BaseService
         $userToken->type = $loginType;
         $userToken->token = $token;
         $userToken->save();
-        User::where(['user_id' => $userId])->update(['phone' => $phone]);
+        User::where(['id' => $userId])->update(['phone' => $phone]);
     }
 
     public static function getSessionKeyByToken($token)
     {
-        $userInfo = self::getUserInfoByToken($token);
-        return $userInfo['session_key'];
+        $userToken = UserToken::whereToken($token)->first();
+        if(!$userToken){
+            Log::debug('getSessionKey token invalid :' . $token);
+            return false;
+        }
+        return $userToken->session_key;
     }
 
 
@@ -120,7 +129,7 @@ class UserService extends BaseService
         $userInfo = self::getUserByUserId($userId);
         if ($userInfo['phone']) {
             $userInfo['user_id'] = $userInfo['id'];
-            $userInfo['session_key'] = $userToken->session_key;
+            //$userInfo['session_key'] = $userToken->session_key;
             return self::$userInfo = $userInfo;
         }
         return false;

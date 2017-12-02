@@ -31,6 +31,7 @@ class UserToken extends Model
 
     protected $table = 'user_token';
     protected $primaryKey = 'id';
-    protected $fillable = ['user_id', 'token','openid'];
+    //protected $fillable = ['*'];
+    protected $guarded = [];
 
 }
