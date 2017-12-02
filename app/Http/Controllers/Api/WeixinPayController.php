@@ -29,7 +29,7 @@ class WeixinPayController extends Controller
         if (!$token) {
             return Helper::responeseError('请登录', ['token' => $token]);
         }
-        $userId = UserService::getUserInfoByToken($token)['uid'];
+        $userId = UserService::getUserInfoByToken($token)['user_id'];
         $orderNo = OrderService::createOrder($userId, $orderAmount);
         //创建支付参数
         $payArgs = $this->_createPayArgs($orderNo, $orderAmount);
