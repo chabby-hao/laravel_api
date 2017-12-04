@@ -69,11 +69,13 @@ class ChargeController extends Controller
     public function chargeHalt(Request $request)
     {
         $deviceNo = $request->input('device_no');
-        $portNo = $request->input('device_no');
+        $portNo = $request->input('port_no');
+        $type = $request->input('type');
 
         return Helper::response([
             'device_no'=>$deviceNo,
             'port_no'=>$portNo,
+            'type'=>$type,
         ]);
     }
 
