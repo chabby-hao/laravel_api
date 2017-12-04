@@ -72,6 +72,8 @@ class ChargeController extends Controller
         $portNo = $request->input('port_no');
         $type = $request->input('type');
 
+        Log::debug('chargeHalt receive data: ' . json_encode($request->input()));
+
         return Helper::response([
             'device_no'=>$deviceNo,
             'port_no'=>$portNo,
