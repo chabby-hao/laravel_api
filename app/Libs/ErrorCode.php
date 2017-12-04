@@ -15,4 +15,6 @@ class ErrorCode
 
     public static $invalidDeviceId = 2004;//设备id不存在
 
+    public static $chargeTaskNotFind = 2005;//充电任务不存在
+
 }

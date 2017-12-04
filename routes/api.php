@@ -24,6 +24,7 @@ Route::any('/user/bindPhoneForWx', 'Api\UserController@bindPhoneForWx');
 Route::any('/user/login', 'Api\UserController@login');
 
 Route::any('/user/checkToken', 'Api\UserController@checkToken');
+
 Route::any('/user/sendMsgCode', 'Api\UserController@sendMsgCode');
 
 Route::any('/user/balance', 'Api\UserController@balance');
@@ -37,6 +38,9 @@ Route::any('/charge/openBox','Api\ChargeController@openBox');
 Route::any('/charge/chargeBegin','Api\ChargeController@chargeBegin');
 
 Route::any('/charge/chargeEnd','Api\ChargeController@chargeEnd');
+Route::any('/charge/chargeHalt','Api\ChargeController@chargeHalt');
+
+Route::any('/charge/charingTime','Api\ChargeController@charingTime');
 
 Route::any('/orders/lists','Api\OrdersController@lists');
 

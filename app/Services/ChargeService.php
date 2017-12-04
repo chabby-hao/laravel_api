@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 use App\Libs\ErrorCode;
@@ -29,7 +30,7 @@ class ChargeService extends BaseService
     public static function startCharge($userId, $deviceId, $mode)
     {
         $duration = $mode * 3600;
-        if(!$deviceModel = DeviceInfo::find($deviceId)){
+        if (!$deviceModel = DeviceInfo::find($deviceId)) {
             Log::warning('deviceInfo not find deviceId:' . $deviceId);
             return false;
         }
@@ -45,14 +46,14 @@ class ChargeService extends BaseService
      */
     public static function endCharge($deviceId, $state = ChargeTasks::TASK_STATE_COMPLETE)
     {
-        if(!$deviceModel = DeviceInfo::find($deviceId)){
+        if (!$deviceModel = DeviceInfo::find($deviceId)) {
             Log::warning('deviceInfo not find deviceId:' . $deviceId);
             return false;
         }
         $deviceNo = $deviceModel->device_no;
         $portNo = $deviceModel->port_no;
-        $model = ChargeTasks::where(['device_no'=>$deviceNo,'port_no'=>$portNo])->orderBy('id','desc')->first();
-        if(!$model){
+        $model = ChargeTasks::where(['device_no' => $deviceNo, 'port_no' => $portNo])->orderBy('id', 'desc')->first();
+        if (!$model) {
             return false;
         }
         $begin = $model->begin_at;
@@ -68,6 +69,24 @@ class ChargeService extends BaseService
     public static function endChargeByUser($deviceId)
     {
         return self::endCharge($deviceId, ChargeTasks::TASK_STATE_USER_END);
+    }
+
+    /**
+     * 获取当前充电时长
+     * @param $userId
+     * @return float|int
+     */
+    public static function getLastChargingTimeByUserId($userId)
+    {
+        $mins = 0;
+        $model = ChargeTasks::whereUserId($userId)->orderByDesc('id')->first();
+        if (!$model || $model->task_state != ChargeTasks::TASK_STATE_INIT) {
+            return $mins;
+        }
+        $begin = strtotime($model->begin_at);
+        $time = time() - $begin;
+        $mins = floor($time / 60);
+        return $mins;
     }
 
 }
