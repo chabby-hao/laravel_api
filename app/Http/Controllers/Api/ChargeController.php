@@ -6,9 +6,11 @@ use App\Libs\ErrorCode;
 use App\Libs\Helper;
 use App\Services\BoxService;
 use App\Services\ChargeService;
+use App\Services\RequestService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 
 class ChargeController extends Controller
@@ -70,9 +72,20 @@ class ChargeController extends Controller
      */
     public function chargeHalt(Request $request)
     {
-        $deviceNo = $request->input('device_no');
-        $portNo = $request->input('port_no');
-        $type = $request->input('type');
+        $inputRequire = ['device_no','port_no','type','timestamp','sign'];
+        $input = $this->checkRequireParams($inputRequire, $request->input());
+        if($input instanceof Response){
+            return $input;
+        }
+
+        if(!RequestService::checkSign($input)){
+            return Helper::responeseError(ErrorCode::$errSign);
+        }
+
+        $deviceNo = $input['device_no'];
+        $portNo = $input['port_no'];
+        $type = $input['type'];
+
 
         Log::debug('chargeHalt receive data: ' . json_encode($request->input()));
 
@@ -92,12 +105,18 @@ class ChargeController extends Controller
      */
     public function powerOn(Request $request)
     {
-        $taskId = $request->input('task_id');
-        if(!$taskId){
-            return Helper::responeseError();
+        $inputRequired = ['task_id','timestamp','sign'];
+        $input = $this->checkRequireParams($inputRequired, $request->input());
+
+        if($input instanceof Response){
+            return $input;
         }
-//        $deviceNo = $request->input('device_no');
-//        $portNo = $request->input('port_no');
+
+        if(!RequestService::checkSign($input)){
+            return Helper::responeseError(ErrorCode::$errSign);
+        }
+
+        $taskId = $input['task_id'];
 
         Log::debug('power is on .' . json_encode($request->input()));
 
@@ -107,7 +126,7 @@ class ChargeController extends Controller
     }
 
     /**
-     * 充电时间
+     * 获取充电时间
      * @param Request $request
      */
     public function chargingTime()

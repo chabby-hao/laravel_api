@@ -19,8 +19,11 @@ class Helper
         $code = 200;
         $content = [
             'code' => $code,
-            'data' => $data,
+            'msg'=>'success',
         ];
+        if($data){
+            $content = array_merge($content, ['data'=>$data]);
+        }
         return response($content, $status, $headers);
     }
 
@@ -36,6 +39,7 @@ class Helper
 
         $content = [
             'code' => $code,
+            'msg'=>'error',
         ];
         $content = array_merge($content, $data);
         return response($content, $status, $headers);
@@ -104,5 +108,54 @@ class Helper
         return $values;
     }
 
+    /*
+     * 验证签名(按Asci从小到大排序)
+     * @param $data
+     * @param $key
+     * @return bool
+     */
+    public static function commonCheckSign($data, $key)
+    {
+        if (!isset($data['sign'])) {
+            return false;
+        }
+
+        $sign = $data['sign'];
+        unset($data['sign']);
+        ksort($data);
+
+        $str = '';
+        if ($data) {
+            foreach ($data as $row) {
+                $str .= $row;
+            }
+        }
+        $str .= $key;
+
+        return md5($str) === $sign;
+    }
+
+    /**
+     * 过滤后，返回必要的字段
+     * @param $arrFilter
+     * @param $arrData
+     * @return array|bool|string
+     */
+    public static function arrayRequiredCheck($arrFilter, $arrData, $returnKey = false)
+    {
+        $data = [];
+        foreach ($arrFilter as $filter){
+            if(array_key_exists($filter,$arrData) && $arrData[$filter]!=='' && $arrData[$filter]!==null){
+                $data[$filter] = $arrData[$filter];
+            }else{
+                if($returnKey){
+                    return $filter;
+                }else{
+                    return false;
+                }
+            }
+        }
+        return $data;
+    }
 
 }

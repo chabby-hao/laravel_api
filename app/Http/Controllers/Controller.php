@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Libs\ErrorCode;
 use App\Libs\Helper;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
@@ -18,7 +19,20 @@ class Controller extends BaseController
      */
     public function responseOk()
     {
-        return Helper::response(['msg'=>'ok']);
+        return Helper::response();
+    }
+
+    /**
+     * @param $data
+     * @return array|bool|\Illuminate\Contracts\Routing\ResponseFactory|string|\Symfony\Component\HttpFoundation\Response
+     */
+    public function checkRequireParams($arrRequire, $data)
+    {
+        $res = Helper::arrayRequiredCheck($arrRequire, $data, true);
+        if(is_string($res)){
+            return Helper::responeseError(ErrorCode::$errParams, ['msg'=>"$res is required"]);
+        }
+        return $res;
     }
 
 }
