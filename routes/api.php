@@ -39,8 +39,9 @@ Route::any('/charge/chargeBegin','Api\ChargeController@chargeBegin');
 
 Route::any('/charge/chargeEnd','Api\ChargeController@chargeEnd');
 Route::any('/charge/chargeHalt','Api\ChargeController@chargeHalt');
+Route::any('/charge/powerOn','Api\ChargeController@powerOn');
 
-Route::any('/charge/charingTime','Api\ChargeController@charingTime');
+Route::any('/charge/chargingTime','Api\ChargeController@chargingTime');
 
 Route::any('/orders/lists','Api\OrdersController@lists');
 

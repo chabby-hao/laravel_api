@@ -8,6 +8,7 @@ use App\Models\DeviceInfo;
 use App\Models\Orders;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use phpDocumentor\Reflection\Types\Mixed_;
 
 class ChargeService extends BaseService
 {
@@ -38,20 +39,32 @@ class ChargeService extends BaseService
         $portNo = $deviceModel->port_no;
         $chargeTaskMod = new ChargeTasks();
         $chargeTaskMod->createTask($userId, $deviceNo, $portNo, $duration);
-        CommandService::sendCommandChargeStart($deviceNo, $portNo);
+        return CommandService::sendCommandChargeStart($deviceNo, $portNo);
     }
 
     /**
      * 结束充电
+     * @param $device array|string    ['device_no'=>'123','port_no'=>'1']|$deviceId
+     * @param int $state
+     * @return bool
      */
-    public static function endCharge($deviceId, $state = ChargeTasks::TASK_STATE_COMPLETE)
+    public static function endCharge($device, $state = ChargeTasks::TASK_STATE_COMPLETE, $sendCmd = true)
     {
-        if (!$deviceModel = DeviceInfo::find($deviceId)) {
-            Log::warning('deviceInfo not find deviceId:' . $deviceId);
+        if(is_string($device)){
+            if (!$deviceModel = DeviceInfo::find($device)) {
+                Log::warning('deviceInfo not find deviceId:' . $device);
+                return false;
+            }
+            $deviceNo = $deviceModel->device_no;
+            $portNo = $deviceModel->port_no;
+        }elseif(is_array($device)){
+            $deviceNo = $device['device_no'];
+            $portNo = $device['port_no'];
+        }else{
+            Log::error('device is not array|string');
             return false;
         }
-        $deviceNo = $deviceModel->device_no;
-        $portNo = $deviceModel->port_no;
+
         $model = ChargeTasks::where(['device_no' => $deviceNo, 'port_no' => $portNo])->orderBy('id', 'desc')->first();
         if (!$model) {
             return false;
@@ -62,31 +75,88 @@ class ChargeService extends BaseService
         $model->task_state = $state;
         //此处预留扣费逻辑
 
+
         $model->save();
-        CommandService::sendCommandChargeEnd($deviceNo, $portNo);
+        if($sendCmd){
+            CommandService::sendCommandChargeEnd($deviceNo, $portNo);
+        }
     }
 
+    /**
+     * @param $deviceId
+     * @return bool
+     */
     public static function endChargeByUser($deviceId)
     {
         return self::endCharge($deviceId, ChargeTasks::TASK_STATE_USER_END);
     }
 
     /**
-     * 获取当前充电时长
-     * @param $userId
-     * @return float|int
+     * 时间结束自动中断停电
+     * @param $deviceNo
+     * @param $portNo
+     * @return bool
      */
-    public static function getLastChargingTimeByUserId($userId)
+    public static function endChargeByTimeOver($deviceNo, $portNo)
     {
-        $mins = 0;
-        $model = ChargeTasks::whereUserId($userId)->orderByDesc('id')->first();
-        if (!$model || $model->task_state != ChargeTasks::TASK_STATE_INIT) {
-            return $mins;
+        return self::endCharge(['device_no'=>$deviceNo,'port_no'=>$portNo], ChargeTasks::TASK_STATE_TIME_END);
+    }
+
+    /**
+     * @param $deviceNo
+     * @param $portNo
+     * @param $type 0 = 正常充满, 1 = 异常
+     */
+    public static function chargeHalt($deviceNo, $portNo, $type)
+    {
+        $model = ChargeTasks::where(['device_no' => $deviceNo, 'port_no' => $portNo])->orderBy('id', 'desc')->first();
+        if (!$model) {
+            return false;
         }
+
+        if ($type == 0) {
+            $state = ChargeTasks::TASK_STATE_COMPLETE;
+        } else {
+            $state = ChargeTasks::TASK_STATE_END_ABMORMAL;
+        }
+
+        $model->task_state = $state;
+        return $model->save();
+    }
+
+    public static function chargeHaltComplete($device, $port)
+    {
+
+    }
+
+    /**
+     * 获取当前充电任务信息
+     * @param $userId
+     * @return array|bool
+     */
+    public static function getLastTaskInfo($userId)
+    {
+        $data = [
+            'status' => 0,//初始化,正在冲
+            'mins' => 0,//分钟
+        ];
+        $model = ChargeTasks::whereUserId($userId)->orderByDesc('id')->first();
+        if (!$model) {
+            return false;
+        }
+
         $begin = strtotime($model->begin_at);
         $time = time() - $begin;
         $mins = floor($time / 60);
-        return $mins;
+        $data['mins'] = sprintf('%02s', $mins);
+
+        if ($model->task_state == ChargeTasks::TASK_STATE_END_ABMORMAL) {
+            $data['status'] = 1;//异常终止
+        } elseif ($model->task_state == ChargeTasks::TASK_STATE_TIME_END || $model->task_state == ChargeTasks::TASK_STATE_COMPLETE) {
+            $data['status'] = 2;//充电完成
+        }
+
+        return $data;
     }
 
 }

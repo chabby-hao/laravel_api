@@ -17,4 +17,6 @@ class ErrorCode
 
     public static $chargeTaskNotFind = 2005;//充电任务不存在
 
+    public static $qrCodeNotFind = 2006;//找不到充电二维码
+
 }
