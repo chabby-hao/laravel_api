@@ -52,6 +52,7 @@ class CommandService extends BaseService
      */
     public static function sendCommandChargeStart($deviceNo, $portNo)
     {
+
         $cmd = self::CMD_START_CHARGE;
         return self::send($deviceNo, $portNo, $cmd);
     }

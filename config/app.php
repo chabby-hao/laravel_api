@@ -246,7 +246,4 @@ return [
 
     ],
 
-    'wx_appid' => 'wx9c25141ed39dd3c2',
-    'wx_secret' => '66c47ecf537beb5af81b4e4b91286e24',
-
 ];

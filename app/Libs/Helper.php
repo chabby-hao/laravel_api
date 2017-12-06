@@ -20,10 +20,8 @@ class Helper
         $content = [
             'code' => $code,
             'msg'=>'success',
+            'data'=>$data,
         ];
-        if($data){
-            $content = array_merge($content, ['data'=>$data]);
-        }
         return response($content, $status, $headers);
     }
 

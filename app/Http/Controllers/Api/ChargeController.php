@@ -29,6 +29,7 @@ class ChargeController extends Controller
     }
 
     /**
+     *  用户点击充电按钮开始充电
      * @param Request $request
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
@@ -37,6 +38,7 @@ class ChargeController extends Controller
         $post = $request->post();
         $mode = $post['mode']; //0=充满模式,其余为多少小时
         $deviceId = $post['device_id'];//设备id
+        $formId = $post['form_id'];
 
         Log::debug('chargeBegin :' . json_encode($post));
 
@@ -45,7 +47,7 @@ class ChargeController extends Controller
         }
 
         //充电
-        if (!ChargeService::startCharge($userId, $deviceId, $mode)) {
+        if (!ChargeService::startCharge($userId, $deviceId, $mode, $formId)) {
             return Helper::responeseError(ErrorCode::$qrCodeNotFind);
         }
 
@@ -86,10 +88,14 @@ class ChargeController extends Controller
         $portNo = $input['port_no'];
         $type = $input['type'];
 
-
         Log::debug('chargeHalt receive data: ' . json_encode($request->input()));
 
-        ChargeService::chargeHalt($deviceNo, $portNo, $type);
+        //$type 0 = 正常充满, 1 = 异常
+        if ($type == 0) {
+            ChargeService::chargeHaltComplete($deviceNo, $portNo);
+        } else {
+            ChargeService::chargeHaltComplete($deviceNo, $portNo);
+        }
 
         return Helper::response([
             'device_no' => $deviceNo,
@@ -118,6 +124,8 @@ class ChargeController extends Controller
 
         $taskId = $input['task_id'];
 
+
+
         Log::debug('power is on .' . json_encode($request->input()));
 
         return Helper::response([
@@ -141,5 +149,17 @@ class ChargeController extends Controller
         return Helper::response($data);
     }
 
+    public function taskId()
+    {
+        if(!$userId = UserService::getUserId()){
+            return Helper::responeseError(ErrorCode::$tokenExpire);
+        }
+
+        $taskId = ChargeService::getUnfinishTaskIdByUserId($userId);
+
+        $data = ['task_id'=>intval($taskId)];
+        return Helper::response($data);
+
+    }
 
 }

@@ -30,12 +30,16 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ChargeTasks whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ChargeTasks whereUserId($value)
  * @mixin \Eloquent
+ * @property float $user_cost 用户花费，元
+ * @property string|null $form_id
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ChargeTasks whereFormId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ChargeTasks whereUserCost($value)
  */
 class ChargeTasks extends Model
 {
 
-    //10-初始化，20-充电任务完成，30-异常中断
-    const TASK_STATE_INIT = 10;//初始化
+    const TASK_STATE_INIT = 0;//初始化
+    const TASK_STATE_CHARGING = 10;//正在充
     const TASK_STATE_COMPLETE = 20;//充电完成,充满
     const TASK_STATE_END_ABMORMAL = 30;//充电异常中断
     const TASK_STATE_TIME_END = 40;//充电时间到，自动结束充电
@@ -53,17 +57,15 @@ class ChargeTasks extends Model
      * @param $duration
      * @return bool
      */
-    public function createTask($userId, $deviceNo, $portNo, $duration)
+    public function createTask($userId, $deviceNo, $portNo, $duration, $formId)
     {
-        $nowTime = time();
         $task = new self();
         $task->user_id = $userId;
-        $task->begin_at = date('Y-m-d H:i:s', $nowTime);
         $task->expect_time = $duration;
-        $task->expect_end_at = date('Y-m-d H:i:s',strtotime("+$duration seconds", $nowTime));
         $task->device_no = $deviceNo;
         $task->port_no = $portNo;
         $task->task_state = self::TASK_STATE_INIT;
-        return $task->save();
+        $task->form_id = $formId;
+        return $task->save() ? $task->id : false;
     }
 }

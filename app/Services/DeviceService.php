@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\DeviceInfo;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
 
@@ -9,6 +10,13 @@ class DeviceService extends BaseService
 {
 
     const KEY_HASH_STATUS_PRE = 'axcPortInfo_';
+    const KEY_HASH_SEND_PRE = 'axcSendInfo_';
+
+    public static function getDeviceId($deviceNo, $portNo)
+    {
+        $model = DeviceInfo::where(['device_no'=>$deviceNo,'port_no'=>$portNo])->first();
+        return $model ? $model->id : false;
+    }
 
     public static function isPortUseful($deviceNo, $portNo)
     {
@@ -24,7 +32,7 @@ class DeviceService extends BaseService
      * @param $portNo
      * @return bool
      */
-    public static function isChargSendOk($deviceNo, $portNo)
+    public static function isChargeCmdSendOk($deviceNo, $portNo)
     {
         $key = self::_getStatusKey($deviceNo, $portNo);
         $val = Redis::hGet($key, 'rely_status');
@@ -51,5 +59,16 @@ class DeviceService extends BaseService
         return $key;
     }
 
+    private static function _getSendKey($deviceNo, $portNo)
+    {
+        $key = self::KEY_HASH_SEND_PRE . $deviceNo . '_' . $portNo;
+        return $key;
+    }
+
+    public static function sendChargingHash($deviceNo, $portNo, $taskId)
+    {
+        $key = self::_getSendKey($deviceNo, $portNo);
+        return Redis::hSet($key, 'task_id', $taskId);
+    }
 
 }
