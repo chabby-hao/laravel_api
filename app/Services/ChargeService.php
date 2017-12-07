@@ -56,6 +56,8 @@ class ChargeService extends BaseService
         if($model && $model->task_state == ChargeTasks::TASK_STATE_INIT){
             $model->task_state = ChargeTasks::TASK_STATE_CHARGING;
             $model->begin_at = date('Y-m-d H:i:s');
+            $expectTime = $model->expect_time;
+            $model->expect_end_at = $expectTime ? date('Y-m-d H:i:s', strtotime("+$expectTime seconds")) : 0;
             return $model->save();
         }elseif($model){
             return true;
