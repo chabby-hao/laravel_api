@@ -88,7 +88,7 @@ class ChargeService extends BaseService
             return false;
         }
 
-        Log::debug("end charge device_no: $deviceNo,port_no:$portNo");
+        //Log::debug("end charge device_no: $deviceNo,port_no:$portNo");
 
         $model = ChargeTasks::where(['device_no' => $deviceNo, 'port_no' => $portNo])->orderBy('id', 'desc')->first();
         if (!$model) {
