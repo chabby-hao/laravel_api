@@ -21,8 +21,8 @@ class WxApi
         $res = $client->post($uri, ['body'=>$json]);
         $body = $res->getBody()->getContents();
         $data = json_decode($body, true);
+        Log::info('send message json : ' .$json . ' res: ' .  $body);
         if($data['errcode'] !== 0 ){
-            Log::error('send message fail json : ' .$json . ' res: ' .  $body);
             return false;
         }
         return true;
