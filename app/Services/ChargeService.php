@@ -2,8 +2,10 @@
 
 namespace App\Services;
 
+use App\Libs\WxApi;
 use App\Models\ChargeTasks;
 use App\Models\DeviceInfo;
+use App\Models\User;
 use Illuminate\Support\Facades\Log;
 
 class ChargeService extends BaseService
@@ -12,7 +14,7 @@ class ChargeService extends BaseService
     /**
      * 是否正在充电
      */
-    public static function isChargeing()
+    public static function isCharging()
     {
 
     }
@@ -115,6 +117,8 @@ class ChargeService extends BaseService
     {
         $device = ['device_no' => $deviceNo, 'port_no' => $portNo];
         $state = ChargeTasks::TASK_STATE_COMPLETE;
+        $taskId = ChargeTasks::getLastTaskIdByDevice($deviceNo, $portNo);
+        self::sendEndMessage($taskId);
         return self::endCharge($device, $state, false);
     }
 
@@ -127,6 +131,8 @@ class ChargeService extends BaseService
     {
         $device = ['device_no' => $deviceNo, 'port_no' => $portNo];
         $state = ChargeTasks::TASK_STATE_END_ABMORMAL;
+        $taskId = ChargeTasks::getLastTaskIdByDevice($deviceNo, $portNo);
+        self::sendEndAbMessage($taskId);
         return self::endCharge($device, $state, false);
     }
 
@@ -192,6 +198,52 @@ class ChargeService extends BaseService
             return false;
         }
         return $model->id;
+    }
+
+    const TEMPLATE_ID_AB = '8ySltzpdZn80ymIGD6-2N6vhQ1YFGbjRMZ0v8js22YA';
+
+    public static function sendEndAbMessage($taskId)
+    {
+        $data = [
+            'template_id'=>self::TEMPLATE_ID_AB,
+            'data'=>[
+                'keyword1'=>['value'=>'充电异常中断','color'=>'#173177'],
+                'keyword2'=>['value'=>'请到车棚查看原因','color'=>'#173177'],
+            ],
+        ];
+        return self::sendMessageToUser($taskId, $data);
+    }
+
+    const TEMPLATE_ID_END = 'kJuQgZvKVkuGr_uK16rrXg0NKYeLaoHWiEq9uvE7x14';
+
+    public static function sendEndMessage($taskId)
+    {
+        $data = [
+            'template_id'=>self::TEMPLATE_ID_END,
+            'data'=>[
+                'keyword1'=>['value'=>'Y1.00','color'=>'#173177'],
+                'keyword2'=>['value'=>'24分钟','color'=>'#173177'],
+                //'keyword3'=>['value'=>'请到车棚查看原因','color'=>'#173177'],
+            ],
+        ];
+        return self::sendMessageToUser($taskId, $data);
+    }
+
+    public static function sendMessageToUser($taskId,array $data)
+    {
+        $model = ChargeTasks::find($taskId);
+        if(!$model){
+            return false;
+        }
+        $formId = $model->form_id;
+        $openId = User::getOpenIdById($model->user_id);
+        $default = [
+            'touser'=>$openId,
+            'form_id'=>$formId,
+        ];
+        $data = array_merge($data, $default);
+        $wxapi = new WxApi();
+        return $wxapi->sendMessage($data);
     }
 
 }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\DeviceService;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -67,5 +68,16 @@ class ChargeTasks extends Model
         $task->task_state = self::TASK_STATE_INIT;
         $task->form_id = $formId;
         return $task->save() ? $task->id : false;
+    }
+
+    /**
+     * @param $deviceNo
+     * @param $portNo
+     * @return bool|int|mixed
+     */
+    public static function getLastTaskIdByDevice($deviceNo, $portNo)
+    {
+        $model = self::whereDeviceNo($deviceNo)->wherePortNo($portNo)->orderByDesc('id')->first();
+        return $model ? $model->id : false;
     }
 }

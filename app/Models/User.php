@@ -35,4 +35,10 @@ class User extends Model
     {
         return self::where(['openid'=>$openid])->first()->toArray();
     }
+
+    public static function getOpenIdById($userId)
+    {
+        $model = self::find($userId);
+        return $model ? $model->openid : false;
+    }
 }

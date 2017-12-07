@@ -2,7 +2,9 @@
 
 namespace App\Libs;
 
+use App\Services\ChargeService;
 use Curl\Curl;
+use Illuminate\Support\Facades\Log;
 
 class WxApi
 {
@@ -12,13 +14,22 @@ class WxApi
 
     public function sendMessage($json)
     {
-
+        is_array($json) && $json = json_encode($json);
         $accessToken = $this->getAccessToken();
-        $curl = new Curl();
-        $curl->post("https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=$accessToken", $json);
+        $uri = "https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=$accessToken";
+        $client = new \GuzzleHttp\Client();
+        $res = $client->post($uri, ['body'=>$json]);
+        $body = $res->getBody()->getContents();
+        $data = json_decode($body, true);
+        if($data['errcode'] !== 0 ){
+            Log::error('send message fail json : ' .$json . ' res: ' .  $body);
+            return false;
+        }
+        return true;
     }
 
-    public function getAccessToken() {
+    public function getAccessToken()
+    {
         // access_token 应该全局存储与更新，以下代码以写入到文件中做示例
         $data = json_decode($this->get_php_file("access_token.php"));
         if ($data->expire_time < time()) {
@@ -38,14 +49,15 @@ class WxApi
         return $access_token;
     }
 
-    private function httpGet($url) {
+    private function httpGet($url)
+    {
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_TIMEOUT, 500);
         // 为保证第三方服务器与微信服务器之间数据传输的安全性，所有微信接口采用https方式调用，必须使用下面2行代码打开ssl安全校验。
         // 如果在部署过程中代码在此处验证失败，请到 http://curl.haxx.se/ca/cacert.pem 下载新的证书判别文件。
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, true);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, true);
+//        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, true);
+//        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, true);
         curl_setopt($curl, CURLOPT_URL, $url);
 
         $res = curl_exec($curl);
@@ -54,10 +66,16 @@ class WxApi
         return $res;
     }
 
-    private function get_php_file($filename) {
+    private function get_php_file($filename)
+    {
+        if (!file_exists($filename)) {
+            $this->set_php_file($filename, json_encode(['expire_time' => 0]));
+        }
         return trim(substr(file_get_contents($filename), 15));
     }
-    private function set_php_file($filename, $content) {
+
+    private function set_php_file($filename, $content)
+    {
         $fp = fopen($filename, "w");
         fwrite($fp, "<?php exit();?>" . $content);
         fclose($fp);

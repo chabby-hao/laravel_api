@@ -94,7 +94,7 @@ class ChargeController extends Controller
         if ($type == 0) {
             ChargeService::chargeHaltComplete($deviceNo, $portNo);
         } else {
-            ChargeService::chargeHaltComplete($deviceNo, $portNo);
+            ChargeService::chargeHaltAbnormal($deviceNo, $portNo);
         }
 
         return Helper::response([
@@ -149,6 +149,10 @@ class ChargeController extends Controller
         return Helper::response($data);
     }
 
+    /**
+     * 获取当前充电任务
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
     public function taskId()
     {
         if(!$userId = UserService::getUserId()){
