@@ -52,7 +52,7 @@ class AutoFinishCharge extends Command
             foreach ($result as $row){
                 $expectEndAt = $row->expect_end_at;
                 if($dateNow >= $expectEndAt){
-                    Log::info('crontab autoFinishCharge ' . $row->toJson());
+                    Log::info('crontab autoFinishCharge ' . json_encode($row));
                     //充电时间已满，可以终止充电
                     ChargeService::endChargeByTimeOver($row->device_no,$row->port_no);
                 }
