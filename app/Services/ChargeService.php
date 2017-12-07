@@ -118,7 +118,9 @@ class ChargeService extends BaseService
      */
     public static function endChargeByTimeOver($deviceNo, $portNo)
     {
-        return self::endCharge(['device_no' => $deviceNo, 'port_no' => $portNo], ChargeTasks::TASK_STATE_TIME_END);
+        self::endCharge(['device_no' => $deviceNo, 'port_no' => $portNo], ChargeTasks::TASK_STATE_TIME_END);
+        $taskId = ChargeTasks::getLastTaskIdByDevice($deviceNo, $portNo);
+        return self::sendEndMessage($taskId);
     }
 
     /**
@@ -130,9 +132,9 @@ class ChargeService extends BaseService
     {
         $device = ['device_no' => $deviceNo, 'port_no' => $portNo];
         $state = ChargeTasks::TASK_STATE_COMPLETE;
+        self::endCharge($device, $state, true);
         $taskId = ChargeTasks::getLastTaskIdByDevice($deviceNo, $portNo);
-        self::sendEndMessage($taskId);
-        return self::endCharge($device, $state, true);
+        return self::sendEndMessage($taskId);
     }
 
     /**
@@ -144,9 +146,9 @@ class ChargeService extends BaseService
     {
         $device = ['device_no' => $deviceNo, 'port_no' => $portNo];
         $state = ChargeTasks::TASK_STATE_END_ABMORMAL;
+        self::endCharge($device, $state, true);
         $taskId = ChargeTasks::getLastTaskIdByDevice($deviceNo, $portNo);
-        self::sendEndAbMessage($taskId);
-        return self::endCharge($device, $state, true);
+        return self::sendEndAbMessage($taskId);
     }
 
     /**
