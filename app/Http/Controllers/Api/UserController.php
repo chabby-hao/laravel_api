@@ -156,7 +156,6 @@ class UserController extends Controller
                 ->where('phone', $phone)
                 ->where('expire_at', '>', time() - 30 * 60)
                 ->update(['code' => $code, 'expire_at' => time() + 30 * 60]);
-
         }
 
         //验证码保存成功，则发送验证码给用户

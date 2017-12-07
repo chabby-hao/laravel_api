@@ -17,7 +17,7 @@ Route::middlewareGroup('api',['token_login']);
 
 Route::any('/user/loginByCode', 'Api\UserController@loginByCode');
 
-Route::any('/user/checkLogin','Api\UserController@checkLogin');
+//Route::any('/user/checkLogin','Api\UserController@checkLogin');
 
 Route::any('/user/bindPhoneForWx', 'Api\UserController@bindPhoneForWx');
 
