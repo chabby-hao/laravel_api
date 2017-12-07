@@ -23,7 +23,7 @@ class Helper
             'msg'=>'success',
             'data'=>$data,
         ];
-        Log::debug('response------------- ' . json_encode($content));
+        //Log::debug('response------------- ' . json_encode($content));
         return response($content, $status, $headers);
     }
 
@@ -42,7 +42,7 @@ class Helper
             'msg'=>'error',
         ];
         $content = array_merge($content, $data);
-        Log::error('response error----------- ' . json_encode($content));
+        //Log::error('response error----------- ' . json_encode($content));
         return response($content, $status, $headers);
 
     }

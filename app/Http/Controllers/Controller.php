@@ -17,7 +17,7 @@ class Controller extends BaseController
 
     public function __construct(Request $request)
     {
-        Log::debug('reques---------- ' . json_encode($request->input()));
+        //Log::debug('reques---------- ' . json_encode($request->input()));
     }
 
     /**
