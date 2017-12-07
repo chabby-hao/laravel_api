@@ -50,6 +50,18 @@ class ChargeService extends BaseService
         return CommandService::sendCommandChargeStart($deviceNo, $portNo);
     }
 
+    public static function beginCharingByTaskId($taskId)
+    {
+        $model = ChargeTasks::find($taskId);
+        if($model && $model->task_state == ChargeTasks::TASK_STATE_INIT){
+            $model->task_state = ChargeTasks::TASK_STATE_CHARGING;
+            return $model->save();
+        }elseif($model){
+            return true;
+        }
+        return false;
+    }
+
     /**
      * 结束充电
      * @param $device array|string    ['device_no'=>'123','port_no'=>'1']|$deviceId
