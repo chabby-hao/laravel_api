@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Services\DeviceService;
 use Illuminate\Database\Eloquent\Model;
 
 /**
