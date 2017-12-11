@@ -83,6 +83,6 @@ class ChargeTasks extends Model
 
     public static function userCostAdd($taskId, $cost)
     {
-        return self::find($taskId)->decrement('user_cost', $cost);
+        return self::find($taskId)->increment('user_cost', $cost);
     }
 }
