@@ -80,4 +80,9 @@ class ChargeTasks extends Model
         $model = self::whereDeviceNo($deviceNo)->wherePortNo($portNo)->orderByDesc('id')->first();
         return $model ? $model->id : false;
     }
+
+    public static function userCostAdd($taskId, $cost)
+    {
+        return self::find($taskId)->decrement('user_cost', $cost);
+    }
 }

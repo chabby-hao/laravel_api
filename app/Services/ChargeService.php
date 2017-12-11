@@ -11,6 +11,12 @@ use Illuminate\Support\Facades\Log;
 class ChargeService extends BaseService
 {
 
+    const TEMPLATE_ID_AB = '8ySltzpdZn80ymIGD6-2N6vhQ1YFGbjRMZ0v8js22YA';
+
+    const TEMPLATE_ID_END = 'kJuQgZvKVkuGr_uK16rrXg0NKYeLaoHWiEq9uvE7x14';
+
+    const PER_MINUTE_CHARGE_PRICE = 0.01;//单位分钟扣除费用(元)
+
     /**
      * 是否正在充电
      */
@@ -49,6 +55,7 @@ class ChargeService extends BaseService
         DeviceService::sendChargingHash($deviceNo, $portNo, $taskId);
         return CommandService::sendCommandChargeStart($deviceNo, $portNo);
     }
+
 
     public static function beginCharingByTaskId($taskId)
     {
@@ -100,11 +107,29 @@ class ChargeService extends BaseService
         $beginTime = strtotime($begin);
         $model->actual_time = time() - $beginTime;
         $model->task_state = $state;
-        //此处预留扣费逻辑
+
+
+        //扣费逻辑
+        self::_chargeCost($model->user_id, $model->actual_time, $model->id);
+
         $model->save();
         if ($sendCmd) {
             CommandService::sendCommandChargeEnd($deviceNo, $portNo);
         }
+    }
+
+    /**
+     * 扣费
+     * @param $userId
+     * @param $chargeTime
+     * @return int
+     */
+    private static function _chargeCost($userId, $chargeTime, $taskId)
+    {
+        $minutes = floor($chargeTime / 60);
+        $costs = $minutes * self::PER_MINUTE_CHARGE_PRICE;
+        ChargeTasks::userCostAdd($taskId, $costs);
+        return User::charging($userId, $costs);
     }
 
     /**
@@ -221,8 +246,6 @@ class ChargeService extends BaseService
         return $model->id;
     }
 
-    const TEMPLATE_ID_AB = '8ySltzpdZn80ymIGD6-2N6vhQ1YFGbjRMZ0v8js22YA';
-
     public static function sendEndAbMessage($taskId)
     {
         $data = [
@@ -234,8 +257,6 @@ class ChargeService extends BaseService
         ];
         return self::sendMessageToUser($taskId, $data);
     }
-
-    const TEMPLATE_ID_END = 'kJuQgZvKVkuGr_uK16rrXg0NKYeLaoHWiEq9uvE7x14';
 
     public static function sendEndMessage($taskId)
     {

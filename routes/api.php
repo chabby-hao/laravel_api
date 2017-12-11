@@ -48,6 +48,10 @@ Route::any('/orders/lists', 'Api\OrdersController@lists');
 
 Route::get('test', function () {
 
+    $a = \App\Models\User::charging(8,0.01);
+    var_dump($a);
+    exit;
+
     $c = new \App\Libs\WxApi();
 
     $b = $c->sendMessage('{

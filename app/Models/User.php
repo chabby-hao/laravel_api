@@ -41,4 +41,9 @@ class User extends Model
         $model = self::find($userId);
         return $model ? $model->openid : false;
     }
+
+    public static function charging($userId, $cost)
+    {
+        return self::find($userId)->decrement('user_balance', $cost);
+    }
 }
