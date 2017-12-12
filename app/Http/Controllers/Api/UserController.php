@@ -93,9 +93,9 @@ class UserController extends Controller
         $phone = $data['phone'];
         $verifyCode = $data['verify_code'];
 
-        if(!$userInfo = UserService::getUserInfoByToken($token)){
+        /*if(!$userInfo = UserService::getUserInfoByToken($token)){
             return Helper::responeseError(ErrorCode::$tokenExpire);
-        }
+        }*/
 
         if($verifyCodeRow = VerifyCode::getByPhoneAndCode($phone, $verifyCode)){
             UserService::bindPhone($token, $phone);
