@@ -36,9 +36,9 @@ class VerifyCode extends Model
      */
     public static function getByPhoneAndCode($phone, $code)
     {
-        $verifyCode = self::where(['phone'=>$phone,'code'=>$code])->first()->toArray();
-        if($verifyCode && $verifyCode['expire_at'] > time()){
-            return $verifyCode;
+        $verifyCode = self::where(['phone'=>$phone,'code'=>$code])->first();
+        if($verifyCode && $verifyCode->expire_at > time()){
+            return $verifyCode->toArray();
         }else{
             return [];
         }

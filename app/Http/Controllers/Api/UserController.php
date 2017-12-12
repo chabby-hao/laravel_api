@@ -163,11 +163,11 @@ class UserController extends Controller
             $msg = '您的验证码是' . $code;
             $ucpaas = Helper::send_message($options, $appId, $to, $templateId, $msg);
 
+            Log::debug('verify code response:' . $ucpaas);
             //$ucpaas_res = json_decode($ucpaas, true);
             //var_dump($ucpaas_res);
             return $this->responseOk();
         }
-        Log::error('verify code send fail :' . $ucpaas);
         return Helper::responeseError();
 
     }
