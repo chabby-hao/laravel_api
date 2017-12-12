@@ -73,10 +73,11 @@ class UserService extends BaseService
 //            //'phone' => !empty($user['phone']) ? $user['phone'] : '',
 //        ];
         $update = [
-            'token'=> $token,
-            'session_key'=>$data['session_key'],
+            'token' => $token,
+            'session_key' => $data['session_key'],
+            'openid' => $openid,
         ];
-        if ($userToken = UserToken::updateOrCreate(['user_id' => $user['id']],$update)) {
+        if ($userToken = UserToken::updateOrCreate(['user_id' => $user['id']], $update)) {
             return $token;
         }
         return false;
@@ -97,16 +98,54 @@ class UserService extends BaseService
             return false;
         }
         $userId = $userToken->user_id;
-        $userToken->type = $loginType;
-        $userToken->token = $token;
-        $userToken->save();
-        User::where(['id' => $userId])->update(['phone' => $phone]);
+        $user = User::wherePhone($phone)->first();
+        if ($user && $user->id == $userId) {
+            $userToken->type = $loginType;
+            $userToken->save();
+        } elseif ($user && $user->id != $userId) {
+            $userTokenOld = UserToken::whereUserId($user->id)->first();
+            if ($userTokenOld) {
+                $userTokenOld->type = $loginType;
+                $userTokenOld->user_id = $user->id;
+                $userTokenOld->openid = $userToken->openid;
+                $userTokenOld->save();
+                Log::notice('delete userToken : ' . $userToken->toJson());
+                $userToken->delete();
+            }else{
+                $userToken->type = $loginType;
+                $userToken->user_id = $user->id;
+                $userToken->save();
+            }
+
+            $user->openid = $userToken->openid;
+            $user->save();
+            if ($user2 = User::find($userId)) {
+                if ($user2->user_balance == 0) {
+                    Log::notice('delete user : ' . $user2->toJson());
+                    $user2->delete();
+                }
+            }
+        } else {
+            $user3 = User::create([
+                'phone' => $phone,
+                'openid' => $userToken->openid,
+            ]);
+            UserToken::create([
+                'openid' => $userToken->openid,
+                'type' => $loginType,
+                'user_id' => $user3->id,
+                'token' => $token,
+                'session_key' => $userToken->session_key,
+            ]);
+            //User::create(['id' => $userId])->update(['phone' => $phone, 'openid' => $userToken->openid]);
+        }
+        return true;
     }
 
     public static function getSessionKeyByToken($token)
     {
         $userToken = UserToken::whereToken($token)->first();
-        if(!$userToken){
+        if (!$userToken) {
             Log::debug('getSessionKey token invalid :' . $token);
             return false;
         }
