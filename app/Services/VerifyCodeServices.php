@@ -6,7 +6,7 @@
  * Time: 上午11:04
  */
 
-namespace app\Services;
+namespace App\Services;
 
 use App\Models\VerifyCode;
 use Illuminate\Support\Facades\Cache;
