@@ -162,9 +162,14 @@ class UserController extends Controller
         if ($id) {
             $msg = '您的验证码是' . $code;
             $ucpaas = Helper::send_message($options, $appId, $to, $templateId, $msg);
-            $ucpaas_res = json_decode($ucpaas, true);
-            var_dump($ucpaas_res);
+
+            //$ucpaas_res = json_decode($ucpaas, true);
+            //var_dump($ucpaas_res);
+            return $this->responseOk();
         }
+        Log::error('verify code send fail :' . $ucpaas);
+        return Helper::responeseError();
+
     }
 
     public function checkToken(Request $request)
