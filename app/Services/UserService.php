@@ -126,16 +126,15 @@ class UserService extends BaseService
                 }
             }
         } else {
-
-            //切换账号场景
+            //正常登录
             if($user3 = User::whereOpenid($userToken->openid)->first()){
+                $user3->phone = $phone;
+                $user3->save();
+            }else{ //切换账号场景
                 $user3 = User::create([
                     'openid'=>$userToken->openid,
                     'phone'=>$phone,
                 ]);
-            }else{ //正常登录
-                $user3->phone = $phone;
-                $user3->save();
             }
             UserToken::updateOrCreate(['user_id'=>$user3->id],[
                 'openid' => $userToken->openid,
