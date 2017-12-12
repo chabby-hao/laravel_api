@@ -111,7 +111,7 @@ class UserService extends BaseService
                 $userTokenOld->save();
                 Log::notice('delete userToken : ' . $userToken->toJson());
                 $userToken->delete();
-            }else{
+            } else {
                 $userToken->type = $loginType;
                 $userToken->user_id = $user->id;
                 $userToken->save();
@@ -127,16 +127,24 @@ class UserService extends BaseService
             }
         } else {
             //正常登录
-            if($user3 = User::whereOpenid($userToken->openid)->first()){
-                $user3->phone = $phone;
-                $user3->save();
-            }else{ //切换账号场景
+            if ($user3 = User::whereOpenid($userToken->openid)->first()) {
+                //已注册
+                if ($user3->phone) {
+                    $user3 = User::create([
+                        'openid' => $userToken->openid,
+                        'phone' => $phone,
+                    ]);
+                } else { //未注册
+                    $user3->phone = $phone;
+                    $user3->save();
+                }
+            } else { //切换账号场景
                 $user3 = User::create([
-                    'openid'=>$userToken->openid,
-                    'phone'=>$phone,
+                    'openid' => $userToken->openid,
+                    'phone' => $phone,
                 ]);
             }
-            UserToken::updateOrCreate(['user_id'=>$user3->id],[
+            UserToken::updateOrCreate(['user_id' => $user3->id], [
                 'openid' => $userToken->openid,
                 'type' => $loginType,
                 'token' => $token,
