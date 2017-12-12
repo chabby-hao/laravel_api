@@ -126,6 +126,7 @@ class UserService extends BaseService
                 }
             }
         } else {
+
             //切换账号场景
             if($user3 = User::whereOpenid($userToken->openid)->first()){
                 $user3 = User::create([
