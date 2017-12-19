@@ -289,4 +289,25 @@ class ChargeService extends BaseService
         return $wxapi->sendMessage($data);
     }
 
+    /**
+     * 获取充电列表
+     * @param $userId
+     * @return array
+     */
+    public static function chargeList($userId)
+    {
+        $models = ChargeTasks::whereUserId($userId)->orderBy('id','desc')->get();
+        $ret = [];
+        if($models){
+            foreach ($models as $model){
+                $tmp = [];
+                $tmp['pay_at'] = $model->begin_at;
+                $tmp['minutes'] = floor($model->actual_time / 60);
+                $tmp['pay_amount'] = $model->user_cost;
+                $ret[] = $tmp;
+            }
+        }
+        return $ret;
+    }
+
 }

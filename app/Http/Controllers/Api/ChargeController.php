@@ -166,4 +166,15 @@ class ChargeController extends Controller
 
     }
 
+    public function list()
+    {
+        if(!$userId = UserService::getUserId()){
+            return Helper::responeseError(ErrorCode::$tokenExpire);
+        }
+
+        $list = ChargeService::chargeList($userId);
+
+        return Helper::response($list);
+
+    }
 }
