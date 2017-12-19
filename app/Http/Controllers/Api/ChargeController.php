@@ -166,7 +166,7 @@ class ChargeController extends Controller
 
     }
 
-    public function list()
+    public function lists()
     {
         if(!$userId = UserService::getUserId()){
             return Helper::responeseError(ErrorCode::$tokenExpire);
