@@ -37,6 +37,9 @@ class ChargeController extends Controller
      */
     public function checkQrCode(Request $request)
     {
+        if (!$userId = UserService::getUserId()) {
+            return Helper::responeseError(ErrorCode::$tokenExpire);
+        }
         //二维码扫描结果
         $url = $request->input('url');
         //二维码是否有效
@@ -53,6 +56,10 @@ class ChargeController extends Controller
         //检查设备端口是否可用
         if(!DeviceService::isPortUseful($deviceNo, $portNo)){
             return Helper::responeseError(ErrorCode::$deviceNotUseful);
+        }
+
+        if(UserService::getUserBalance($userId) < 0){
+            return Helper::responeseError(ErrorCode::$balanceNotEnough);
         }
 
         return Helper::response(['device_id'=>$deviceId,'address'=>$deviceInfo['address']]);

@@ -234,4 +234,11 @@ class UserService extends BaseService
         return $user ? $user->toArray() : false;
     }
 
+    public static function getUserBalance($userId)
+    {
+        $user = self::getUserByUserId($userId);
+        return $user ? floatval($user['user_balance']) : 0;
+    }
+
+
 }

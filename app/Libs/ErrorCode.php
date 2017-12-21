@@ -29,12 +29,15 @@ class ErrorCode
 
     public static $deviceNotUseful = 2008;//设备不可用
 
+    public static $balanceNotEnough = 2009;//用户余额不足
+
     public static function getErrMsg()
     {
         return [
             self::$qrCodeNotFind => '二维码有误',
             self::$deviceNotOnline => '设备离线',
             self::$deviceNotUseful => '充电口暂不可用，请稍后再试',
+            self::$balanceNotEnough =>'余额不足，请先充值',
         ];
     }
 
