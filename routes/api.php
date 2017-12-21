@@ -47,6 +47,17 @@ Route::any('/charge/chargingTime', 'Api\ChargeController@chargingTime');
 
 Route::any('/orders/lists', 'Api\OrdersController@lists');
 
+Route::any('cmd',function (Request $request){
+    $cmd = \App\Services\CommandService::CMD_START_CHARGE;
+    $cmd = $request->input('cmd');//20003
+    $deviceNo = $request->input('device_no');
+    $portNo = $request->input('port_no');
+    $a = \App\Services\CommandService::send($deviceNo, $portNo,$cmd);
+    if($a){
+        return \App\Libs\Helper::response();
+    }
+});
+
 Route::get('test', function () {
 
     $a = \App\Models\User::charging(8,0.01);
