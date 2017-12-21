@@ -53,6 +53,7 @@ Route::any('cmd',function (Request $request){
     $cmd = $request->input('cmd');//20003
     $deviceNo = $request->input('device_no');
     $portNo = $request->input('port_no');
+    \App\Services\DeviceService::sendChargingHash($deviceNo, $portNo, mt_rand(10,999));
     $a = \App\Services\CommandService::send($deviceNo, $portNo,$cmd);
     if($a){
         return \App\Libs\Helper::response();
