@@ -58,9 +58,9 @@ class ChargeController extends Controller
             return Helper::responeseError(ErrorCode::$deviceNotUseful);
         }
 
-        if(UserService::getUserBalance($userId) < 0){
-            return Helper::responeseError(ErrorCode::$balanceNotEnough);
-        }
+//        if(UserService::getUserBalance($userId) < 0){
+//            return Helper::responeseError(ErrorCode::$balanceNotEnough);
+//        }
 
         return Helper::response(['device_id'=>$deviceId,'address'=>$deviceInfo['address']]);
     }
