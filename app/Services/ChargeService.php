@@ -44,8 +44,12 @@ class ChargeService extends BaseService
         $portNo = $deviceModel->port_no;
         $chargeTaskMod = new ChargeTasks();
         $taskId = $chargeTaskMod->createTask($userId, $deviceNo, $portNo, $duration, $formId);
-        if(!$taskId){
+        if (!$taskId) {
             return false;
+        }
+        if (!BoxService::isOpen($deviceNo, $portNo)) {
+            //箱子没开，打开箱子
+            BoxService::openBox($deviceNo, $portNo);
         }
         return self::sendCmdToStartCharge($deviceNo, $portNo, $taskId);
     }
@@ -61,15 +65,15 @@ class ChargeService extends BaseService
     public static function beginCharingByTaskId($taskId)
     {
         $model = ChargeTasks::find($taskId);
-        if($model && $model->task_state == ChargeTasks::TASK_STATE_INIT){
+        if ($model && $model->task_state == ChargeTasks::TASK_STATE_INIT) {
             $model->task_state = ChargeTasks::TASK_STATE_CHARGING;
             $model->begin_at = date('Y-m-d H:i:s');
             $expectTime = $model->expect_time;
-            if($expectTime){
+            if ($expectTime) {
                 $model->expect_end_at = date('Y-m-d H:i:s', strtotime("+$expectTime seconds"));
             }
             return $model->save();
-        }elseif($model){
+        } elseif ($model) {
             return true;
         }
         return false;
@@ -102,6 +106,10 @@ class ChargeService extends BaseService
 
         $model = ChargeTasks::where(['device_no' => $deviceNo, 'port_no' => $portNo])->orderBy('id', 'desc')->first();
         if (!$model) {
+            return false;
+        }
+        //已经结束充电
+        if (!in_array($model->task_state, [ChargeTasks::TASK_STATE_INIT, ChargeTasks::TASK_STATE_CHARGING])) {
             return false;
         }
         $begin = $model->begin_at;
@@ -241,7 +249,7 @@ class ChargeService extends BaseService
     public static function getUnfinishTaskIdByUserId($userId)
     {
         $model = ChargeTasks::whereUserId($userId)->orderByDesc('id')->first();
-        if(!$model || $model->task_state != ChargeTasks::TASK_STATE_CHARGING){
+        if (!$model || $model->task_state != ChargeTasks::TASK_STATE_CHARGING) {
             return false;
         }
         return $model->id;
@@ -250,10 +258,10 @@ class ChargeService extends BaseService
     public static function sendEndAbMessage($taskId)
     {
         $data = [
-            'template_id'=>self::TEMPLATE_ID_AB,
-            'data'=>[
-                'keyword1'=>['value'=>'充电异常中断','color'=>'#173177'],
-                'keyword2'=>['value'=>'请到车棚查看原因','color'=>'#173177'],
+            'template_id' => self::TEMPLATE_ID_AB,
+            'data' => [
+                'keyword1' => ['value' => '充电异常中断', 'color' => '#173177'],
+                'keyword2' => ['value' => '请到车棚查看原因', 'color' => '#173177'],
             ],
         ];
         return self::sendMessageToUser($taskId, $data);
@@ -262,27 +270,27 @@ class ChargeService extends BaseService
     public static function sendEndMessage($taskId)
     {
         $data = [
-            'template_id'=>self::TEMPLATE_ID_END,
-            'data'=>[
-                'keyword1'=>['value'=>'Y1.00','color'=>'#173177'],
-                'keyword2'=>['value'=>'24分钟','color'=>'#173177'],
+            'template_id' => self::TEMPLATE_ID_END,
+            'data' => [
+                'keyword1' => ['value' => 'Y1.00', 'color' => '#173177'],
+                'keyword2' => ['value' => '24分钟', 'color' => '#173177'],
                 //'keyword3'=>['value'=>'请到车棚查看原因','color'=>'#173177'],
             ],
         ];
         return self::sendMessageToUser($taskId, $data);
     }
 
-    public static function sendMessageToUser($taskId,array $data)
+    public static function sendMessageToUser($taskId, array $data)
     {
         $model = ChargeTasks::find($taskId);
-        if(!$model){
+        if (!$model) {
             return false;
         }
         $formId = $model->form_id;
         $openId = User::getOpenIdById($model->user_id);
         $default = [
-            'touser'=>$openId,
-            'form_id'=>$formId,
+            'touser' => $openId,
+            'form_id' => $formId,
         ];
         $data = array_merge($data, $default);
         $wxapi = new WxApi();
@@ -296,10 +304,10 @@ class ChargeService extends BaseService
      */
     public static function chargeList($userId)
     {
-        $models = ChargeTasks::whereUserId($userId)->orderBy('id','desc')->get();
+        $models = ChargeTasks::whereUserId($userId)->orderBy('id', 'desc')->get();
         $ret = [];
-        if($models){
-            foreach ($models as $model){
+        if ($models) {
+            foreach ($models as $model) {
                 $tmp = [];
                 $tmp['begin_at'] = $model->begin_at;
                 $tmp['minutes'] = floor($model->actual_time / 60);

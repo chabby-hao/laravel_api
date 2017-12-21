@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Libs\ErrorCode;
 use App\Libs\Helper;
+use App\Models\DeviceInfo;
 use App\Services\BoxService;
 use App\Services\ChargeService;
+use App\Services\DeviceService;
 use App\Services\RequestService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
@@ -20,12 +22,40 @@ class ChargeController extends Controller
      * 打开盒子
      * @param Request $request
      */
-    public function openBox(Request $request)
+//    public function openBox(Request $request)
+//    {
+//        if (!BoxService::isOpen()) {
+//            BoxService::openBox();
+//            return $this->responseOk();
+//        }
+//    }
+
+    /**
+     * 检查二维码是否可用,并返回可用的设备id
+     * @param Request $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
+    public function checkQrCode(Request $request)
     {
-        if (!BoxService::isOpen()) {
-            BoxService::openBox();
-            return $this->responseOk();
+        //二维码扫描结果
+        $url = $request->input('url');
+        //二维码是否有效
+        if(!$deviceId = DeviceService::getDeviceIdByUrl($url)){
+            return Helper::responeseError(ErrorCode::$qrCodeNotFind);
         }
+        //设备是否在线
+        $deviceInfo = DeviceService::getDeviceInfo($deviceId);
+        $deviceNo = $deviceInfo['deviceNo'];
+        $portNo = $deviceInfo['portNo'];
+        if(!DeviceService::isDeviceOnline($deviceNo)){
+            return Helper::responeseError(ErrorCode::$deviceNotOnline);
+        }
+        //检查设备端口是否可用
+        if(!DeviceService::isPortUseful($deviceNo, $portNo)){
+            return Helper::responeseError(ErrorCode::$deviceNotUseful);
+        }
+
+        return Helper::response(['device_id'=>$deviceId,'address'=>$deviceInfo['address']]);
     }
 
     /**

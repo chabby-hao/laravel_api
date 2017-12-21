@@ -14,10 +14,46 @@ class DeviceService extends BaseService
 
     public static function getDeviceId($deviceNo, $portNo)
     {
-        $model = DeviceInfo::where(['device_no'=>$deviceNo,'port_no'=>$portNo])->first();
+        $model = DeviceInfo::where(['device_no' => $deviceNo, 'port_no' => $portNo])->first();
         return $model ? $model->id : false;
     }
 
+    public static function getDeviceIdByUrl($url)
+    {
+        $model = DeviceInfo::whereUrl($url)->first();
+        return $model ? $model->id : false;
+    }
+
+    /**
+     * 获取['deviceNo'=>$model->device_no,'portNo'=>$model->port_no]
+     * @param $deviceId
+     * @return array
+     */
+    public static function getDeviceInfo($deviceId)
+    {
+        $model = DeviceInfo::find($deviceId);
+        return $model ? ['deviceNo' => $model->device_no, 'portNo' => $model->port_no,'address'=>$model->address] : [];
+    }
+
+    /**
+     * 设备是否在线
+     * @param $deviceNo
+     * @return bool
+     */
+    public static function isDeviceOnline($deviceNo)
+    {
+        $key = self::KEY_HASH_STATUS_PRE . $deviceNo . '_0';
+        $val = Redis::hGet($key, 'attach');
+        Log::debug("isDeviceOnline deviceNo: $deviceNo attach: $val");
+        return $val ? true : false;
+    }
+
+    /**
+     * 检查端口是否可用
+     * @param $deviceNo
+     * @param $portNo
+     * @return bool
+     */
     public static function isPortUseful($deviceNo, $portNo)
     {
         $key = self::_getStatusKey($deviceNo, $portNo);
@@ -39,6 +75,12 @@ class DeviceService extends BaseService
         return $val ? true : false;
     }
 
+    /**
+     * 是否正在充电
+     * @param $deviceNo
+     * @param $portNo
+     * @return bool
+     */
     public static function isCharging($deviceNo, $portNo)
     {
         $key = self::_getStatusKey($deviceNo, $portNo);

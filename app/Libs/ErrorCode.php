@@ -3,7 +3,6 @@
 namespace App\Libs;
 
 
-
 class ErrorCode
 {
 
@@ -20,10 +19,24 @@ class ErrorCode
 
     public static $sessionKeyExpire = 2003;//微信sessionkey过期
 
-    public static $invalidDeviceId = 2004;//设备id不存在
+    //public static $invalidDeviceId = 2004;//设备id不存在
 
     public static $chargeTaskNotFind = 2005;//充电任务不存在
 
     public static $qrCodeNotFind = 2006;//找不到充电二维码
+
+    public static $deviceNotOnline = 2007;//设备离线
+
+    public static $deviceNotUseful = 2008;//设备不可用
+
+    public static function getErrMsg()
+    {
+        return [
+            self::$qrCodeNotFind => '二维码有误',
+            self::$deviceNotOnline => '设备离线',
+            self::$deviceNotUseful => '充电口暂不可用，请稍后再试',
+        ];
+    }
+
 
 }

@@ -37,9 +37,10 @@ class Helper
     public static function responeseError($code = 500, array $data = [], $status = 200, array $headers = [])
     {
 
+        $errMsg = ErrorCode::getErrMsg();
         $content = [
             'code' => $code,
-            'msg'=>'error',
+            'msg'=>isset($errMsg[$code]) ? $errMsg[$code] : '',
         ];
         $content = array_merge($content, $data);
         //Log::error('response error----------- ' . json_encode($content));

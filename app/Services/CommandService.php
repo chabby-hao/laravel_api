@@ -25,7 +25,7 @@ class CommandService extends BaseService
         $a = pack('P', $deviceNo);
         $b = pack('V', $portNo);
         $c = pack('V', $cmd);
-        $val = $a.$b.$c;
+        $val = $a . $b . $c;
         Log::debug("push redis deviceNo: $deviceNo, portNo: $portNo, cmd: $cmd");
         return Redis::lPush(self::LIST_COMMAND_PRE . $number, $val);
     }
@@ -33,7 +33,8 @@ class CommandService extends BaseService
     /**
      * @param $deviceNo
      * @return int
-     */private static function _getServerNumber($deviceNo)
+     */
+    private static function _getServerNumber($deviceNo)
     {
         $number = Redis::hGet('axc_device_server', $deviceNo);
         return $number ? $number - 1 : 0;
@@ -44,7 +45,8 @@ class CommandService extends BaseService
      */
     public static function sendCommandBoxOpen($deviceNo, $portNo)
     {
-
+        $cmd = self::CMD_OPEN_BOX;
+        return self::send($deviceNo, $portNo, $cmd);
     }
 
     /**
@@ -65,7 +67,6 @@ class CommandService extends BaseService
         $cmd = self::CMD_STOP_CHARGE;
         return self::send($deviceNo, $portNo, $cmd);
     }
-
 
 
 }
