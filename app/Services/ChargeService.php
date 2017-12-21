@@ -108,8 +108,8 @@ class ChargeService extends BaseService
         if (!$model) {
             return false;
         }
-        //已经结束充电
-        if (!in_array($model->task_state, [ChargeTasks::TASK_STATE_INIT, ChargeTasks::TASK_STATE_CHARGING])) {
+        //必须正在充电
+        if ($model->task_state != ChargeTasks::TASK_STATE_CHARGING) {
             return false;
         }
         $begin = $model->begin_at;
