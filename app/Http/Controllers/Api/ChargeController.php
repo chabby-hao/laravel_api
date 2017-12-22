@@ -236,7 +236,7 @@ class ChargeController extends Controller
         if (!$model = ChargeTasks::getLastTaskByUserId($userId)) {
             return Helper::responeseError(ErrorCode::$chargeTaskNotFind);
         }
-        if (!in_array($model->task_state, [ChargeTasks::TASK_STATE_COMPLETE, ChargeTasks::TASK_STATE_END_ABMORMAL, ChargeTasks::TASK_STATE_TIME_END, ChargeTasks::TASK_STATE_USER_END])) {
+        if (!in_array($model->task_state, ChargeTasks::getFinishStateMap())) {
             return Helper::responeseError(ErrorCode::$chargeNotFinishYet);
         }
         $mins = floor($model->actual_time / 60);

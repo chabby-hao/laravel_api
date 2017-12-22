@@ -50,6 +50,20 @@ class ChargeTasks extends Model
     protected $fillable = ['user_id', 'device_no','port_no'];
 
     /**
+     * 获取充电结束的state，方便一点
+     * @return array
+     */
+    public static function getFinishStateMap()
+    {
+        return [
+            self::TASK_STATE_COMPLETE,
+            self::TASK_STATE_END_ABMORMAL,
+            self::TASK_STATE_TIME_END,
+            self::TASK_STATE_USER_END,
+        ];
+    }
+
+    /**
      * 新建任务
      * @param $userId
      * @param $deviceNo
