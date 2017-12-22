@@ -30,6 +30,17 @@ class ChargeController extends Controller
 //        }
 //    }
 
+    public function deviceAddress(Request $request)
+    {
+        $deviceId = $request->input('device_id');
+        $deviceInfo = DeviceService::getDeviceInfo($deviceId);
+        $data = [
+            'address' => $deviceInfo['address'],
+            'address_number' => '编号：' . $deviceInfo['deviceNo'] . '-' . $deviceInfo['portNo']
+        ];
+        return Helper::response($data);
+    }
+
     /**
      * 检查二维码是否可用,并返回可用的设备id
      * @param Request $request
@@ -43,7 +54,7 @@ class ChargeController extends Controller
         //二维码扫描结果
         $url = $request->input('url');
         //二维码是否有效
-        if(!$deviceId = DeviceService::getDeviceIdByUrl($url)){
+        if (!$deviceId = DeviceService::getDeviceIdByUrl($url)) {
             return Helper::responeseError(ErrorCode::$qrCodeNotFind);
         }
         //设备是否在线
@@ -62,7 +73,7 @@ class ChargeController extends Controller
 //            return Helper::responeseError(ErrorCode::$balanceNotEnough);
 //        }
 
-        return Helper::response(['device_id'=>$deviceId,'address'=>$deviceInfo['address']]);
+        return Helper::response(['device_id' => $deviceId, 'address' => $deviceInfo['address']]);
     }
 
     /**
@@ -111,13 +122,13 @@ class ChargeController extends Controller
      */
     public function chargeHalt(Request $request)
     {
-        $inputRequire = ['device_no','port_no','type','timestamp','sign'];
+        $inputRequire = ['device_no', 'port_no', 'type', 'timestamp', 'sign'];
         $input = $this->checkRequireParams($inputRequire, $request->input());
-        if($input instanceof Response){
+        if ($input instanceof Response) {
             return $input;
         }
 
-        if(!RequestService::checkSign($input)){
+        if (!RequestService::checkSign($input)) {
             return Helper::responeseError(ErrorCode::$errSign);
         }
 
@@ -148,14 +159,14 @@ class ChargeController extends Controller
      */
     public function powerOn(Request $request)
     {
-        $inputRequired = ['task_id','timestamp','sign'];
+        $inputRequired = ['task_id', 'timestamp', 'sign'];
         $input = $this->checkRequireParams($inputRequired, $request->input());
 
-        if($input instanceof Response){
+        if ($input instanceof Response) {
             return $input;
         }
 
-        if(!RequestService::checkSign($input)){
+        if (!RequestService::checkSign($input)) {
             return Helper::responeseError(ErrorCode::$errSign);
         }
 
@@ -166,7 +177,7 @@ class ChargeController extends Controller
         Log::debug('power is on .' . json_encode($request->input()));
 
         return Helper::response([
-            'task_id'=>$taskId,
+            'task_id' => $taskId,
         ]);
     }
 
@@ -192,20 +203,20 @@ class ChargeController extends Controller
      */
     public function taskId()
     {
-        if(!$userId = UserService::getUserId()){
+        if (!$userId = UserService::getUserId()) {
             return Helper::responeseError(ErrorCode::$tokenExpire);
         }
 
         $taskId = ChargeService::getUnfinishTaskIdByUserId($userId);
 
-        $data = ['task_id'=>intval($taskId)];
+        $data = ['task_id' => intval($taskId)];
         return Helper::response($data);
 
     }
 
     public function lists()
     {
-        if(!$userId = UserService::getUserId()){
+        if (!$userId = UserService::getUserId()) {
             return Helper::responeseError(ErrorCode::$tokenExpire);
         }
 

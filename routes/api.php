@@ -43,6 +43,7 @@ Route::any('/charge/powerOn', 'Api\ChargeController@powerOn');
 Route::any('/charge/taskId', 'Api\ChargeController@taskId');
 Route::any('/charge/lists', 'Api\ChargeController@lists');
 Route::any('/charge/checkQrCode', 'Api\ChargeController@checkQrCode');
+Route::any('/charge/deviceAddress', 'Api\ChargeController@deviceAddress');
 
 Route::any('/charge/chargingTime', 'Api\ChargeController@chargingTime');
 
