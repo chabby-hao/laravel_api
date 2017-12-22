@@ -205,7 +205,7 @@ class ChargeService extends BaseService
         $data = [
             'status' => 0,//正在冲
             'mins' => 0,//分钟
-            'task_id'=>$model->id,
+            'task_id' => $model->id,
         ];
 
         if ($model->task_state == ChargeTasks::TASK_STATE_END_ABMORMAL) {
@@ -305,7 +305,7 @@ class ChargeService extends BaseService
      */
     public static function chargeList($userId)
     {
-        $models = ChargeTasks::whereUserId($userId)->whereIn('order_state',ChargeTasks::getFinishStateMap())->orderBy('id', 'desc')->get();
+        $models = ChargeTasks::whereUserId($userId)->whereIn('order_state', ChargeTasks::getFinishStateMap())->orderBy('id', 'desc')->get();
         $ret = [];
         if ($models) {
             foreach ($models as $model) {
