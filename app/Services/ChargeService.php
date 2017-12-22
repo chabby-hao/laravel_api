@@ -15,7 +15,7 @@ class ChargeService extends BaseService
 
     const TEMPLATE_ID_END = 'kJuQgZvKVkuGr_uK16rrXg0NKYeLaoHWiEq9uvE7x14';
 
-    const PER_MINUTE_CHARGE_PRICE = 0.01;//单位分钟扣除费用(元)
+    const PER_MINUTE_CHARGE_PRICE = 0.02;//单位分钟扣除费用(元)
 
     /**
      * 是否正在充电
@@ -198,14 +198,16 @@ class ChargeService extends BaseService
      */
     public static function getLastTaskInfo($userId)
     {
-        $data = [
-            'status' => 0,//正在冲
-            'mins' => 0,//分钟
-        ];
-        $model = ChargeTasks::whereUserId($userId)->orderByDesc('id')->first();
+
+        $model = ChargeTasks::getLastTaskByUserId($userId);
         if (!$model) {
             return false;
         }
+        $data = [
+            'status' => 0,//正在冲
+            'mins' => 0,//分钟
+            'task_id'=>$model->id,
+        ];
 
         if ($model->task_state == ChargeTasks::TASK_STATE_END_ABMORMAL) {
             $data['status'] = 1;//异常终止

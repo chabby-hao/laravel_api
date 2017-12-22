@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Libs\ErrorCode;
 use App\Libs\Helper;
+use App\Models\ChargeTasks;
 use App\Models\DeviceInfo;
 use App\Services\BoxService;
 use App\Services\ChargeService;
@@ -194,6 +195,28 @@ class ChargeController extends Controller
             return Helper::responeseError(ErrorCode::$chargeTaskNotFind);
         }
 
+        return Helper::response($data);
+    }
+
+    public function chargeMode()
+    {
+        if (!$userId = UserService::getUserId()) {
+            return Helper::responeseError(ErrorCode::$tokenExpire);
+        }
+        if(!$model = ChargeTasks::getLastTaskByUserId($userId)){
+            return Helper::responeseError(ErrorCode::$chargeTaskNotFind);
+        }
+        $expectTime = $model->expect_time;
+        $expectHour = round($expectTime/3600);
+        if($expectHour === 0){
+            $mode = '您已选择充满模式';
+        }else{
+            $mode = '您选择充' . $expectHour .'小时';
+        }
+        $data = [
+            'mode_text'=>$mode,
+            'price_text'=>'按充电时间计费：' . ChargeService::PER_MINUTE_CHARGE_PRICE . '元/分钟',
+        ];
         return Helper::response($data);
     }
 
