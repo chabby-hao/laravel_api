@@ -212,7 +212,7 @@ class ChargeController extends Controller
         }
         $expectTime = $model->expect_time;
         $expectHour = round($expectTime / 3600);
-        if ($expectHour === 0) {
+        if ($expectHour == 0) {
             $mode = '您已选择充满模式';
         } else {
             $mode = '您选择充' . $expectHour . '小时';
