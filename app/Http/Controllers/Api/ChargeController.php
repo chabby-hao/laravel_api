@@ -198,24 +198,51 @@ class ChargeController extends Controller
         return Helper::response($data);
     }
 
+    /**
+     * 获取充电模式文本
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
     public function chargeMode()
     {
         if (!$userId = UserService::getUserId()) {
             return Helper::responeseError(ErrorCode::$tokenExpire);
         }
-        if(!$model = ChargeTasks::getLastTaskByUserId($userId)){
+        if (!$model = ChargeTasks::getLastTaskByUserId($userId)) {
             return Helper::responeseError(ErrorCode::$chargeTaskNotFind);
         }
         $expectTime = $model->expect_time;
-        $expectHour = round($expectTime/3600);
-        if($expectHour === 0){
+        $expectHour = round($expectTime / 3600);
+        if ($expectHour === 0) {
             $mode = '您已选择充满模式';
-        }else{
-            $mode = '您选择充' . $expectHour .'小时';
+        } else {
+            $mode = '您选择充' . $expectHour . '小时';
         }
         $data = [
-            'mode_text'=>$mode,
-            'price_text'=>'按充电时间计费：' . ChargeService::PER_MINUTE_CHARGE_PRICE . '元/分钟',
+            'mode_text' => $mode,
+            'price_text' => '按充电时间计费：' . ChargeService::PER_MINUTE_CHARGE_PRICE . '元/分钟',
+        ];
+        return Helper::response($data);
+    }
+
+    /**
+     * 获取充电结束提示文本
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
+    public function lastFinish()
+    {
+        if (!$userId = UserService::getUserId()) {
+            return Helper::responeseError(ErrorCode::$tokenExpire);
+        }
+        if (!$model = ChargeTasks::getLastTaskByUserId($userId)) {
+            return Helper::responeseError(ErrorCode::$chargeTaskNotFind);
+        }
+        if (!in_array($model->task_state, [ChargeTasks::TASK_STATE_END_ABMORMAL, ChargeTasks::TASK_STATE_TIME_END, ChargeTasks::TASK_STATE_USER_END])) {
+            return Helper::responeseError(ErrorCode::$chargeNotFinishYet);
+        }
+        $mins = floor($model->actual_time / 60);
+        $costs = $model->user_cost;
+        $data = [
+            'content' => '充电' . $mins . '分钟，花费' . $costs . '元。',
         ];
         return Helper::response($data);
     }

@@ -16,27 +16,19 @@ use Illuminate\Http\Request;
 Route::middlewareGroup('api', ['token_login']);
 
 Route::any('/user/loginByCode', 'Api\UserController@loginByCode');
-
-//Route::any('/user/checkLogin','Api\UserController@checkLogin');
-
 Route::any('/user/bindPhoneForWx', 'Api\UserController@bindPhoneForWx');
-
 Route::any('/user/login', 'Api\UserController@login');
-
 Route::any('/user/checkToken', 'Api\UserController@checkToken');
-
 Route::any('/user/sendMsgCode', 'Api\UserController@sendMsgCode');
-
 Route::any('/user/balance', 'Api\UserController@balance');
 
-Route::any('/weixinPay/payJoinfee', 'Api\WeixinPayController@payJoinfee');
 
+Route::any('/weixinPay/payJoinfee', 'Api\WeixinPayController@payJoinfee');
 Route::any('/weixinPay/wxNotify', 'Api\WeixinPayController@wxNotify')->name('wxnotify');
 
+
 Route::any('/charge/openBox', 'Api\ChargeController@openBox');
-
 Route::any('/charge/chargeBegin', 'Api\ChargeController@chargeBegin');
-
 Route::any('/charge/chargeEnd', 'Api\ChargeController@chargeEnd');
 Route::any('/charge/chargeHalt', 'Api\ChargeController@chargeHalt');
 Route::any('/charge/powerOn', 'Api\ChargeController@powerOn');
@@ -46,6 +38,7 @@ Route::any('/charge/checkQrCode', 'Api\ChargeController@checkQrCode');
 Route::any('/charge/deviceAddress', 'Api\ChargeController@deviceAddress');
 Route::any('/charge/chargingTime', 'Api\ChargeController@chargingTime');
 Route::any('/charge/chargeMode', 'Api\ChargeController@chargeMode');
+Route::any('/charge/lastFinish', 'Api\ChargeController@lastFinish');
 
 Route::any('/orders/lists', 'Api\OrdersController@lists');
 

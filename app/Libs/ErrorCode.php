@@ -31,6 +31,8 @@ class ErrorCode
 
     public static $balanceNotEnough = 2009;//用户余额不足
 
+    public static $chargeNotFinishYet = 2010;//充电还未结束
+
     public static function getErrMsg()
     {
         return [
