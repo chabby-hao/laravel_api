@@ -305,7 +305,7 @@ class ChargeService extends BaseService
      */
     public static function chargeList($userId)
     {
-        $models = ChargeTasks::whereUserId($userId)->whereIn('order_state', ChargeTasks::getFinishStateMap())->orderBy('id', 'desc')->get();
+        $models = ChargeTasks::whereUserId($userId)->whereIn('task_state', ChargeTasks::getFinishStateMap())->orderBy('id', 'desc')->get();
         $ret = [];
         if ($models) {
             foreach ($models as $model) {
