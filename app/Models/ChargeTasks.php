@@ -94,11 +94,20 @@ class ChargeTasks extends Model
         return $model ? $model->id : false;
     }
 
+    /**
+     * @param $taskId
+     * @param $cost
+     * @return int
+     */
     public static function userCostAdd($taskId, $cost)
     {
         return self::find($taskId)->increment('user_cost', $cost);
     }
 
+    /**
+     * @param $userId
+     * @return Model|null|static
+     */
     public static function getLastTaskByUserId($userId)
     {
         $model = self::whereUserId($userId)->orderByDesc('id')->first();

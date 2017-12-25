@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\User;
+use App\Models\UserRefunds;
 use App\Models\UserToken;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -238,6 +239,26 @@ class UserService extends BaseService
     {
         $user = self::getUserByUserId($userId);
         return $user ? floatval($user['user_balance']) : 0;
+    }
+
+    /**
+     * 退款
+     * @param $userId
+     * @return bool|int
+     */
+    public static function userRefund($userId)
+    {
+        $user = User::find($userId);
+        if(!$user){
+            return false;
+        }
+        $userBalance = $user->user_balance;
+        $userRefund = new UserRefunds();
+        $userRefund->user_id = $userId;
+        $userRefund->refund_amount = $userBalance;
+        $userRefund->state = UserRefunds::REFUND_STATE_INIT;
+        $bool = $userRefund->save();
+        return $bool ? $userRefund->id : fasle;
     }
 
 

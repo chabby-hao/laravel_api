@@ -33,6 +33,8 @@ class ErrorCode
 
     public static $chargeNotFinishYet = 2010;//充电还未结束
 
+    public static $refundFail = 2011;//提交退款失败，请确认还有余额
+
     public static function getErrMsg()
     {
         return [

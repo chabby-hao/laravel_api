@@ -195,4 +195,22 @@ class UserController extends Controller
         return Helper::response(['balance'=>$balance]);
     }
 
+    /**
+     * 退款
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
+    public function refund()
+    {
+        if (!$userId = UserService::getUserId()) {
+            return Helper::responeseError(ErrorCode::$tokenExpire);
+        }
+
+        if ($refundId = UserService::userRefund($userId)){
+            return $this->responseOk();
+        }
+
+        return Helper::responeseError(ErrorCode::$refundFail);
+
+    }
+
 }

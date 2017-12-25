@@ -21,6 +21,7 @@ Route::any('/user/login', 'Api\UserController@login');
 Route::any('/user/checkToken', 'Api\UserController@checkToken');
 Route::any('/user/sendMsgCode', 'Api\UserController@sendMsgCode');
 Route::any('/user/balance', 'Api\UserController@balance');
+Route::any('/user/refund', 'Api\UserController@refund');
 
 
 Route::any('/weixinPay/payJoinfee', 'Api\WeixinPayController@payJoinfee');
