@@ -86,7 +86,7 @@ class ChargeService extends BaseService
      */
     public static function endCharge($device, $state = ChargeTasks::TASK_STATE_COMPLETE, $sendCmd = true)
     {
-        if (is_string($device)) {
+        if (is_numeric($device)) {
             if (!$deviceModel = DeviceInfo::find($device)) {
                 Log::warning('deviceInfo not find deviceId:' . $device);
                 return false;
@@ -141,12 +141,12 @@ class ChargeService extends BaseService
     }
 
     /**
-     * @param $deviceId
+     * @param $device
      * @return bool
      */
-    public static function endChargeByUser($deviceId)
+    public static function endChargeByUser($device)
     {
-        return self::endCharge($deviceId, ChargeTasks::TASK_STATE_USER_END);
+        return self::endCharge($device, ChargeTasks::TASK_STATE_USER_END);
     }
 
     /**

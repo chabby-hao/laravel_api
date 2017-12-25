@@ -37,7 +37,7 @@ class ChargeController extends Controller
         $deviceInfo = DeviceService::getDeviceInfo($deviceId);
         $data = [
             'address' => $deviceInfo['address'],
-            'address_number' => '编号：' . $deviceInfo['deviceNo'] . '-' . $deviceInfo['portNo']
+            'address_number' => '编号：' . $deviceInfo['device_no'] . '-' . $deviceInfo['port_no']
         ];
         return Helper::response($data);
     }
@@ -60,8 +60,8 @@ class ChargeController extends Controller
         }
         //设备是否在线
         $deviceInfo = DeviceService::getDeviceInfo($deviceId);
-        $deviceNo = $deviceInfo['deviceNo'];
-        $portNo = $deviceInfo['portNo'];
+        $deviceNo = $deviceInfo['device_no'];
+        $portNo = $deviceInfo['port_no'];
 //        if(!DeviceService::isDeviceOnline($deviceNo)){
 //            return Helper::responeseError(ErrorCode::$deviceNotOnline);
 //        }
@@ -110,9 +110,13 @@ class ChargeController extends Controller
      */
     public function chargeEnd(Request $request)
     {
-        $deviceId = $request->input('device_id');
+        $taskId = $request->input('task_id');
 
-        ChargeService::endChargeByUser($deviceId);
+        $device = ChargeTasks::find($taskId);
+        if($device){
+            ChargeService::endChargeByUser(['device_no'=>$device->device_no,'port_no'=>$device->port_no]);
+        }
+
 
         return $this->responseOk();
     }

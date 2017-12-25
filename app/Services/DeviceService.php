@@ -32,7 +32,7 @@ class DeviceService extends BaseService
     public static function getDeviceInfo($deviceId)
     {
         $model = DeviceInfo::find($deviceId);
-        return $model ? ['deviceNo' => $model->device_no, 'portNo' => $model->port_no,'address'=>$model->address] : [];
+        return $model ? ['device_no' => $model->device_no, 'port_no' => $model->port_no,'address'=>$model->address] : [];
     }
 
     /**
