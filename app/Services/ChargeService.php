@@ -31,6 +31,7 @@ class ChargeService extends BaseService
      * @param $deviceNo
      * @param $portNo
      * @param $mode 0=充满（小时）
+     * @return bool
      */
     public static function startCharge($userId, $deviceId, $mode, $formId)
     {
@@ -50,7 +51,8 @@ class ChargeService extends BaseService
             //箱子没开，打开箱子
             BoxService::openBox($deviceNo, $portNo);
         }
-        return self::sendCmdToStartCharge($deviceNo, $portNo, $taskId);
+        self::sendCmdToStartCharge($deviceNo, $portNo, $taskId);
+        return $taskId;
     }
 
     public static function sendCmdToStartCharge($deviceNo, $portNo, $taskId)

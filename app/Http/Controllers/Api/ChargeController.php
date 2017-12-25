@@ -96,11 +96,11 @@ class ChargeController extends Controller
         }
 
         //充电
-        if (!ChargeService::startCharge($userId, $deviceId, $mode, $formId)) {
+        if (!$taskId = ChargeService::startCharge($userId, $deviceId, $mode, $formId)) {
             return Helper::responeseError(ErrorCode::$qrCodeNotFind);
         }
 
-        return $this->responseOk();
+        return Helper::response(['task_id'=>$taskId]);
     }
 
     /**
