@@ -62,9 +62,9 @@ class ChargeController extends Controller
         $deviceInfo = DeviceService::getDeviceInfo($deviceId);
         $deviceNo = $deviceInfo['device_no'];
         $portNo = $deviceInfo['port_no'];
-//        if(!DeviceService::isDeviceOnline($deviceNo)){
-//            return Helper::responeseError(ErrorCode::$deviceNotOnline);
-//        }
+        if(!DeviceService::isDeviceOnline($deviceNo)){
+            return Helper::responeseError(ErrorCode::$deviceNotOnline);
+        }
         //检查设备端口是否可用
 //        if(!DeviceService::isPortUseful($deviceNo, $portNo)){
 //            return Helper::responeseError(ErrorCode::$deviceNotUseful);
