@@ -55,6 +55,17 @@ Route::any('cmd',function (Request $request){
     }
 });
 
+Route::get('redis', function(Request $request){
+   $key = $request->input('key');
+   $a = explode(':', $key);
+   $redisKey = \App\Services\DeviceService::KEY_HASH_STATUS_PRE . $a[0] .'_' . $a[1];
+   $b = Redis::hGetAll($key);
+
+   echo json_encode(['data'=>$b]);
+   exit;
+
+});
+
 Route::get('test', function () {
 
     $a = \App\Models\User::charging(8,0.01);
