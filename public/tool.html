@@ -49,6 +49,7 @@
             var url = '/api/redis?key=' + $val;
             $.ajax({
                 type: "get",
+                dataType:'json',
                 //dataType: 'jsonp',
                 //async:false,
                 url: url,//数据类型为jsonp
