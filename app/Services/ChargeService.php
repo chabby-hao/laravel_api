@@ -36,6 +36,10 @@ class ChargeService extends BaseService
     public static function startCharge($userId, $deviceId, $mode, $formId)
     {
         $duration = $mode * 3600;
+        if($mode == 1){
+            //1小时，测试改成2分钟
+            $duration = 120;
+        }
         if (!$deviceModel = DeviceInfo::find($deviceId)) {
             Log::warning('deviceInfo not find deviceId:' . $deviceId);
             return false;
@@ -272,11 +276,15 @@ class ChargeService extends BaseService
 
     public static function sendEndMessage($taskId)
     {
+        $task = ChargeTasks::find($taskId);
+        if(!$task){
+            return false;
+        }
         $data = [
             'template_id' => self::TEMPLATE_ID_END,
             'data' => [
-                'keyword1' => ['value' => 'Y1.00', 'color' => '#173177'],
-                'keyword2' => ['value' => '24分钟', 'color' => '#173177'],
+                'keyword1' => ['value' => 'Y' . $task->user_cost, 'color' => '#173177'],
+                'keyword2' => ['value' => floor($task->actual_time / 60) . '分钟', 'color' => '#173177'],
                 //'keyword3'=>['value'=>'请到车棚查看原因','color'=>'#173177'],
             ],
         ];
