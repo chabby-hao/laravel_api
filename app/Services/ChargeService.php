@@ -283,7 +283,7 @@ class ChargeService extends BaseService
         $data = [
             'template_id' => self::TEMPLATE_ID_END,
             'data' => [
-                'keyword1' => ['value' => 'Y' . $task->user_cost, 'color' => '#173177'],
+                'keyword1' => ['value' => '￥' . $task->user_cost, 'color' => '#173177'],
                 'keyword2' => ['value' => floor($task->actual_time / 60) . '分钟', 'color' => '#173177'],
                 //'keyword3'=>['value'=>'请到车棚查看原因','color'=>'#173177'],
             ],
