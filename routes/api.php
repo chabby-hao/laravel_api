@@ -61,7 +61,7 @@ Route::get('redis', function(Request $request){
    $redisKey = \App\Services\DeviceService::KEY_HASH_STATUS_PRE . $a[0] .'_' . $a[1];
    $b = \Illuminate\Support\Facades\Redis::hGetAll($redisKey);
 
-   echo json_encode(['data'=>$b]);
+   echo json_encode($b?:[]);
    exit;
 
 });
