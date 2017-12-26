@@ -74,7 +74,7 @@ class ChargeController extends Controller
             return Helper::responeseError(ErrorCode::$balanceNotEnough);
         }
 
-        if(!DeviceService::isCharging($deviceNo, $portNo)){
+        if(DeviceService::isCharging($deviceNo, $portNo)){
             return Helper::responeseError(ErrorCode::$isChargingNow);
         }
 
