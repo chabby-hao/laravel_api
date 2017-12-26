@@ -49,10 +49,10 @@
             var url = '/api/redis?key=' + $val;
             $.ajax({
                 type: "get",
-                dataType: 'jsonp',
+                //dataType: 'jsonp',
                 //async:false,
                 url: url,//数据类型为jsonp
-                jsonp: "jsonpCallback",//服务端用于接收callback调用的function名的参数
+                //jsonp: "jsonpCallback",//服务端用于接收callback调用的function名的参数
                 success: function (data) {
                     console.log(data);
                     for (var x in data) {
@@ -74,7 +74,7 @@
                 },
                 error: function () {
                     alert('请登录');
-                    location.href='/support/loginView';
+                    //location.href='/support/loginView';
                 }
             });
         }
