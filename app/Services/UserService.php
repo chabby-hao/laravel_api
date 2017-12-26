@@ -248,17 +248,26 @@ class UserService extends BaseService
      */
     public static function userRefund($userId)
     {
+        DB::beginTransaction();
         $user = User::find($userId);
         if(!$user){
             return false;
         }
+        $user->user_balance = 0;
+        $resUser = $user->save();
         $userBalance = $user->user_balance;
         $userRefund = new UserRefunds();
         $userRefund->user_id = $userId;
         $userRefund->refund_amount = $userBalance;
         $userRefund->state = UserRefunds::REFUND_STATE_INIT;
         $bool = $userRefund->save();
-        return $bool ? $userRefund->id : fasle;
+        if($resUser && $bool){
+            DB::commit();
+            return $userRefund->id;
+        }else{
+            DB::rollBack();
+            return false;
+        }
     }
 
 

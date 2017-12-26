@@ -66,13 +66,17 @@ class ChargeController extends Controller
             return Helper::responeseError(ErrorCode::$deviceNotOnline);
         }
         //检查设备端口是否可用
-//        if(!DeviceService::isPortUseful($deviceNo, $portNo)){
-//            return Helper::responeseError(ErrorCode::$deviceNotUseful);
-//        }
+        if(!DeviceService::isPortUseful($deviceNo, $portNo)){
+            return Helper::responeseError(ErrorCode::$deviceNotUseful);
+        }
 
-//        if(UserService::getUserBalance($userId) < 0){
-//            return Helper::responeseError(ErrorCode::$balanceNotEnough);
-//        }
+        if(UserService::getUserBalance($userId) < 0){
+            return Helper::responeseError(ErrorCode::$balanceNotEnough);
+        }
+
+        if(!DeviceService::isCharging($deviceNo, $portNo)){
+            return Helper::responeseError(ErrorCode::$isChargingNow);
+        }
 
         return Helper::response(['device_id' => $deviceId, 'address' => $deviceInfo['address']]);
     }

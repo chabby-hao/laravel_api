@@ -35,6 +35,8 @@ class ErrorCode
 
     public static $refundFail = 2011;//提交退款失败，请确认还有余额
 
+    public static $isChargingNow = 2012;//正在充电中
+
     public static function getErrMsg()
     {
         return [
@@ -42,6 +44,7 @@ class ErrorCode
             self::$deviceNotOnline => '设备离线',
             self::$deviceNotUseful => '充电口暂不可用，请稍后再试',
             self::$balanceNotEnough =>'余额不足，请先充值',
+            self::$isChargingNow => '当前设备正在使用中',
         ];
     }
 
