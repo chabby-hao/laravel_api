@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Libs\ErrorCode;
 use App\Libs\Helper;
 use App\Models\User;
+use App\Models\UserRefunds;
 use App\Models\VerifyCode;
 use App\Services\UserService;
 use App\Services\VerifyCodeServices;
@@ -211,6 +212,20 @@ class UserController extends Controller
 
         return Helper::responeseError(ErrorCode::$refundFail);
 
+    }
+
+    public function hasRefund()
+    {
+        if (!$userId = UserService::getUserId()) {
+            return Helper::responeseError(ErrorCode::$tokenExpire);
+        }
+
+        $refund = UserRefunds::whereUserId($userId)->first();
+        if($refund){
+            return Helper::response(['has_refund'=>1]);
+        }else{
+            return Helper::response(['has_refund'=>0]);
+        }
     }
 
 }
