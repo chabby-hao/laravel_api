@@ -70,7 +70,7 @@ class ChargeController extends Controller
             return Helper::responeseError(ErrorCode::$deviceNotUseful);
         }
 
-        if(UserService::getUserBalance($userId) < 0){
+        if(UserService::getUserBalance($userId) <= 0){
             return Helper::responeseError(ErrorCode::$balanceNotEnough);
         }
 
