@@ -51,10 +51,10 @@ class ChargeService extends BaseService
         if (!$taskId) {
             return false;
         }
-        if (!BoxService::isOpen($deviceNo, $portNo)) {
+        //if (!BoxService::isOpen($deviceNo, $portNo)) {
             //箱子没开，打开箱子
             BoxService::openBox($deviceNo, $portNo);
-        }
+        //}
         self::sendCmdToStartCharge($deviceNo, $portNo, $taskId);
         return $taskId;
     }
