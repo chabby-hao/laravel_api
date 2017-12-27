@@ -17,6 +17,8 @@ class ChargeService extends BaseService
 
     const PER_MINUTE_CHARGE_PRICE = 0.02;//单位分钟扣除费用(元)
 
+    const CLOSE_BOX_TIMEOUT = 30;//下发充电命令，多长时间关闭箱子(秒)
+
     /**
      * 是否正在充电
      */
@@ -51,10 +53,6 @@ class ChargeService extends BaseService
         if (!$taskId) {
             return false;
         }
-        //if (!BoxService::isOpen($deviceNo, $portNo)) {
-            //箱子没开，打开箱子
-            BoxService::openBox($deviceNo, $portNo);
-        //}
         self::sendCmdToStartCharge($deviceNo, $portNo, $taskId);
         return $taskId;
     }

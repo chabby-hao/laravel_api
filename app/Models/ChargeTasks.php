@@ -45,6 +45,9 @@ class ChargeTasks extends Model
     const TASK_STATE_TIME_END = 40;//充电时间到，自动结束充电
     const TASK_STATE_USER_END = 50;//用户手动中断充电
 
+    const CLOSE_BOX_NOT_SENT = 0;//未发送关闭箱子命令
+    const CLOSE_BOX_HAS_SENT = 1;//已发送关闭箱子命令
+
     protected $table = 'charge_tasks';
     protected $primaryKey = 'id';
     protected $fillable = ['user_id', 'device_no','port_no'];

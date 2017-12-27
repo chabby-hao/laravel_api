@@ -62,20 +62,27 @@ class ChargeController extends Controller
         $deviceInfo = DeviceService::getDeviceInfo($deviceId);
         $deviceNo = $deviceInfo['device_no'];
         $portNo = $deviceInfo['port_no'];
-        if(!DeviceService::isDeviceOnline($deviceNo)){
+        if (!DeviceService::isDeviceOnline($deviceNo)) {
             return Helper::responeseError(ErrorCode::$deviceNotOnline);
         }
         //检查设备端口是否可用
-        if(!DeviceService::isPortUseful($deviceNo, $portNo)){
+        if (!DeviceService::isPortUseful($deviceNo, $portNo)) {
             return Helper::responeseError(ErrorCode::$deviceNotUseful);
         }
 
-        if(UserService::getUserBalance($userId) <= 0){
+        //用户余额是否充足
+        if (UserService::getUserBalance($userId) <= 0) {
             return Helper::responeseError(ErrorCode::$balanceNotEnough);
         }
 
-        if(DeviceService::isCharging($deviceNo, $portNo)){
+        //是否正在通电
+        if (DeviceService::isCharging($deviceNo, $portNo)) {
             return Helper::responeseError(ErrorCode::$isChargingNow);
+        }
+
+        //箱子没开，打开箱子
+        if (!BoxService::isOpen($deviceNo, $portNo)) {
+            BoxService::openBox($deviceNo, $portNo);
         }
 
         return Helper::response(['device_id' => $deviceId, 'address' => $deviceInfo['address']]);
@@ -104,7 +111,7 @@ class ChargeController extends Controller
             return Helper::responeseError(ErrorCode::$qrCodeNotFind);
         }
 
-        return Helper::response(['task_id'=>$taskId]);
+        return Helper::response(['task_id' => $taskId]);
     }
 
     /**
@@ -117,8 +124,8 @@ class ChargeController extends Controller
         $taskId = $request->input('task_id');
 
         $device = ChargeTasks::find($taskId);
-        if($device){
-            ChargeService::endChargeByUser(['device_no'=>$device->device_no,'port_no'=>$device->port_no]);
+        if ($device) {
+            ChargeService::endChargeByUser(['device_no' => $device->device_no, 'port_no' => $device->port_no]);
         }
 
 

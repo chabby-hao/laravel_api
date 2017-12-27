@@ -1,13 +1,15 @@
 <?php
+
 namespace App\Services;
 
 use App\Models\DeviceInfo;
 use App\Models\Orders;
+use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
 
-class BoxService extends  BaseService
+class BoxService extends BaseService
 {
 
     /**
@@ -30,4 +32,8 @@ class BoxService extends  BaseService
         CommandService::sendCommandBoxOpen($deviceNo, $portNo);
     }
 
+    public static function closeBox($deviceNo, $portNo)
+    {
+        CommandService::sendCommandBoxClose($deviceNo, $portNo);
+    }
 }

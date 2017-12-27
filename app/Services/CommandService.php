@@ -49,6 +49,12 @@ class CommandService extends BaseService
         return self::send($deviceNo, $portNo, $cmd);
     }
 
+    public static function sendCommandBoxClose($deviceNo, $portNo)
+    {
+        $cmd = self::CMD_CLOSE_BOX;
+        return self::send($deviceNo, $portNo, $cmd);
+    }
+
     /**
      * 开始充电
      */
