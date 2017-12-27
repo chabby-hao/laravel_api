@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Feedbacks;
 use App\Models\User;
 use App\Models\UserRefunds;
 use App\Models\UserToken;
@@ -268,6 +269,14 @@ class UserService extends BaseService
             DB::rollBack();
             return false;
         }
+    }
+
+    public static function addFeedBack($userId, $content)
+    {
+        $feedback = new Feedbacks();
+        $feedback->user_id = $userId;
+        $feedback->content = $content;
+        return $feedback->save();
     }
 
 

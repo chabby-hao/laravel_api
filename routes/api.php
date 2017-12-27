@@ -23,6 +23,8 @@ Route::any('/user/sendMsgCode', 'Api\UserController@sendMsgCode');
 Route::any('/user/balance', 'Api\UserController@balance');
 Route::any('/user/refund', 'Api\UserController@refund');
 Route::any('/user/hasRefund', 'Api\UserController@hasRefund');
+Route::any('/user/feedback', 'Api\UserController@feedback');
+
 
 
 Route::any('/weixinPay/payJoinfee', 'Api\WeixinPayController@payJoinfee');

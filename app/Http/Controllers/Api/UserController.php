@@ -228,4 +228,18 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * 用户反馈
+     */
+    public function feedback(Request $request)
+    {
+        if (!$userId = UserService::getUserId()) {
+            return Helper::responeseError(ErrorCode::$tokenExpire);
+        }
+        $content = $request->input('content');
+
+        UserService::addFeedBack($userId, $content);
+        return $this->responseOk();
+    }
+
 }
