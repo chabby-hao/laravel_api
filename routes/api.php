@@ -66,7 +66,7 @@ Route::get('redis', function(Request $request){
 
 
    if($b){
-       foreach ($b as $row){
+       foreach ($b as &$row){
 //           volt_input	0.1V
 //volt_output	0.1V
 //cur	0.1A
