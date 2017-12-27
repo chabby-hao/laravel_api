@@ -64,6 +64,37 @@ Route::get('redis', function(Request $request){
    $redisKey = \App\Services\DeviceService::KEY_HASH_STATUS_PRE . $a[0] .'_' . $a[1];
    $b = \Illuminate\Support\Facades\Redis::hGetAll($redisKey);
 
+
+   if($b){
+       foreach ($b as $row){
+//           volt_input	0.1V
+//volt_output	0.1V
+//cur	0.1A
+//cap	0.1KW
+//power 1W
+
+           if(isset($row['volt_input'])){
+               $row['volt_input'] /= 10;
+               $row['volt_input'] .= 'V';
+           }
+           if(isset($row['volt_output'])){
+               $row['volt_output'] /= 10;
+               $row['volt_output'] .= 'V';
+           }
+           if(isset($row['cur'])){
+               $row['cur'] /= 10;
+               $row['cur'] .= 'A';
+           }
+           if(isset($row['cap'])){
+               $row['cap'] /= 10;
+               $row['cap'] .= 'KW';
+           }
+           if(isset($row['power'])){
+               $row['power'] .= 'W';
+           }
+       }
+   }
+
    echo json_encode($b?:[]);
    exit;
 
