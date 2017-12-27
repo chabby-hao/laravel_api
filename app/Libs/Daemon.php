@@ -37,7 +37,7 @@ class Daemon
         if (!function_exists('pcntl_signal')) {
             $message = 'PHP does not appear to be compiled with the PCNTL extension.  This is neccesary for daemonization';
             $this->_log($message);
-            throw new Exception($message);
+            throw new \Exception($message);
         }
 //信号处理
         pcntl_signal(SIGTERM, array(__CLASS__, "signalHandler"), false);
@@ -278,7 +278,7 @@ class Daemon
 
         if (!isset($jobs['function']) || empty($jobs['function'])) {
 
-            $this->log("你必须添加运行的函数！");
+            $this->_log("你必须添加运行的函数！");
         }
 
         $this->jobs = $jobs;
