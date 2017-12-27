@@ -80,7 +80,7 @@ Route::get('redis', function (Request $request) {
             $b['volt_output'] .= 'V';
         }
         if (isset($b['cur'])) {
-            $b['cur'] /= 10;
+            $b['cur'] /= 100;
             $b['cur'] .= 'A';
         }
         if (isset($b['cap'])) {
