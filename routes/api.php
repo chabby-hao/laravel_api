@@ -26,7 +26,6 @@ Route::any('/user/hasRefund', 'Api\UserController@hasRefund');
 Route::any('/user/feedback', 'Api\UserController@feedback');
 
 
-
 Route::any('/weixinPay/payJoinfee', 'Api\WeixinPayController@payJoinfee');
 Route::any('/weixinPay/wxNotify', 'Api\WeixinPayController@wxNotify')->name('wxnotify');
 
@@ -46,63 +45,61 @@ Route::any('/charge/lastFinish', 'Api\ChargeController@lastFinish');
 
 Route::any('/orders/lists', 'Api\OrdersController@lists');
 
-Route::any('cmd',function (Request $request){
+Route::any('cmd', function (Request $request) {
     $cmd = \App\Services\CommandService::CMD_START_CHARGE;
     $cmd = $request->input('cmd');//20003
     $deviceNo = $request->input('device_no');
     $portNo = $request->input('port_no');
-    \App\Services\DeviceService::sendChargingHash($deviceNo, $portNo, mt_rand(10,999));
-    $a = \App\Services\CommandService::send($deviceNo, $portNo,$cmd);
-    if($a){
+    \App\Services\DeviceService::sendChargingHash($deviceNo, $portNo, mt_rand(10, 999));
+    $a = \App\Services\CommandService::send($deviceNo, $portNo, $cmd);
+    if ($a) {
         return \App\Libs\Helper::response();
     }
 });
 
-Route::get('redis', function(Request $request){
-   $key = $request->input('key');
-   $a = explode(':', $key);
-   $redisKey = \App\Services\DeviceService::KEY_HASH_STATUS_PRE . $a[0] .'_' . $a[1];
-   $b = \Illuminate\Support\Facades\Redis::hGetAll($redisKey);
+Route::get('redis', function (Request $request) {
+    $key = $request->input('key');
+    $a = explode(':', $key);
+    $redisKey = \App\Services\DeviceService::KEY_HASH_STATUS_PRE . $a[0] . '_' . $a[1];
+    $b = \Illuminate\Support\Facades\Redis::hGetAll($redisKey);
 
 
-   if($b){
-       foreach ($b as &$row){
+    if ($b) {
 //           volt_input	0.1V
 //volt_output	0.1V
 //cur	0.1A
 //cap	0.1KW
 //power 1W
 
-           if(isset($row['volt_input'])){
-               $row['volt_input'] /= 10;
-               $row['volt_input'] .= 'V';
-           }
-           if(isset($row['volt_output'])){
-               $row['volt_output'] /= 10;
-               $row['volt_output'] .= 'V';
-           }
-           if(isset($row['cur'])){
-               $row['cur'] /= 10;
-               $row['cur'] .= 'A';
-           }
-           if(isset($row['cap'])){
-               $row['cap'] /= 10;
-               $row['cap'] .= 'KW';
-           }
-           if(isset($row['power'])){
-               $row['power'] .= 'W';
-           }
-       }
-   }
+        if (isset($b['volt_input'])) {
+            $b['volt_input'] /= 10;
+            $b['volt_input'] .= 'V';
+        }
+        if (isset($b['volt_output'])) {
+            $b['volt_output'] /= 10;
+            $b['volt_output'] .= 'V';
+        }
+        if (isset($b['cur'])) {
+            $b['cur'] /= 10;
+            $b['cur'] .= 'A';
+        }
+        if (isset($b['cap'])) {
+            $b['cap'] /= 10;
+            $b['cap'] .= 'KW';
+        }
+        if (isset($b['power'])) {
+            $b['power'] .= 'W';
+        }
+    }
 
-   echo json_encode($b?:[]);
-   exit;
+    echo json_encode($b ?: []);
+    exit;
 
 });
 
 Route::get('test', function () {
 
-    $a = \App\Models\User::charging(8,0.01);
+    $a = \App\Models\User::charging(8, 0.01);
     var_dump($a);
     exit;
 
