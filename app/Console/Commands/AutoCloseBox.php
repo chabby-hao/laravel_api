@@ -69,7 +69,7 @@ class AutoCloseBox extends Command
                     Log::debug('update close_box with id: ' . $id);
                 }
             }
-            usleep(100000);
+            usleep(1000000);
         }
     }
 
