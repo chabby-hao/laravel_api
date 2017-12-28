@@ -219,10 +219,12 @@ class ChargeService extends BaseService
 
         if ($model->task_state == ChargeTasks::TASK_STATE_END_ABMORMAL) {
             $data['status'] = 1;//异常终止
-        } elseif ($model->task_state == ChargeTasks::TASK_STATE_TIME_END || $model->task_state == ChargeTasks::TASK_STATE_COMPLETE) {
+        } elseif (in_array($model->task_state, ChargeTasks::getFinishStateMap())) {
             $data['status'] = 2;//充电完成
         } elseif ($model->task_state == ChargeTasks::TASK_STATE_INIT) {
             $data['status'] = 3;//初始化，还没通电
+        } elseif ($model->task_state == ChargeTasks::TASK_STATE_INIT && $model->close_box == ChargeTasks::CLOSE_BOX_HAS_SENT) {
+            $data['status'] = 4;//舒适化，未通电，但已过等待时间，关闭箱子
         } else {
             $begin = strtotime($model->begin_at);
             $time = time() - $begin;

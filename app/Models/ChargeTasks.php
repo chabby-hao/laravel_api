@@ -34,6 +34,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $form_id
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ChargeTasks whereFormId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ChargeTasks whereUserCost($value)
+ * @property int $close_box
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ChargeTasks whereCloseBox($value)
  */
 class ChargeTasks extends Model
 {
