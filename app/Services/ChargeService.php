@@ -130,6 +130,10 @@ class ChargeService extends BaseService
         if ($sendCmd) {
             CommandService::sendCommandChargeEnd($deviceNo, $portNo);
         }
+        if(!BoxService::isOpen($deviceNo, $portNo)){
+            //如果box关了就打开
+            BoxService::openBox($deviceNo, $portNo);
+        }
     }
 
     /**

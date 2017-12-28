@@ -66,7 +66,9 @@ class AutoCloseBox extends Command
                     $deviceNo = $row->device_no;
                     $portNo = $row->port_no;
                     Log::debug('close box with task_id: ' . $id);
-                    BoxService::closeBox($deviceNo, $portNo);
+                    if (BoxService::isOpen($deviceNo, $portNo)){
+                        BoxService::closeBox($deviceNo, $portNo);
+                    }
                     DB::update("update charge_tasks set close_box = $Close where id=$id");
                 }
             }
