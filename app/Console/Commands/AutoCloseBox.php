@@ -56,7 +56,7 @@ class AutoCloseBox extends Command
 
         $num = 0;
         while (true) {
-            echo 'used memory :' . memory_get_usage() . 'bytes' . "\n";
+            echo 'used memory :' . memory_get_usage() . ' bytes' . "\n";
             echo ++$num . "\n";
             $result = DB::select("select * from charge_tasks where close_box = $noClose and created_at <= '" . date('Y-m-d H:i:s', strtotime("-$timeout seconds")) . "'");
             if ($result) {
