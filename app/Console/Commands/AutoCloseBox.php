@@ -44,7 +44,7 @@ class AutoCloseBox extends Command
     public function handle()
     {
         //守护进程
-        $daemon=new Daemon(true, 'root', storage_path('logs/daemon.log'));
+        $daemon = new Daemon(true, 'root', storage_path('logs/daemon.log'));
         $daemon->pid_file = 'auto_close_box.pid';
         $daemon->daemonize();
         $daemon->start();
@@ -56,6 +56,7 @@ class AutoCloseBox extends Command
 
         $num = 0;
         while (true) {
+            echo 'used memory :' . memory_get_usage() . 'bytes' . "\n";
             echo ++$num . "\n";
             $result = DB::select("select * from charge_tasks where close_box = $noClose and created_at <= '" . date('Y-m-d H:i:s', strtotime("-$timeout seconds")) . "'");
             if ($result) {
