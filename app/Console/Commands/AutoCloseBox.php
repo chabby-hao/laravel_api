@@ -72,7 +72,8 @@ class AutoCloseBox extends Command
                     DB::update("update charge_tasks set close_box = $Close where id=$id");
                 }
             }
-            usleep(1000000);
+            //500ms
+            usleep(500000);
         }
     }
 
