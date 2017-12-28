@@ -16,4 +16,4 @@ cmd2=`/usr/local/php7/bin/php /data/web/anxinchong/artisan AutoCloseBox`
 
 echo $cmd2
 
-echo 'proccess start'
+echo 'proccess exit(0)'
