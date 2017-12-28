@@ -243,6 +243,7 @@ return [
         'SMS_TEMPLATE_REGISTER' => '226863',//手机注册验证码
         'SMS_TEMPLATE_RESET' => '83783',//用户重置密码短信验证码
         'SMS_TEMPLATE_ADMIN_RESET' => '15720',//客服重置密码, 短信通知用
+        //257392
 
     ],
 

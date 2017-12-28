@@ -129,9 +129,6 @@ class UserController extends Controller
         $appId = config('app')['UCPAAS']['SMS_UCPAAS_APPID'];
         $to = $data['phone'];
         $templateId = config('app')['UCPAAS']['SMS_TEMPLATE_REGISTER'];
-        if (env('APP_DEBUG')) {
-            $templateId = '83783';
-        }
 
         //生成随机6位验证码
         $code = Helper::rand_verify_code(4);
