@@ -81,9 +81,9 @@ class ChargeController extends Controller
         }
 
         //箱子没开，打开箱子
-        if (!BoxService::isOpen($deviceNo, $portNo)) {
+        //if (!BoxService::isOpen($deviceNo, $portNo)) {
             BoxService::openBox($deviceNo, $portNo);
-        }
+        //}
 
         return Helper::response(['device_id' => $deviceId, 'address' => $deviceInfo['address']]);
     }
