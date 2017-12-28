@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-PIDFILE="/tmp/Daemon_artisian.pid"
+PIDFILE="/tmp/auto_close_box.pid"
 
 cmd=`ps -ef | grep "AutoCloseBox" | grep -v "grep AutoCloseBox"| wc -l`
 
