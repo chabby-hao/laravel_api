@@ -99,7 +99,7 @@ Route::get('redis', function (Request $request) {
 
 Route::get('test', function () {
 
-    $a = \App\Models\User::charging(8, 0.01);
+    $a = \App\Models\User::chargeCost(8, 0.01);
     var_dump($a);
     exit;
 

@@ -19,6 +19,8 @@ class ChargeService extends BaseService
 
     const CLOSE_BOX_TIMEOUT = 30;//下发充电命令，多长时间关闭箱子(秒)
 
+    const MAX_CHARGING_TIME = 3600 * 48;//最大充电时长
+
     /**
      * 是否正在充电
      */
@@ -38,7 +40,7 @@ class ChargeService extends BaseService
     public static function startCharge($userId, $deviceId, $mode, $formId)
     {
         $duration = $mode * 3600;
-        if($mode == 1){
+        if ($mode == 1) {
             //1小时，测试改成2分钟
             $duration = 120;
         }
@@ -138,10 +140,13 @@ class ChargeService extends BaseService
      */
     private static function _chargeCost($userId, $chargeTime, $taskId)
     {
+        if ($chargeTime > self::MAX_CHARGING_TIME) {
+            $chargeTime = self::MAX_CHARGING_TIME;
+        }
         $minutes = floor($chargeTime / 60);
         $costs = $minutes * self::PER_MINUTE_CHARGE_PRICE;
         ChargeTasks::userCostAdd($taskId, $costs);
-        return User::charging($userId, $costs);
+        return User::chargeCost($userId, $costs);
     }
 
     /**
@@ -275,7 +280,7 @@ class ChargeService extends BaseService
     public static function sendEndMessage($taskId)
     {
         $task = ChargeTasks::find($taskId);
-        if(!$task){
+        if (!$task) {
             return false;
         }
         $data = [
