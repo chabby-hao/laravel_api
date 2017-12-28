@@ -12,7 +12,7 @@ rm -f $PIDFILE
 
 echo 'proccess shutdown'
 
-cmd2=`/usr/local/php7/bin/php /data/web/anxinchong/artisan AutoCloseBox`
+
 
 
 echo 'proccess exit(0)'
