@@ -68,7 +68,7 @@ class Daemon
 // 只能单例运行
         if ($this->is_sington == true) {
 
-            $this->pid_file = $this->info_dir . "/" . __CLASS__ . "_" . substr(basename($argv[0]), 0, -4) . ".pid";
+            $this->pid_file = $this->pid_file ? $this->info_dir . '/' . $this->pid_file : $this->info_dir . "/" . __CLASS__ . "_" . substr(basename($argv[0]), 0, -4) . ".pid";
             $this->checkPidfile();
         }
 

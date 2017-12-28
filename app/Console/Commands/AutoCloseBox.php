@@ -45,6 +45,7 @@ class AutoCloseBox extends Command
     {
         //守护进程
         $daemon=new Daemon(true, 'root', storage_path('logs/daemon.log'));
+        $daemon->pid_file = 'auto_close_box.pid';
         $daemon->daemonize();
         $daemon->start();
 
