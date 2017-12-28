@@ -37,6 +37,10 @@ class ErrorCode
 
     public static $isChargingNow = 2012;//正在充电中
 
+    public static $phoneInvalid = 2013;//手机格式不正确
+
+    public static $phoneVerifyCodeSendFailed = 2014;//手机验证码发送失败
+
     public static function getErrMsg()
     {
         return [

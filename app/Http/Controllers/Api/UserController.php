@@ -117,9 +117,7 @@ class UserController extends Controller
         $pattern = "/^1[34578]\d{9}/";
 
         if (!preg_match($pattern, $phone)) {
-            $res = array('code' => 1, 'msg' => '手机号码格式不正确,非11位正确手机号');
-            echo json_encode($res);
-            die;
+            return Helper::responeseError(ErrorCode::$phoneInvalid);
         }
 
         $accountid = config('app')['UCPAAS']['SMS_UCPAAS_ACCOUNT'];
@@ -165,11 +163,12 @@ class UserController extends Controller
             $ucpaas = Helper::send_message($options, $appId, $to, $templateId, $msg);
 
             Log::debug('verify code response:' . $ucpaas);
-            //$ucpaas_res = json_decode($ucpaas, true);
-            //var_dump($ucpaas_res);
-            return $this->responseOk();
+            $ucpaas = json_decode($ucpaas, true);
+            if($ucpaas['resp']['respCode'] == '000000'){
+                return $this->responseOk();
+            }
         }
-        return Helper::responeseError();
+        return Helper::responeseError(ErrorCode::$phoneVerifyCodeSendFailed);
 
     }
 
