@@ -114,6 +114,10 @@ Route::get('redis', function (Request $request) {
             $b['ammeter_power'] .= 'W';
         }
 
+        if(isset($b['battery_volt'])){
+            $b['battery_volt'] .= 'V';
+        }
+
     }
 
     echo json_encode($b ?: []);
