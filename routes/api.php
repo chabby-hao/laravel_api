@@ -90,6 +90,30 @@ Route::get('redis', function (Request $request) {
         if (isset($b['power'])) {
             $b['power'] .= 'W';
         }
+        //  电表当前电量
+        if (isset($b['ammeter_energy'])) {
+            // KWH
+            $b['ammeter_energy'] .= 'KWH';
+        }
+
+        //  电表当前电压
+        if (isset($b['ammeter_volt'])) {
+            // V
+            $b['ammeter_volt'] .= 'V';
+        }
+
+        //  电表当前电流
+        if (isset($b['ammeter_cur'])) {
+            // A
+            $b['ammeter_cur'] .= 'A';
+        }
+
+        //  电表当前功率
+        if (isset($b['ammeter_power'])) {
+            //W
+            $b['ammeter_power'] .= 'W';
+        }
+
     }
 
     echo json_encode($b ?: []);
