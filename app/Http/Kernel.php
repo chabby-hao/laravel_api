@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\AdminBeforeCheck;
 use App\Http\Middleware\TokenLogin;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -42,9 +43,11 @@ class Kernel extends HttpKernel
             'throttle:60,1',
             'bindings',
         ],
+
     ];
 
     /**
+     * 别名，可以不定义,用A:class来代替
      * The application's route middleware.
      *
      * These middleware may be assigned to groups or used individually.
@@ -59,5 +62,6 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'token_login'=> TokenLogin::class,
+        //'admin_before_check'=>AdminBeforeCheck::class,
     ];
 }
