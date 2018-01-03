@@ -44,7 +44,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class Shell extends Application
 {
-    const VERSION = 'v0.8.12';
+    const VERSION = 'v0.8.17';
 
     const PROMPT      = '>>> ';
     const BUFF_PROMPT = '... ';
@@ -75,13 +75,13 @@ class Shell extends Application
      */
     public function __construct(Configuration $config = null)
     {
-        $this->config   = $config ?: new Configuration();
-        $this->cleaner  = $this->config->getCodeCleaner();
-        $this->loop     = $this->config->getLoop();
-        $this->context  = new Context();
-        $this->includes = array();
-        $this->readline = $this->config->getReadline();
-        $this->inputBuffer = array();
+        $this->config       = $config ?: new Configuration();
+        $this->cleaner      = $this->config->getCodeCleaner();
+        $this->loop         = $this->config->getLoop();
+        $this->context      = new Context();
+        $this->includes     = array();
+        $this->readline     = $this->config->getReadline();
+        $this->inputBuffer  = array();
         $this->stdoutBuffer = '';
 
         parent::__construct('Psy Shell', self::VERSION);
@@ -170,8 +170,6 @@ class Shell extends Application
         $hist = new Command\HistoryCommand();
         $hist->setReadline($this->readline);
 
-        $edit = new Command\EditCommand($this->config->getRuntimeDir());
-
         return array(
             new Command\HelpCommand(),
             new Command\ListCommand(),
@@ -184,11 +182,11 @@ class Shell extends Application
             new Command\TraceCommand(),
             new Command\BufferCommand(),
             new Command\ClearCommand(),
+            new Command\EditCommand($this->config->getRuntimeDir()),
             // new Command\PsyVersionCommand(),
             $sudo,
             $hist,
             new Command\ExitCommand(),
-            $edit,
         );
     }
 
@@ -748,7 +746,11 @@ class Shell extends Application
     {
         $message = $e->getMessage();
         if (!$e instanceof PsyException) {
-            $message = sprintf('%s with message \'%s\'', get_class($e), $message);
+            if ($message === '') {
+                $message = get_class($e);
+            } else {
+                $message = sprintf('%s with message \'%s\'', get_class($e), $message);
+            }
         }
 
         $severity = ($e instanceof \ErrorException) ? $this->getSeverity($e) : 'error';
@@ -1011,7 +1013,7 @@ class Shell extends Application
         try {
             $client = $this->config->getChecker();
             if (!$client->isLatest()) {
-                $this->output->writeln(sprintf('New version is available (current: %s, latest: %s)',self::VERSION, $client->getLatest()));
+                $this->output->writeln(sprintf('New version is available (current: %s, latest: %s)', self::VERSION, $client->getLatest()));
             }
         } catch (\InvalidArgumentException $e) {
             $this->output->writeln($e->getMessage());

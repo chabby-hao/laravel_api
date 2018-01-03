@@ -31,6 +31,7 @@ use Symfony\Component\HttpFoundation\Response;
 class Client extends BaseClient
 {
     protected $kernel;
+    private $catchExceptions = true;
 
     /**
      * @param HttpKernelInterface $kernel    An HttpKernel instance
@@ -48,15 +49,23 @@ class Client extends BaseClient
     }
 
     /**
-     * Makes a request.
+     * Sets whether to catch exceptions when the kernel is handling a request.
      *
-     * @param Request $request A Request instance
+     * @param bool $catchExceptions Whether to catch exceptions
+     */
+    public function catchExceptions($catchExceptions)
+    {
+        $this->catchExceptions = $catchExceptions;
+    }
+
+    /**
+     * Makes a request.
      *
      * @return Response A Response instance
      */
     protected function doRequest($request)
     {
-        $response = $this->kernel->handle($request);
+        $response = $this->kernel->handle($request, HttpKernelInterface::MASTER_REQUEST, $this->catchExceptions);
 
         if ($this->kernel instanceof TerminableInterface) {
             $this->kernel->terminate($request, $response);
@@ -67,8 +76,6 @@ class Client extends BaseClient
 
     /**
      * Returns the script to execute when the request must be insulated.
-     *
-     * @param Request $request A Request instance
      *
      * @return string
      */
@@ -123,8 +130,6 @@ EOF;
     /**
      * Converts the BrowserKit request to a HttpKernel request.
      *
-     * @param DomRequest $request A DomRequest instance
-     *
      * @return Request A Request instance
      */
     protected function filterRequest(DomRequest $request)
@@ -148,8 +153,6 @@ EOF;
      * an invalid UploadedFile is returned with an error set to UPLOAD_ERR_INI_SIZE.
      *
      * @see UploadedFile
-     *
-     * @param array $files An array of files
      *
      * @return array An array with all uploaded files marked as already moved
      */
@@ -187,8 +190,6 @@ EOF;
 
     /**
      * Converts the HttpKernel response to a BrowserKit response.
-     *
-     * @param Response $response A Response instance
      *
      * @return DomResponse A DomResponse instance
      */

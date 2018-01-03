@@ -230,9 +230,9 @@ class Router implements RegistrarContract, BindingRegistrar
     /**
      * Create a redirect from one URI to another.
      *
-     * @param string  $uri
-     * @param string  $destination
-     * @param int  $status
+     * @param  string  $uri
+     * @param  string  $destination
+     * @param  int  $status
      * @return \Illuminate\Routing\Route
      */
     public function redirect($uri, $destination, $status = 301)
@@ -305,7 +305,20 @@ class Router implements RegistrarContract, BindingRegistrar
     }
 
     /**
-     * Route an api resource to a controller.
+     * Register an array of API resource controllers.
+     *
+     * @param  array  $resources
+     * @return void
+     */
+    public function apiResources(array $resources)
+    {
+        foreach ($resources as $name => $controller) {
+            $this->apiResource($name, $controller);
+        }
+    }
+
+    /**
+     * Route an API resource to a controller.
      *
      * @param  string  $name
      * @param  string  $controller

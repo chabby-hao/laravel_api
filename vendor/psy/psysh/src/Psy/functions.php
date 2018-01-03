@@ -147,7 +147,7 @@ if (!function_exists('Psy\info')) {
         $updateAvailable = null;
         $latest = null;
         try {
-            $updateAvailable = $checker->isLatest();
+            $updateAvailable = !$checker->isLatest();
             $latest = $checker->getLatest();
         } catch (\Exception $e) {
         }
@@ -185,6 +185,11 @@ if (!function_exists('Psy\info')) {
             'pcntl available' => function_exists('pcntl_signal'),
             'posix available' => function_exists('posix_getpid'),
         );
+
+        $disabledFuncs = array_map('trim', explode(',', ini_get('disable_functions')));
+        if (in_array('pcntl_signal', $disabledFuncs) || in_array('pcntl_fork', $disabledFuncs)) {
+            $pcntl['pcntl disabled'] = true;
+        }
 
         $history = array(
             'history file'     => $prettyPath($config->getHistoryFile()),

@@ -13,10 +13,10 @@ namespace PHPUnit\Util\PHP;
 use __PHP_Incomplete_Class;
 use ErrorException;
 use PHPUnit\Framework\Exception;
-use PHPUnit\Framework\TestResult;
-use PHPUnit\Framework\TestFailure;
-use PHPUnit\Framework\Test;
 use PHPUnit\Framework\SyntheticError;
+use PHPUnit\Framework\Test;
+use PHPUnit\Framework\TestFailure;
+use PHPUnit\Framework\TestResult;
 use PHPUnit\Util\InvalidArgumentHelper;
 use SebastianBergmann\Environment\Runtime;
 
@@ -264,7 +264,7 @@ abstract class AbstractPhpProcess
         $buffer = '';
 
         foreach ($settings as $setting) {
-            $buffer .= ' -d ' . $setting;
+            $buffer .= ' -d ' . \escapeshellarg($setting);
         }
 
         return $buffer;
@@ -292,6 +292,7 @@ abstract class AbstractPhpProcess
             \set_error_handler(function ($errno, $errstr, $errfile, $errline) {
                 throw new ErrorException($errstr, $errno, $errno, $errfile, $errline);
             });
+
             try {
                 if (\strpos($stdout, "#!/usr/bin/env php\n") === 0) {
                     $stdout = \substr($stdout, 19);

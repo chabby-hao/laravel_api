@@ -18,7 +18,7 @@ use Psy\Shell;
 use Psy\TabCompletion\Matcher\ClassMethodsMatcher;
 use Symfony\Component\Console\Output\StreamOutput;
 
-class ShellTest extends \PHPUnit_Framework_TestCase
+class ShellTest extends \PHPUnit\Framework\TestCase
 {
     private $streams = array();
 
@@ -241,7 +241,7 @@ class ShellTest extends \PHPUnit_Framework_TestCase
         $shell->flushCode();
         $code = '$test()';
         $shell->addCode($code);
-        $shell->flushCode();
+        $this->assertEquals($shell->flushCode(), 'return $test();');
     }
 
     public function testWriteStdout()

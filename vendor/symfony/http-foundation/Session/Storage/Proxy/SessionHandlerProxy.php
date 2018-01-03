@@ -16,14 +16,8 @@ namespace Symfony\Component\HttpFoundation\Session\Storage\Proxy;
  */
 class SessionHandlerProxy extends AbstractProxy implements \SessionHandlerInterface
 {
-    /**
-     * @var \SessionHandlerInterface
-     */
     protected $handler;
 
-    /**
-     * @param \SessionHandlerInterface $handler
-     */
     public function __construct(\SessionHandlerInterface $handler)
     {
         $this->handler = $handler;
