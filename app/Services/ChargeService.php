@@ -40,10 +40,10 @@ class ChargeService extends BaseService
     public static function startCharge($userId, $deviceId, $mode, $formId)
     {
         $duration = $mode * 3600;
-        if ($mode == 1) {
-            //1小时，测试改成2分钟
-            $duration = 120;
-        }
+//        if ($mode == 1) {
+//            //1小时，测试改成2分钟
+//            $duration = 120;
+//        }
         if (!$deviceModel = DeviceInfo::find($deviceId)) {
             Log::warning('deviceInfo not find deviceId:' . $deviceId);
             return false;
