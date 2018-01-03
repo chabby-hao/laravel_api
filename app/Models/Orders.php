@@ -28,6 +28,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Orders wherePayAt($value)
  * @property string|null $third_no
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Orders whereThirdNo($value)
+ * @property string|null $form_id
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Orders whereFormId($value)
  */
 class Orders extends Model
 {

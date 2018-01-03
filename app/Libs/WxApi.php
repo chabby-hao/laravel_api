@@ -3,7 +3,6 @@
 namespace App\Libs;
 
 use GuzzleHttp\Client;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class WxApi
@@ -34,13 +33,13 @@ class WxApi
         $uri = "https://api.weixin.qq.com/cgi-bin/wxaapp/createwxaqrcode?access_token=$accessToken";
         $client = new Client();
         $json = '{"path": "pages/index/index?deviceId=' . $deviceId . '", "width": 500}';
-        $res = $client->post($uri, ['headers' => ['Content-Type:application/json'], 'body' =>$json]);
+        $res = $client->post($uri, ['headers' => ['Content-Type:application/json'], 'body' => $json]);
         $body = $res->getBody()->getContents();
         $filename = "image/qr/device-$deviceId.jpg";
         $file = public_path($filename);
-        $imgUrl = url($filename) ;
+        $imgUrl = env('APP_URL') . DIRECTORY_SEPARATOR . $filename;
         file_put_contents($file, $body);
-
+        return ['img_url' => $imgUrl, 'img_path' => $file];
     }
 
     public function getAccessToken()

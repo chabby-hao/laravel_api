@@ -50,7 +50,7 @@
                                         <td><?php echo $row['device_no'] ?></td>
                                         <td><?php echo $row['port_no'] ?></td>
                                         <?php if ($row['qr_img']) { ?>
-                                            <td><img src="<?php echo $row['qr_img'] ?>" alt="未设置"></td>
+                                            <td><img width="100" height="100" src="<?php echo $row['qr_img'] ?>" alt="未设置"></td>
                                         <?php } else { ?>
                                             <td>未生成</td>
                                         <?php } ?>

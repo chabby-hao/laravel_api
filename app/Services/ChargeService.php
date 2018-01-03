@@ -126,6 +126,7 @@ class ChargeService extends BaseService
         //扣费逻辑
         self::_chargeCost($model->user_id, $model->actual_time, $model->id);
 
+        $model->close_box = 1;
         $model->save();
         if ($sendCmd) {
             CommandService::sendCommandChargeEnd($deviceNo, $portNo);

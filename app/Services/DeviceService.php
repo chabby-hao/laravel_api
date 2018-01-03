@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Libs\QrApi;
+use App\Libs\WxApi;
 use App\Models\DeviceInfo;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
@@ -32,7 +34,7 @@ class DeviceService extends BaseService
     public static function getDeviceInfo($deviceId)
     {
         $model = DeviceInfo::find($deviceId);
-        return $model ? ['device_no' => $model->device_no, 'port_no' => $model->port_no,'address'=>$model->address] : [];
+        return $model ? ['device_no' => $model->device_no, 'port_no' => $model->port_no, 'address' => $model->address] : [];
     }
 
     /**
@@ -116,14 +118,35 @@ class DeviceService extends BaseService
     public static function addDevice($data)
     {
         $model = DeviceInfo::whereDeviceNo($data['device_no'])->wherePortNo($data['port_no'])->first();
-        if($model){
+        if ($model) {
             return false;
         }
-        $model = DeviceInfo::create($data);
-        if($model){
-            $deviceId = $model->id;
+        try {
+            $model = DeviceInfo::create($data);
+            if ($model) {
+                $deviceId = $model->id;
+                $wxApi = new WxApi();
+                $qrInfo = $wxApi->getQrImg($deviceId);
+                $model->qr_img = $qrInfo['img_url'];
+                $qrcode = new \QrReader($qrInfo['img_path']);
+                $url = $qrcode->text();
+                //有时会解析失败，解析失败调用api来解析
+                if (!$url) {
+                    Log::error('qr decode fail with data ' . json_encode($qrInfo));
+                    $qrApi = new QrApi();
+                    $url = $qrApi->qrdecode($qrInfo['img_path']);
+                    if (!$url) {
+                        Log::error('qr decode fail for api with data ' . json_encode($qrInfo));
+                        return false;
+                    }
+                }
+                $model->url = $url; //return decoded text from QR Code
+                return $model->save();
+            }
+        } catch (\Exception $e) {
+            Log::error('exception when add device :' . $e->getMessage());
         }
-
+        return false;
     }
 
 }

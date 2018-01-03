@@ -1,13 +1,20 @@
+var t_redirect = null;
 function ajax_check_res(data) {
-    var isAlert=arguments[1] === false ? false:true;//默认第二个参数，弹出提示框
-    if( data.code == 200 && data.status == 200){
-        if(data.url != undefined){
-            location.href=data.url;
+    var isAlert = arguments[1] === false ? false : true;//默认第二个参数，弹出提示框
+    if (data.code == 200) {
+        if (data.redirect != undefined) {
+            myalert('处理成功， 1.5秒后跳转！');
+            t_redirect = setTimeout(function(){
+                location.href = data.redirect;
+            }, '1500');
+            return true;
+        }
+        if (data.msg != undefined) {
+            myalert(data.msg);
         }
         return true;
-    }else{
-        if(isAlert)
-        {
+    } else {
+        if (isAlert) {
             myalert(data.msg);
             /*setTimeout(function(){
              myalert(data.data.errMessage);
@@ -19,12 +26,16 @@ function ajax_check_res(data) {
 
 function myalert(msg) {
 
-    var modal = $('<div id="myAlert" class="modal hide"> <div class="modal-header"> <button data-dismiss="modal" class="close" type="button">×</button> <h3>提示</h3> </div> <div class="modal-body"> <p>' + msg + '</p> </div> <div class="modal-footer"> <!--<a data-dismiss="modal" class="btn btn-primary" href="#">Confirm</a>--> <a data-dismiss="modal" class="btn" href="#">OK</a> </div> </div> ');
+    var modal = $('<div id="myAlert" class="modal hide"> <div class="modal-header"> <button data-dismiss="modal" class="close" type="button">×</button> <h3>提示</h3> </div> <div class="modal-body"> <p>' + msg + '</p> </div> <div class="modal-footer"> <!--<a data-dismiss="modal" class="btn btn-primary" href="#">Confirm</a>--> <a data-dismiss="modal" id="ok" class="btn" href="#">OK</a> </div> </div> ');
 
     var body = $("body");
     body.append(modal);
     var width = modal.width();
     modal.modal().css({marginLeft: '-' + width / 2 + 'px'});
+
+    $("#ok").click(function () {
+        clearTimeout(t_redirect);
+    })
 
     $(".modal-backdrop").animate().css({opacity: 0.3});
     $(".modal-backdrop").click(function () {
@@ -112,9 +123,9 @@ $(function () {
 })
 
 //为数组添加删除元素的方法
-Array.prototype.removeByValue = function(val) {
-    for(var i=0; i<this.length; i++) {
-        if(this[i] == val) {
+Array.prototype.removeByValue = function (val) {
+    for (var i = 0; i < this.length; i++) {
+        if (this[i] == val) {
             this.splice(i, 1);
             break;
         }
@@ -127,5 +138,6 @@ Array.prototype.removeByValue = function(val) {
 function getQueryString(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
     var r = window.location.search.substr(1).match(reg);
-    if (r != null) return unescape(r[2]); return null;
+    if (r != null) return unescape(r[2]);
+    return null;
 }

@@ -16,6 +16,14 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\DeviceInfo whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\DeviceInfo wherePortNo($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\DeviceInfo whereUrl($value)
+ * @property string|null $address 充电棚所在地址
+ * @property int|null $qr_img
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\DeviceInfo whereAddress($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\DeviceInfo whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\DeviceInfo whereQrImg($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\DeviceInfo whereUpdatedAt($value)
  */
 class DeviceInfo extends Model
 {
@@ -24,7 +32,7 @@ class DeviceInfo extends Model
 
     protected $primaryKey = 'id';
 
-    protected $fillable = ['id','device_no'];
+    protected $guarded = [];
 
 //    /**
 //     * @param $id

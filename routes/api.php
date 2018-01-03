@@ -126,6 +126,15 @@ Route::get('redis', function (Request $request) {
 });
 
 Route::get('test', function () {
+    $img = '/Users/chabby/git/laravel/public/image/qr/device-1027.jpg';
+
+    $qrapi = new \App\Libs\QrApi();
+    $d = $qrapi->qrdecode($img);
+    var_dump($d);exit;
+
+    $qrcode = new QrReader();
+    $text = $qrcode->text(); //return decoded text from QR Code
+    echo $text;exit;
     $filename = "image/qr/device-3.jpg";
     $file = public_path($filename);
     $imgUrl = url($filename);

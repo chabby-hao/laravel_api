@@ -22,6 +22,11 @@ class BaseController extends Controller
         die(json_encode($data));
     }
 
+    protected function _outPutSuccess()
+    {
+        $this->_outPut(['msg'=>'success']);
+    }
+
     protected function _outPutError($msg, array $data = [])
     {
         if (!isset($data['code'])) {
@@ -31,11 +36,16 @@ class BaseController extends Controller
         die(json_encode($data));
     }
 
+    protected function _outPutRedirect($url)
+    {
+        $this->_outPut(['redirect'=>$url]);
+    }
+
     protected function _checkParams($check, $input, $allowEmptys = [])
     {
         $data = Helper::arrayRequiredCheck($check, $input, false, $allowEmptys);
         if ($data === false) {
-            return $this->_outPutError('信息填写错误');
+            return $this->_outPutError('请填写完整信息');
         }
         return $data;
     }

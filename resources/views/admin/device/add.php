@@ -75,7 +75,7 @@
             success: function(data)
             {
                 if(ajax_check_res(data)){
-                    myalert('保存成功');
+                    //myalert('保存成功');
                 }
             }
         });
