@@ -28,7 +28,7 @@ class WxApi
         return true;
     }
 
-    public function getQrImg()
+    public function getQrImg($deviceId)
     {
 
     }

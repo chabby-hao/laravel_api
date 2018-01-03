@@ -148,14 +148,18 @@ class Helper
      * 过滤后，返回必要的字段
      * @param $arrFilter
      * @param $arrData
+     * @param bool $returnKey
+     * @param array $allowEmptys
      * @return array|bool|string
      */
-    public static function arrayRequiredCheck($arrFilter, $arrData, $returnKey = false)
+    public static function arrayRequiredCheck($arrFilter, $arrData, $returnKey = false, $allowEmptys = [])
     {
         $data = [];
         foreach ($arrFilter as $filter) {
             if (array_key_exists($filter, $arrData) && $arrData[$filter] !== '' && $arrData[$filter] !== null) {
                 $data[$filter] = $arrData[$filter];
+            }elseif(in_array($filter, $allowEmptys)){
+                $data[$filter] = '';
             } else {
                 if ($returnKey) {
                     return $filter;

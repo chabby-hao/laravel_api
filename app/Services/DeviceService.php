@@ -115,6 +115,14 @@ class DeviceService extends BaseService
 
     public static function addDevice($data)
     {
+        $model = DeviceInfo::whereDeviceNo($data['device_no'])->wherePortNo($data['port_no'])->first();
+        if($model){
+            return false;
+        }
+        $model = DeviceInfo::create($data);
+        if($model){
+            $deviceId = $model->id;
+        }
 
     }
 

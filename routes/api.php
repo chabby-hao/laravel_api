@@ -126,6 +126,9 @@ Route::get('redis', function (Request $request) {
 });
 
 Route::get('test', function () {
+    $wxapi = new \App\Libs\WxApi();
+    echo $wxapi->getAccessToken();
+    exit;
 
     $a = \App\Models\User::chargeCost(8, 0.01);
     var_dump($a);

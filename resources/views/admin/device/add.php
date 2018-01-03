@@ -33,7 +33,7 @@
                                 <div class="control-group">
                                     <label class="control-label">安装地址 :</label>
                                     <div class="controls">
-                                        <input name="port_no" type="text" class="span11"/>
+                                        <input name="address" type="text" class="span11"/>
                                         <span class="help-block">例：万和家园110号充电棚</span>
                                     </div>
                                 </div>

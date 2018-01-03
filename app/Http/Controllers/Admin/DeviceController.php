@@ -30,7 +30,7 @@ class DeviceController extends BaseController
         if($request->isXmlHttpRequest()){
             $arrInput = $request->input();
             $arrCheck = ['device_no','port_no','address'];
-            $data = $this->_checkParams($arrCheck, $arrInput);
+            $data = $this->_checkParams($arrCheck, $arrInput, ['address']);
 
             DeviceService::addDevice($data);
 
