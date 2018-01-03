@@ -52,7 +52,7 @@ class ChargeTasks extends Model
 
     protected $table = 'charge_tasks';
     protected $primaryKey = 'id';
-    protected $fillable = ['user_id', 'device_no','port_no'];
+    protected $fillable = ['user_id', 'device_no', 'port_no'];
 
     /**
      * 获取充电结束的state，方便一点
@@ -98,6 +98,13 @@ class ChargeTasks extends Model
         $model = self::whereDeviceNo($deviceNo)->wherePortNo($portNo)->orderByDesc('id')->first();
         return $model ? $model->id : false;
     }
+
+    public static function getLastTaskByDevice($deviceNo, $portNo)
+    {
+        $model = self::whereDeviceNo($deviceNo)->wherePortNo($portNo)->orderByDesc('id')->first();
+        return $model;
+    }
+
 
     /**
      * @param $taskId

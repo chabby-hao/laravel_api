@@ -28,6 +28,11 @@ class WxApi
         return true;
     }
 
+    public function getQrImg()
+    {
+
+    }
+
     public function getAccessToken()
     {
         // access_token 应该全局存储与更新，以下代码以写入到文件中做示例

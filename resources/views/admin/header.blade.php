@@ -29,8 +29,9 @@
 <!--top-Header-menu-->
 <div id="user-nav" class="navbar navbar-inverse">
     <ul class="nav">
-        <li class="dropdown" id="profile-messages"><a title="" href="#" data-toggle="dropdown" data-target="#profile-messages" class="dropdown-toggle"><i
-                    class="icon icon-user"></i> <span class="text">Welcome User</span><b class="caret"></b></a>
+        <li class="dropdown" id="profile-messages">
+            <a title="" href="#" data-toggle="dropdown" data-target="#profile-messages" class="dropdown-toggle"><i
+                        class="icon icon-user"></i> <span class="text">Welcome User</span><b class="caret"></b></a>
             <ul class="dropdown-menu">
                 <li><a href="#"><i class="icon-user"></i> My Profile</a></li>
                 <li class="divider"></li>
@@ -56,22 +57,26 @@
         <!--<li class="active"><a href=""><i class="icon icon-home"></i>
                 <span>Dashboard</span></a></li>-->
         <!--        用户参数配置，用于集成api-->
-        <li class="submenu"><a href="#"><i class="icon icon-th-list"></i> <span>管理员</span> <span class="label label-important">1</span></a>
+        <li class="submenu"><a href="#"><i class="icon icon-th-list"></i> <span>管理员</span>
+                <span class="label label-important">1</span></a>
             <ul>
                 <li><a href="=">管理员列表</a></li>
             </ul>
 
         </li>
         <!--        app应用配置-->
-        <li class="submenu"><a href="#"><i class="icon icon-th-list"></i> <span>应用配置</span> <span class="label label-important">1</span></a>
+        <li class="submenu"><a href="#"><i class="icon icon-th-list"></i> <span>设备配置</span>
+                <span class="label label-important">1</span></a>
             <ul>
-                <li><a href="">app列表</a></li>
+                <li><a href="{{ URL::action('Admin\DeviceController@list')  }}">设备列表</a></li>
+                <li><a href="{{ URL::action('Admin\DeviceController@add')  }}">添加设备</a></li>
             </ul>
 
         </li>
 
         <!--        报告-->
-        <li class="submenu"><a href="#"><i class="icon icon-th-list"></i> <span>报告</span> <span class="label label-important">4</span></a>
+        <li class="submenu"><a href="#"><i class="icon icon-th-list"></i> <span>报告</span>
+                <span class="label label-important">4</span></a>
             <ul>
                 <li><a href="">整体报告</a></li>
                 <li><a href="">整体报告</a></li>

@@ -13,8 +13,9 @@ use App\Libs\Helper;
 use App\Models\DeviceInfo;
 use App\Services\DeviceService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
-class DeviceController extends Controller
+class DeviceController extends BaseController
 {
     public function list()
     {
@@ -24,8 +25,19 @@ class DeviceController extends Controller
         return view('admin.device.list',['devices'=>$devices]);
     }
 
-    public function add()
+    public function add(Request $request)
     {
+        if($request->isXmlHttpRequest()){
+            $arrInput = $request->input();
+            $arrCheck = ['device_no','port_no','address'];
+            $data = $this->_checkParams($arrCheck, $arrInput);
+
+            DeviceService::addDevice($data);
+
+            $this->_outPut($data);
+
+
+        }
         return view('admin.device.add');
     }
 

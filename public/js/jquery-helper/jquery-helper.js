@@ -8,7 +8,7 @@ function ajax_check_res(data) {
     }else{
         if(isAlert)
         {
-            myalert(data.data.errMessage);
+            myalert(data.msg);
             /*setTimeout(function(){
              myalert(data.data.errMessage);
              }, '500');*/
@@ -94,19 +94,19 @@ $(function () {
 
     function onStart(event) {
         //动画加载
-        //ajax_loading();
+        ajax_loading();
         //.....
     }
 
     function onComplete(event, xhr, settings) {
         //动画加载结束
-        //ajax_complete();
+        ajax_complete();
         //.....
     }
 
     function onSuccess(event, xhr, settings) {
         //动画加载结束
-        //ajax_complete();
+        ajax_complete();
         //.....
     }
 })

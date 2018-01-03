@@ -17,7 +17,7 @@ class ChargeService extends BaseService
 
     const PER_MINUTE_CHARGE_PRICE = 0.02;//单位分钟扣除费用(元)
 
-    const CLOSE_BOX_TIMEOUT = 30;//下发充电命令，多长时间关闭箱子(秒)
+    const CLOSE_BOX_TIMEOUT = 120;//下发充电命令，多长时间关闭箱子(秒)
 
     const MAX_CHARGING_TIME = 3600 * 48;//最大充电时长
 

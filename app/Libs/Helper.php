@@ -20,8 +20,8 @@ class Helper
         $code = 200;
         $content = [
             'code' => $code,
-            'msg'=>'success',
-            'data'=>$data,
+            'msg' => 'success',
+            'data' => $data,
         ];
         //Log::debug('response------------- ' . json_encode($content));
         return response($content, $status, $headers);
@@ -30,18 +30,25 @@ class Helper
     /**
      * @param int $code
      * @param array $data
+     * @param array $replaces
      * @param int $status
      * @param array $headers
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
-    public static function responeseError($code = 500, array $data = [], $status = 200, array $headers = [])
+    public static function responeseError($code = 500, array $data = [], $replaces = [], $status = 200, array $headers = [])
     {
 
         $errMsg = ErrorCode::getErrMsg();
         $content = [
             'code' => $code,
-            'msg'=>isset($errMsg[$code]) ? $errMsg[$code] : '',
+            'msg' => isset($errMsg[$code]) ? $errMsg[$code] : '',
         ];
+        if ($replaces) {
+            array_walk($replaces, function (&$w){
+                $w = '{' . $w . '}';
+            });
+            $content['msg'] = strtr($content['msg'], $replaces);
+        }
         $content = array_merge($content, $data);
         //Log::error('response error----------- ' . json_encode($content));
         return response($content, $status, $headers);
@@ -146,13 +153,13 @@ class Helper
     public static function arrayRequiredCheck($arrFilter, $arrData, $returnKey = false)
     {
         $data = [];
-        foreach ($arrFilter as $filter){
-            if(array_key_exists($filter,$arrData) && $arrData[$filter]!=='' && $arrData[$filter]!==null){
+        foreach ($arrFilter as $filter) {
+            if (array_key_exists($filter, $arrData) && $arrData[$filter] !== '' && $arrData[$filter] !== null) {
                 $data[$filter] = $arrData[$filter];
-            }else{
-                if($returnKey){
+            } else {
+                if ($returnKey) {
                     return $filter;
-                }else{
+                } else {
                     return false;
                 }
             }

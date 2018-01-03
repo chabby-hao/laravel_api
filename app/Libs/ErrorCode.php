@@ -41,6 +41,8 @@ class ErrorCode
 
     public static $phoneVerifyCodeSendFailed = 2014;//手机验证码发送失败
 
+    public static $isChargingAndNeedWait = 2015;//充电口被占用，需等待
+
     public static function getErrMsg()
     {
         return [
@@ -48,7 +50,8 @@ class ErrorCode
             self::$deviceNotOnline => '设备离线',
             self::$deviceNotUseful => '充电口暂不可用，请稍后再试',
             self::$balanceNotEnough =>'余额不足，请先充值',
-            self::$isChargingNow => '当前设备正在使用中',
+            self::$isChargingNow => '充电口被占用，请换一个充电口',
+            self::$isChargingAndNeedWait = '充电口被占用，请换一个充电口或等待{mins}分钟';
         ];
     }
 

@@ -20,17 +20,10 @@ class ChargeController extends Controller
 {
 
     /**
-     * 打开盒子
+     * 获取充电口地址信息
      * @param Request $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
-//    public function openBox(Request $request)
-//    {
-//        if (!BoxService::isOpen()) {
-//            BoxService::openBox();
-//            return $this->responseOk();
-//        }
-//    }
-
     public function deviceAddress(Request $request)
     {
         $deviceId = $request->input('device_id');
@@ -77,6 +70,13 @@ class ChargeController extends Controller
 
         //是否正在通电
         if (DeviceService::isCharging($deviceNo, $portNo)) {
+            if (($lastTask = ChargeTasks::getLastTaskByDevice($deviceNo, $portNo)) && $lastTask->task_state == ChargeTasks::TASK_STATE_CHARGING) {
+                if ($lastTask->expect_time == 0) {
+                    return Helper::responeseError(ErrorCode::$isChargingNow);
+                } else {
+                    return Helper::responeseError(ErrorCode::$isChargingAndNeedWait, [], ['mins' => ceil(($lastTask->expect_time - (time() - strtotime($lastTask->begin_at))) / 60)]);
+                }
+            }
             return Helper::responeseError(ErrorCode::$isChargingNow);
         }
 

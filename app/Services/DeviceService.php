@@ -113,4 +113,9 @@ class DeviceService extends BaseService
         return Redis::hSet($key, 'task_id', $taskId);
     }
 
+    public static function addDevice($data)
+    {
+
+    }
+
 }
