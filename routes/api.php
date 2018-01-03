@@ -114,7 +114,7 @@ Route::get('redis', function (Request $request) {
             $b['ammeter_power'] .= 'W';
         }
 
-        if(isset($b['battery_volt'])){
+        if (isset($b['battery_volt'])) {
             $b['battery_volt'] .= 'V';
         }
 
@@ -126,6 +126,11 @@ Route::get('redis', function (Request $request) {
 });
 
 Route::get('test', function () {
+    $filename = "image/qr/device-3.jpg";
+    $file = public_path($filename);
+    $imgUrl = url($filename);
+    var_dump($filename, $file, $imgUrl);
+    exit;
     $wxapi = new \App\Libs\WxApi();
     echo $wxapi->getAccessToken();
     exit;

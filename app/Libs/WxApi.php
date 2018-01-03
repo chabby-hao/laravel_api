@@ -2,8 +2,8 @@
 
 namespace App\Libs;
 
-use App\Services\ChargeService;
-use Curl\Curl;
+use GuzzleHttp\Client;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class WxApi
@@ -17,12 +17,12 @@ class WxApi
         is_array($json) && $json = json_encode($json);
         $accessToken = $this->getAccessToken();
         $uri = "https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=$accessToken";
-        $client = new \GuzzleHttp\Client();
-        $res = $client->post($uri, ['body'=>$json]);
+        $client = new Client();
+        $res = $client->post($uri, ['body' => $json]);
         $body = $res->getBody()->getContents();
         $data = json_decode($body, true);
-        Log::info('send message token: ' . $accessToken . ' json : ' .$json . ' res: ' .  $body);
-        if($data['errcode'] !== 0 ){
+        Log::info('send message token: ' . $accessToken . ' json : ' . $json . ' res: ' . $body);
+        if ($data['errcode'] !== 0) {
             return false;
         }
         return true;
@@ -30,6 +30,16 @@ class WxApi
 
     public function getQrImg($deviceId)
     {
+        $accessToken = $this->getAccessToken();
+        $uri = "https://api.weixin.qq.com/cgi-bin/wxaapp/createwxaqrcode?access_token=$accessToken";
+        $client = new Client();
+        $json = '{"path": "pages/index/index?deviceId=' . $deviceId . '", "width": 500}';
+        $res = $client->post($uri, ['headers' => ['Content-Type:application/json'], 'body' =>$json]);
+        $body = $res->getBody()->getContents();
+        $filename = "image/qr/device-$deviceId.jpg";
+        $file = public_path($filename);
+        $imgUrl = url($filename) ;
+        file_put_contents($file, $body);
 
     }
 
