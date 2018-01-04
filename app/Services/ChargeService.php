@@ -77,6 +77,10 @@ class ChargeService extends BaseService
             if ($expectTime) {
                 $model->expect_end_at = date('Y-m-d H:i:s', strtotime("+$expectTime seconds"));
             }
+            if (BoxService::isOpen($model->device_no, $model->port_no)) {
+                //关箱子
+                BoxService::closeBox($model->device_no, $model->port_no);
+            }
             return $model->save();
         } elseif ($model) {
             return true;
@@ -131,7 +135,7 @@ class ChargeService extends BaseService
         if ($sendCmd) {
             CommandService::sendCommandChargeEnd($deviceNo, $portNo);
         }
-        if(!BoxService::isOpen($deviceNo, $portNo)){
+        if (!BoxService::isOpen($deviceNo, $portNo)) {
             //如果box关了就打开
             BoxService::openBox($deviceNo, $portNo);
         }
@@ -295,7 +299,7 @@ class ChargeService extends BaseService
             'data' => [
                 'keyword1' => ['value' => '￥' . $task->user_cost, 'color' => '#173177'],
                 'keyword2' => ['value' => floor($task->actual_time / 60) . '分钟', 'color' => '#173177'],
-                'keyword3'=>['value'=>'无','color'=>'#173177'],
+                'keyword3' => ['value' => '无', 'color' => '#173177'],
             ],
         ];
         return self::sendMessageToUser($taskId, $data);
