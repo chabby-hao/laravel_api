@@ -121,13 +121,13 @@ class ChargeService extends BaseService
         $beginTime = strtotime($begin);
         $model->actual_time = time() - $beginTime;
         $model->task_state = $state;
+        $model->close_box = ChargeTasks::CLOSE_BOX_HAS_SENT;
+        $model->save();
 
 
         //扣费逻辑
         self::_chargeCost($model->user_id, $model->actual_time, $model->id);
 
-        $model->close_box = 1;
-        $model->save();
         if ($sendCmd) {
             CommandService::sendCommandChargeEnd($deviceNo, $portNo);
         }
