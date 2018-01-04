@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Log;
 class ChargeService extends BaseService
 {
 
-    const TEMPLATE_ID_AB = '8ySltzpdZn80ymIGD6-2N6vhQ1YFGbjRMZ0v8js22YA';
+    //const TEMPLATE_ID_AB = '8ySltzpdZn80ymIGD6-2N6vhQ1YFGbjRMZ0v8js22YA';
 
     const TEMPLATE_ID_END = 'kJuQgZvKVkuGr_uK16rrXg0NKYeLaoHWiEq9uvE7x14';
 
@@ -278,11 +278,16 @@ class ChargeService extends BaseService
 
     public static function sendEndAbMessage($taskId)
     {
+        $task = ChargeTasks::find($taskId);
+        if (!$task) {
+            return false;
+        }
         $data = [
-            'template_id' => self::TEMPLATE_ID_AB,
+            'template_id' => self::TEMPLATE_ID_END,
             'data' => [
-                'keyword1' => ['value' => '充电异常中断', 'color' => '#173177'],
-                'keyword2' => ['value' => '请到车棚查看原因', 'color' => '#173177'],
+                'keyword1' => ['value' => '￥' . $task->user_cost, 'color' => '#173177'],
+                'keyword2' => ['value' => floor($task->actual_time / 60) . '分钟', 'color' => '#173177'],
+                'keyword3' => ['value' => '充电过程被意外中断，请到充电棚查看充电器连接情况', 'color' => '#173177'],
             ],
         ];
         return self::sendMessageToUser($taskId, $data);
@@ -294,12 +299,22 @@ class ChargeService extends BaseService
         if (!$task) {
             return false;
         }
+
+        $userId = $task->user_id;
+        $userBalance = UserService::getUserBalance($userId);
+        if ($userBalance < 0) {
+            //欠费提醒
+            $desc = '您已欠费' . abs($userBalance) . '元，为了不影响下次充电，请及时充值';
+        } else {
+            $desc = '无';
+        }
+
         $data = [
             'template_id' => self::TEMPLATE_ID_END,
             'data' => [
                 'keyword1' => ['value' => '￥' . $task->user_cost, 'color' => '#173177'],
                 'keyword2' => ['value' => floor($task->actual_time / 60) . '分钟', 'color' => '#173177'],
-                'keyword3' => ['value' => '无', 'color' => '#173177'],
+                'keyword3' => ['value' => $desc, 'color' => '#173177'],
             ],
         ];
         return self::sendMessageToUser($taskId, $data);
