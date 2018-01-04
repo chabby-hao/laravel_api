@@ -88,6 +88,7 @@ Route::get('redis', function (Request $request) {
             $b['cap'] .= 'KWH';
         }
         if (isset($b['power'])) {
+            $b['power'] /= 10;
             $b['power'] .= 'W';
         }
         //  电表当前电量
