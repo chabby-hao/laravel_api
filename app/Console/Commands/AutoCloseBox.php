@@ -6,6 +6,7 @@ use App\Libs\Daemon;
 use App\Models\ChargeTasks;
 use App\Services\BoxService;
 use App\Services\ChargeService;
+use App\Services\CommandService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -66,8 +67,12 @@ class AutoCloseBox extends Command
                     $deviceNo = $row->device_no;
                     $portNo = $row->port_no;
                     Log::debug('close box with task_id: ' . $id);
-                    if (BoxService::isOpen($deviceNo, $portNo)){
+                    if (BoxService::isOpen($deviceNo, $portNo)) {
                         BoxService::closeBox($deviceNo, $portNo);
+                    }
+                    if ($row->task_state == ChargeTasks::TASK_STATE_INIT) {
+                        //还未通电
+                        CommandService::sendCommandChargeEnd($deviceNo, $portNo);
                     }
                     DB::update("update charge_tasks set close_box = $Close where id=$id");
                 }
