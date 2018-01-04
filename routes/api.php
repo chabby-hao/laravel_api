@@ -85,7 +85,7 @@ Route::get('redis', function (Request $request) {
         }
         if (isset($b['cap'])) {
             $b['cap'] /= 10;
-            $b['cap'] .= 'KW';
+            $b['cap'] .= 'KWH';
         }
         if (isset($b['power'])) {
             $b['power'] .= 'W';
@@ -116,6 +116,10 @@ Route::get('redis', function (Request $request) {
 
         if (isset($b['battery_volt'])) {
             $b['battery_volt'] .= 'V';
+        }
+
+        if(isset($b['power_scale'])){
+            $b['power_scale'] /= 1000;
         }
 
     }
