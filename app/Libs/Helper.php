@@ -43,12 +43,14 @@ class Helper
             'code' => $code,
             'msg' => isset($errMsg[$code]) ? $errMsg[$code] : '',
         ];
+        Log::debug('repla' . \GuzzleHttp\json_encode($replaces));
         if ($replaces) {
             $newReplaces = [];
             foreach ($replaces as $k=>$replace){
                 $newReplaces['{' . $k . '}'] = $replace;
             }
             $content['msg'] = strtr($content['msg'], $newReplaces);
+            Log::debug(\GuzzleHttp\json_encode($content));
         }
         $content = array_merge($content, $data);
         //Log::error('response error----------- ' . json_encode($content));
