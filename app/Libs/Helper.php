@@ -44,10 +44,11 @@ class Helper
             'msg' => isset($errMsg[$code]) ? $errMsg[$code] : '',
         ];
         if ($replaces) {
-            array_walk($replaces, function (&$w){
-                $w = '{' . $w . '}';
-            });
-            $content['msg'] = strtr($content['msg'], $replaces);
+            $newReplaces = [];
+            foreach ($replaces as $k=>$replace){
+                $newReplaces['{' . $k . '}'] = $replace;
+            }
+            $content['msg'] = strtr($content['msg'], $newReplaces);
         }
         $content = array_merge($content, $data);
         //Log::error('response error----------- ' . json_encode($content));
