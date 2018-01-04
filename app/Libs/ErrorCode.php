@@ -51,7 +51,7 @@ class ErrorCode
             self::$deviceNotUseful => '充电口暂不可用，请稍后再试',
             self::$balanceNotEnough =>'余额不足，请先充值',
             self::$isChargingNow => '充电口被占用，请换一个充电口',
-            self::$isChargingAndNeedWait = '充电口被占用，请换一个充电口或等待{mins}分钟',
+            self::$isChargingAndNeedWait => '充电口被占用，请换一个充电口或等待{mins}分钟',
         ];
     }
 
