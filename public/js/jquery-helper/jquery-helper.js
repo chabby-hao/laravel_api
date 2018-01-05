@@ -26,14 +26,14 @@ function ajax_check_res(data) {
 
 function myalert(msg) {
 
-    var modal = $('<div id="myAlert" class="modal hide"> <div class="modal-header"> <button data-dismiss="modal" class="close" type="button">×</button> <h3>提示</h3> </div> <div class="modal-body"> <p>' + msg + '</p> </div> <div class="modal-footer"> <!--<a data-dismiss="modal" class="btn btn-primary" href="#">Confirm</a>--> <a data-dismiss="modal" class="ok" class="btn" href="#">OK</a> </div> </div> ');
+    var modal = $('<div id="myAlert" class="modal hide"> <div class="modal-header"> <button data-dismiss="modal" class="close" type="button">×</button> <h3>提示</h3> </div> <div class="modal-body"> <p>' + msg + '</p> </div> <div class="modal-footer"> <!--<a data-dismiss="modal" class="btn btn-primary" href="#">Confirm</a>--> <a data-dismiss="modal" class="btn alert" href="#">OK</a> </div> </div> ');
 
     var body = $("body");
     body.append(modal);
     var width = modal.width();
     modal.modal().css({marginLeft: '-' + width / 2 + 'px'});
 
-    $(".ok").click(function () {
+    $(".alert").click(function () {
         clearTimeout(t_redirect);
     })
 
