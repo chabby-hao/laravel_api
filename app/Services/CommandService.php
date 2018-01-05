@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\ClientCommandLogs;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
 
@@ -27,6 +28,7 @@ class CommandService extends BaseService
         $c = pack('V', $cmd);
         $val = $a . $b . $c;
         Log::debug("push redis deviceNo: $deviceNo, portNo: $portNo, cmd: $cmd");
+        ClientCommandLogs::addLog($deviceNo, $portNo, $cmd);
         return Redis::lPush(self::LIST_COMMAND_PRE . $number, $val);
     }
 
