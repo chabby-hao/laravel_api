@@ -294,7 +294,7 @@ class ChargeService extends BaseService
                 'keyword2' => ['value' => floor($task->actual_time / 60) . '分钟', 'color' => '#173177'],
                 'keyword3' => ['value' => '充电过程被意外中断，请到充电棚查看充电器连接情况', 'color' => '#173177'],
             ],
-            "page" => "/pages/index/index",
+            "page" => "pages/index/index",
         ];
         return self::sendMessageToUser($taskId, $data);
     }
@@ -327,7 +327,7 @@ class ChargeService extends BaseService
                 'keyword2' => ['value' => floor($task->actual_time / 60) . '分钟', 'color' => '#173177'],
                 'keyword3' => ['value' => $desc, 'color' => '#173177'],
             ],
-            "page" => "/pages/index/index",
+            "page" => "pages/index/index",
         ];
         return self::sendMessageToUser($taskId, $data);
     }
