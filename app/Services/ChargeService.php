@@ -164,7 +164,9 @@ class ChargeService extends BaseService
      */
     public static function endChargeByUser($device)
     {
-        return self::endCharge($device, ChargeTasks::TASK_STATE_USER_END);
+        self::endCharge($device, ChargeTasks::TASK_STATE_USER_END);
+        $taskId = ChargeTasks::getLastTaskIdByDevice($device['device_no'], $device['port_no']);
+        return self::sendEndMessage($taskId);
     }
 
     /**
