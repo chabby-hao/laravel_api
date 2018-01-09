@@ -113,6 +113,7 @@ class DeviceService extends BaseService
 
     public static function sendChargingHash($deviceNo, $portNo, $taskId)
     {
+        $deviceNo = intval($deviceNo);
         $key = self::_getSendKey($deviceNo, $portNo);
         return Redis::hSet($key, 'task_id', $taskId);
     }
