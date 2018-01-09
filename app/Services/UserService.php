@@ -254,9 +254,10 @@ class UserService extends BaseService
         if(!$user){
             return false;
         }
+        $userBalance = $user->user_balance;
+        Log::info('user/refund user: ' . $user->toJson());
         $user->user_balance = 0;
         $resUser = $user->save();
-        $userBalance = $user->user_balance;
         $userRefund = new UserRefunds();
         $userRefund->user_id = $userId;
         $userRefund->refund_amount = $userBalance;
