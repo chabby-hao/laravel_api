@@ -44,7 +44,7 @@ class DeviceService extends BaseService
      */
     public static function isDeviceOnline($deviceNo)
     {
-        $key = self::KEY_HASH_STATUS_PRE . $deviceNo . '_0';
+        $key = self::KEY_HASH_STATUS_PRE . intval($deviceNo) . '_0';
         $val = Redis::hGet($key, 'attach');
         Log::debug("isDeviceOnline deviceNo: $deviceNo attach: $val");
         return $val ? true : false;
