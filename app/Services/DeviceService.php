@@ -99,12 +99,14 @@ class DeviceService extends BaseService
 
     private static function _getStatusKey($deviceNo, $portNo)
     {
+        $deviceNo = intval($deviceNo);
         $key = self::KEY_HASH_STATUS_PRE . $deviceNo . '_' . $portNo;
         return $key;
     }
 
     private static function _getSendKey($deviceNo, $portNo)
     {
+        $deviceNo = intval($deviceNo);
         $key = self::KEY_HASH_SEND_PRE . $deviceNo . '_' . $portNo;
         return $key;
     }
