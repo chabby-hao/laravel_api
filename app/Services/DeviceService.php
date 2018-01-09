@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Redis;
 class DeviceService extends BaseService
 {
 
+    //发命令的时候 device_no 是 long 型的
+
     const KEY_HASH_STATUS_PRE = 'axcPortInfo_';
     const KEY_HASH_SEND_PRE = 'axcSendInfo_';
 
