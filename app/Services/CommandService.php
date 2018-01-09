@@ -21,6 +21,7 @@ class CommandService extends BaseService
      */
     public static function send($deviceNo, $portNo, $cmd)
     {
+        $deviceNo = intval($deviceNo);
         $number = self::_getServerNumber($deviceNo);
 
         $a = pack('P', $deviceNo);
