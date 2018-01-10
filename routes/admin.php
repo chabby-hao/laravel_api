@@ -18,6 +18,8 @@ Route::any('/device/list', 'Admin\DeviceController@list');
 
 Route::any('/device/add','Admin\DeviceController@add');
 
+Route::any('/device/remoteUpgrade','Admin\DeviceController@remoteUpgrade');
+
 Route::any('/test', function () {
     $d = Route::currentRouteAction();
     var_dump($d);

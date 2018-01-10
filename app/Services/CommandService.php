@@ -15,6 +15,7 @@ class CommandService extends BaseService
     const CMD_CLOSE_BOX = 20002;//关箱
     const CMD_START_CHARGE = 20003;//开始充电
     const CMD_STOP_CHARGE = 20004;//结束充电
+    const CMD_SLAVE_UPGRADE = 23333;//从机升级
 
     /**
      * 下发命令
@@ -75,6 +76,17 @@ class CommandService extends BaseService
     {
         $cmd = self::CMD_STOP_CHARGE;
         return self::send($deviceNo, $portNo, $cmd);
+    }
+
+    /**
+     * 从机升级
+     * @param $deviceNo
+     * @return mixed
+     */
+    public static function sendSlaveUpgrade($deviceNo)
+    {
+        $cmd = self::CMD_SLAVE_UPGRADE;
+        return self::send($deviceNo, 0, $cmd);
     }
 
 

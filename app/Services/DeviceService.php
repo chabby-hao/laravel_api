@@ -7,6 +7,7 @@ use App\Libs\WxApi;
 use App\Models\DeviceInfo;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
+use Psy\Command\Command;
 
 class DeviceService extends BaseService
 {
@@ -118,6 +119,18 @@ class DeviceService extends BaseService
         $deviceNo = intval($deviceNo);
         $key = self::_getSendKey($deviceNo, $portNo);
         return Redis::hSet($key, 'task_id', $taskId);
+    }
+
+    public static function slaveUpgrade($deviceNo, $url, $version)
+    {
+        $deviceNo = intval($deviceNo);
+        $key = self::_getSendKey($deviceNo, 0);
+        $data = [
+            'upgrade_slave_url'=> $url,
+            'upgrade_slave_version'=>$version,
+        ];
+        Redis::hMSet($key, $data);
+        return CommandService::sendSlaveUpgrade($deviceNo);
     }
 
     public static function addDevice($data)

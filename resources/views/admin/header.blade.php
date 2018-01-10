@@ -70,12 +70,13 @@
             <ul>
                 <li><a href="{{ URL::action('Admin\DeviceController@list')  }}">设备列表</a></li>
                 <li><a href="{{ URL::action('Admin\DeviceController@add')  }}">添加设备</a></li>
+                <li><a href="{{ URL::action('Admin\DeviceController@remoteUpgrade')  }}">远程升级</a></li>
             </ul>
 
         </li>
 
         <!--        报告-->
-        <li class="submenu"><a href="#"><i class="icon icon-th-list"></i> <span>报告</span>
+        {{--<li class="submenu"><a href="#"><i class="icon icon-th-list"></i> <span>报告</span>
                 <span class="label label-important">4</span></a>
             <ul>
                 <li><a href="">整体报告</a></li>
@@ -84,7 +85,7 @@
                 <li><a href="">整体报告</a></li>
             </ul>
 
-        </li>
+        </li>--}}
 
     </ul>
 </div>
