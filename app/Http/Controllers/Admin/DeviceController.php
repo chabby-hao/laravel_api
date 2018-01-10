@@ -52,15 +52,19 @@ class DeviceController extends BaseController
             $deviceNo = $data['device_no'];
             $slaveFile = $data['slave_file'];
 
+            if(!DeviceService::isDeviceOnline($deviceNo)){
+                $this->_outPutError('设备不在线');
+            }
+
             $match = [];
             if(!preg_match('/^axc_slave_(\d+)\.bin$/', $slaveFile, $match)){
-                return $this->_outPutError('请选择正确的文件');
+                $this->_outPutError('请选择正确的文件');
             }
             $version = $match[1];
             $url = strtr(env('APP_URL'),['https'=>'http']) . '/slave_bin/' . $slaveFile;
 
             DeviceService::slaveUpgrade($deviceNo, $url, $version);
-            return $this->_outPut($request->input());
+            $this->_outPut($request->input());
         }
 
         $dir = public_path('slave_bin');
