@@ -57,7 +57,7 @@ class DeviceController extends BaseController
                 return $this->_outPutError('请选择正确的文件');
             }
             $version = $match[1];
-            $url = env('APP_URL') . '/slave_bin/' . $slaveFile;
+            $url = strtr(env('APP_URL'),['https'=>'http']) . '/slave_bin/' . $slaveFile;
 
             DeviceService::slaveUpgrade($deviceNo, $url, $version);
             return $this->_outPut($request->input());
