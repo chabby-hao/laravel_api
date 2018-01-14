@@ -70,9 +70,9 @@ class AutoCloseBox extends Command
 
                     if ($row->task_state == ChargeTasks::TASK_STATE_INIT) {
                         //还未通电
-//                        if (!BoxService::isOpen($deviceNo, $portNo)) {
+                        if (!BoxService::isOpen($deviceNo, $portNo)) {
                             BoxService::openBox($deviceNo, $portNo);
-//                        }
+                        }
                         CommandService::sendCommandChargeEnd($deviceNo, $portNo);
                     }
                     DB::update("update charge_tasks set close_box = $Close where id=$id");

@@ -55,16 +55,16 @@ class ChargeController extends Controller
         $deviceInfo = DeviceService::getDeviceInfo($deviceId);
         $deviceNo = $deviceInfo['device_no'];
         $portNo = $deviceInfo['port_no'];
-        if (false && !DeviceService::isDeviceOnline($deviceNo)) {
+        if ( !DeviceService::isDeviceOnline($deviceNo)) {
             return Helper::responeseError(ErrorCode::$deviceNotOnline);
         }
         //检查设备端口是否可用
-        if (false && !DeviceService::isPortUseful($deviceNo, $portNo)) {
+        if ( !DeviceService::isPortUseful($deviceNo, $portNo)) {
             return Helper::responeseError(ErrorCode::$deviceNotUseful);
         }
 
         //用户余额是否充足
-        if (false && UserService::getUserBalance($userId) <= 0) {
+        if ( UserService::getUserBalance($userId) <= 0) {
             return Helper::responeseError(ErrorCode::$balanceNotEnough);
         }
 
@@ -81,9 +81,9 @@ class ChargeController extends Controller
         }
 
         //箱子没开，打开箱子
-//        if (!BoxService::isOpen($deviceNo, $portNo)) {
+        if (!BoxService::isOpen($deviceNo, $portNo)) {
             BoxService::openBox($deviceNo, $portNo);
-//        }
+        }
 
         return Helper::response(['device_id' => $deviceId, 'address' => $deviceInfo['address']]);
     }
