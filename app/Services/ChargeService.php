@@ -15,7 +15,7 @@ class ChargeService extends BaseService
 
     const TEMPLATE_ID_END = 'kJuQgZvKVkuGr_uK16rrXg0NKYeLaoHWiEq9uvE7x14';
 
-    const PER_MINUTE_CHARGE_PRICE = 0.02;//单位分钟扣除费用(元)
+    const PER_MINUTE_CHARGE_PRICE = 0.01;//单位分钟扣除费用(元)
 
     const CLOSE_BOX_TIMEOUT = 120;//下发充电命令，多长时间关闭箱子(秒)
 
