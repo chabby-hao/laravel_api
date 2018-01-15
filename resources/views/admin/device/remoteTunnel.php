@@ -70,6 +70,7 @@
         });
 
         $("#close").click(function () {
+            var deviceNo = $('#device_no').val();
             $.ajax({
                 url:'<?php echo URL::action('Admin\DeviceController@remoteTunnel') ?>',
                 data:{
