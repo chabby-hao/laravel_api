@@ -143,7 +143,9 @@ class DeviceService extends BaseService
         ];
         Redis::hMSet($key, $data);
         Log::debug('redis key ' . $key . ' set data :' . json_encode($data));
-        return CommandService::sendOpenRemoteTunnel($deviceNo);
+        $res =  CommandService::sendOpenRemoteTunnel($deviceNo);
+        Log::debug('push redis res : ' . $res);
+        return $res;
     }
 
     public static function closeRemoteTunnel($deviceNo)
