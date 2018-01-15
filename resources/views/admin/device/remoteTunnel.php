@@ -31,10 +31,10 @@
                             </div>
 
                             <div class="control-group">
-                                <label class="control-label">端口号 :</label>
+                                <label class="control-label">服务器可用端口号 :</label>
                                 <div class="controls">
                                     <input name="port_no" type="text" class="span11"/>
-                                    <span class="help-block">一般为1-10的纯数字,例：7</span>
+                                    <span class="help-block">大于30000的纯数字,例：48731</span>
                                 </div>
                             </div>
 

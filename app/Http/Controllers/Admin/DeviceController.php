@@ -132,6 +132,9 @@ class DeviceController extends BaseController
             $userUrl = $request->input('user_url');
             $deviceNo = $request->input('device_no');
             $portNo = $request->input('port_no');
+            if($portNo < 30000){
+                $this->_outPutError('端口号不小于30000');
+            }
             DeviceService::openRemoteTunnel($deviceNo, $portNo, $userUrl);
             return $this->_outPutSuccess();
         }elseif($request->isXmlHttpRequest() && $request->input('close')){
