@@ -65,12 +65,14 @@
 
         </li>
         <!--        app应用配置-->
-        <li class="submenu"><a href="#"><i class="icon icon-th-list"></i> <span>设备配置</span>
+        <li class="submenu"><a href="#"><i class="icon icon-th-list"></i> <span>设备管理</span>
                 <span class="label label-important">1</span></a>
             <ul>
                 <li><a href="{{ URL::action('Admin\DeviceController@list')  }}">设备列表</a></li>
                 <li><a href="{{ URL::action('Admin\DeviceController@add')  }}">添加设备</a></li>
                 <li><a href="{{ URL::action('Admin\DeviceController@remoteUpgrade')  }}">远程升级</a></li>
+                <li><a href="{{ URL::action('Admin\DeviceController@slaveBinManage')  }}">升级文件管理</a></li>
+                <li><a href="{{ URL::action('Admin\DeviceController@remoteTunnel')  }}">设备远程隧道配置</a></li>
             </ul>
 
         </li>

@@ -16,6 +16,8 @@ class CommandService extends BaseService
     const CMD_START_CHARGE = 20003;//开始充电
     const CMD_STOP_CHARGE = 20004;//结束充电
     const CMD_SLAVE_UPGRADE = 23333;//从机升级
+    const CMD_REMOTE_OPEN_TUNNEL = 24444;//开启远程隧道
+    const CMD_REMOTE_CLOSE_TUNNEL = 25555;//关闭远程隧道
 
     /**
      * 下发命令
@@ -89,5 +91,16 @@ class CommandService extends BaseService
         return self::send($deviceNo, 0, $cmd);
     }
 
+    public static function sendOpenRemoteTunnel($deviceNo)
+    {
+        $cmd = self::CMD_REMOTE_OPEN_TUNNEL;
+        return self::send($deviceNo, 0, $cmd);
+    }
+
+    public static function sendCloseRemoteTunnel($deviceNo)
+    {
+        $cmd = self::CMD_REMOTE_CLOSE_TUNNEL;
+        return self::send($deviceNo, 0, $cmd);
+    }
 
 }

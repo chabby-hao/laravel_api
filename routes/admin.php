@@ -15,10 +15,10 @@ use Illuminate\Http\Request;
 Route::middlewareGroup('admin', [\App\Http\Middleware\AdminBeforeCheck::class,]);
 
 Route::any('/device/list', 'Admin\DeviceController@list');
-
 Route::any('/device/add','Admin\DeviceController@add');
-
 Route::any('/device/remoteUpgrade','Admin\DeviceController@remoteUpgrade');
+Route::any('/device/slaveBinManage','Admin\DeviceController@slaveBinManage');
+Route::any('/device/remoteTunnel','Admin\DeviceController@remoteTunnel');
 
 Route::any('/test', function () {
     $d = Route::currentRouteAction();

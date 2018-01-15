@@ -67,6 +67,43 @@ class DeviceController extends BaseController
             $this->_outPut($request->input());
         }
 
+        $t = $this->_getBinFile();
+
+        return view('admin.device.remoteUpgarge',[
+            'slave_bin_files'=>$t,
+        ]);
+    }
+
+    public function slaveBinManage(Request $request)
+    {
+
+        $uploadkey = 'bin_file';
+        if($request->hasFile($uploadkey)){
+            //添加升级文件
+            if($request->file($uploadkey)->getMimeType() != 'application/octet-stream'){
+                $this->_outPutError('上传文件格式有误');
+            }
+            $filename = $request->file($uploadkey)->getClientOriginalName();
+            $desitination = public_path('slave_bin/' . $filename);
+            if(in_array($filename, $this->_getBinFile())){
+                $this->_outPutError('上传文件名与现有文件名发生冲突');
+            }
+            if(move_uploaded_file($request->file($uploadkey)->getRealPath(), $desitination)){
+                $this->_outPutRedirect(URL::action('Admin\DeviceController@slaveBinManage'));
+            }else{
+                $this->_outPutError('上传失败');
+            }
+        }
+
+        $t = $this->_getBinFile();
+        return view('admin.device.slaveBinManage',[
+            'slave_bin_files'=>$t,
+        ]);
+    }
+
+    private function _getBinFile()
+    {
+
         $dir = public_path('slave_bin');
         $t = [];
         // Open a known directory, and proceed to read its contents
@@ -82,10 +119,29 @@ class DeviceController extends BaseController
                 closedir($dh);
             }
         }
-        return view('admin.device.remoteUpgarge',[
-            'slave_bin_files'=>$t,
-        ]);
+        return $t;
     }
 
+    /**
+     * 远程反向隧道
+     */
+    public function remoteTunnel(Request $request)
+    {
+        if($request->isXmlHttpRequest() && $request->input('open')){
+            //开启
+            $userUrl = $request->input('user_url');
+            $deviceNo = $request->input('device_no');
+            $portNo = $request->input('port_no');
+            DeviceService::openRemoteTunnel($deviceNo, $portNo, $userUrl);
+            return $this->_outPutSuccess();
+        }elseif($request->isXmlHttpRequest() && $request->input('close')){
+            //关闭
+            $deviceNo = $request->input('device_no');
+            DeviceService::closeRemoteTunnel($deviceNo);
+            return $this->_outPutSuccess();
+        }
+
+        return view('admin.device.remoteTunnel');
+    }
 
 }

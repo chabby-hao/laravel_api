@@ -133,6 +133,23 @@ class DeviceService extends BaseService
         return CommandService::sendSlaveUpgrade($deviceNo);
     }
 
+    public static function openRemoteTunnel($deviceNo, $portNo, $userUrl)
+    {
+        $deviceNo = intval($deviceNo);
+        $key = self::_getSendKey($deviceNo, 0);
+        $data = [
+            'ssh_user@url'=>$userUrl,
+            'ssh_usable_port'=>$portNo,
+        ];
+        Redis::hMSet($key, $data);
+        return CommandService::sendOpenRemoteTunnel($deviceNo);
+    }
+
+    public static function closeRemoteTunnel($deviceNo)
+    {
+        return CommandService::sendCloseRemoteTunnel($deviceNo);
+    }
+
     public static function addDevice($data)
     {
         $model = DeviceInfo::whereDeviceNo($data['device_no'])->wherePortNo($data['port_no'])->first();

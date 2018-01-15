@@ -25,10 +25,10 @@
                             </div>
 
                             <div class="control-group">
-                                <label class="control-label"><span>从机升级文件</span></label>
+                                <label class="control-label"><span class="text-error">*</span><span>从机升级文件 :</span></label>
                                 <div class="controls">
                                     <select class="span11" name="slave_file">
-                                        <?php foreach ($slave_bin_files as $file){ ?>
+                                        <?php foreach ($slave_bin_files as $file) { ?>
                                             <option value="<?php echo $file ?>"><?php echo $file ?></option>
                                         <?php } ?>
                                     </select>
@@ -36,12 +36,12 @@
 
                             </div>
 
-                            <div class="form-actions control-group">
-                                <label class="controls-label">
+                            <div class="form-actions">
+                                <div class="control">
                                     <button type="button" id="mysubmit" class="btn btn-success">升级</button>
-                                </label>
-                                <div id="success" class="alert alert-success hide">升级成功</div>
+                                </div>
                             </div>
+                            <div id="success" class="alert alert-success hide">升级指令下发成功</div>
                         </form>
                     </div>
                 </div>
@@ -54,19 +54,18 @@
 
 <script>
 
-    $(function(){
+    $(function () {
         var myform = $("#myform");
 
-        $("#mysubmit").click(function(){
+        $("#mysubmit").click(function () {
             myform.submit();
         });
 
         myform.ajaxForm({
             dataType: 'json',
             //beforeSubmit : test,//ajax动画加载
-            success: function(data)
-            {
-                if(ajax_check_res(data)){
+            success: function (data) {
+                if (ajax_check_res(data)) {
                     $("#success").show();
                     //myalert('保存成功');
                 }
