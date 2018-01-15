@@ -9,6 +9,9 @@ function ajax_check_res(data) {
             }, '1600');
             return true;
         }
+        if(data.msg =='success'){
+            myalert('成功');
+        }
         // if (data.msg != undefined) {
         //     myalert(data.msg);
         // }
