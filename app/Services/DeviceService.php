@@ -142,6 +142,7 @@ class DeviceService extends BaseService
             'ssh_usable_port'=>$portNo,
         ];
         Redis::hMSet($key, $data);
+        Log::debug('redis key ' . $key . ' set data :' . json_encode($data));
         return CommandService::sendOpenRemoteTunnel($deviceNo);
     }
 
