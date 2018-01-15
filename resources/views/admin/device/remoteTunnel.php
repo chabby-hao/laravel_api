@@ -18,7 +18,7 @@
                             <div class="control-group">
                                 <label class="control-label"><span class="text-error">*</span>设备号 :</label>
                                 <div class="controls">
-                                    <inpu id="device_no" name="device_no" value="" type="text" class="span11"/>
+                                    <input id="device_no" name="device_no" value="" type="text" class="span11"/>
                                     <span class="help-block">例：100000001</span>
                                 </div>
                             </div>
