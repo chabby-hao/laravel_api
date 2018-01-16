@@ -78,7 +78,8 @@ class DeviceController extends BaseController
     {
 
         $uploadkey = 'bin_file';
-        if($request->hasFile($uploadkey)){
+
+        if($request->isXmlHttpRequest() && $request->hasFile($uploadkey)){
             //添加升级文件
             if($request->file($uploadkey)->getMimeType() != 'application/octet-stream'){
                 $this->_outPutError('上传文件格式有误');
@@ -93,6 +94,8 @@ class DeviceController extends BaseController
             }else{
                 $this->_outPutError('上传失败');
             }
+        }elseif($request->isXmlHttpRequest()){
+            $this->_outPutError('请先选择文件');
         }
 
         $t = $this->_getBinFile();
