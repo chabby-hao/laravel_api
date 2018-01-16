@@ -1013,7 +1013,8 @@ span.icon .checker {
 	cursor: default !important;
 }
 .dataTables_paginate span .ui-state-disabled, .pagination.alternate li.active a {
-	background: #41BEDD !important;
+	/*background: #41BEDD !important;*/
+	background: #41BF8C !important;
 	color: #ffffff !important;
 	cursor: default !important;
 }
