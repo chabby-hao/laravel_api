@@ -20,6 +20,15 @@ Route::any('/device/remoteUpgrade','Admin\DeviceController@remoteUpgrade');
 Route::any('/device/slaveBinManage','Admin\DeviceController@slaveBinManage');
 Route::any('/device/remoteTunnel','Admin\DeviceController@remoteTunnel');
 
+Route::any('/user/list','Admin\UserController@list');
+Route::any('/user/feedback','Admin\UserController@feedback');
+
+Route::any('/orders/list','Admin\OrdersController@list');
+
+Route::any('/charge/list','Admin\ChargeController@list');
+
+Route::any('/refunds/list','Admin\RefundsController@list');
+
 Route::any('/test', function () {
     $d = Route::currentRouteAction();
     var_dump($d);

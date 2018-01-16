@@ -32,5 +32,14 @@ class UserRefunds extends Model
 
     protected $guarded = [];
 
+    public static function getStateMap($key = null)
+    {
+        $map = [
+            self::REFUND_STATE_INIT => '申请退款',
+            self::REFUND_STATE_PROCESSING => '退款中',
+            self::REFUND_STATE_SUCCESS => '退款成功',
+        ];
+        return $key === null ? $map : $map[$key];
+    }
 
 }

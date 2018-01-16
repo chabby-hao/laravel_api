@@ -54,6 +54,37 @@ class ChargeTasks extends Model
     protected $primaryKey = 'id';
     protected $guarded = [];
 
+    public static function getStateMap($key = null)
+    {
+        $map = [
+            self::TASK_STATE_INIT => '初始化，等待通电',
+            self::TASK_STATE_CHARGING => '正在充电中',
+            self::TASK_STATE_COMPLETE => '充满已完成',
+            self::TASK_STATE_END_ABMORMAL => '充电异常中断',
+            self::TASK_STATE_TIME_END => '充电时间到，自动结束',
+            self::TASK_STATE_USER_END => '用户手动中断充电',
+        ];
+        return $key !== null ? $map[$key] : $map;
+    }
+
+    public static function getModeMap($key = null)
+    {
+        $map = [
+            0 => '充满模式',
+            3600 => '冲1小时',
+            3600 * 2 => '冲2小时',
+            3600 * 4 => '冲4小时',
+        ];
+
+        if ($key === null) {
+            return $map;
+        } elseif (isset($map[$key])) {
+            return $map[$key];
+        } else {
+            return '冲' . $key / 3600 . '小时';
+        }
+    }
+
     /**
      * 获取充电结束的state，方便一点
      * @return array

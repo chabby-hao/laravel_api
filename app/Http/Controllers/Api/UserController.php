@@ -59,29 +59,13 @@ class UserController extends Controller
         if ($errCode == 0) {
             //不带区号的手机号
             $phone = json_decode($output, true)['purePhoneNumber'];
-            UserService::bindPhone($token, $phone, User::LOGIN_TYPE_PHONE);
+            UserService::bindPhone($token, $phone, User::LOGIN_TYPE_WEIXIN);
         } else {
             return Helper::responeseError(ErrorCode::$sessionKeyExpire);
         }
 
         return Helper::response(['phone'=>$phone]);
     }
-
-    /**
-     * @param Request $request
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
-     */
-    /*public function checkLogin(Request $request)
-    {
-        $data = $request->post();
-        $token = $data['token'];
-        if($phone = UserService::getPhoneByToken($token)){
-            return Helper::response([
-                'phone'=>$phone,
-            ]);
-        }
-        return Helper::responeseError(ErrorCode::$tokenExpire);
-    }*/
 
     /**
      * phone+verify_code
@@ -99,7 +83,7 @@ class UserController extends Controller
         }*/
 
         if($verifyCodeRow = VerifyCode::getByPhoneAndCode($phone, $verifyCode)){
-            UserService::bindPhone($token, $phone);
+            UserService::bindPhone($token, $phone, User::LOGIN_TYPE_PHONE);
             return Helper::response(['phone'=>$phone]);
         }else{
             return Helper::responeseError();

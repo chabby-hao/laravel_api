@@ -64,15 +64,44 @@
             </ul>
 
         </li>
-        <!--        app应用配置-->
+        <!--        设备配置-->
         <li class="submenu"><a href="#"><i class="icon icon-th-list"></i> <span>设备管理</span>
-                <span class="label label-important">1</span></a>
+                <span class="label label-important">5</span></a>
             <ul>
                 <li><a href="{{ URL::action('Admin\DeviceController@list')  }}">设备列表</a></li>
                 <li><a href="{{ URL::action('Admin\DeviceController@add')  }}">添加设备</a></li>
                 <li><a href="{{ URL::action('Admin\DeviceController@remoteUpgrade')  }}">远程升级</a></li>
                 <li><a href="{{ URL::action('Admin\DeviceController@slaveBinManage')  }}">升级文件管理</a></li>
                 <li><a href="{{ URL::action('Admin\DeviceController@remoteTunnel')  }}">设备远程隧道配置</a></li>
+            </ul>
+
+        </li>
+
+        {{--用户管理--}}
+        <li class="submenu"><a href="#"><i class="icon icon-th-list"></i> <span>用户管理</span>
+                <span class="label label-important">1</span></a>
+            <ul>
+                <li><a href="{{ URL::action('Admin\UserController@list')  }}">用户列表</a></li>
+                <li><a href="{{ URL::action('Admin\UserController@feedback')  }}">用户反馈</a></li>
+            </ul>
+
+        </li>
+
+        {{--订单管理--}}
+        <li class="submenu"><a href="#"><i class="icon icon-th-list"></i> <span>订单管理</span>
+                <span class="label label-important">2</span></a>
+            <ul>
+                <li><a href="{{ URL::action('Admin\OrdersController@list')  }}">充值列表</a></li>
+                <li><a href="{{ URL::action('Admin\RefundsController@list')  }}">退款列表</a></li>
+            </ul>
+
+        </li>
+
+        {{--充电列表--}}
+        <li class="submenu"><a href="#"><i class="icon icon-th-list"></i> <span>充电管理</span>
+                <span class="label label-important">1</span></a>
+            <ul>
+                <li><a href="{{ URL::action('Admin\ChargeController@list')  }}">充电列表</a></li>
             </ul>
 
         </li>

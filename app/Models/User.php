@@ -29,7 +29,8 @@ class User extends Model
 
     protected $table = 'users';
     protected $primaryKey = 'id';
-    protected $fillable = ['phone', 'openid'];
+//    protected $fillable = ['phone', 'openid'];
+    protected $guarded = [];
 
     public static function getUserByOpenid($openid)
     {
@@ -46,4 +47,11 @@ class User extends Model
     {
         return self::find($userId)->decrement('user_balance', $cost);
     }
+
+    public static function getUserList()
+    {
+        $users = self::where('phone','<>','')->orderByDesc('id')->get();
+        return $users;
+    }
+
 }
