@@ -133,6 +133,7 @@ class DeviceController extends BaseController
         if ($request->isXmlHttpRequest() && $request->input('open')) {
             //开启
             $this->_checkParams(['user_url', 'device_no', 'port_no'], $request->input());
+
             $userUrl = $request->input('user_url');
             $deviceNo = $request->input('device_no');
             $portNo = $request->input('port_no');
