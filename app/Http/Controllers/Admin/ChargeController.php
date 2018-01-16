@@ -9,7 +9,7 @@
 namespace App\Http\Controllers\Admin;
 
 
-use App\Libs\Mypage;
+use App\Libs\MyPage;
 use App\Models\ChargeTasks;
 
 class ChargeController extends BaseController
@@ -24,7 +24,7 @@ class ChargeController extends BaseController
 
         return view('admin.charge.list',[
             'charges'=>$paginate->items(),
-            'page_nav'=>Mypage::showPageNav($paginate),
+            'page_nav'=>MyPage::showPageNav($paginate),
         ]);
     }
 

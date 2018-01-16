@@ -8,7 +8,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Libs\Mypage;
+use App\Libs\MyPage;
 use App\Models\Orders;
 
 
@@ -24,7 +24,7 @@ class OrdersController extends BaseController
 
         return view('admin.orders.list',[
             'orders'=>$orders->items(),
-            'page_nav'=>Mypage::showPageNav($orders),
+            'page_nav'=>MyPage::showPageNav($orders),
         ]);
 
     }

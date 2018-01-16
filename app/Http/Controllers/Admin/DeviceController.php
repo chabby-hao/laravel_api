@@ -10,7 +10,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Libs\Helper;
-use App\Libs\Mypage;
+use App\Libs\MyPage;
 use App\Models\DeviceInfo;
 use App\Services\DeviceService;
 use Illuminate\Http\Request;
@@ -26,7 +26,7 @@ class DeviceController extends BaseController
 
         return view('admin.device.list', [
             'devices' => $devices->items(),
-            'page_nav'=>Mypage::showPageNav($devices),
+            'page_nav'=>MyPage::showPageNav($devices),
         ]);
     }
 

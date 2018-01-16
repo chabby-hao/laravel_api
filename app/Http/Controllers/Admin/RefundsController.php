@@ -8,7 +8,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Libs\Mypage;
+use App\Libs\MyPage;
 use App\Models\UserRefunds;
 
 
@@ -22,7 +22,7 @@ class RefundsController extends BaseController
 
         return view('admin.refund.list',[
             'refunds'=>$refunds->items(),
-            'page_nav'=>Mypage::showPageNav($refunds),
+            'page_nav'=>MyPage::showPageNav($refunds),
         ]);
 
     }

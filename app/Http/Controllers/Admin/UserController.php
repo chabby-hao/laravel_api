@@ -9,7 +9,7 @@
 namespace App\Http\Controllers\Admin;
 
 
-use App\Libs\Mypage;
+use App\Libs\MyPage;
 use App\Models\Feedbacks;
 use App\Models\User;
 
@@ -22,7 +22,7 @@ class UserController extends BaseController
 
         return view('admin.user.list',[
             'users'=>$users->items(),
-            'page_nav'=>Mypage::showPageNav($users),
+            'page_nav'=>MyPage::showPageNav($users),
         ]);
     }
 
@@ -35,7 +35,7 @@ class UserController extends BaseController
 
         return view('admin.user.feedbacks',[
             'feedbacks'=>$feedbacks->items(),
-            'page_nav'=>Mypage::showPageNav($feedbacks),
+            'page_nav'=>MyPage::showPageNav($feedbacks),
         ]);
 
     }
