@@ -97,6 +97,7 @@ class DeviceService extends BaseService
     {
         $key = self::_getStatusKey($deviceNo, $portNo);
         $val = Redis::hGet($key, 'screw_status');
+        Log::debug('box open status : ' . $val);
         return $val ? true : false;
     }
 
