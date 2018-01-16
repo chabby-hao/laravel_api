@@ -52,16 +52,16 @@ class DeviceController extends BaseController
             $deviceNo = $data['device_no'];
             $slaveFile = $data['slave_file'];
 
-            if(!DeviceService::isDeviceOnline($deviceNo)){
+            if (!DeviceService::isDeviceOnline($deviceNo)) {
                 $this->_outPutError('设备不在线');
             }
 
             $match = [];
-            if(!preg_match('/^axc_slave_(\d+)\.bin$/', $slaveFile, $match)){
+            if (!preg_match('/^axc_slave_(\d+)\.bin$/', $slaveFile, $match)) {
                 $this->_outPutError('请选择正确的文件');
             }
             $version = $match[1];
-            $url = strtr(env('APP_URL'),['https'=>'http']) . '/slave_bin/' . $slaveFile;
+            $url = strtr(env('APP_URL'), ['https' => 'http']) . '/slave_bin/' . $slaveFile;
 
             DeviceService::slaveUpgrade($deviceNo, $url, $version);
             $this->_outPut($request->input());
@@ -69,8 +69,8 @@ class DeviceController extends BaseController
 
         $t = $this->_getBinFile();
 
-        return view('admin.device.remoteUpgarge',[
-            'slave_bin_files'=>$t,
+        return view('admin.device.remoteUpgarge', [
+            'slave_bin_files' => $t,
         ]);
     }
 
@@ -79,28 +79,28 @@ class DeviceController extends BaseController
 
         $uploadkey = 'bin_file';
 
-        if($request->isXmlHttpRequest() && $request->hasFile($uploadkey)){
+        if ($request->isXmlHttpRequest() && $request->hasFile($uploadkey)) {
             //添加升级文件
-            if($request->file($uploadkey)->getMimeType() != 'application/octet-stream'){
+            if ($request->file($uploadkey)->getMimeType() != 'application/octet-stream') {
                 $this->_outPutError('上传文件格式有误');
             }
             $filename = $request->file($uploadkey)->getClientOriginalName();
             $desitination = public_path('slave_bin/' . $filename);
-            if(in_array($filename, $this->_getBinFile())){
+            if (in_array($filename, $this->_getBinFile())) {
                 $this->_outPutError('上传文件名与现有文件名发生冲突');
             }
-            if(move_uploaded_file($request->file($uploadkey)->getRealPath(), $desitination)){
+            if (move_uploaded_file($request->file($uploadkey)->getRealPath(), $desitination)) {
                 $this->_outPutRedirect(URL::action('Admin\DeviceController@slaveBinManage'));
-            }else{
+            } else {
                 $this->_outPutError('上传失败');
             }
-        }elseif($request->isXmlHttpRequest()){
+        } elseif ($request->isXmlHttpRequest()) {
             $this->_outPutError('请先选择文件');
         }
 
         $t = $this->_getBinFile();
-        return view('admin.device.slaveBinManage',[
-            'slave_bin_files'=>$t,
+        return view('admin.device.slaveBinManage', [
+            'slave_bin_files' => $t,
         ]);
     }
 
@@ -130,17 +130,18 @@ class DeviceController extends BaseController
      */
     public function remoteTunnel(Request $request)
     {
-        if($request->isXmlHttpRequest() && $request->input('open')){
+        if ($request->isXmlHttpRequest() && $request->input('open')) {
             //开启
+            $this->_checkParams(['user_url', 'device_no', 'port_no'], $request->input());
             $userUrl = $request->input('user_url');
             $deviceNo = $request->input('device_no');
             $portNo = $request->input('port_no');
-            if($portNo < 30000){
+            if ($portNo < 30000) {
                 $this->_outPutError('端口号不小于30000');
             }
             DeviceService::openRemoteTunnel($deviceNo, $portNo, $userUrl);
             return $this->_outPutSuccess();
-        }elseif($request->isXmlHttpRequest() && $request->input('close')){
+        } elseif ($request->isXmlHttpRequest() && $request->input('close')) {
             //关闭
             $deviceNo = $request->input('device_no');
             DeviceService::closeRemoteTunnel($deviceNo);
