@@ -8,7 +8,7 @@ namespace App\Libs;
  * @since 2016/08/02
  *
  */
-class Mypage {
+class MyPage {
     private $myde_total;          //总记录数
     private $myde_size;           //一页显示的记录数
     private $myde_page;           //当前页
