@@ -87,7 +87,7 @@ class DeviceController extends BaseController
             $filename = $request->file($uploadkey)->getClientOriginalName();
 
             if (!preg_match('/^axc_slave_(\d+)\.bin$/', $filename)) {
-                $this->_outPutError('请选择正确的文件');
+                $this->_outPutError('请上传正确命名的文件,如 axc_slave_2205.bin');
             }
 
             $desitination = public_path('slave_bin/' . $filename);
