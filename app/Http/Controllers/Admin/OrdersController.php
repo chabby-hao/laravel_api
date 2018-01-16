@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Libs\Mypage;
 use App\Models\Orders;
 
 
@@ -17,10 +18,13 @@ class OrdersController extends BaseController
     public function list()
     {
 
-        $orders = Orders::getOrdersList();
+        $orders = Orders::join('users',function($join){
+            $join->on('users.id','=','orders.user_id');
+        })->select(['orders.*','users.phone'])->where(['order_state'=>Orders::ORDER_STATE_PAY])->orderByDesc('id')->paginate();
 
         return view('admin.orders.list',[
-            'orders'=>$orders,
+            'orders'=>$orders->items(),
+            'page_nav'=>Mypage::showPageNav($orders),
         ]);
 
     }

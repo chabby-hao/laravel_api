@@ -65,7 +65,7 @@
                             </table>
                         </div>
                         <div class="pager">
-                            {{$page_nav}}
+                            <?php echo $page_nav; ?>
                         </div>
                     </div>
                 </div>

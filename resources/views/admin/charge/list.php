@@ -39,11 +39,13 @@
                                     <th>手机号</th>
                                     <th>充电模式</th>
                                     <th>充电状态</th>
+                                    <th>设备</th>
+                                    <th>端口</th>
                                     <th>充电开始时间</th>
                                     <th>充电结束时间</th>
                                     <th>充电周期</th>
                                     <th>充电费用</th>
-                                    <th>操作</th>
+<!--                                    <th>操作</th>-->
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -53,21 +55,23 @@
                                         <td><?php echo $charge->phone ?></td>
                                         <td><?php echo \App\Models\ChargeTasks::getModeMap($charge->expect_time); ?></td>
                                         <td><?php echo \App\Models\ChargeTasks::getStateMap($charge->task_state); ?></td>
+                                        <td><?php echo $charge->device_no; ?></td>
+                                        <td><?php echo $charge->port_no; ?></td>
                                         <td><?php echo $charge->begin_at ?></td>
                                         <td><?php echo in_array($charge->task_state, \App\Models\ChargeTasks::getFinishStateMap()) ? $charge->updated_at : '' ?></td>
                                         <td><?php echo $charge->actual_time ? $charge->actual_time / 60 . '分钟' : '' ?></td>
                                         <td><?php echo $charge->user_cost; ?></td>
-                                        <td>
-                                            <a href="" class="btn btn-info">设置</a>
-                                            <!-- <a href="javascript:;" class="btn btn-danger del">删除</a>-->
-                                        </td>
+<!--                                        <td>-->
+<!--                                            <a href="" class="btn btn-info">设置</a>-->
+<!--                                            <!-- <a href="javascript:;" class="btn btn-danger del">删除</a>-->
+<!--                                        </td>-->
                                     </tr>
                                 <?php } ?>
                                 </tbody>
                             </table>
                         </div>
                         <div class="pager">
-                            {{$page_nav}}
+                            <?php echo $page_nav; ?>
                         </div>
                     </div>
                 </div>

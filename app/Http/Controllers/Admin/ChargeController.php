@@ -9,6 +9,7 @@
 namespace App\Http\Controllers\Admin;
 
 
+use App\Libs\Mypage;
 use App\Models\ChargeTasks;
 
 class ChargeController extends BaseController
@@ -16,13 +17,14 @@ class ChargeController extends BaseController
     public function list()
     {
 
-        $charges = ChargeTasks::join('users',function($join){
+        $paginate = ChargeTasks::join('users',function($join){
             $join->on('users.id','=','user_id');
-        })->select(['charge_tasks.*','users.phone'])->orderByDesc('id')->get();
+        })->select(['charge_tasks.*','users.phone'])->orderByDesc('id')->paginate();
 
 
         return view('admin.charge.list',[
-            'charges'=>$charges,
+            'charges'=>$paginate->items(),
+            'page_nav'=>Mypage::showPageNav($paginate),
         ]);
     }
 

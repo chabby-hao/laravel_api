@@ -81,7 +81,7 @@ class ChargeTasks extends Model
         } elseif (isset($map[$key])) {
             return $map[$key];
         } else {
-            return '冲' . $key / 3600 . '小时';
+            return '冲' . number_format($key / 3600, 2) . '小时';
         }
     }
 

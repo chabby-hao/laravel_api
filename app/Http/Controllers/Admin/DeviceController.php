@@ -10,6 +10,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Libs\Helper;
+use App\Libs\Mypage;
 use App\Models\DeviceInfo;
 use App\Services\DeviceService;
 use Illuminate\Http\Request;
@@ -21,9 +22,12 @@ class DeviceController extends BaseController
     public function list()
     {
 
-        $devices = DeviceInfo::orderByDesc('id')->get()->toArray();
+        $devices = DeviceInfo::orderByDesc('id')->paginate();
 
-        return view('admin.device.list', ['devices' => $devices]);
+        return view('admin.device.list', [
+            'devices' => $devices->items(),
+            'page_nav'=>Mypage::showPageNav($devices),
+        ]);
     }
 
     public function add(Request $request)

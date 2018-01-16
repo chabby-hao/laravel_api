@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Libs\Mypage;
 use App\Models\UserRefunds;
 
 
@@ -17,10 +18,11 @@ class RefundsController extends BaseController
     {
 
         $refunds = UserRefunds::join('users','users.id','=','user_id')
-            ->select(['user_refunds.*','users.phone'])->orderByDesc('id')->get();
+            ->select(['user_refunds.*','users.phone'])->orderByDesc('id')->paginate();
 
         return view('admin.refund.list',[
-            'refunds'=>$refunds,
+            'refunds'=>$refunds->items(),
+            'page_nav'=>Mypage::showPageNav($refunds),
         ]);
 
     }
