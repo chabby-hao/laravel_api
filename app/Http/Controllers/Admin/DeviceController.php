@@ -85,6 +85,11 @@ class DeviceController extends BaseController
                 $this->_outPutError('上传文件格式有误');
             }
             $filename = $request->file($uploadkey)->getClientOriginalName();
+
+            if (!preg_match('/^axc_slave_(\d+)\.bin$/', $filename)) {
+                $this->_outPutError('请选择正确的文件');
+            }
+
             $desitination = public_path('slave_bin/' . $filename);
             if (in_array($filename, $this->_getBinFile())) {
                 $this->_outPutError('上传文件名与现有文件名发生冲突');
