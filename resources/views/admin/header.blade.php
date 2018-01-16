@@ -79,7 +79,7 @@
 
         {{--用户管理--}}
         <li class="submenu"><a href="#"><i class="icon icon-th-list"></i> <span>用户管理</span>
-                <span class="label label-important">1</span></a>
+                <span class="label label-important">2</span></a>
             <ul>
                 <li><a href="{{ URL::action('Admin\UserController@list')  }}">用户列表</a></li>
                 <li><a href="{{ URL::action('Admin\UserController@feedback')  }}">用户反馈</a></li>
