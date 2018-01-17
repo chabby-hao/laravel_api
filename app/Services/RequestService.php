@@ -1,4 +1,5 @@
 <?php
+//第三方请求签名服务
 namespace App\Services;
 
 use App\Libs\Helper;

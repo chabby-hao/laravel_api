@@ -31,13 +31,13 @@
     <ul class="nav">
         <li class="dropdown" id="profile-messages">
             <a title="" href="#" data-toggle="dropdown" data-target="#profile-messages" class="dropdown-toggle"><i
-                        class="icon icon-user"></i> <span class="text">Welcome User</span><b class="caret"></b></a>
+                        class="icon icon-user"></i> <span class="text">Welcome <?php echo session('admin_name') ?></span><b class="caret"></b></a>
             <ul class="dropdown-menu">
-                <li><a href="#"><i class="icon-user"></i> My Profile</a></li>
-                <li class="divider"></li>
-                <li><a href="#"><i class="icon-check"></i> My Tasks</a></li>
-                <li class="divider"></li>
-                <li><a href="login.html"><i class="icon-key"></i> Log Out</a></li>
+                {{--<li><a href="#"><i class="icon-user"></i> My Profile</a></li>--}}
+                {{--<li class="divider"></li>--}}
+                {{--<li><a href="#"><i class="icon-check"></i> My Tasks</a></li>--}}
+                {{--<li class="divider"></li>--}}
+                <li><a href="<?php echo \Illuminate\Support\Facades\URL::action('Admin\AdminController@logout'); ?>"><i class="icon-key"></i> Log Out</a></li>
             </ul>
         </li>
     </ul>
@@ -58,9 +58,10 @@
                 <span>Dashboard</span></a></li>-->
         <!--        用户参数配置，用于集成api-->
         <li class="submenu"><a href="#"><i class="icon icon-th-list"></i> <span>管理员</span>
-                <span class="label label-important">1</span></a>
+                <span class="label label-important">2</span></a>
             <ul>
-                <li><a href="=">管理员列表</a></li>
+                <li><a href="{{ URL::action('Admin\AdminController@list') }}">管理员列表</a></li>
+                <li><a href="{{ URL::action('Admin\AdminController@add') }}">添加管理员</a></li>
             </ul>
 
         </li>
