@@ -93,12 +93,12 @@ class DeviceService extends BaseService
         return $val ? true : false;
     }
 
-    public static function isBoxOpen($deviceNo, $portNo)
+    public static function getBoxStatus($deviceNo, $portNo)
     {
         $key = self::_getStatusKey($deviceNo, $portNo);
         $val = Redis::hGet($key, 'screw_status');
         Log::debug('box open status : ' . $val);
-        return $val ? true : false;
+        return $val;
     }
 
     private static function _getStatusKey($deviceNo, $portNo)

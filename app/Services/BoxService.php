@@ -18,9 +18,9 @@ class BoxService extends BaseService
      * @param $portNo
      * @return bool
      */
-    public static function isOpen($deviceNo, $portNo)
+    public static function getBoxStatus($deviceNo, $portNo)
     {
-        return DeviceService::isBoxOpen($deviceNo, $portNo);
+        return DeviceService::getBoxStatus($deviceNo, $portNo);
     }
 
     /**
@@ -28,12 +28,16 @@ class BoxService extends BaseService
      */
     public static function openBox($deviceNo, $portNo)
     {
-        //下发开箱命令
-        CommandService::sendCommandBoxOpen($deviceNo, $portNo);
+        //下发开箱命令，如果不是开箱
+        if(self::getBoxStatus($deviceNo, $portNo) != 1){
+            CommandService::sendCommandBoxOpen($deviceNo, $portNo);
+        }
     }
 
     public static function closeBox($deviceNo, $portNo)
     {
-        CommandService::sendCommandBoxClose($deviceNo, $portNo);
+        if(self::getBoxStatus($deviceNo, $portNo) != 0){
+            CommandService::sendCommandBoxClose($deviceNo, $portNo);
+        }
     }
 }
