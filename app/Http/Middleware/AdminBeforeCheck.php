@@ -21,13 +21,18 @@ class AdminBeforeCheck
     public function handle(Request $request, \Closure $next)
     {
 
+        $isLogin = session('is_login', 0);
         $routeName = $request->route()->getName();
         if(!in_array($routeName, $this->noLoginRoutes)){
             //需要效验登录
-            $isLogin = session('is_login', 0);
             if(!$isLogin){
                 return Redirect::action('Admin\AdminController@login');
             }
+        }
+
+        // 如果已经登录过了，直接调新页面
+        if($isLogin && $routeName == 'login'){
+            return Redirect::action('Admin\DeviceController@list');
         }
 
         $a = session()->all();

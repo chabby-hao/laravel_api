@@ -46,7 +46,7 @@ body { background-color:#2E363F;    padding: 0;    margin-top:10%;}
 #loginbox form{ width:100%; background:#2E363F; position:relative; top:0; left:0; }
 #loginbox .form-actions { padding: 14px 20px 15px;}
 #loginbox .form-actions .pull-left { margin-top:0px;}
-#loginbox form#loginform { z-index: 200; display:block;}
+#loginbox form#loginform { z-index: 200; display:block;margin: 4em auto; margin-top: 20%}
 #loginbox form#recoverform { z-index: 100;     display:none;}
 #loginbox form#recoverform .form-actions {    margin-top: 10px;}
 #loginbox .main_input_box { margin:0 auto; text-align:center; font-size:13px;}
