@@ -77,10 +77,10 @@ class ChargeService extends BaseService
             if ($expectTime) {
                 $model->expect_end_at = date('Y-m-d H:i:s', strtotime("+$expectTime seconds"));
             }
-            if (BoxService::isOpen($model->device_no, $model->port_no)) {
+            //if (BoxService::isOpen($model->device_no, $model->port_no)) {
                 //关箱子
                 BoxService::closeBox($model->device_no, $model->port_no);
-            }
+            //}
             return $model->save();
         } elseif ($model) {
             return true;
@@ -135,10 +135,10 @@ class ChargeService extends BaseService
         if ($sendCmd) {
             CommandService::sendCommandChargeEnd($deviceNo, $portNo);
         }
-        if (!BoxService::isOpen($deviceNo, $portNo)) {
+        //if (!BoxService::isOpen($deviceNo, $portNo)) {
             //如果box关了就打开
             BoxService::openBox($deviceNo, $portNo);
-        }
+        //}
     }
 
     /**

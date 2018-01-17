@@ -171,7 +171,7 @@ Route::get('test', function () {
     var_dump($a);
     exit;
 
-    \App\Services\BoxService::isOpen(1, 2);
+    //\App\Services\BoxService::isOpen(1, 2);
 
 //    $c =route('wxnotify');
 //    var_dump($c);exit;
