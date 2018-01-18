@@ -40,6 +40,7 @@
                                     <th>手机号</th>
                                     <th>注册时间</th>
                                     <th>余额</th>
+                                    <th>赠送金</th>
                                     <th>优惠券</th>
                                     <th>操作</th>
                                 </tr>
@@ -53,6 +54,7 @@
                                         <td><?php echo $user->created_at ?></td>
 
                                         <td><?php echo $user->user_balance ?></td>
+                                        <td><?php echo $user->present_balance ?></td>
                                         <td></td>
                                         <td>
                                             <a href="" class="btn btn-info">设置</a>

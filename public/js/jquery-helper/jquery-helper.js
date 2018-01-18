@@ -3,10 +3,15 @@ function ajax_check_res(data) {
     var isAlert = arguments[1] === false ? false : true;//默认第二个参数，弹出提示框
     if (data.code == 200) {
         if (data.redirect != undefined) {
-            myalert('成功，1秒后跳转');
-            t_redirect = setTimeout(function(){
+
+            if(data.timeout == undefined || data.timeout == 0){
                 location.href = data.redirect;
-            }, '1600');
+            }else{
+                myalert('成功！页面马上跳转');
+                t_redirect = setTimeout(function(){
+                    location.href = data.redirect;
+                }, data.timeout);
+            }
             return true;
         }
         if(data.msg =='success'){

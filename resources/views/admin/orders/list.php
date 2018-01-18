@@ -41,6 +41,7 @@
                                     <th>手机号</th>
                                     <th>充值时间</th>
                                     <th>充值金额</th>
+                                    <th>赠送金额</th>
                                     <th>充值方式</th>
                                     <th>操作</th>
                                 </tr>
@@ -54,6 +55,7 @@
                                         <td><?php echo $order->phone ?></td>
                                         <td><?php echo $order->pay_at ?></td>
                                         <td><?php echo $order->order_amount ?></td>
+                                        <td><?php echo $order->present_money ?></td>
                                         <td>微信支付</td>
                                         <td>
                                             <a href="" class="btn btn-info">设置</a>

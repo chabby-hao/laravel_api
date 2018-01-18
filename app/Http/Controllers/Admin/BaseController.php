@@ -36,9 +36,17 @@ class BaseController extends Controller
         die(json_encode($data));
     }
 
-    protected function _outPutRedirect($url)
+    /**
+     * 是否弹框
+     * @param $url
+     * @param bool $alert
+     */
+    protected function _outPutRedirect($url, $timeout = 1200)
     {
-        $this->_outPut(['redirect'=>$url]);
+        $this->_outPut([
+            'redirect'=>$url,
+            'timeout'=>$timeout,
+        ]);
     }
 
     protected function _checkParams($check, $input, $allowEmptys = [])
