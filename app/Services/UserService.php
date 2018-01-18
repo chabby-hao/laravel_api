@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Feedbacks;
+use App\Models\Orders;
 use App\Models\User;
 use App\Models\UserRefunds;
 use App\Models\UserToken;
@@ -220,9 +221,10 @@ class UserService extends BaseService
     public static function addUserBalance($userId, $amount)
     {
         $user = User::whereId($userId)->first();
-        $userBalance = $user->user_balance;
-        $userBalance += $amount;
-        $user->user_balance = $userBalance;
+        /*$userBalance = $user->user_balance;
+        $userBalance += $amount;*/
+        $user->user_balance += $amount;
+        $user->present_balance += OrderService::getPresentMoney($amount);
         return $user->save();
     }
 

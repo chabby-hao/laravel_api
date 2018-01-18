@@ -30,6 +30,7 @@ use Illuminate\Support\Facades\DB;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Orders whereThirdNo($value)
  * @property string|null $form_id
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Orders whereFormId($value)
+ * @property float|null $present_money
  */
 class Orders extends Model
 {

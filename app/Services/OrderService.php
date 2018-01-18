@@ -10,6 +10,16 @@ class OrderService extends BaseService
 {
 
     /**
+     * 获取赠送金额
+     * @param $money
+     * @return mixed
+     */
+    public static function getPresentMoney($money)
+    {
+        return $money;
+    }
+
+    /**
      * 创建订单
      * @param $userId
      * @return bool|string
@@ -44,10 +54,11 @@ class OrderService extends BaseService
                 $order->third_no = $thirdNo;
                 $order->pay_at = date('Y-m-d H:i:s');
                 $order->order_state = Orders::ORDER_STATE_PAY;
+                $orderAmount = $order->order_amount;
+                $order->present_money = OrderService::getPresentMoney($orderAmount);//充多少送多少
                 $res = $order->save();
                 if ($res === true) {
                     $userId = $order->user_id;
-                    $orderAmount = $order->order_amount;
                     $ret = UserService::addUserBalance($userId, $orderAmount);
                 }
             }

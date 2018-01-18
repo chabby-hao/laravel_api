@@ -18,8 +18,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User wherePhone($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereUpdatedAt($value)
  * @mixin \Eloquent
- * @property float|null $user_balance 用户余额\
+ * @property float|null $user_balance 用户余额
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereUserBalance($value)
+ * @property float|null $present_balance 赠送金额余额
  */
 class User extends Model
 {
