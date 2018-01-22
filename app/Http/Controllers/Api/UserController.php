@@ -169,11 +169,9 @@ class UserController extends Controller
         if(!$userInfo = UserService::getUserInfoByToken($token)){
             return Helper::responeseError(ErrorCode::$tokenExpire);
         }
-        $userId = $userInfo['id'];
-        $user = UserService::getUserByUserId($userId);
-        $balance = $user ? $user['user_balance'] : 0;
-        $balance = number_format($balance, 2);
-        return Helper::response(['balance'=>$balance]);
+        $balance = number_format($userInfo['user_balance'], 2);
+        $present = number_format($userInfo['present_balance'], 2);
+        return Helper::response(['balance'=>$balance,'present'=>$present]);
     }
 
     /**

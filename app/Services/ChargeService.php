@@ -155,7 +155,13 @@ class ChargeService extends BaseService
         $minutes = floor($chargeTime / 60);
         $costs = $minutes * self::PER_MINUTE_CHARGE_PRICE;
         ChargeTasks::userCostAdd($taskId, $costs);
-        return User::chargeCost($userId, $costs);
+        $user = User::find($userId);
+        if($user->user_balance > 0){
+            $field = 'user_balance';
+        }else{
+            $field = 'present_balance';
+        }
+        return User::chargeCost($userId, $costs, $field);
     }
 
     /**

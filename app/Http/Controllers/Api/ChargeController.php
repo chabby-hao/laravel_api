@@ -64,7 +64,7 @@ class ChargeController extends Controller
         }
 
         //用户余额是否充足
-        if ( UserService::getUserBalance($userId) <= 0) {
+        if ( UserService::getAvailabelBalance($userId) <= 0) {
             return Helper::responeseError(ErrorCode::$balanceNotEnough);
         }
 

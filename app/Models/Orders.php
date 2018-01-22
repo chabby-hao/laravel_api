@@ -73,7 +73,7 @@ class Orders extends Model
     public function getOrdersByUid($uid)
     {
         $order = new Orders();
-        $orders = $order->where(['user_id'=>$uid,'order_state'=>self::ORDER_STATE_PAY])->get();
+        $orders = $order->where(['user_id'=>$uid,'order_state'=>self::ORDER_STATE_PAY])->orderByDesc('id')->get();
         if($orders){
             return $orders->toArray();
         }else{

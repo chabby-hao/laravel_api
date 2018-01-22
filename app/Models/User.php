@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 
 /**
  * App\Models\User
@@ -44,9 +45,10 @@ class User extends Model
         return $model ? $model->openid : false;
     }
 
-    public static function chargeCost($userId, $cost)
+    public static function chargeCost($userId, $cost, $field = 'user_balance')
     {
-        return self::find($userId)->decrement('user_balance', $cost);
+        Log::info("charge cost user_id $userId cost $field $cost");
+        return self::find($userId)->decrement($field, $cost);
     }
 
     public static function getUserList()

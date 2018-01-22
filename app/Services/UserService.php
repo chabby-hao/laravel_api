@@ -244,6 +244,12 @@ class UserService extends BaseService
         return $user ? floatval($user['user_balance']) : 0;
     }
 
+    public static function getAvailabelBalance($userId)
+    {
+        $user = User::find($userId);
+        return $user ? floatval( $user->user_balance + $user->present_balance) : 0;
+    }
+
     /**
      * 退款
      * @param $userId

@@ -100,7 +100,7 @@ class ChargeTasks extends Model
     }
 
     /**
-     * 新建任务
+     * 新建任务[
      * @param $userId
      * @param $deviceNo
      * @param $portNo
