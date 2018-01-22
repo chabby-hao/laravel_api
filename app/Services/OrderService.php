@@ -16,7 +16,7 @@ class OrderService extends BaseService
      */
     public static function getPresentMoney($money)
     {
-        if(ActivityService::SWITCH_OF_PAY_SEND_MONEY){
+        if(ActivityService::isOpenPaySendActivity()){
             return $money;
         }
         return 0;

@@ -16,7 +16,7 @@ class ActivityController extends Controller
         $output = [
             'open'=>0,
         ];
-        if(ActivityService::SWITCH_OF_PAY_SEND_MONEY){
+        if(ActivityService::isOpenPaySendActivity()){
             $output['open'] = 1;
         }
         return Helper::response($output);
