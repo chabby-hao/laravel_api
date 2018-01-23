@@ -42,6 +42,21 @@ class WxApi
         return ['img_url' => $imgUrl, 'img_path' => $file];
     }
 
+    public function getQrImgForCards($cardId)
+    {
+        $accessToken = $this->getAccessToken();
+        $uri = "https://api.weixin.qq.com/cgi-bin/wxaapp/createwxaqrcode?access_token=$accessToken";
+        $client = new Client();
+        $json = '{"path": "pages/index/index?cardId=' . $cardId . '", "width": 500}';
+        $res = $client->post($uri, ['headers' => ['Content-Type:application/json'], 'body' => $json]);
+        $body = $res->getBody()->getContents();
+        $filename = "image/qr/card-$cardId.jpg";
+        $file = public_path($filename);
+        $imgUrl = env('APP_URL') . DIRECTORY_SEPARATOR . $filename;
+        file_put_contents($file, $body);
+        return ['img_url' => $imgUrl, 'img_path' => $file];
+    }
+
     public function getAccessToken()
     {
         // access_token 应该全局存储与更新，以下代码以写入到文件中做示例

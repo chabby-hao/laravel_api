@@ -107,6 +107,16 @@
 
         </li>
 
+        {{--活动管理--}}
+        <li class="submenu"><a href="#"><i class="icon icon-th-list"></i> <span>活动管理</span>
+                <span class="label label-important">3</span></a>
+            <ul>
+                <li><a href="{{ URL::action('Admin\ActivityController@cardsList')  }}">福利卡列表</a></li>
+                <li><a href="{{ URL::action('Admin\ActivityController@cardsAdd')  }}">福利卡添加</a></li>
+            </ul>
+
+        </li>
+
         <!--        报告-->
         {{--<li class="submenu"><a href="#"><i class="icon icon-th-list"></i> <span>报告</span>
                 <span class="label label-important">4</span></a>

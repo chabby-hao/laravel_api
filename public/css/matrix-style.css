@@ -1653,3 +1653,7 @@ div.dataTables_wrapper .ui-widget-header {
 		}
 }
 /*****动画加载end***********/
+
+.myalert{
+	background-color: initial;
+}

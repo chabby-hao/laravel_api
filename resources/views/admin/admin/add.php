@@ -24,9 +24,9 @@
                                 </div>
 
                                 <div class="control-group">
-                                    <label class="control-label"><span class="text-error">*</span>密码 :</label>
+                                    <label class="control-label"><span class="text-error">*</span>手机 :</label>
                                     <div class="controls">
-                                        <input name="pwd" type="text" class="span11"/>
+                                        <input name="phones" type="file" class="span11"/>
                                     </div>
                                 </div>
 

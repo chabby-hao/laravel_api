@@ -38,7 +38,37 @@ Route::any('/admins/add', 'Admin\AdminController@add');
 Route::any('/admins/login', 'Admin\AdminController@login')->name('login');
 Route::any('/admins/logout', 'Admin\AdminController@logout');
 
+Route::any('/activity/cardsList','Admin\ActivityController@cardsList');
+Route::any('/activity/cardsAdd','Admin\ActivityController@cardsAdd');
+Route::any('/activity/cardsEdit','Admin\ActivityController@cardsEdit');
+Route::any('/activity/cardsImport','Admin\ActivityController@CardsImport');
+
 Route::any('/test', function () {
+
+    $a = public_path('demo/导入模板.xls');
+    
+    Excel::load($a, function($reader) {
+        /** @var \Maatwebsite\Excel\Readers\LaravelExcelReader $reader */
+        $data = $reader->all()->toArray();
+        var_dump($data);
+        dd($data);exit;
+    });
+    exit;
+
+    $cellData = [
+        ['手机号码'],
+        ['15921303355'],
+        ['15921303357'],
+        ['15921303358'],
+        ['15921303359'],
+    ];
+    Excel::create('导入模板',function($excel) use ($cellData){
+        $excel->sheet('score', function($sheet) use ($cellData){
+            $sheet->rows($cellData);
+        });
+    })->export('xls');
+    exit;
+
     $d = Route::currentRouteAction();
     var_dump($d);
     exit;

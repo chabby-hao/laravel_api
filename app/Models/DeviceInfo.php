@@ -34,6 +34,19 @@ class DeviceInfo extends Model
 
     protected $guarded = [];
 
+    /**
+     * @return array
+     */
+    public static function getAllDeviceNo()
+    {
+        $m = self::select('device_no')->get()->unique('device_no');
+        $devices = $m->toArray();
+        foreach ($devices as &$device){
+            $device = $device['device_no'];
+        }
+        return $devices;
+    }
+
 //    /**
 //     * @param $id
 //     * @return array

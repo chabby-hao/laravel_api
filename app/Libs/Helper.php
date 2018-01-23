@@ -172,4 +172,37 @@ class Helper
         return $data;
     }
 
+    public static function getQrUrl($imgPath)
+    {
+        $qrcode = new \QrReader($imgPath);
+        $url = $qrcode->text();
+        //有时会解析失败，解析失败调用api来解析
+        if (!$url) {
+            Log::error('qr decode fail with data ' . $imgPath);
+            $qrApi = new QrApi();
+            $url = $qrApi->qrdecode($imgPath);
+            if (!$url) {
+                Log::error('qr decode fail for api with data ' . $imgPath);
+                return false;
+            }
+        }
+        return $url;
+
+    }
+
+    /**
+     * 转成一维数组
+     * @param array $array
+     * @param $keyname
+     */
+    public static function transToOneDimensionalArray(array $array, $keyname)
+    {
+        if($array){
+            foreach ($array as &$item){
+                $item = $item[$keyname];
+            }
+        }
+        return $array;
+    }
+
 }

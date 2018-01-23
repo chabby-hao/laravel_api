@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Libs\Helper;
 use App\Libs\QrApi;
 use App\Libs\WxApi;
 use App\Models\DeviceInfo;
@@ -167,18 +168,7 @@ class DeviceService extends BaseService
                 $wxApi = new WxApi();
                 $qrInfo = $wxApi->getQrImg($deviceId);
                 $model->qr_img = $qrInfo['img_url'];
-                $qrcode = new \QrReader($qrInfo['img_path']);
-                $url = $qrcode->text();
-                //有时会解析失败，解析失败调用api来解析
-                if (!$url) {
-                    Log::error('qr decode fail with data ' . json_encode($qrInfo));
-                    $qrApi = new QrApi();
-                    $url = $qrApi->qrdecode($qrInfo['img_path']);
-                    if (!$url) {
-                        Log::error('qr decode fail for api with data ' . json_encode($qrInfo));
-                        return false;
-                    }
-                }
+                $url = Helper::getQrUrl($qrInfo['img_path']);
                 $model->url = $url; //return decoded text from QR Code
                 return $model->save();
             }
