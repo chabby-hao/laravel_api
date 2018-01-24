@@ -46,6 +46,7 @@ Route::any('/charge/lastFinish', 'Api\ChargeController@lastFinish');
 Route::any('/orders/lists', 'Api\OrdersController@lists');
 
 Route::any('/activity/isOpenPaySend', 'Api\ActivityController@isOpenPaySend');
+Route::any('/activity/getCard', 'Api\ActivityController@getCard');
 
 Route::any('cmd', function (Request $request) {
     $cmd = \App\Services\CommandService::CMD_START_CHARGE;
