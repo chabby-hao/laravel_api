@@ -43,6 +43,7 @@
                                     <th>设备号（棚号）</th>
                                     <th>白名单</th>
                                     <th>生成日期</th>
+                                    <th>操作</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -63,6 +64,7 @@
                                             <?php } ?>
                                         </td>
                                         <td><?php echo $card->created_at ?></td>
+                                        <td><a class="btn btn-warning" href="<?php echo \Illuminate\Support\Facades\URL::action('Admin\ActivityController@cardsEdit', ['id'=>$card->id]) ?>">编辑</a></td>
                                     </tr>
                                 <?php } ?>
                                 </tbody>

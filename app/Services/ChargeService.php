@@ -158,22 +158,30 @@ class ChargeService extends BaseService
         $minutes = floor($chargeTime / 60);
         $costs = $minutes * self::PER_MINUTE_CHARGE_PRICE;
         $charge = ChargeTasks::find($taskId);
+        $charge->user_cost = $costs;//需要支付$costs
 
         if(WelfareUsers::join('welfare_devices',function ($join){
             /** @var JoinClause $join */
             $join->on('welfare_users.card_id','=','welfare_devices.card_id');
         })->whereUserId($userId)->whereDeviceNo($charge->device_no)->first()){
-
-        }
-
-        ChargeTasks::userCostAdd($taskId, $costs);
-        $user = User::find($userId);
-        if($user->user_balance > 0){
-            $field = 'user_balance';
+            //福利卡用户
+            $charge->cost_type = ChargeTasks::COST_TYPE_CARD;
+            $charge->actual_cost = 0;//实际支付0
         }else{
-            $field = 'present_balance';
+            $user = User::find($userId);
+            if($user->user_balance > 0){
+                $charge->cost_type = ChargeTasks::COST_TYPE_BALANCE;
+                $field = 'user_balance';
+            }else{
+                $charge->cost_type = ChargeTasks::COST_TYPE_PRESNET;
+                $field = 'present_balance';
+            }
+            $charge->actual_cost = $costs;
+            //扣款
+            User::chargeCost($userId, $costs, $field);
         }
-        return User::chargeCost($userId, $costs, $field);
+        //更新充电任务
+        $charge->save();
     }
 
     /**

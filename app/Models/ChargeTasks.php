@@ -54,6 +54,12 @@ class ChargeTasks extends Model
     const CLOSE_BOX_NOT_SENT = 0;//未发送关闭箱子命令
     const CLOSE_BOX_HAS_SENT = 1;//已发送关闭箱子命令
 
+    const COST_TYPE_BALANCE = 0;//余额支付
+    const COST_TYPE_PRESNET = 1;//赠送金支付
+    const COST_TYPE_CARD = 2;//福利卡支付
+
+
+
     protected $table = 'charge_tasks';
     protected $primaryKey = 'id';
     protected $guarded = [];

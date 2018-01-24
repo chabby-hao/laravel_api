@@ -41,12 +41,12 @@ Route::any('/admins/logout', 'Admin\AdminController@logout');
 Route::any('/activity/cardsList','Admin\ActivityController@cardsList');
 Route::any('/activity/cardsAdd','Admin\ActivityController@cardsAdd');
 Route::any('/activity/cardsEdit','Admin\ActivityController@cardsEdit');
-Route::any('/activity/cardsImport','Admin\ActivityController@CardsImport');
+Route::any('/activity/cardsWhiteListExport','Admin\ActivityController@cardsWhiteListExport');
 
 Route::any('/test', function () {
 
-    $a = public_path('demo/导入模板.xls');
-    
+    $a = public_path('demo/ttt.xls');
+
     Excel::load($a, function($reader) {
         /** @var \Maatwebsite\Excel\Readers\LaravelExcelReader $reader */
         $data = $reader->all()->toArray();
@@ -56,14 +56,14 @@ Route::any('/test', function () {
     exit;
 
     $cellData = [
-        ['手机号码'],
+        ['phone'],
         ['15921303355'],
         ['15921303357'],
         ['15921303358'],
         ['15921303359'],
     ];
-    Excel::create('导入模板',function($excel) use ($cellData){
-        $excel->sheet('score', function($sheet) use ($cellData){
+    Excel::create('ttt',function($excel) use ($cellData){
+        $excel->sheet('list', function($sheet) use ($cellData){
             $sheet->rows($cellData);
         });
     })->export('xls');

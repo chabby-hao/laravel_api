@@ -23,7 +23,58 @@ class ActivityService extends BaseService
         return self::SWITCH_OF_PAY_SEND_MONEY;
     }
 
-    public static function addCards($deviceNos, $cardName,$company, $phones = null)
+    public static function editCards($id, $deviceNos, $cardName, $company, $phones = null)
+    {
+        DB::beginTransaction();
+        try {
+            $card = WelfareCards::find($id);
+            $card->company = $company;
+            $card->card_name = $cardName;
+            if (!$card->save()) {
+                throw new \Exception('cards edit error');
+            }
+
+            WelfareDevices::whereCardId($id)->delete();
+
+            foreach ($deviceNos as $deviceNo) {
+                $welfareDevice = new WelfareDevices();
+                $welfareDevice->card_id = $card->id;
+                $welfareDevice->device_no = $deviceNo;
+                if (!$welfareDevice->save()) {
+                    throw new \Exception('welfare device add error');
+                }
+            }
+
+            WelfareWhiteLists::whereCardId($id)->delete();
+            if ($phones) {
+                foreach ($phones as $phone) {
+                    $welfareWhite = new WelfareWhiteLists();
+                    $welfareWhite->card_id = $card->id;
+                    $welfareWhite->phone = $phone;
+                    $welfareWhite->save();
+                    if (!$welfareWhite->save()) {
+                        throw new \Exception('welfare white list add error');
+                    }
+                }
+                $card->limit_user = 1;
+            }else{
+                $card->limit_user = 0;
+            }
+
+            //添加二维码 $card
+            if (!$card->save()) {
+                throw new \Exception('cards save error');
+            }
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('edit Cards db error: ' . $e->getMessage());
+            return false;
+        }
+        DB::commit();
+        return true;
+    }
+
+    public static function addCards($deviceNos, $cardName, $company, $phones = null)
     {
         DB::beginTransaction();
         try {
@@ -67,18 +118,13 @@ class ActivityService extends BaseService
             if (!$card->save()) {
                 throw new \Exception('cards save error');
             }
-
-
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('add Cards db error: ' . $e->getMessage());
             return false;
         }
-
         DB::commit();
         return true;
-
-
     }
 
     /**
