@@ -36,6 +36,10 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ChargeTasks whereUserCost($value)
  * @property int $close_box
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ChargeTasks whereCloseBox($value)
+ * @property int $cost_type 付款方式，0-余额付款，1-赠送金付款
+ * @property float $actual_cost 实际支付金额
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ChargeTasks whereActualCost($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ChargeTasks whereCostType($value)
  */
 class ChargeTasks extends Model
 {

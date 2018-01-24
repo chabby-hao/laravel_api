@@ -6,7 +6,10 @@ use App\Libs\WxApi;
 use App\Models\ChargeTasks;
 use App\Models\DeviceInfo;
 use App\Models\User;
+use App\Models\WelfareUsers;
+use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Facades\Log;
+use Psy\Command\WhereamiCommand;
 
 class ChargeService extends BaseService
 {
@@ -154,6 +157,15 @@ class ChargeService extends BaseService
         }
         $minutes = floor($chargeTime / 60);
         $costs = $minutes * self::PER_MINUTE_CHARGE_PRICE;
+        $charge = ChargeTasks::find($taskId);
+
+        if(WelfareUsers::join('welfare_devices',function ($join){
+            /** @var JoinClause $join */
+            $join->on('welfare_users.card_id','=','welfare_devices.card_id');
+        })->whereUserId($userId)->whereDeviceNo($charge->device_no)->first()){
+
+        }
+
         ChargeTasks::userCostAdd($taskId, $costs);
         $user = User::find($userId);
         if($user->user_balance > 0){

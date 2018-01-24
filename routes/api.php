@@ -134,6 +134,14 @@ Route::get('redis', function (Request $request) {
 });
 
 Route::get('test', function () {
+
+    $m = \App\Models\WelfareUsers::join('welfare_devices',function ($join){
+        /** @var JoinClause $join */
+        $join->on('welfare_users.card_id','=','welfare_devices.card_id');
+    })->whereUserId(6)->whereDeviceNo('2222220')->first();
+    var_dump($m);exit;
+
+
     $img = '/Users/chabby/git/laravel/public/image/qr/device-1027.jpg';
 
     $qrapi = new \App\Libs\QrApi();
