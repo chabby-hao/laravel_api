@@ -8,6 +8,7 @@ use App\Libs\WxApi;
 use App\Models\DeviceInfo;
 use App\Models\WelfareCards;
 use App\Models\WelfareDevices;
+use App\Models\WelfareUsers;
 use App\Models\WelfareWhiteLists;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -78,6 +79,20 @@ class ActivityService extends BaseService
         return true;
 
 
+    }
+
+    /**
+     * 用户领取卡片
+     * @param $userId
+     * @param $cardId
+     * @return bool
+     */
+    public static function userGetCard($userId, $cardId)
+    {
+        $welfareUser = new WelfareUsers();
+        $welfareUser->card_id = $cardId;
+        $welfareUser->user_id = $userId;
+        return $welfareUser->save();
     }
 
 }

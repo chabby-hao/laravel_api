@@ -39,6 +39,7 @@
                                     <th>卡id</th>
                                     <th>卡名</th>
                                     <th>公司</th>
+                                    <th>二维码</th>
                                     <th>设备号（棚号）</th>
                                     <th>白名单</th>
                                     <th>生成日期</th>
@@ -51,10 +52,15 @@
                                         <td><?php echo $card->id ?></td>
                                         <td><?php echo $card->card_name ?></td>
                                         <td><?php echo $card->company ?></td>
+                                        <td><img width="100px" src="<?php echo $card->url_img; ?>" alt=""></td>
                                         <td><?php echo implode("<br/>", $card->device_no) ?></td>
                                         <td>
+                                            <?php if($card->limit_user){ ?>
                                             <?php $phones = implode("<br/>", $card->phones); ?>
                                             <a onclick="myalert('<?php echo $phones; ?>')" class="btn btn-info" href="javascript:;">点击查看</a>
+                                            <?php  }else{?>
+                                                不限制
+                                            <?php } ?>
                                         </td>
                                         <td><?php echo $card->created_at ?></td>
                                     </tr>

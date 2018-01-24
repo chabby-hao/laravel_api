@@ -43,6 +43,12 @@ class ErrorCode
 
     public static $isChargingAndNeedWait = 2015;//充电口被占用，需等待
 
+    public static $cardInvalid = 2016;//非法卡片
+
+    public static $notInWhiteList = 2017;//非福利卡白名单用户
+
+    public static $hasGotCard = 2018;//已经领取过福利法，无需再次领取
+
     public static function getErrMsg()
     {
         return [
