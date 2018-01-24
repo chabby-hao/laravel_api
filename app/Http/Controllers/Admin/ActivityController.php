@@ -110,8 +110,11 @@ class ActivityController extends BaseController
         $card = WelfareCards::find($id);
 
         $phones = WelfareWhiteLists::getPhonesByCardId($card->id);
+        $cellData = [['phone']];
+        foreach ($phones as $phone){
+            $cellData[] = [$phone];
+        }
 
-        $cellData = array_merge(['phones'], $phones);
         Excel::create($card->card_name . '-' . $card->company . '-白名单列表', function ($excel) use ($cellData) {
             $excel->sheet('list', function ($sheet) use ($cellData) {
                 $sheet->rows($cellData);
