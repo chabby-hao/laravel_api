@@ -54,7 +54,7 @@ class ActivityController extends BaseController
                 /** @var LaravelExcelReader $reader */
                 $data = $reader->all()->toArray();
                 foreach ($data as $row) {
-                    $phones[] = $row[0];
+                    $phones[] = $row['phone'];
                 }
             });
         }
