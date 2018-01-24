@@ -29,7 +29,9 @@ class UserController extends Controller
         if(!$token){
             return Helper::responeseError(ErrorCode::$codeInvalid);
         }
-        return Helper::response(['token'=>$token]);
+
+        $phone = UserService::getPhoneByToken($token);
+        return Helper::response(['token'=>$token,'phone'=>$phone]);
     }
 
     /**
