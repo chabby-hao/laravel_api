@@ -17,9 +17,9 @@
 <!--                                <input name="date_range" id="daterange" type="text"/>-->
 <!--                            </div>-->
 
-                            <div class="inline-block">
-                                <input class="btn btn-success" id="btn-search" type="submit" value="确定"/>
-                            </div>
+<!--                            <div class="inline-block">-->
+<!--                                <input class="btn btn-success" id="btn-search" type="submit" value="确定"/>-->
+<!--                            </div>-->
 
                         </div>
                     </div>
