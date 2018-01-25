@@ -41,20 +41,22 @@ class DeviceInfo extends Model
     {
         $m = self::orderByDesc('id')->get()->unique('device_no');
         $devices = $m->toArray();
-        foreach ($devices as &$device){
-            $device = $device['device_no'];
+        $data = [];
+        foreach ($devices as $device){
+            $data[] = $device['device_no'];
         }
-        return $devices;
+        return $data;
     }
 
     public static function getAllDeviceStr()
     {
         $m = self::orderByDesc('id')->get()->unique('device_no');
         $devices = $m->toArray();
-        foreach ($devices as &$device){
-            $device = $device['device_no'] .'-' . $device['address'];
+        $data = [];
+        foreach ($devices as $device){
+            $data[] = $device['device_no'] .'-' . $device['address'];
         }
-        return $devices;
+        return $data;
     }
 
 //    /**
