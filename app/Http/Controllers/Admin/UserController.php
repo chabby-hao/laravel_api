@@ -9,9 +9,11 @@
 namespace App\Http\Controllers\Admin;
 
 
+use App\Libs\Helper;
 use App\Libs\MyPage;
 use App\Models\Feedbacks;
 use App\Models\User;
+use App\Services\ActivityService;
 
 class UserController extends BaseController
 {
@@ -19,9 +21,15 @@ class UserController extends BaseController
     {
 
         $users = User::where('phone','<>','')->orderByDesc('id')->paginate();
+        $usersList = $users->items();
+        /** @var User $user */
+        foreach ($usersList as $user){
+            $cardInfo = ActivityService::getCardsByUserId($user->id);
+            $user->card_name = $cardInfo ? Helper::transToOneDimensionalArray($cardInfo, 'card_name') : [];
+        }
 
         return view('admin.user.list',[
-            'users'=>$users->items(),
+            'users'=>$usersList,
             'page_nav'=>MyPage::showPageNav($users),
         ]);
     }
