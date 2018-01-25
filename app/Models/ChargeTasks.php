@@ -59,10 +59,19 @@ class ChargeTasks extends Model
     const COST_TYPE_CARD = 2;//福利卡支付
 
 
-
     protected $table = 'charge_tasks';
     protected $primaryKey = 'id';
     protected $guarded = [];
+
+    public static function getCostTypeMap($key = null)
+    {
+        $map = [
+            self::COST_TYPE_BALANCE => '赠送金支付',
+            self::COST_TYPE_PRESNET => '余额支付',
+            self::COST_TYPE_CARD => '福利卡支付',
+        ];
+        return $key !== null ? $map[$key] : $map;
+    }
 
     public static function getStateMap($key = null)
     {
