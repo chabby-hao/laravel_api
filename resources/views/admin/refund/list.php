@@ -7,7 +7,7 @@
         </div>
         <div class="container-fluid">
             <hr>
-            <div></div>
+<!--            <div></div>
             <div class="widget-content">
                 <form class="form-search">
                     <div class="control-group">
@@ -24,7 +24,7 @@
                         </div>
                     </div>
                 </form>
-            </div>
+            </div>-->
             <div class="row-fluid">
                 <div class="span12">
                     <div class="widget-box">

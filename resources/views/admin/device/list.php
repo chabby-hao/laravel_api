@@ -8,23 +8,23 @@
         <div class="container-fluid">
             <hr>
             <div></div>
-            <div class="widget-content">
+            <!--<div class="widget-content">
                 <form class="form-search">
                     <div class="control-group">
                         <div class="controls controls-row">
-<!--                            <div class="inline-block">-->
-<!--                                <label>时间范围</label>-->
-<!--                                <input name="date_range" id="daterange" type="text"/>-->
-<!--                            </div>-->
+                            <div class="inline-block">
+                                <label>时间范围</label>
+                                <input name="date_range" id="daterange" type="text"/>
+                            </div>
 
-<!--                            <div class="inline-block">-->
-<!--                                <input class="btn btn-success" id="btn-search" type="submit" value="确定"/>-->
-<!--                            </div>-->
+                            <div class="inline-block">
+                                <input class="btn btn-success" id="btn-search" type="submit" value="确定"/>
+                            </div>
 
                         </div>
                     </div>
                 </form>
-            </div>
+            </div>-->
             <div class="row-fluid">
                 <div class="span12">
                     <div class="widget-box">
