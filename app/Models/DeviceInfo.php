@@ -39,7 +39,7 @@ class DeviceInfo extends Model
      */
     public static function getAllDeviceNo()
     {
-        $m = self::select('device_no')->get()->unique('device_no');
+        $m = self::orderByDesc('id')->get()->unique('device_no');
         $devices = $m->toArray();
         foreach ($devices as &$device){
             $device = $device['device_no'];
@@ -49,7 +49,7 @@ class DeviceInfo extends Model
 
     public static function getAllDeviceStr()
     {
-        $m = self::get()->unique('device_no');
+        $m = self::orderByDesc('id')->get()->unique('device_no');
         $devices = $m->toArray();
         foreach ($devices as &$device){
             $device = $device['device_no'] .'-' . $device['address'];
