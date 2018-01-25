@@ -58,29 +58,28 @@ class ChargeController extends Controller
         $deviceInfo = DeviceService::getDeviceInfo($deviceId);
         $deviceNo = $deviceInfo['device_no'];
         $portNo = $deviceInfo['port_no'];
-        if ( !DeviceService::isDeviceOnline($deviceNo)) {
+        if (!DeviceService::isDeviceOnline($deviceNo)) {
             return Helper::responeseError(ErrorCode::$deviceNotOnline);
         }
         //检查设备端口是否可用
-        if ( !DeviceService::isPortUseful($deviceNo, $portNo)) {
+        if (!DeviceService::isPortUseful($deviceNo, $portNo)) {
             return Helper::responeseError(ErrorCode::$deviceNotUseful);
         }
 
 
         //用户余额是否充足
 
-        if(!WelfareUsers::join('welfare_devices',function ($join){
-            /** @var JoinClause $join */
-            $join->on('welfare_users.card_id','=','welfare_devices.card_id');
-        })->whereUserId($userId)->whereDeviceNo($deviceNo)->first()){
 
-        }elseif ( UserService::getAvailabelBalance($userId) <= 0) {
-            return Helper::responeseError(ErrorCode::$balanceNotEnough);
+        if (UserService::getAvailabelBalance($userId) <= 0) {
+
+            if (!WelfareUsers::join('welfare_devices', function ($join) {
+                /** @var JoinClause $join */
+                $join->on('welfare_users.card_id', '=', 'welfare_devices.card_id');
+            })->whereUserId($userId)->whereDeviceNo($deviceNo)->first()
+            ) {
+                return Helper::responeseError(ErrorCode::$balanceNotEnough);
+            }
         }
-
-        /*if ( UserService::getAvailabelBalance($userId) <= 0) {
-            return Helper::responeseError(ErrorCode::$balanceNotEnough);
-        }*/
 
         //是否正在通电
         if (DeviceService::isCharging($deviceNo, $portNo)) {
@@ -96,7 +95,7 @@ class ChargeController extends Controller
 
         //箱子没开，打开箱子
         //if (!BoxService::isOpen($deviceNo, $portNo)) {
-            BoxService::openBox($deviceNo, $portNo);
+        BoxService::openBox($deviceNo, $portNo);
         //}
 
         return Helper::response(['device_id' => $deviceId, 'address' => $deviceInfo['address']]);
