@@ -39,7 +39,7 @@
                                 <tr>
                                     <th>序列号</th>
                                     <th>文件名</th>
-                                    <th>操作</th>
+<!--                                    <th>操作</th>-->
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -48,9 +48,9 @@
                                     <tr class="gradeX">
                                         <td><?php echo ++$i; ?></td>
                                         <td><?php echo $row; ?></td>
-                                        <td>
-                                            <a href="javascript:;" class="btn btn-danger del">删除</a>
-                                        </td>
+<!--                                        <td>-->
+<!--                                            <a href="javascript:;" class="btn btn-danger del">删除</a>-->
+<!--                                        </td>-->
                                     </tr>
                                 <?php } ?>
                                 </tbody>

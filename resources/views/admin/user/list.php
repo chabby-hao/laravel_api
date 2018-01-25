@@ -12,10 +12,10 @@
                 <form class="form-search">
                     <div class="control-group">
                         <div class="controls controls-row">
-                            <div class="inline-block">
-                                <label>时间范围</label>
-                                <input name="date_range" id="daterange" type="text"/>
-                            </div>
+<!--                            <div class="inline-block">-->
+<!--                                <label>时间范围</label>-->
+<!--                                <input name="date_range" id="daterange" type="text"/>-->
+<!--                            </div>-->
 
                             <div class="inline-block">
                                 <input class="btn btn-success" id="btn-search" type="submit" value="确定"/>
@@ -42,7 +42,7 @@
                                     <th>余额</th>
                                     <th>赠送金</th>
                                     <th>福利卡</th>
-                                    <th>操作</th>
+<!--                                    <th>操作</th>-->
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -56,10 +56,10 @@
                                         <td><?php echo $user->user_balance ?></td>
                                         <td><?php echo $user->present_balance ?></td>
                                         <td><?php echo implode('<br/>', $user->card_name); ?></td>
-                                        <td>
-                                            <a href="" class="btn btn-info">设置</a>
-<!--                                            <a href="javascript:;" class="btn btn-danger del">删除</a>-->
-                                        </td>
+<!--                                        <td>-->
+<!--                                            <a href="" class="btn btn-info">设置</a>-->
+<!--<!--                                            <a href="javascript:;" class="btn btn-danger del">删除</a>-->
+<!--                                        </td>-->
                                     </tr>
                                 <?php } ?>
                                 </tbody>

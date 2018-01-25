@@ -12,10 +12,10 @@
                 <form class="form-search">
                     <div class="control-group">
                         <div class="controls controls-row">
-                            <div class="inline-block">
-                                <label>时间范围</label>
-                                <input name="date_range" id="daterange" type="text"/>
-                            </div>
+<!--                            <div class="inline-block">-->
+<!--                                <label>时间范围</label>-->
+<!--                                <input name="date_range" id="daterange" type="text"/>-->
+<!--                            </div>-->
 
                             <div class="inline-block">
                                 <input class="btn btn-success" id="btn-search" type="submit" value="确定"/>
@@ -41,7 +41,7 @@
                                     <th>二维码</th>
                                     <th>安装地址</th>
                                     <th>添加时间</th>
-                                    <th>操作</th>
+<!--                                    <th>操作</th>-->
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -57,10 +57,10 @@
 
                                         <td><?php echo $row['address'] ?></td>
                                         <td><?php echo $row['created_at'] ?></td>
-                                        <td>
-                                            <a href="<?php echo url('admin/device/add') ?>" class="btn btn-info">设置</a>
-                                            <a href="javascript:;" class="btn btn-danger del">删除</a>
-                                        </td>
+<!--                                        <td>-->
+<!--                                            <a href="--><?php //echo url('admin/device/add') ?><!--" class="btn btn-info">设置</a>-->
+<!--                                            <a href="javascript:;" class="btn btn-danger del">删除</a>-->
+<!--                                        </td>-->
                                     </tr>
                                 <?php } ?>
                                 </tbody>
