@@ -71,7 +71,7 @@ class Helper
 
     }
 
-    public static function send_message($options, $appId, $to, $templateId, $msg)
+    public static function sendShortMessage($options, $appId, $to, $templateId, $msg)
     {
         $ucpaas = New Ucpass($options);
         //发送模板短信

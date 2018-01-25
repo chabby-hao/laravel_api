@@ -47,7 +47,7 @@
                             <div class="control-group">
                                 <label class="control-label"><span class="text-error">*</span>重新导入手机号(excel):</label>
                                 <div class="controls">
-                                    <input name="phones" type="file" class="file-uploading"/>
+                                    <input name="phones" type="file" />
                                     <span class="help-block">(不提交即不限制) <a class="text-error" href="<?php echo \Illuminate\Support\Facades\URL::action('Admin\ActivityController@cardsWhiteListExport',['id'=>$card->id]) ?>">下载当前白名单excel</a> </span>
                                 </div>
                             </div>
@@ -66,7 +66,7 @@
 <?php echo view('admin.footer')->render() ?>
 <script type="text/javascript" src="/js/bootstrap-filestyle.min.js"></script>
 <script>
-    $(":file").filestyle();
+    $(":file").filestyle({classButton: "btn btn-info"});
 
     $(function () {
         var myform = $("#myform");

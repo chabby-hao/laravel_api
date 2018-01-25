@@ -318,7 +318,7 @@ class ChargeService extends BaseService
         $data = [
             'template_id' => self::TEMPLATE_ID_END,
             'data' => [
-                'keyword1' => ['value' => '￥' . $task->user_cost, 'color' => '#173177'],
+                'keyword1' => ['value' => '￥' . $task->actual_cost, 'color' => '#173177'],
                 'keyword2' => ['value' => floor($task->actual_time / 60) . '分钟', 'color' => '#173177'],
                 'keyword3' => ['value' => '充电过程被意外中断，请到充电棚查看充电器连接情况', 'color' => '#173177'],
             ],
@@ -351,7 +351,7 @@ class ChargeService extends BaseService
         $data = [
             'template_id' => self::TEMPLATE_ID_END,
             'data' => [
-                'keyword1' => ['value' => '￥' . $task->user_cost, 'color' => '#173177'],
+                'keyword1' => ['value' => '￥' . $task->actual_cost, 'color' => '#173177'],
                 'keyword2' => ['value' => floor($task->actual_time / 60) . '分钟', 'color' => '#173177'],
                 'keyword3' => ['value' => $desc, 'color' => '#173177'],
             ],

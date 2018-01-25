@@ -144,7 +144,7 @@ class UserController extends Controller
         //验证码保存成功，则发送验证码给用户
         if ($id) {
             $msg = '您的验证码是' . $code;
-            $ucpaas = Helper::send_message($options, $appId, $to, $templateId, $msg);
+            $ucpaas = Helper::sendShortMessage($options, $appId, $to, $templateId, $msg);
 
             Log::debug('verify code response:' . $ucpaas);
             $ucpaas = json_decode($ucpaas, true);

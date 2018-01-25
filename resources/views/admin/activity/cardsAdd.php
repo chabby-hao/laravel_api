@@ -65,7 +65,7 @@
 <?php echo view('admin.footer')->render() ?>
 <script type="text/javascript" src="/js/bootstrap-filestyle.min.js"></script>
 <script>
-    $(":file").filestyle();
+    $(":file").filestyle({classButton: "btn btn-info"});
 
     $(function () {
         var myform = $("#myform");
