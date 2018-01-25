@@ -7,6 +7,7 @@ use App\Libs\Helper;
 use App\Models\User;
 use App\Models\UserRefunds;
 use App\Models\VerifyCode;
+use App\Services\ActivityService;
 use App\Services\UserService;
 use App\Services\VerifyCodeServices;
 use Illuminate\Http\Request;
@@ -220,6 +221,17 @@ class UserController extends Controller
 
         UserService::addFeedBack($userId, $content);
         return $this->responseOk();
+    }
+
+    public function cardsList(Request $request)
+    {
+        if(!$userId = UserService::getUserId()){
+            return Helper::responeseError(ErrorCode::$tokenExpire);
+        }
+
+        $data = ActivityService::getCardsByUserId($userId);
+        return Helper::response($data);
+
     }
 
 }

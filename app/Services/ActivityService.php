@@ -141,4 +141,24 @@ class ActivityService extends BaseService
         return $welfareUser->save();
     }
 
+    /**
+     * @param $userId
+     * @return array
+     */
+    public static function getCardsByUserId($userId)
+    {
+        $m = WelfareUsers::whereUserId($userId)->orderByDesc('id')->get();
+        $data = [];
+        if($m){
+            foreach ($m->toArray() as $item){
+                $tmp = [
+                    'card_id'=>$item['card_id'],
+                    'card_name'=>$item['card_name'],
+                ];
+                $data[] = $tmp;
+            }
+        }
+        return $data;
+    }
+
 }
