@@ -268,7 +268,7 @@ class ChargeController extends Controller
             return Helper::responeseError(ErrorCode::$chargeNotFinishYet);
         }
         $mins = floor($model->actual_time / 60);
-        $costs = $model->user_cost;
+        $costs = $model->actual_cost;
         $data = [
             'content' => '充电' . $mins . '分钟，花费' . $costs . '元。',
         ];
