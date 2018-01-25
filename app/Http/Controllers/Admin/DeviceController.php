@@ -35,7 +35,7 @@ class DeviceController extends BaseController
         if ($request->isXmlHttpRequest()) {
             $arrInput = $request->input();
             $arrCheck = ['device_no', 'port_no', 'address'];
-            $data = $this->_checkParams($arrCheck, $arrInput, ['address']);
+            $data = $this->_checkParams($arrCheck, $arrInput);
 
             if (!DeviceService::addDevice($data)) {
                 $this->_outPutError('无法添加设备，请确认信息是否填写正确');

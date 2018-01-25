@@ -19,10 +19,11 @@
                             <div class="control-group">
                                 <label class="control-label"><span class="text-error">*</span>设备号（棚号） :</label>
                                 <div class="controls">
-                                    <?php foreach (\App\Models\DeviceInfo::getAllDeviceNo() as $deviceNo) { ?>
+                                    <?php $deviceNos = \App\Models\DeviceInfo::getAllDeviceNo();?>
+                                    <?php foreach (\App\Models\DeviceInfo::getAllDeviceStr() as $k=> $deviceStr) {$deviceNo = $deviceNos[$k]; ?>
                                         <label>
                                             <input type="checkbox" name="device_no[]" value="<?php echo $deviceNo; ?>"/>
-                                            <?php echo $deviceNo; ?></label>
+                                            <?php echo $deviceStr; ?></label>
                                     <?php } ?>
                                 </div>
                             </div>

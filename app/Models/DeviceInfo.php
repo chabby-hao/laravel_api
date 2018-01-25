@@ -47,6 +47,16 @@ class DeviceInfo extends Model
         return $devices;
     }
 
+    public static function getAllDeviceStr()
+    {
+        $m = self::get()->unique('device_no');
+        $devices = $m->toArray();
+        foreach ($devices as &$device){
+            $device = $device['device_no'] .'-' . $device['address'];
+        }
+        return $devices;
+    }
+
 //    /**
 //     * @param $id
 //     * @return array
