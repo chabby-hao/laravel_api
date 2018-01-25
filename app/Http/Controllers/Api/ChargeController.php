@@ -6,11 +6,14 @@ use App\Libs\ErrorCode;
 use App\Libs\Helper;
 use App\Models\ChargeTasks;
 use App\Models\DeviceInfo;
+use App\Models\WelfareDevices;
+use App\Models\WelfareUsers;
 use App\Services\BoxService;
 use App\Services\ChargeService;
 use App\Services\DeviceService;
 use App\Services\RequestService;
 use App\Services\UserService;
+use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
@@ -63,10 +66,21 @@ class ChargeController extends Controller
             return Helper::responeseError(ErrorCode::$deviceNotUseful);
         }
 
+
         //用户余额是否充足
-        if ( UserService::getAvailabelBalance($userId) <= 0) {
+
+        if(!WelfareUsers::join('welfare_devices',function ($join){
+            /** @var JoinClause $join */
+            $join->on('welfare_users.card_id','=','welfare_devices.card_id');
+        })->whereUserId($userId)->whereDeviceNo($deviceNo)->first()){
+
+        }elseif ( UserService::getAvailabelBalance($userId) <= 0) {
             return Helper::responeseError(ErrorCode::$balanceNotEnough);
         }
+
+        /*if ( UserService::getAvailabelBalance($userId) <= 0) {
+            return Helper::responeseError(ErrorCode::$balanceNotEnough);
+        }*/
 
         //是否正在通电
         if (DeviceService::isCharging($deviceNo, $portNo)) {
