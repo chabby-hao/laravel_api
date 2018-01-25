@@ -41,7 +41,7 @@
                                     <th>注册时间</th>
                                     <th>余额</th>
                                     <th>赠送金</th>
-                                    <th>优惠券</th>
+                                    <th>福利卡</th>
                                     <th>操作</th>
                                 </tr>
                                 </thead>
