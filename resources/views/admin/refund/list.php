@@ -40,7 +40,7 @@
                                     <th>退款时间</th>
                                     <th>退款金额</th>
                                     <th>退款状态</th>
-                                    <th>操作</th>
+<!--                                    <th>操作</th>-->
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -51,9 +51,9 @@
                                         <td><?php echo $refund->created_at; ?></td>
                                         <td><?php echo $refund->refund_amount; ?></td>
                                         <td><?php echo \App\Models\UserRefunds::getStateMap($refund->state); ?></td>
-                                        <td>
+                                        <!--<td>
                                             <a href="" class="btn btn-info">设置</a>
-                                        </td>
+                                        </td>-->
                                     </tr>
                                 <?php } ?>
                                 </tbody>
