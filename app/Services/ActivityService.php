@@ -57,7 +57,7 @@ class ActivityService extends BaseService
                     }
                 }
                 $card->limit_user = 1;
-            }else{
+            } else {
                 $card->limit_user = 0;
             }
 
@@ -147,13 +147,15 @@ class ActivityService extends BaseService
      */
     public static function getCardsByUserId($userId)
     {
-        $m = WelfareUsers::whereUserId($userId)->orderByDesc('id')->get();
+        $m = WelfareUsers::join('welfare_cards', function ($join) {
+            $join->on('welfare_cards.id', '=', 'card_id');
+        })->whereUserId($userId)->orderByDesc('id')->get();
         $data = [];
-        if($m){
-            foreach ($m->toArray() as $item){
+        if ($m) {
+            foreach ($m->toArray() as $item) {
                 $tmp = [
-                    'card_id'=>$item['card_id'],
-                    'card_name'=>$item['card_name'],
+                    'card_id' => $item['card_id'],
+                    'card_name' => $item['card_name'],
                 ];
                 $data[] = $tmp;
             }
