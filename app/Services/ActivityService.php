@@ -149,7 +149,7 @@ class ActivityService extends BaseService
     {
         $m = WelfareUsers::join('welfare_cards', function ($join) {
             $join->on('welfare_cards.id', '=', 'card_id');
-        })->whereUserId($userId)->orderByDesc('id')->get();
+        })->whereUserId($userId)->orderByDesc('welfare_users.id')->get();
         $data = [];
         if ($m) {
             foreach ($m->toArray() as $item) {
