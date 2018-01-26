@@ -43,7 +43,7 @@ class UserController extends Controller
     public function bindPhoneForWx(Request $request)
     {
         //$data = $request->post();
-        $data = $this->checkRequireParams(['detail','iv','encryptedData','token'], $request->input());
+        $data = $this->checkRequireParams(['detail','token'], $request->input());
         if ($data instanceof Response) {
             return $data;
         }
