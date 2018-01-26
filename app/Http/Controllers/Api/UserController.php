@@ -48,6 +48,9 @@ class UserController extends Controller
             return $data;
         }
         $detail = $data['detail'];
+        if(empty($detail['iv'])){
+            return Helper::responeseError(ErrorCode::$errParams);
+        }
         $iv = $detail['iv'];
         $encryptedData = $detail['encryptedData'];
         $token = $data['token'];
