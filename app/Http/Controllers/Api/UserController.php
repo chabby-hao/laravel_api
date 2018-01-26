@@ -13,6 +13,7 @@ use App\Services\VerifyCodeServices;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
@@ -41,7 +42,11 @@ class UserController extends Controller
      */
     public function bindPhoneForWx(Request $request)
     {
-        $data = $request->post();
+        //$data = $request->post();
+        $data = $this->checkRequireParams(['detail','iv','encryptedData','token'], $request->input());
+        if ($data instanceof Response) {
+            return $data;
+        }
         $detail = $data['detail'];
         $iv = $detail['iv'];
         $encryptedData = $detail['encryptedData'];
