@@ -23,150 +23,323 @@
         height: 100%;
     }
 
-    #bottom{
+    #bottom {
         position: absolute;
         bottom: 0;
         left: 0;
-        right:0;
-        margin:0 auto;
-        background:rgba(70,70,70,0.4);
+        right: 0;
+        margin: 0 auto;
+        background: rgba(70, 70, 70, 0.4);
         width: 90%;
         height: 85px;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
     }
+
+    .choose-ul {
+        padding: 0;
+        text-align: center;
+        width: 96%;
+        position: absolute;
+        bottom: 5px;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+    }
+
+    .choose-li {
+        cursor: pointer;
+        text-align: left;
+        vertical-align: bottom;
+        display: inline-block;
+        list-style: none;
+        width: 10%;
+        height: 4.5rem;
+        background-color: white;
+        border-radius: 10px;
+        margin: 0.5%;
+        padding: 1%;
+        padding-left: 2%;
+    }
+
+    .active {
+        width: 14%;
+        height: 5.5rem;
+        background-color: rgb(46, 224, 224);
+    }
+
+    .intro {
+        display: block;
+    }
+
+    .quantity {
+        font-size: 25px;
+        margin-top: 13%;
+        display: block;
+        font-weight: bold;
+    }
+
+    #right {
+        /*background: url("./anniu@2x.png");*/
+        border-radius: 10px;
+        width: 86px;
+        height: 250px;
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        z-index: 9999999999;
+    }
+
+    .right-ul {
+        background-color: rgb(232, 241, 245);
+        border-radius: 10px;
+        cursor: pointer;
+        list-style: none;
+        height: 100%;
+        text-align: center;
+        padding: 0;
+        margin: 0;
+    }
+
+    .right-ul li {
+        height: 33.33%;
+        position: relative;
+    }
+
+    .item {
+        position: absolute;
+        height: 50%;
+        margin: auto;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        color: #3a3a3a;
+    }
+
+    .right-text {
+        display: block;
+        font-size: 10px;
+
+    }
+
+    .cheliang {
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+
+    .wangdian {
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+
+    .current {
+        background-color: rgb(70, 79, 83);
+    }
+    .current .right-text{
+        color: #ffffff;
+    }
+
+    #che-img{
+        position: absolute;
+        top: 28px;
+        left: 28px;
+    }
+
 </style>
 <body>
 <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
 <div id="main"></div>
-<div id="bottom"></div>
+<div id="right">
+    <ul class="right-ul">
+        <li class="cheliang current">
+            <div class="item">
+                <img src="cheliang@2x.png" alt="">
+                <span class="right-text">车辆</span>
+            </div>
+        </li>
+        <li class="chongdianpeng">
+            <div class="item">
+                <img src="chongdianpeng@2x.png" alt="">
+                <span class="right-text">充电棚</span>
+            </div>
+        </li>
+        <li class="wangdian">
+            <div class="item">
+                <img src="wangdian@2x.png" alt="">
+                <span class="right-text">服务网点</span>
+            </div>
+        </li>
+    </ul>
+</div>
+<div id="bottom">
+    <img src="cheliang2@2x.png" id="che-img" alt="">
+    <ul class="choose-ul">
+        <li class="choose-li active" name="qixing">
+            <span class="intro">骑行/辆</span>
+            <span class="quantity">10000</span>
+        </li>
+        <li class="choose-li" name="tingche">
+            <span class="intro">停车/辆</span>
+            <span class="quantity">10000</span>
+        </li>
+        <li class="choose-li" name="lixian">
+            <span class="intro">离线/辆</span>
+            <span class="quantity">10000</span>
+        </li>
+        <li class="choose-li" name="shilian">
+            <span class="intro">失联/辆</span>
+            <span class="quantity">10000</span>
+        </li>
+        <li class="choose-li" name="jijiangguoqi">
+            <span class="intro">即将过期/辆</span>
+            <span class="quantity">10000</span>
+        </li>
+        <li class="choose-li" name="guoqi">
+            <span class="intro">过期/辆</span>
+            <span class="quantity">10000</span>
+        </li>
+    </ul>
+</div>
+
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
 <script type="text/javascript">
-    // 基于准备好的dom，初始化echarts实例
-    var myChart = echarts.init(document.getElementById('main'));
-
-
-    var url = 'http://work.longlongwalk.com/map/getEbikeData';
     var convertData = [];
-    $.ajax({
-        type: "get",
-        dataType: 'jsonp',
-        //async:false,
-        url: url,//数据类型为jsonp
-        jsonp: "jsonpCallback",//服务端用于接收callback调用的function名的参数
-        success: function (res) {
-            console.log(res);
-            convertData = res.gps;
-            option = {
-                title: {
-                    text: '全国智慧芯电动车分布',
-                    subtext: 'data from 安骑科技',
-                    //sublink: 'http://www.pm25.in',
-                    left: 'center'
-                },
-                tooltip: {//弹框
-                    show: true,
-                    position: 'top',
-                    textStyle: {},
-                    padding:[
-                        5,  // 上
-                        15, // 右
-                        5,  // 下
-                        15, // 左
-                    ],
-                    formatter: function (params, ticket, callback) {
-                        console.log(params);
-                        return '<img src="cheliang2@2x.png"/>&nbsp;&nbsp;&nbsp;&nbsp;' + '最近一次定位<br>· ' + params.data.time + '<br>· ' + params.data.address;
-                    },
+    var option = {
+        title: {
+            text: '全国智慧芯电动车分布',
+            subtext: 'data from 安骑科技',
+            //sublink: 'http://www.pm25.in',
+            left: 'center'
+        },
+        tooltip: {//弹框
+            show: true,
+            position: 'top',
+            textStyle: {},
+            padding: [
+                5,  // 上
+                15, // 右
+                5,  // 下
+                15, // 左
+            ],
+            formatter: function (params, ticket, callback) {
+                console.log(params);
+                return '<img src="cheliang2@2x.png"/>&nbsp;&nbsp;&nbsp;&nbsp;' + '最近一次定位<br>· ' + params.data.time + '<br>· ' + params.data.address;
+            },
 //                    backgroundColor:'rgb(46,224,224)',
+        },
+        bmap: {
+            center: [104.114129, 37.550339],
+            zoom: 5,
+            roam: true,
+            mapStyle: {}
+        },
+        series: [
+            {
+                name: 'udid',
+                type: 'scatter',
+                /*large: true,
+                largeThreshold:100000,*/
+                coordinateSystem: 'bmap',
+                data: convertData,
+                symbol:'circle',//image://./cheliang2@2x.png  pin
+                symbolSize: function (val) {
+                    return 12;
                 },
-                bmap: {
-                    center: [104.114129, 37.550339],
-                    zoom: 5,
-                    roam: true,
-                    mapStyle: {}
-                },
-                series: [
-                    {
-                        name: 'udid',
-                        type: 'scatter',
-                        large: true,
-                        coordinateSystem: 'bmap',
-                        data: convertData,
-                        symbolSize: function (val) {
-                            return 12;
-                        },
-                        hoverAnimation: true,
-                        tooltip: {},
-                        label: {
-                            normal: {
-                                formatter: '{b}',
-                                position: 'top',
-                                show: false
-                            },
-                            emphasis: {
-                                show: false
-                            },
-                        },
-                        itemStyle: {
-                            normal: {
-                                color: 'rgb(46,224,224)'
-                            }
-                        }
+                hoverAnimation: true,
+                tooltip: {},
+                label: {
+                    normal: {
+                        formatter: '{b}',
+                        position: 'top',
+                        show: false
                     },
-                    /*{
-                     name: 'Top 5',
-                     type: 'effectScatter',
-                     coordinateSystem: 'bmap',
-                     data: convertData(data.sort(function (a, b) {
-                     return b.value - a.value;
-                     }).slice(0, 6)),
-                     symbolSize: function (val) {
-                     return val[2] / 10;
-                     },
-                     showEffectOn: 'render',
-                     rippleEffect: {
-                     brushType: 'stroke'
-                     },
-                     hoverAnimation: true,
-                     label: {
-                     normal: {
-                     formatter: '{b}',
-                     position: 'right',
-                     show: true
-                     }
-                     },
-                     itemStyle: {
-                     normal: {
-                     color: 'purple',
-                     shadowBlur: 10,
-                     shadowColor: '#333'
-                     }
-                     },
-                     zlevel: 1
-                     }*/
-                ]
-            };
-            // 使用刚指定的配置项和数据显示图表。
-            myChart.setOption(option);
+                    emphasis: {
+                        show: false
+                    },
+                },
+                itemStyle: {
+                    normal: {
+                        color: 'rgb(46,224,224)'
+                    }
+                }
+            },
+        ]
+    };
+
+    var chooseLis = $(".choose-li");
+    var rightLis = $(".right-ul li");
+    var cheliang= $(".cheliang img");
+    var chongdianpeng = $(".chongdianpeng img");
+    var wangdian = $(".wangdian img");
+
+    rightLis.click(function(){
+        rightLis.removeClass('current');
+        $(this).addClass('current');
+        cheliang.attr({src:'cheliang_black@2x.png'});
+        chongdianpeng.attr({src:'chongdianpeng@2x.png'});
+        wangdian.attr({src:'wangdian@2x.png'});
+    });
+
+    rightLis.each(function (index) {
+        if(index === 0){
+            $(this).click(function () {
+                $(this).find('img').attr({
+                    src:'cheliang@2x.png',
+                })
+            });
+        }else if(index === 1){
+            $(this).click(function(){
+                $(this).find('img').attr({
+                    src:'chongdianpeng_White@2x.png',
+                })
+            });
+        }else if(index === 2){
+            $(this).click(function(){
+                $(this).find('img').attr({
+                    src:'wangdian_White@2x.png',
+                })
+            });
         }
     })
 
-    /*    var convertData = function (data) {
-     var res = [];
-     for (var i = 0; i < data.length; i++) {
-     var geoCoord = geoCoordMap[data[i].name];
-     if (geoCoord) {
-     res.push({
-     name: data[i].name,
-     value: geoCoord.concat(data[i].value)
-     });
-     }
-     }
-     console.log(res);
-     return res;
-     };*/
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+    myChart.setOption(option);
 
+
+    var url = 'http://work.longlongwalk.com/map/getEbikeData';
+
+
+    chooseLis.click(function () {
+        myChart.showLoading();
+        chooseLis.removeClass('active');
+        var that = $(this);
+        that.addClass('active');
+        var name = that.attr('name');
+        $.ajax({
+            type: "get",
+            dataType: 'jsonp',
+            //async:false,
+            url: url,//数据类型为jsonp
+            data:{name:name},
+            jsonp: "jsonpCallback",//服务端用于接收callback调用的function名的参数
+            success: function (res) {
+                console.log(res);
+                convertData = res.gps;
+                option.series[0].data = convertData;
+                // 使用刚指定的配置项和数据显示图表。
+                console.log(option);
+                var a = myChart.setOption(option);
+                console.log(a);
+                myChart.hideLoading();
+            }
+        })
+    });
+
+    $("li[name='qixing']").trigger('click');
 
 </script>
 </body>
