@@ -35,8 +35,10 @@ class AdminBeforeCheck
             return Redirect::action('Admin\DeviceController@list');
         }
 
-        $a = session()->all();
-        Log::debug('session  : ' . json_encode($a));
+        Log::debug('admin route : ' . $request->route()->getActionName());
+
+//        $a = session()->all();
+//        Log::debug('session  : ' . json_encode($a));
 
         return $next($request);
     }
