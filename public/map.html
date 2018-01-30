@@ -177,27 +177,27 @@
     <ul class="choose-ul">
         <li class="choose-li active" name="qixing">
             <span class="intro">骑行/辆</span>
-            <span class="quantity">10000</span>
+            <span class="quantity">0</span>
         </li>
         <li class="choose-li" name="tingche">
             <span class="intro">停车/辆</span>
-            <span class="quantity">10000</span>
+            <span class="quantity">0</span>
         </li>
         <li class="choose-li" name="lixian">
             <span class="intro">离线/辆</span>
-            <span class="quantity">10000</span>
+            <span class="quantity">0</span>
         </li>
         <li class="choose-li" name="shilian">
             <span class="intro">失联/辆</span>
-            <span class="quantity">10000</span>
+            <span class="quantity">0</span>
         </li>
         <li class="choose-li" name="jijiangguoqi">
             <span class="intro">即将过期/辆</span>
-            <span class="quantity">10000</span>
+            <span class="quantity">0</span>
         </li>
         <li class="choose-li" name="guoqi">
             <span class="intro">过期/辆</span>
-            <span class="quantity">10000</span>
+            <span class="quantity">0</span>
         </li>
     </ul>
 </div>
@@ -231,7 +231,7 @@
 //                    backgroundColor:'rgb(46,224,224)',
         },
         bmap: {
-            center: [104.114129, 37.550339],
+            center: [106.282019,34.587249],
             zoom: 5,
             roam: true,
             mapStyle: {
@@ -263,7 +263,7 @@
                     'featureType': 'highway',
                     'elementType': 'labels',
                     'stylers': {
-                        'visibility': 'off'
+                        'visibility': 'on'
                     }
                 }, {
                     'featureType': 'arterial',
@@ -305,19 +305,19 @@
                     'featureType': 'local',
                     'elementType': 'all',
                     'stylers': {
-                        'color': '#d1d1d1'
+                        'color': '#000'
                     }
                 }, {
                     'featureType': 'arterial',
                     'elementType': 'labels',
                     'stylers': {
-                        'visibility': 'off'
+                        'visibility': 'on'
                     }
                 }, {
                     'featureType': 'boundary',
                     'elementType': 'all',
                     'stylers': {
-                        'color': '#fefefe'
+                        'color': '#000'
                     }
                 }, {
                     'featureType': 'building',
@@ -329,7 +329,7 @@
                     'featureType': 'label',
                     'elementType': 'labels.text.fill',
                     'stylers': {
-                        'color': '#999999'
+                        'color': '#fff'
                     }
                 }]
             }
@@ -339,12 +339,12 @@
                 name: 'udid',
                 type: 'scatter',
                 /*large: true,
-                largeThreshold:100000,*/
+                largeThreshold:30000,*/
                 coordinateSystem: 'bmap',
                 data: convertData,
                 symbol:'circle',//image://./cheliang2@2x.png  pin
                 symbolSize: function (val) {
-                    return 12;
+                    return 9;
                 },
                 hoverAnimation: true,
                 tooltip: {},
@@ -409,7 +409,7 @@
 
 
     var url = 'http://work.longlongwalk.com/map/getEbikeData';
-
+    var url2 = 'http://work.longlongwalk.com/map/getEbikeCount';
 
     chooseLis.click(function () {
         myChart.showLoading();
@@ -425,19 +425,33 @@
             data:{name:name},
             jsonp: "jsonpCallback",//服务端用于接收callback调用的function名的参数
             success: function (res) {
-                console.log(res);
-                convertData = res.gps;
-                option.series[0].data = convertData;
-                // 使用刚指定的配置项和数据显示图表。
-                console.log(option);
-                var a = myChart.setOption(option);
-                console.log(a);
+                //console.log(res);
+                //that.find('.quantity').html(res.gps.length);
+                option.series[0].data = res.gps;
+                //console.log(option);
+                //使用刚指定的配置项和数据显示图表。
+                myChart.setOption(option);
                 myChart.hideLoading();
             }
         })
     });
 
     $("li[name='qixing']").trigger('click');
+
+    $.ajax({
+        type: "get",
+        dataType: 'jsonp',
+        //async:false,
+        url: url2,//数据类型为jsonp
+        jsonp: "jsonpCallback",//服务端用于接收callback调用的function名的参数
+        success: function (res){
+            console.log(res);
+            $(".choose-li").each(function(){
+                var name = $(this).attr('name')
+                $(this).find('.quantity').html(res[name]);
+            });
+        }
+    })
 
 </script>
 </body>
