@@ -81,8 +81,8 @@ class ChargeService extends BaseService
                 $model->expect_end_at = date('Y-m-d H:i:s', strtotime("+$expectTime seconds"));
             }
             //if (BoxService::isOpen($model->device_no, $model->port_no)) {
-                //关箱子
-                BoxService::closeBox($model->device_no, $model->port_no);
+            //关箱子
+            BoxService::closeBox($model->device_no, $model->port_no);
             //}
             return $model->save();
         } elseif ($model) {
@@ -138,10 +138,8 @@ class ChargeService extends BaseService
         if ($sendCmd) {
             CommandService::sendCommandChargeEnd($deviceNo, $portNo);
         }
-        //if (!BoxService::isOpen($deviceNo, $portNo)) {
-            //如果box关了就打开
-            BoxService::openBox($deviceNo, $portNo);
-        //}
+        BoxService::openBox($deviceNo, $portNo);
+        return true;
     }
 
     /**
@@ -160,19 +158,20 @@ class ChargeService extends BaseService
         $charge = ChargeTasks::find($taskId);
         $charge->user_cost = $costs;//需要支付$costs
 
-        if(WelfareUsers::join('welfare_devices',function ($join){
+        if (WelfareUsers::join('welfare_devices', function ($join) {
             /** @var JoinClause $join */
-            $join->on('welfare_users.card_id','=','welfare_devices.card_id');
-        })->whereUserId($userId)->whereDeviceNo($charge->device_no)->first()){
+            $join->on('welfare_users.card_id', '=', 'welfare_devices.card_id');
+        })->whereUserId($userId)->whereDeviceNo($charge->device_no)->first()
+        ) {
             //福利卡用户
             $charge->cost_type = ChargeTasks::COST_TYPE_CARD;
             $charge->actual_cost = 0;//实际支付0
-        }else{
+        } else {
             $user = User::find($userId);
-            if($user->user_balance > 0){
+            if ($user->user_balance > 0) {
                 $charge->cost_type = ChargeTasks::COST_TYPE_BALANCE;
                 $field = 'user_balance';
-            }else{
+            } else {
                 $charge->cost_type = ChargeTasks::COST_TYPE_PRESNET;
                 $field = 'present_balance';
             }
@@ -181,7 +180,7 @@ class ChargeService extends BaseService
             User::chargeCost($userId, $costs, $field);
         }
         //更新充电任务
-        $charge->save();
+        return $charge->save();
     }
 
     /**
@@ -190,9 +189,9 @@ class ChargeService extends BaseService
      */
     public static function endChargeByUser($device)
     {
-        self::endCharge($device, ChargeTasks::TASK_STATE_USER_END);
+        $end = self::endCharge($device, ChargeTasks::TASK_STATE_USER_END);
         $taskId = ChargeTasks::getLastTaskIdByDevice($device['device_no'], $device['port_no']);
-        return self::sendEndMessage($taskId);
+        return $end ? self::sendEndMessage($taskId) : false;
     }
 
     /**
@@ -203,9 +202,9 @@ class ChargeService extends BaseService
      */
     public static function endChargeByTimeOver($deviceNo, $portNo)
     {
-        self::endCharge(['device_no' => $deviceNo, 'port_no' => $portNo], ChargeTasks::TASK_STATE_TIME_END);
+        $end = self::endCharge(['device_no' => $deviceNo, 'port_no' => $portNo], ChargeTasks::TASK_STATE_TIME_END);
         $taskId = ChargeTasks::getLastTaskIdByDevice($deviceNo, $portNo);
-        return self::sendEndMessage($taskId);
+        return $end ? self::sendEndMessage($taskId) : false;
     }
 
     /**
@@ -217,9 +216,11 @@ class ChargeService extends BaseService
     {
         $device = ['device_no' => $deviceNo, 'port_no' => $portNo];
         $state = ChargeTasks::TASK_STATE_COMPLETE;
-        self::endCharge($device, $state, true);
-        $taskId = ChargeTasks::getLastTaskIdByDevice($deviceNo, $portNo);
-        return self::sendEndMessage($taskId);
+        if(self::endCharge($device, $state, true)){
+            $taskId = ChargeTasks::getLastTaskIdByDevice($deviceNo, $portNo);
+            return self::sendEndMessage($taskId);
+        }
+        return false;
     }
 
     /**
@@ -231,9 +232,11 @@ class ChargeService extends BaseService
     {
         $device = ['device_no' => $deviceNo, 'port_no' => $portNo];
         $state = ChargeTasks::TASK_STATE_END_ABMORMAL;
-        self::endCharge($device, $state, true);
-        $taskId = ChargeTasks::getLastTaskIdByDevice($deviceNo, $portNo);
-        return self::sendEndAbMessage($taskId);
+        if(self::endCharge($device, $state, true)){
+            $taskId = ChargeTasks::getLastTaskIdByDevice($deviceNo, $portNo);
+            return self::sendEndAbMessage($taskId);
+        }
+        return false;
     }
 
     /**
