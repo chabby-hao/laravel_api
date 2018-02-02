@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>ECharts</title>
+    <title>分布图</title>
     <!-- 引入 echarts.js -->
     <!--引入百度地图的jssdk，这里需要使用你在百度地图开发者平台申请的 ak-->
     <script src="https://api.map.baidu.com/api?v=4.0&ak=QhhNgV6Mb4rVFtGQKhiPoETzf1VpK1vM"></script>
@@ -177,23 +177,23 @@
     <img src="cheliang2@2x.png" id="che-img" alt="">
     <ul class="choose-ul">
         <li class="choose-li" name="quanbu">
-            <span class="intro">全部/辆</span>
+            <span class="intro">全部</span>
             <span class="quantity">0</span>
         </li>
         <li class="choose-li active" name="qixing">
-            <span class="intro">骑行/辆</span>
+            <span class="intro">骑行</span>
             <span class="quantity">0</span>
         </li>
         <li class="choose-li" name="tingche">
-            <span class="intro">停车/辆</span>
+            <span class="intro">停车</span>
             <span class="quantity">0</span>
         </li>
         <li class="choose-li" name="lixian">
-            <span class="intro">离线/辆</span>
+            <span class="intro">离线</span>
             <span class="quantity">0</span>
         </li>
         <li class="choose-li" name="shilian">
-            <span class="intro">失联/辆</span>
+            <span class="intro">失联</span>
             <span class="quantity">0</span>
         </li>
         <li class="choose-li" name="jijiangguoqi">
@@ -201,7 +201,7 @@
             <span class="quantity">0</span>
         </li>
         <li class="choose-li" name="guoqi">
-            <span class="intro">过期/辆</span>
+            <span class="intro">过期</span>
             <span class="quantity">0</span>
         </li>
     </ul>
@@ -230,7 +230,7 @@
                 15, // 左
             ],
             formatter: function (params, ticket, callback) {
-                console.log(params);
+                //console.log(params);
                 return '<img src="cheliang2@2x.png"/>&nbsp;&nbsp;&nbsp;&nbsp;最近一次定位' + '<br>· ' + params.data.name + '<br>· ' + params.data.time + '<br>· ' + params.data.address;
             },
 //                    backgroundColor:'rgb(46,224,224)',
@@ -390,7 +390,7 @@
                 15, // 左
             ],
             formatter: function (params, ticket, callback) {
-                console.log(params);
+                //console.log(params);
                 return '&nbsp;' + params.data.address + '<br>·' + ' 设备号： ' + params.data.device_no + '<br>· 充电口： ' + params.data.port_nums + '<br>· 充电中： ' + params.data.charging_nums;
             },
 //                    backgroundColor:'rgb(46,224,224)',
