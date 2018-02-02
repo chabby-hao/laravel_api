@@ -43,6 +43,8 @@ class MapController extends Controller
         ];
 
         foreach ($datas as &$data){
+            $data['charging_nums'] = 0;
+            $data['port_nums'] = 0;
             $deviceNo = $data['device_no'];
             $devices = DeviceInfo::whereDeviceNo($deviceNo)->get();
             if($devices){
