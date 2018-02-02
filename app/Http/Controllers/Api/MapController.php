@@ -47,6 +47,6 @@ class MapController extends Controller
                 ],
             ],
         ];
-        return \response($data);
+        return \response($data, 200, ['Access-Control-Allow-Origin'=>'*']);
     }
 }
