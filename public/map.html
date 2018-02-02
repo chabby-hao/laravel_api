@@ -53,7 +53,7 @@
         vertical-align: bottom;
         display: inline-block;
         list-style: none;
-        width: 10%;
+        width: 8%;
         height: 4.5rem;
         background-color: white;
         border-radius: 10px;
@@ -136,14 +136,15 @@
     .current {
         background-color: rgb(70, 79, 83);
     }
-    .current .right-text{
+
+    .current .right-text {
         color: #ffffff;
     }
 
-    #che-img{
+    #che-img {
         position: absolute;
         top: 28px;
-        left: 28px;
+        left: 20px;
     }
 
 </style>
@@ -175,6 +176,10 @@
 <div id="bottom">
     <img src="cheliang2@2x.png" id="che-img" alt="">
     <ul class="choose-ul">
+        <li class="choose-li active" name="quanbu">
+            <span class="intro">全部/辆</span>
+            <span class="quantity">0</span>
+        </li>
         <li class="choose-li active" name="qixing">
             <span class="intro">骑行/辆</span>
             <span class="quantity">0</span>
@@ -192,7 +197,7 @@
             <span class="quantity">0</span>
         </li>
         <li class="choose-li" name="jijiangguoqi">
-            <span class="intro">即将过期/辆</span>
+            <span class="intro">即将过期</span>
             <span class="quantity">0</span>
         </li>
         <li class="choose-li" name="guoqi">
@@ -226,12 +231,12 @@
             ],
             formatter: function (params, ticket, callback) {
                 console.log(params);
-                return '<img src="cheliang2@2x.png"/>&nbsp;&nbsp;&nbsp;&nbsp;' + '最近一次定位<br>· ' + params.data.time + '<br>· ' + params.data.address;
+                return '<img src="cheliang2@2x.png"/>&nbsp;&nbsp;&nbsp;&nbsp;最近一次定位' + '<br>· ' + params.data.name + '<br>· ' + params.data.time + '<br>· ' + params.data.address;
             },
 //                    backgroundColor:'rgb(46,224,224)',
         },
         bmap: {
-            center: [106.282019,34.587249],
+            center: [106.282019, 34.587249],
             zoom: 5,
             roam: true,
             mapStyle: {
@@ -339,10 +344,170 @@
                 name: 'udid',
                 type: 'scatter',
                 /*large: true,
-                largeThreshold:30000,*/
+                 largeThreshold:30000,*/
                 coordinateSystem: 'bmap',
                 data: convertData,
-                symbol:'circle',//image://./cheliang2@2x.png  pin
+                symbol: 'circle',//image://./cheliang2@2x.png  pin
+                symbolSize: function (val) {
+                    return 9;
+                },
+                hoverAnimation: true,
+                tooltip: {},
+                label: {
+                    normal: {
+                        formatter: '{b}',
+                        position: 'top',
+                        show: false
+                    },
+                    emphasis: {
+                        show: false
+                    },
+                },
+                itemStyle: {
+                    normal: {
+                        color: 'rgb(46,224,224)'
+                    }
+                }
+            },
+        ]
+    };
+
+    var option2 = {
+        title: {
+            text: '全国智慧芯电动车分布',
+            subtext: 'data from 安骑科技',
+            //sublink: 'http://www.pm25.in',
+            left: 'center'
+        },
+        tooltip: {//弹框
+            show: true,
+            position: 'top',
+            textStyle: {},
+            padding: [
+                5,  // 上
+                15, // 右
+                5,  // 下
+                15, // 左
+            ],
+            formatter: function (params, ticket, callback) {
+                console.log(params);
+                return '&nbsp;' + params.data.address + '<br>·' + ' 设备号： ' + params.data.device_no + '<br>· 充电口： ' + params.data.port_nums + '<br>· 充电中： ' + params.data.charging_nums;
+            },
+//                    backgroundColor:'rgb(46,224,224)',
+        },
+        bmap: {
+            center: [106.282019, 34.587249],
+            zoom: 5,
+            roam: true,
+            mapStyle: {
+                styleJson: [{
+                    'featureType': 'water',
+                    'elementType': 'all',
+                    'stylers': {
+                        'color': '#d1d1d1'
+                    }
+                }, {
+                    'featureType': 'land',
+                    'elementType': 'all',
+                    'stylers': {
+                        'color': '#f3f3f3'
+                    }
+                }, {
+                    'featureType': 'railway',
+                    'elementType': 'all',
+                    'stylers': {
+                        'visibility': 'off'
+                    }
+                }, {
+                    'featureType': 'highway',
+                    'elementType': 'all',
+                    'stylers': {
+                        'color': '#000'
+                    }
+                }, {
+                    'featureType': 'highway',
+                    'elementType': 'labels',
+                    'stylers': {
+                        'visibility': 'on'
+                    }
+                }, {
+                    'featureType': 'arterial',
+                    'elementType': 'geometry',
+                    'stylers': {
+                        'color': '#fefefe'
+                    }
+                }, {
+                    'featureType': 'arterial',
+                    'elementType': 'geometry.fill',
+                    'stylers': {
+                        'color': '#fefefe'
+                    }
+                }, {
+                    'featureType': 'poi',
+                    'elementType': 'all',
+                    'stylers': {
+                        'visibility': 'off'
+                    }
+                }, {
+                    'featureType': 'green',
+                    'elementType': 'all',
+                    'stylers': {
+                        'visibility': 'off'
+                    }
+                }, {
+                    'featureType': 'subway',
+                    'elementType': 'all',
+                    'stylers': {
+                        'visibility': 'off'
+                    }
+                }, {
+                    'featureType': 'manmade',
+                    'elementType': 'all',
+                    'stylers': {
+                        'color': '#d1d1d1'
+                    }
+                }, {
+                    'featureType': 'local',
+                    'elementType': 'all',
+                    'stylers': {
+                        'color': '#000'
+                    }
+                }, {
+                    'featureType': 'arterial',
+                    'elementType': 'labels',
+                    'stylers': {
+                        'visibility': 'on'
+                    }
+                }, {
+                    'featureType': 'boundary',
+                    'elementType': 'all',
+                    'stylers': {
+                        'color': '#000'
+                    }
+                }, {
+                    'featureType': 'building',
+                    'elementType': 'all',
+                    'stylers': {
+                        'color': '#d1d1d1'
+                    }
+                }, {
+                    'featureType': 'label',
+                    'elementType': 'labels.text.fill',
+                    'stylers': {
+                        'color': '#fff'
+                    }
+                }]
+            }
+        },
+        series: [
+            {
+                name: 'udid',
+                type: 'scatter',
+                /*large: true,
+                 largeThreshold:30000,*/
+                coordinateSystem: 'bmap',
+                data: convertData,
+                symbol: 'circle',//image://./cheliang2@2x.png  pin
                 symbolSize: function (val) {
                     return 9;
                 },
@@ -369,35 +534,35 @@
 
     var chooseLis = $(".choose-li");
     var rightLis = $(".right-ul li");
-    var cheliang= $(".cheliang img");
+    var cheliang = $(".cheliang img");
     var chongdianpeng = $(".chongdianpeng img");
     var wangdian = $(".wangdian img");
 
-    rightLis.click(function(){
+    rightLis.click(function () {
         rightLis.removeClass('current');
         $(this).addClass('current');
-        cheliang.attr({src:'cheliang_black@2x.png'});
-        chongdianpeng.attr({src:'chongdianpeng@2x.png'});
-        wangdian.attr({src:'wangdian@2x.png'});
+        cheliang.attr({src: 'cheliang_black@2x.png'});
+        chongdianpeng.attr({src: 'chongdianpeng@2x.png'});
+        wangdian.attr({src: 'wangdian@2x.png'});
     });
 
     rightLis.each(function (index) {
-        if(index === 0){
+        if (index === 0) {
             $(this).click(function () {
                 $(this).find('img').attr({
-                    src:'cheliang@2x.png',
+                    src: 'cheliang@2x.png',
                 })
             });
-        }else if(index === 1){
-            $(this).click(function(){
+        } else if (index === 1) {
+            $(this).click(function () {
                 $(this).find('img').attr({
-                    src:'chongdianpeng_White@2x.png',
+                    src: 'chongdianpeng_White@2x.png',
                 })
             });
-        }else if(index === 2){
-            $(this).click(function(){
+        } else if (index === 2) {
+            $(this).click(function () {
                 $(this).find('img').attr({
-                    src:'wangdian_White@2x.png',
+                    src: 'wangdian_White@2x.png',
                 })
             });
         }
@@ -411,7 +576,10 @@
     var url = 'http://work.longlongwalk.com/map/getEbikeData';
     var url2 = 'http://work.longlongwalk.com/map/getEbikeCount';
 
+    var bottoms = $("#bottom");
+
     chooseLis.click(function () {
+        bottoms.show();
         myChart.showLoading();
         chooseLis.removeClass('active');
         var that = $(this);
@@ -422,7 +590,7 @@
             dataType: 'jsonp',
             //async:false,
             url: url,//数据类型为jsonp
-            data:{name:name},
+            data: {name: name},
             jsonp: "jsonpCallback",//服务端用于接收callback调用的function名的参数
             success: function (res) {
                 //console.log(res);
@@ -436,7 +604,13 @@
         })
     });
 
-    $("li[name='qixing']").trigger('click');
+    function triggerQixing()
+    {
+        $("li[name='qixing']").trigger('click');
+    }
+
+    triggerQixing();
+
 
     $.ajax({
         type: "get",
@@ -444,14 +618,40 @@
         //async:false,
         url: url2,//数据类型为jsonp
         jsonp: "jsonpCallback",//服务端用于接收callback调用的function名的参数
-        success: function (res){
+        success: function (res) {
             console.log(res);
-            $(".choose-li").each(function(){
+            $(".choose-li").each(function () {
                 var name = $(this).attr('name')
                 $(this).find('.quantity').html(res[name]);
             });
         }
     })
+
+    $(".cheliang").click(function () {
+        bottoms.show();
+        triggerQixing();
+    })
+
+    $(".chongdianpeng").click(function () {
+        bottoms.hide();
+        $.ajax({
+            type: "get",
+            dataType: 'json',
+            //async:false,
+            url: 'http://anxinchong.vipcare.com/api/map/deviceData',//数据类型为jsonp
+            jsonp: "jsonpCallback",//服务端用于接收callback调用的function名的参数
+            success: function (res) {
+                console.log(res);
+                //console.log(res);
+                //that.find('.quantity').html(res.gps.length);
+                option2.series[0].data = res;
+                //console.log(option);
+                //使用刚指定的配置项和数据显示图表。
+                myChart.setOption(option2);
+                myChart.hideLoading();
+            }
+        })
+    });
 
 </script>
 </body>
