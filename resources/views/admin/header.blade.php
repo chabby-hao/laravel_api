@@ -31,13 +31,16 @@
     <ul class="nav">
         <li class="dropdown" id="profile-messages">
             <a title="" href="#" data-toggle="dropdown" data-target="#profile-messages" class="dropdown-toggle"><i
-                        class="icon icon-user"></i> <span class="text">Welcome <?php echo session('admin_name') ?></span><b class="caret"></b></a>
+                        class="icon icon-user"></i>
+                <span class="text">Welcome <?php echo session('admin_name') ?></span><b class="caret"></b></a>
             <ul class="dropdown-menu">
                 {{--<li><a href="#"><i class="icon-user"></i> My Profile</a></li>--}}
                 {{--<li class="divider"></li>--}}
                 {{--<li><a href="#"><i class="icon-check"></i> My Tasks</a></li>--}}
                 {{--<li class="divider"></li>--}}
-                <li><a href="<?php echo \Illuminate\Support\Facades\URL::action('Admin\AdminController@logout'); ?>"><i class="icon-key"></i> Log Out</a></li>
+                <li>
+                    <a href="<?php echo \Illuminate\Support\Facades\URL::action('Admin\AdminController@logout'); ?>"><i class="icon-key"></i>
+                        Log Out</a></li>
             </ul>
         </li>
     </ul>
@@ -58,7 +61,7 @@
                 <span>Dashboard</span></a></li>-->
         <!--        用户参数配置，用于集成api-->
         <li class="submenu"><a href="#"><i class="icon icon-th-list"></i> <span>管理员</span>
-                </a>
+            </a>
             <ul>
                 <li><a href="{{ URL::action('Admin\AdminController@list') }}">管理员列表</a></li>
                 <li><a href="{{ URL::action('Admin\AdminController@add') }}">添加管理员</a></li>
@@ -67,7 +70,7 @@
         </li>
         <!--        设备配置-->
         <li class="submenu"><a href="#"><i class="icon icon-th-list"></i> <span>设备管理</span>
-                </a>
+            </a>
             <ul>
                 <li><a href="{{ URL::action('Admin\DeviceController@list')  }}">设备列表</a></li>
                 <li><a href="{{ URL::action('Admin\DeviceController@add')  }}">添加设备</a></li>
@@ -80,7 +83,7 @@
 
         {{--用户管理--}}
         <li class="submenu"><a href="#"><i class="icon icon-th-list"></i> <span>用户管理</span>
-                </a>
+            </a>
             <ul>
                 <li><a href="{{ URL::action('Admin\UserController@list')  }}">用户列表</a></li>
                 <li><a href="{{ URL::action('Admin\UserController@feedback')  }}">用户反馈</a></li>
@@ -90,7 +93,7 @@
 
         {{--订单管理--}}
         <li class="submenu"><a href="#"><i class="icon icon-th-list"></i> <span>订单管理</span>
-                </a>
+            </a>
             <ul>
                 <li><a href="{{ URL::action('Admin\OrdersController@list')  }}">充值列表</a></li>
                 <li><a href="{{ URL::action('Admin\RefundsController@list')  }}">退款列表</a></li>
@@ -100,7 +103,7 @@
 
         {{--充电列表--}}
         <li class="submenu"><a href="#"><i class="icon icon-th-list"></i> <span>充电管理</span>
-                </a>
+            </a>
             <ul>
                 <li><a href="{{ URL::action('Admin\ChargeController@list')  }}">充电列表</a></li>
             </ul>
@@ -109,12 +112,17 @@
 
         {{--活动管理--}}
         <li class="submenu"><a href="#"><i class="icon icon-th-list"></i> <span>活动管理</span>
-               </a>
+            </a>
             <ul>
                 <li><a href="{{ URL::action('Admin\ActivityController@cardsList')  }}">福利卡列表</a></li>
                 <li><a href="{{ URL::action('Admin\ActivityController@cardsAdd')  }}">福利卡添加</a></li>
             </ul>
 
+        </li>
+
+        {{--地图--}}
+        <li class="active"><a target="_blank" href="http://anxinchong.vipcare.com/map.html"><i class="icon icon-th-list"></i> <span>地图</span>
+            </a>
         </li>
 
         <!--        报告-->
