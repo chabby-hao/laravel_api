@@ -23,26 +23,24 @@ class MapController extends Controller
     {
         $data = [
             [
-                'device_no'=>'1111111',
                 'address'=>'万和家园',
-                'device_num'=>2,
+                'device_no'=>'20000001',
                 'port_nums'=>5,
                 'charging_nums'=>0,
                 'value' => [
-                    floatval(72.1),
-                    floatval(31.2),
+                    floatval(121.370286),
+                    floatval(31.114697),
                     1,//数量
                 ],
             ],
             [
-                'device_no'=>'1111111',
                 'address'=>'万和家园',
-                'device_num'=>1,
+                'device_no'=>'20000002',
                 'port_nums'=>5,
                 'charging_nums'=>0,
                 'value' => [
-                    floatval(72.1),
-                    floatval(32.2),
+                    floatval(121.370142),
+                    floatval(31.114655),
                     2,//数量
                 ],
             ],
