@@ -633,7 +633,7 @@
     })
 
     $(".chongdianpeng").click(function () {
-        bottoms.hide();
+        myChart.showLoading();
         $.ajax({
             type: "get",
             dataType: 'json',
@@ -648,6 +648,7 @@
                 //console.log(option);
                 //使用刚指定的配置项和数据显示图表。
                 myChart.setOption(option2);
+                bottoms.hide();
                 myChart.hideLoading();
             }
         })
