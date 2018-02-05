@@ -53,7 +53,7 @@
         vertical-align: bottom;
         display: inline-block;
         list-style: none;
-        width: 8%;
+        width: 10%;
         height: 4.5rem;
         background-color: white;
         border-radius: 10px;
@@ -73,8 +73,10 @@
     }
 
     .quantity {
+        position: absolute;
         font-size: 25px;
-        margin-top: 13%;
+        /*margin-top: 13%;*/
+        bottom: 15px;
         display: block;
         font-weight: bold;
     }
@@ -189,21 +191,25 @@
             <span class="quantity">0</span>
         </li>
         <li class="choose-li" name="lixian">
-            <span class="intro">离线</span>
+            <span class="intro">离线<48小时</span>
             <span class="quantity">0</span>
         </li>
         <li class="choose-li" name="shilian">
-            <span class="intro">失联</span>
+            <span class="intro">离线>48小时</span>
             <span class="quantity">0</span>
         </li>
-        <li class="choose-li" name="jijiangguoqi">
+        <li class="choose-li" name="kucun">
+            <span class="intro">库存</span>
+            <span class="quantity">0</span>
+        </li>
+        <!--<li class="choose-li" name="jijiangguoqi">
             <span class="intro">即将过期</span>
             <span class="quantity">0</span>
         </li>
         <li class="choose-li" name="guoqi">
             <span class="intro">过期</span>
             <span class="quantity">0</span>
-        </li>
+        </li>-->
     </ul>
 </div>
 
@@ -604,8 +610,7 @@
         })
     });
 
-    function triggerQixing()
-    {
+    function triggerQixing() {
         $("li[name='qixing']").trigger('click');
     }
 
