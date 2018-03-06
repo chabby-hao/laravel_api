@@ -46,10 +46,10 @@ class ActivityController extends Controller
 
         if(WelfareUsers::whereUserId($userId)->whereCardId($cardId)->first()){
             //已经领取过
-            //return Helper::responeseError(ErrorCode::$hasGotCard);
-            return Helper::response([
+            return Helper::responeseError(ErrorCode::$hasGotCard);
+            /*return Helper::response([
                 'toast'=>'您已经领取过福利卡，无需再次领取',
-            ]);
+            ]);*/
         }
 
         if($card->limit_user){
@@ -68,7 +68,7 @@ class ActivityController extends Controller
         }
 
         return Helper::response([
-            'toast'=>'您已成功领取公司为您提供的电瓶车智能充电服务，请至园区内的充电棚给您的爱车充电吧。',
+            'toast'=>'增加此卡只适用于' . $card->company . '园区充电棚。',
         ]);
 
     }
