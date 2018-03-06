@@ -68,7 +68,7 @@ class ActivityController extends Controller
         }
 
         return Helper::response([
-            'toast'=>'增加此卡只适用于' . $card->company . '充电棚。',
+            'toast'=>'您已成功领取公司为您提供的电瓶车智能充电服务，请至园区内的充电棚给您的爱车充电吧。此卡只适用于' . $card->company . '充电棚。',
         ]);
 
     }
