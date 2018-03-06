@@ -58,7 +58,7 @@ class ErrorCode
             self::$balanceNotEnough =>'余额不足，请先充值',
             self::$isChargingNow => '充电口被占用，请换一个充电口',
             self::$isChargingAndNeedWait => '充电口被占用，请换一个充电口或等待{mins}分钟',
-            self::$hasGotCard = '您已经领取过福利卡，无需再次领取',
+            self::$hasGotCard => '您已经领取过福利卡，无需再次领取',
         ];
     }
 
