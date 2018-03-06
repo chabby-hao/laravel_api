@@ -47,7 +47,7 @@ class ErrorCode
 
     public static $notInWhiteList = 2017;//非福利卡白名单用户
 
-    public static $hasGotCard = 2018;//已经领取过福利法，无需再次领取
+    public static $hasGotCard = 2018;//已经领取过福利卡，无需再次领取
 
     public static function getErrMsg()
     {

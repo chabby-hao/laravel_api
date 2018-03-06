@@ -46,7 +46,10 @@ class ActivityController extends Controller
 
         if(WelfareUsers::whereUserId($userId)->whereCardId($cardId)->first()){
             //已经领取过
-            return Helper::responeseError(ErrorCode::$hasGotCard);
+            //return Helper::responeseError(ErrorCode::$hasGotCard);
+            return Helper::response([
+                'toast'=>'您已经领取过福利卡，无需再次领取',
+            ]);
         }
 
         if($card->limit_user){
