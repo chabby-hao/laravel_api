@@ -68,7 +68,7 @@ class ActivityController extends Controller
         }
 
         return Helper::response([
-            'toast'=>'增加此卡只适用于' . $card->company . '园区充电棚。',
+            'toast'=>'增加此卡只适用于' . $card->company . '充电棚。',
         ]);
 
     }
