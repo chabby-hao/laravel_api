@@ -121,7 +121,7 @@
         </li>
 
         {{--地图--}}
-        <li class="active"><a target="_blank" href="http://anxinchong.vipcare.com/map.html"><i class="icon icon-th-list"></i> <span>地图</span>
+        <li class="active"><a target="_blank" href="http://bi.vipcare.com/map.html"><i class="icon icon-th-list"></i> <span>地图</span>
             </a>
         </li>
 
