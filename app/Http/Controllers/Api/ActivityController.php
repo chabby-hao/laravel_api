@@ -21,6 +21,7 @@ class ActivityController extends Controller
     {
         $output = [
             'open'=>0,
+            'show_modal'=>0,//首页是否展示弹框
         ];
         if(ActivityService::isOpenPaySendActivity()){
             $output['open'] = 1;
