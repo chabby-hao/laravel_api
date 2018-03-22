@@ -216,7 +216,7 @@ class ChargeService extends BaseService
     {
         $device = ['device_no' => $deviceNo, 'port_no' => $portNo];
         $state = ChargeTasks::TASK_STATE_COMPLETE;
-        if(self::endCharge($device, $state, true)){
+        if(self::endCharge($device, $state, false)){
             $taskId = ChargeTasks::getLastTaskIdByDevice($deviceNo, $portNo);
             return self::sendEndMessage($taskId);
         }
@@ -232,7 +232,7 @@ class ChargeService extends BaseService
     {
         $device = ['device_no' => $deviceNo, 'port_no' => $portNo];
         $state = ChargeTasks::TASK_STATE_END_ABMORMAL;
-        if(self::endCharge($device, $state, true)){
+        if(self::endCharge($device, $state, false)){
             $taskId = ChargeTasks::getLastTaskIdByDevice($deviceNo, $portNo);
             return self::sendEndAbMessage($taskId);
         }
