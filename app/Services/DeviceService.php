@@ -31,7 +31,7 @@ class DeviceService extends BaseService
     }
 
     /**
-     * 获取['deviceNo'=>$model->device_no,'portNo'=>$model->port_no]
+     * 获取['device_no'=>$model->device_no,'port_no'=>$model->port_no]
      * @param $deviceId
      * @return array
      */
