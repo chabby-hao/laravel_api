@@ -23,6 +23,12 @@ class BoxService extends BaseService
         return DeviceService::getBoxStatus($deviceNo, $portNo);
     }
 
+    public static function getBoxStatusById($deviceId)
+    {
+        $deviceInfo = DeviceService::getDeviceInfo($deviceId);
+        return self::getBoxStatus($deviceInfo['deviceNo'], $deviceInfo['portNo']);
+    }
+
     /**
      * 打开箱子
      */

@@ -119,6 +119,11 @@ class ChargeController extends Controller
             return Helper::responeseError(ErrorCode::$tokenExpire);
         }
 
+        if (!BoxService::getBoxStatusById($deviceId)) {
+            //箱子没打开认为是超时
+            return Helper::responeseError(ErrorCode::$openBoxTimeout);
+        }
+
         //充电
         if (!$taskId = ChargeService::startCharge($userId, $deviceId, $mode, $formId)) {
             return Helper::responeseError(ErrorCode::$qrCodeNotFind);

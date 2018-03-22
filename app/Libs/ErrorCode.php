@@ -6,7 +6,7 @@ namespace App\Libs;
 class ErrorCode
 {
 
-    //逻辑层
+    //接入逻辑层
     public static $errParams = 1001;//参数错误
 
     public static $errSign = 1002;//签名错误
@@ -48,6 +48,8 @@ class ErrorCode
     public static $notInWhiteList = 2017;//非福利卡白名单用户
 
     public static $hasGotCard = 2018;//已经领取过福利卡，无需再次领取
+
+    public static $openBoxTimeout = 2019;//箱子状态超时
 
     public static function getErrMsg()
     {
