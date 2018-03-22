@@ -20,7 +20,7 @@ class ChargeService extends BaseService
 
     const PER_MINUTE_CHARGE_PRICE = 0.01;//单位分钟扣除费用(元)
 
-    const CLOSE_BOX_TIMEOUT = 30;//下发充电命令，多长时间关闭箱子(秒)
+    const CLOSE_BOX_TIMEOUT = 120;//下发充电命令，多长时间关闭箱子(秒)
 
     const MAX_CHARGING_TIME = 3600 * 48;//最大充电时长
 
@@ -262,7 +262,7 @@ class ChargeService extends BaseService
         } elseif (in_array($model->task_state, ChargeTasks::getFinishStateMap())) {
             $data['status'] = 2;//充电完成
         } elseif ($model->task_state == ChargeTasks::TASK_STATE_INIT && $model->close_box == ChargeTasks::CLOSE_BOX_HAS_SENT) {
-            $data['status'] = 4;//舒适化，未通电，但已过等待时间，关闭箱子
+            $data['status'] = 4;//舒适化，未通电，但已超时
         } elseif ($model->task_state == ChargeTasks::TASK_STATE_INIT) {
             $data['status'] = 3;//初始化，还没通电
         } else {
