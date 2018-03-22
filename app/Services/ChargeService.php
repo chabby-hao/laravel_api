@@ -254,6 +254,7 @@ class ChargeService extends BaseService
         $data = [
             'status' => 0,//正在冲
             'mins' => 0,//分钟
+            'seconds'=>0,//秒
             'task_id' => $model->id,
         ];
 
@@ -270,6 +271,7 @@ class ChargeService extends BaseService
             $time = time() - $begin;
             $mins = floor($time / 60);
             $data['mins'] = sprintf('%02s', $mins);
+            $data['seconds'] = sprintf('%02s', $time);
         }
 
         return $data;
