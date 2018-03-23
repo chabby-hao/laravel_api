@@ -128,8 +128,8 @@ class DeviceService extends BaseService
         $deviceNo = intval($deviceNo);
         $key = self::_getSendKey($deviceNo, 0);
         $data = [
-            'upgrade_slave_url'=> $url,
-            'upgrade_slave_version'=>$version,
+            'upgrade_slave_url' => $url,
+            'upgrade_slave_version' => $version,
         ];
         Redis::hMSet($key, $data);
         return CommandService::sendSlaveUpgrade($deviceNo);
@@ -140,12 +140,12 @@ class DeviceService extends BaseService
         $deviceNo = intval($deviceNo);
         $key = self::_getSendKey($deviceNo, 0);
         $data = [
-            'ssh_user@url'=>$userUrl,
-            'ssh_usable_port'=>$portNo,
+            'ssh_user@url' => $userUrl,
+            'ssh_usable_port' => $portNo,
         ];
         Redis::hMSet($key, $data);
         Log::debug('redis key ' . $key . ' set data :' . json_encode($data));
-        $res =  CommandService::sendOpenRemoteTunnel($deviceNo);
+        $res = CommandService::sendOpenRemoteTunnel($deviceNo);
         Log::debug('push redis res : ' . $res);
         return $res;
     }
@@ -174,6 +174,15 @@ class DeviceService extends BaseService
             }
         } catch (\Exception $e) {
             Log::error('exception when add device :' . $e->getMessage());
+        }
+        return false;
+    }
+
+    public static function isOldDevice($deviceNo)
+    {
+        //兼容老固件，所有关闭都发命令
+        if (in_array(intval($deviceNo), [2100001, 2100002])) {
+            return true;
         }
         return false;
     }

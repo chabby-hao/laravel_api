@@ -135,6 +135,11 @@ class ChargeService extends BaseService
         //扣费逻辑
         self::_chargeCost($model->user_id, $model->actual_time, $model->id);
 
+        //兼容老固件，所有关闭都发命令
+        if(DeviceService::isOldDevice($deviceNo)){
+            $sendCmd = true;
+        }
+
         if ($sendCmd) {
             CommandService::sendCommandChargeEnd($deviceNo, $portNo);
         }

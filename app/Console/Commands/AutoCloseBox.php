@@ -7,6 +7,7 @@ use App\Models\ChargeTasks;
 use App\Services\BoxService;
 use App\Services\ChargeService;
 use App\Services\CommandService;
+use App\Services\DeviceService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -74,6 +75,10 @@ class AutoCloseBox extends Command
                             //BoxService::openBox($deviceNo, $portNo);
                         //}
                         //CommandService::sendCommandChargeEnd($deviceNo, $portNo);
+                        if(DeviceService::isOldDevice($deviceNo)){
+                            BoxService::openBox($deviceNo, $portNo);
+                            CommandService::sendCommandChargeEnd($deviceNo, $portNo);
+                        }
                     }
                     DB::update("update charge_tasks set close_box = $Close where id=$id");
                 }
