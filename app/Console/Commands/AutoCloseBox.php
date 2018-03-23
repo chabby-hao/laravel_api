@@ -86,6 +86,7 @@ class AutoCloseBox extends Command
             //500ms
             usleep(500000);
         }
+        return true;
     }
 
 }

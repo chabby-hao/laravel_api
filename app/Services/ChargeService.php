@@ -82,7 +82,9 @@ class ChargeService extends BaseService
             }
             //if (BoxService::isOpen($model->device_no, $model->port_no)) {
             //关箱子
-            BoxService::closeBox($model->device_no, $model->port_no);
+            if(DeviceService::isOldDevice($model->device_no)){
+                BoxService::closeBox($model->device_no, $model->port_no);
+            }
             //}
             return $model->save();
         } elseif ($model) {
