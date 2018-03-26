@@ -50,8 +50,13 @@ class ChargeController extends Controller
         }
         //二维码扫描结果
         $url = $request->input('url');
+
         //二维码是否有效
-        if (!$deviceId = DeviceService::getDeviceIdByUrl($url)) {
+        if ($deviceId = DeviceService::getDeviceIdByUrl($url)) {
+            //直接db匹配获取deviceId
+        } elseif ($device = json_decode($url, true)) {
+            $deviceId = $device['deviceId'];
+        } else {
             return Helper::responeseError(ErrorCode::$qrCodeNotFind);
         }
         //设备是否在线
