@@ -54,8 +54,8 @@ class ChargeController extends Controller
         //二维码是否有效
         if ($deviceId = DeviceService::getDeviceIdByUrl($url)) {
             //直接db匹配获取deviceId
-        } elseif ($device = json_decode($url, true)) {
-            $deviceId = $device['deviceId'];
+        } elseif (DeviceInfo::find($url)) {
+            $deviceId = $url;
         } else {
             return Helper::responeseError(ErrorCode::$qrCodeNotFind);
         }
