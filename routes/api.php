@@ -122,7 +122,8 @@ Route::get('redis', function (Request $request) {
         }
 
         if (isset($b['battery_volt'])) {
-            $b['battery_volt'] .= 'MV';
+            $b['battery_volt'] /= 1000;
+            $b['battery_volt'] .= 'V';
         }
 
         if(isset($b['power_scale'])){
