@@ -180,6 +180,7 @@ class DeviceService extends BaseService
 
     public static function isOldDevice($deviceNo)
     {
+        return false;
         //兼容老固件，所有关闭都发命令
         if (in_array(intval($deviceNo), [2100001, 2100002])) {
             return true;
