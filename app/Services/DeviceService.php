@@ -85,6 +85,7 @@ class DeviceService extends BaseService
         $key = self::_getStatusKey($deviceNo, $portNo);
         $val = Redis::hGet($key, 'boxOpenTime');
         Log::debug("getBoxOpenTime deviceNo: $deviceNo, portno: $portNo, val: $val");
+        return $val;
     }
 
     /**
