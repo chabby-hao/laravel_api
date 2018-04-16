@@ -52,7 +52,6 @@ class CommandService extends BaseService
     public static function sendCommandBoxOpen($deviceNo, $portNo)
     {
         $cmd = self::CMD_OPEN_BOX;
-        DeviceService::setBoxOpenTime($deviceNo, $portNo);
         return self::send($deviceNo, $portNo, $cmd);
     }
 

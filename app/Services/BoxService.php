@@ -35,6 +35,7 @@ class BoxService extends BaseService
     public static function openBox($deviceNo, $portNo)
     {
         //下发开箱命令，如果不是开箱
+        DeviceService::setBoxOpenTime($deviceNo, $portNo);
         if(self::getBoxStatus($deviceNo, $portNo) != 1){
             CommandService::sendCommandBoxOpen($deviceNo, $portNo);
         }
