@@ -78,6 +78,7 @@ class DeviceService extends BaseService
         $time = time();
         $val = Redis::hSet($key, 'boxOpenTime', $time);
         Log::debug("setBoxOpenTime deviceNo: $deviceNo, portno: $portNo, time: $time, val: $val");
+        return $val;
     }
 
     public static function getBoxOpenTime($deviceNo, $portNo)
