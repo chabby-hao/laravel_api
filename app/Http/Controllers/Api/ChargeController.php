@@ -131,6 +131,7 @@ class ChargeController extends Controller
        $deviceInfo = DeviceService::getDeviceInfo($deviceId);
         if (!BoxService::getBoxStatusById($deviceId) && time() - DeviceService::getBoxOpenTime($deviceInfo['device_no'], $deviceInfo['port_no']) > 120) {
             //120秒超时 && 箱子没打开认为是超时
+            Log::debug("timeout", $deviceInfo);
             return Helper::responeseError(ErrorCode::$openBoxTimeout);
         }
 
