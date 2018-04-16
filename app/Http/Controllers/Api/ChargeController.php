@@ -124,8 +124,13 @@ class ChargeController extends Controller
             return Helper::responeseError(ErrorCode::$tokenExpire);
         }
 
-        if (!BoxService::getBoxStatusById($deviceId)) {
+       /* if (!BoxService::getBoxStatusById($deviceId)) {
             //箱子没打开认为是超时
+            return Helper::responeseError(ErrorCode::$openBoxTimeout);
+        }*/
+       $deviceInfo = DeviceService::getDeviceInfo($deviceId);
+        if (!BoxService::getBoxStatusById($deviceId) && time() - DeviceService::getBoxOpenTime($deviceInfo['device_no'], $deviceInfo['port_no']) > 120) {
+            //120秒超时 && 箱子没打开认为是超时
             return Helper::responeseError(ErrorCode::$openBoxTimeout);
         }
 

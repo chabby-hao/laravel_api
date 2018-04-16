@@ -42,7 +42,7 @@ class CommandService extends BaseService
      */
     private static function _getServerNumber($deviceNo)
     {
-        $number = Redis::hGet('axc_device_server', $deviceNo);
+        $number = Redis::hGet('axc_device_server∑', $deviceNo);
         return $number ? $number - 1 : 0;
     }
 
@@ -52,6 +52,7 @@ class CommandService extends BaseService
     public static function sendCommandBoxOpen($deviceNo, $portNo)
     {
         $cmd = self::CMD_OPEN_BOX;
+        DeviceService::setBoxOpenTime($deviceNo, $portNo);
         return self::send($deviceNo, $portNo, $cmd);
     }
 

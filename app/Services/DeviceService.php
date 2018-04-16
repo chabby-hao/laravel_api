@@ -69,6 +69,24 @@ class DeviceService extends BaseService
     }
 
     /**
+     * @param $deviceNo
+     * @param $portNo
+     */
+    public static function setBoxOpenTime($deviceNo, $portNo)
+    {
+        $key = self::_getStatusKey($deviceNo, $portNo);
+        $val = Redis::hSet($key, 'boxOpenTime', time());
+        Log::debug("setBoxOpenTime deviceNo: $deviceNo, portno: $portNo, val: $val");
+    }
+
+    public static function getBoxOpenTime($deviceNo, $portNo)
+    {
+        $key = self::_getStatusKey($deviceNo, $portNo);
+        $val = Redis::hGet($key, 'boxOpenTime');
+        Log::debug("getBoxOpenTime deviceNo: $deviceNo, portno: $portNo, val: $val");
+    }
+
+    /**
      * 充电是否发送成功
      * @param $deviceNo
      * @param $portNo

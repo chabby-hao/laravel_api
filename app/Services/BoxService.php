@@ -38,6 +38,7 @@ class BoxService extends BaseService
         if(self::getBoxStatus($deviceNo, $portNo) != 1){
             CommandService::sendCommandBoxOpen($deviceNo, $portNo);
         }
+
     }
 
     public static function closeBox($deviceNo, $portNo)
