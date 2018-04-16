@@ -42,7 +42,7 @@ class CommandService extends BaseService
      */
     private static function _getServerNumber($deviceNo)
     {
-        $number = Redis::hGet('axc_device_server∑', $deviceNo);
+        $number = Redis::hGet('axc_device_server', $deviceNo);
         return $number ? $number - 1 : 0;
     }
 
