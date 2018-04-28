@@ -60,7 +60,7 @@
                                         <td><?php echo $charge->begin_at ?></td>
                                         <td><?php echo in_array($charge->task_state, \App\Models\ChargeTasks::getFinishStateMap()) ? $charge->updated_at : '' ?></td>
                                         <td><?php echo $charge->actual_time ? floor($charge->actual_time / 60) . '分钟' : '' ?></td>
-                                        <td><?php echo $charge->user_cost; ?></td>
+                                        <td><?php echo $charge->actual_cost; ?></td>
 <!--                                        <td>-->
 <!--                                            <a href="" class="btn btn-info">设置</a>-->
 <!--                                            <!-- <a href="javascript:;" class="btn btn-danger del">删除</a>-->
