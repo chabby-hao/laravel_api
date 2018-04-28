@@ -44,7 +44,8 @@
                                     <th>充电开始时间</th>
                                     <th>充电结束时间</th>
                                     <th>实际充电周期</th>
-                                    <th>充电费用</th>
+                                    <th>充电应付费用</th>
+                                    <th>充电实付费用</th>
 <!--                                    <th>操作</th>-->
                                 </tr>
                                 </thead>
@@ -60,6 +61,7 @@
                                         <td><?php echo $charge->begin_at ?></td>
                                         <td><?php echo in_array($charge->task_state, \App\Models\ChargeTasks::getFinishStateMap()) ? $charge->updated_at : '' ?></td>
                                         <td><?php echo $charge->actual_time ? floor($charge->actual_time / 60) . '分钟' : '' ?></td>
+                                        <td><?php echo $charge->user_cost; ?></td>
                                         <td><?php echo $charge->actual_cost; ?></td>
 <!--                                        <td>-->
 <!--                                            <a href="" class="btn btn-info">设置</a>-->
