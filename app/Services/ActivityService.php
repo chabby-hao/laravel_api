@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Log;
 class ActivityService extends BaseService
 {
 
-    const SWITCH_OF_PAY_SEND_MONEY = false;//充值赠送开关
+    const SWITCH_OF_PAY_SEND_MONEY = true;//充值赠送开关
 
     public static function isOpenPaySendActivity()
     {
