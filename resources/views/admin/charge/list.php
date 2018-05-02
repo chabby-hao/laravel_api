@@ -41,6 +41,7 @@
                                     <th>充电状态</th>
                                     <th>设备</th>
                                     <th>端口</th>
+                                    <th>初始化时间</th>
                                     <th>充电开始时间</th>
                                     <th>充电结束时间</th>
                                     <th>实际充电周期</th>
@@ -58,6 +59,7 @@
                                         <td><?php echo \App\Models\ChargeTasks::getStateMap($charge->task_state); ?></td>
                                         <td><?php echo $charge->device_no; ?></td>
                                         <td><?php echo $charge->port_no; ?></td>
+                                        <td><?php echo $charge->created_at ?></td>
                                         <td><?php echo $charge->begin_at ?></td>
                                         <td><?php echo in_array($charge->task_state, \App\Models\ChargeTasks::getFinishStateMap()) ? $charge->updated_at : '' ?></td>
                                         <td><?php echo $charge->actual_time ? floor($charge->actual_time / 60) . '分钟' : '' ?></td>
