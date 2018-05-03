@@ -242,4 +242,19 @@ class UserController extends Controller
 
     }
 
+    public function config()
+    {
+        if(!$userId = UserService::getUserId()){
+            return Helper::responeseError(ErrorCode::$tokenExpire);
+        }
+
+        $data = [
+            'ops'=>1,//运维
+            'replace'=>1,//换电
+        ];
+
+        return Helper::response($data);
+
+    }
+
 }
