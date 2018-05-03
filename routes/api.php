@@ -25,6 +25,7 @@ Route::any('/user/refund', 'Api\UserController@refund');
 Route::any('/user/hasRefund', 'Api\UserController@hasRefund');
 Route::any('/user/feedback', 'Api\UserController@feedback');
 Route::any('/user/cardsList', 'Api\UserController@cardsList');
+Route::any('/user/config', 'Api\UserController@config');
 
 
 Route::any('/weixinPay/payJoinfee', 'Api\WeixinPayController@payJoinfee');
