@@ -35,7 +35,7 @@ class Helper
      * @param array $headers
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
-    public static function responeseError($code = 500, array $data = [], $replaces = [], $status = 200, array $headers = [])
+    public static function responeseError($code = 500, array $data = [], $replaces = [], $status = 200, array $headers = [], $die = true)
     {
 
         $errMsg = ErrorCode::getErrMsg();
@@ -51,6 +51,9 @@ class Helper
             $content['msg'] = strtr($content['msg'], $newReplaces);
         }
         $content = array_merge($content, $data);
+        if($die){
+            die(json_encode($content));
+        }
         //Log::error('response error----------- ' . json_encode($content));
         return response($content, $status, $headers);
 

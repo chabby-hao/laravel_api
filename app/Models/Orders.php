@@ -31,6 +31,7 @@ use Illuminate\Support\Facades\DB;
  * @property string|null $form_id
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Orders whereFormId($value)
  * @property float|null $present_money
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Orders wherePresentMoney($value)
  */
 class Orders extends Model
 {

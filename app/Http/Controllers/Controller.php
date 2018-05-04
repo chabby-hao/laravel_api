@@ -33,8 +33,11 @@ class Controller extends BaseController
      * @param $data
      * @return array|bool|\Illuminate\Contracts\Routing\ResponseFactory|string|\Symfony\Component\HttpFoundation\Response
      */
-    public function checkRequireParams($arrRequire, $data)
+    public function checkRequireParams($arrRequire, $data = null)
     {
+        if(!$data){
+            $data = \Request::input();
+        }
         $res = Helper::arrayRequiredCheck($arrRequire, $data, true);
         if(is_string($res)){
             return Helper::responeseError(ErrorCode::$errParams, ['msg'=>"$res is required"]);

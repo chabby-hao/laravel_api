@@ -52,6 +52,8 @@ Route::any('/activity/getCard', 'Api\ActivityController@getCard');
 
 Route::any('/map/deviceData', 'Api\MapController@deviceData');
 
+Route::any('replaceBattery/checkQrCode','Api\ReplaceBatteryController@checkQrCode');
+
 Route::any('cmd', function (Request $request) {
     $cmd = \App\Services\CommandService::CMD_START_CHARGE;
     $cmd = $request->input('cmd');//20003
@@ -72,11 +74,11 @@ Route::get('redis', function (Request $request) {
 
 
     if ($b) {
-//           volt_input	0.1V
-//volt_output	0.1V
-//cur	0.1A
-//cap	0.1KW
-//power 1W
+        //           volt_input	0.1V
+        //volt_output	0.1V
+        //cur	0.1A
+        //cap	0.1KW
+        //power 1W
 
         if (isset($b['volt_input'])) {
             $b['volt_input'] /= 10;
@@ -139,61 +141,6 @@ Route::get('redis', function (Request $request) {
 });
 
 Route::get('test', function () {
-
-    $m = \App\Models\WelfareUsers::join('welfare_devices',function ($join){
-        /** @var JoinClause $join */
-        $join->on('welfare_users.card_id','=','welfare_devices.card_id');
-    })->whereUserId(6)->whereDeviceNo('1222220')->first();
-    var_dump($m->toArray());exit;
-
-
-    $img = '/Users/chabby/git/laravel/public/image/qr/device-1027.jpg';
-
-    $qrapi = new \App\Libs\QrApi();
-    $d = $qrapi->qrdecode($img);
-    var_dump($d);exit;
-
-    $qrcode = new QrReader();
-    $text = $qrcode->text(); //return decoded text from QR Code
-    echo $text;exit;
-    $filename = "image/qr/device-3.jpg";
-    $file = public_path($filename);
-    $imgUrl = url($filename);
-    var_dump($filename, $file, $imgUrl);
-    exit;
-    $wxapi = new \App\Libs\WxApi();
-    echo $wxapi->getAccessToken();
-    exit;
-
-    $a = \App\Models\User::chargeCost(8, 0.01);
-    var_dump($a);
-    exit;
-
-    $c = new \App\Libs\WxApi();
-
-    $b = $c->sendMessage('{
-  "touser": "oQVwG0YmO8gHFIFUA0KHmcXCcYw4",  
-  "template_id": "8ySltzpdZn80ymIGD6-2N6vhQ1YFGbjRMZ0v8js22YA", 
-  "page": "pages/charge_ab/charge_ab",          
-  "form_id": "4b30c5ecb2a9bddc2f9f16b68e46b8ac"
-}');
-    exit;
-
-    $a = \App\Services\CommandService::sendCommandChargeStart('99981469', '1');
-    var_dump($a);
-    exit;
-
-    $a = \App\Models\DeviceInfo::find(1);
-    var_dump($a);
-    exit;
-
-    //\App\Services\BoxService::isOpen(1, 2);
-
-//    $c =route('wxnotify');
-//    var_dump($c);exit;
-    $b = \App\Services\UserService::addUserBalance(4, 0.01);
-    var_dump($b);
-    //\Illuminate\Support\Facades\Log::info('tttt');exit;
 });
 
 Route::get('phpinfo', function () {

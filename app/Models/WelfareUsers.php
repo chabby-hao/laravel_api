@@ -20,6 +20,8 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  * @property int|null $user_id
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\WelfareUsers whereUserId($value)
+ * @property \Carbon\Carbon $created_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\WelfareUsers whereCreatedAt($value)
  */
 class WelfareUsers extends Model
 {

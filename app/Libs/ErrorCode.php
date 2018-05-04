@@ -51,6 +51,10 @@ class ErrorCode
 
     public static $openBoxTimeout = 2019;//箱子状态超时
 
+    public static $cabinetUnuseful = 2020;//柜门不可用
+
+    public static $batteryNotEnough = 2021;//无可用电池
+
     public static function getErrMsg()
     {
         return [
@@ -61,6 +65,8 @@ class ErrorCode
             self::$isChargingNow => '充电口被占用，请换一个充电口',
             self::$isChargingAndNeedWait => '充电口被占用，请换一个充电口或等待{mins}分钟',
             self::$hasGotCard => '您已经领取过福利卡，无需再次领取',
+            self::$cabinetUnuseful = '充电柜不可用',
+            self::$batteryNotEnough = '无可用电池',
         ];
     }
 
