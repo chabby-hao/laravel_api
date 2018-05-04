@@ -55,6 +55,8 @@ class ErrorCode
 
     public static $batteryNotEnough = 2021;//无可用电池
 
+    public static $batteryNotRegister = 2022;//电池未注册
+
     public static function getErrMsg()
     {
         return [
@@ -67,6 +69,7 @@ class ErrorCode
             self::$hasGotCard => '您已经领取过福利卡，无需再次领取',
             self::$cabinetUnuseful = '充电柜不可用',
             self::$batteryNotEnough = '无可用电池',
+            self::$batteryNotRegister = '电池未注册',
         ];
     }
 
