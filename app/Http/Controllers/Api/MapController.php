@@ -40,6 +40,14 @@ class MapController extends Controller
                     2,//数量
                 ],
             ],
+            [
+                'device_no'=>'002100003',
+                'value' => [//31.3258162649,121.4503672876
+                    floatval(31.3258162649),
+                    floatval(121.4503672876),
+                    1,//数量
+                ],
+            ],
         ];
 
         foreach ($datas as &$data){
