@@ -47,7 +47,7 @@ class ReplaceBatteryController extends Controller
                 return $this->responseOk();//绑定成功
             }
             return Helper::responeseError(ErrorCode::$batteryNotRegister);
-        } elseif ($arr = json_decode($qr, true)) {
+        } elseif ($arr = json_decode($qr, true) && isset($arr['cabinetId'])) {
             $cabinetId = $arr['cabinetId'];
 
             return $this->responseOk();
