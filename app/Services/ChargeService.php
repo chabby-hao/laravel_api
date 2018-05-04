@@ -209,7 +209,7 @@ class ChargeService extends BaseService
      */
     public static function endChargeByTimeOver($deviceNo, $portNo)
     {
-        $end = self::endCharge(['device_no' => $deviceNo, 'port_no' => $portNo], ChargeTasks::TASK_STATE_TIME_END,);
+        $end = self::endCharge(['device_no' => $deviceNo, 'port_no' => $portNo], ChargeTasks::TASK_STATE_TIME_END);
         $taskId = ChargeTasks::getLastTaskIdByDevice($deviceNo, $portNo);
         return $end ? self::sendEndMessage($taskId) : false;
     }
