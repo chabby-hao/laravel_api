@@ -79,12 +79,13 @@ class ReplaceBatteryController extends Controller
         if (!$userId = UserService::getUserId()) {
             return Helper::responeseError(ErrorCode::$tokenExpire);
         }
-        $cabinetId = $request->input('cabinetId');
+        $input = $this->checkRequireParams(['cabinetId']);
+        $cabinetId = $input['cabinetId'];
 
         //检查是否可以预约
 
         //是否已经预约
-        if(Appointments::whereUserId($userId)->where('expired_at', '<=', time())){
+        if(Appointments::whereUserId($userId)->where('expired_at', '<=', time())->first()){
             return Helper::responeseError(ErrorCode::$appointmentExists);
         }
 
