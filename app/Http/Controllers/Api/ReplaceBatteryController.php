@@ -76,6 +76,28 @@ class ReplaceBatteryController extends Controller
 
     }
 
+
+    public function appointmentStatus(Request $request)
+    {
+        if (!$userId = UserService::getUserId()) {
+            return Helper::responeseError(ErrorCode::$tokenExpire);
+        }
+        $input = $this->checkRequireParams(['cabinetId']);
+        $cabinetId = $input['cabinetId'];
+
+        $data  = [];
+        $data['appointmentId'] = 0;
+        $data['batteryCount'] = 0;
+        //是否已经预约
+        if($model = Appointments::whereUserId($userId)->whereCabinetId($cabinetId)->where('expired_at', '>', Carbon::now()->toDateTimeString())->first()){
+            $data['appointmentId'] = $model->id;
+        }
+
+        $data['batteryCount'] = mt_rand(0,10);
+
+        return Helper::response($data);
+    }
+
     public function appointment(Request $request)
     {
         if (!$userId = UserService::getUserId()) {
