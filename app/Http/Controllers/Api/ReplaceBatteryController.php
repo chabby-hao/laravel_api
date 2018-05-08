@@ -19,6 +19,7 @@ use App\Services\DeviceService;
 use App\Services\ReplaceService;
 use App\Services\RequestService;
 use App\Services\UserService;
+use Carbon\Carbon;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -85,7 +86,7 @@ class ReplaceBatteryController extends Controller
         //检查是否可以预约
 
         //是否已经预约
-        if(Appointments::whereUserId($userId)->where('expired_at', '>', time())->first()){
+        if(Appointments::whereUserId($userId)->where('expired_at', '>', Carbon::now()->toDateTimeString())->first()){
             return Helper::responeseError(ErrorCode::$appointmentExists);
         }
 

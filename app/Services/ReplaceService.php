@@ -36,7 +36,7 @@ class ReplaceService extends BaseService
         $appointment = new Appointments();
         $appointment->user_id = $userId;
         $appointment->cabinet_id = $cabinetId;
-        $appointment->expired_at = Carbon::now()->addMinutes(30)->getTimestamp();
+        $appointment->expired_at = Carbon::now()->addMinutes(30)->toDateTimeString();
         $appointment->save();
     }
 
