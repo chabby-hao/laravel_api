@@ -57,6 +57,8 @@ class ErrorCode
 
     public static $batteryNotRegister = 2022;//电池未注册
 
+    public static $appointmentExists = 2023;//已预约
+
     public static function getErrMsg()
     {
         return [
@@ -70,6 +72,7 @@ class ErrorCode
             self::$cabinetUnuseful => '充电柜不可用',
             self::$batteryNotEnough => '无可用电池',
             self::$batteryNotRegister => '电池未注册',
+            self::$appointmentExists =>'已预约',
         ];
     }
 

@@ -53,6 +53,7 @@ Route::any('/activity/getCard', 'Api\ActivityController@getCard');
 Route::any('/map/deviceData', 'Api\MapController@deviceData');
 
 Route::any('replaceBattery/checkQrCode','Api\ReplaceBatteryController@checkQrCode');
+Route::any('replaceBattery/appointment','Api\ReplaceBatteryController@appointment');
 
 Route::any('cmd', function (Request $request) {
     $cmd = \App\Services\CommandService::CMD_START_CHARGE;

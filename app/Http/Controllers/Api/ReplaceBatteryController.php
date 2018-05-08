@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Api;
 
 use App\Libs\ErrorCode;
 use App\Libs\Helper;
+use App\Models\Appointments;
 use App\Models\Battery;
 use App\Models\ChargeTasks;
 use App\Models\DeviceInfo;
+use App\Models\ReplaceTasks;
 use App\Models\User;
 use App\Models\UserDevice;
 use App\Models\WelfareDevices;
@@ -14,6 +16,7 @@ use App\Models\WelfareUsers;
 use App\Services\BoxService;
 use App\Services\ChargeService;
 use App\Services\DeviceService;
+use App\Services\ReplaceService;
 use App\Services\RequestService;
 use App\Services\UserService;
 use Illuminate\Database\Query\JoinClause;
@@ -48,16 +51,49 @@ class ReplaceBatteryController extends Controller
             }
             return Helper::responeseError(ErrorCode::$batteryNotRegister);
         } elseif ($arr = json_decode($qr, true) && isset($arr['cabinetId'])) {
+            //换电,这里是柜子二维码,{'cabinetId':'02100434'}
             $cabinetId = $arr['cabinetId'];
 
+            //检查用户余额
+            if (UserService::getAvailabelBalance($userId) <= 0) {
+                return Helper::responeseError(ErrorCode::$balanceNotEnough);
+            }
+
+            //柜子是否可用
+
+            //是否有可换电的电池
+
+            //开始一项新的换电任务
+            ReplaceService::startReplaceBattery($cabinetId);
+
             return $this->responseOk();
-            //换电,这里是柜子二维码,{'cabinetId':'02100434'}
-        }else{
+        } else {
             return Helper::responeseError(ErrorCode::$qrCodeNotFind);//二维码有误
         }
 
 
     }
 
+    public function appointment(Request $request)
+    {
+        if (!$userId = UserService::getUserId()) {
+            return Helper::responeseError(ErrorCode::$tokenExpire);
+        }
+        $cabinetId = $request->input('cabinetId');
+
+        //检查是否可以预约
+
+        //是否已经预约
+        if(Appointments::whereUserId($userId)->where('expired_at', '<=', time())){
+            return Helper::responeseError(ErrorCode::$appointmentExists);
+        }
+
+
+        //预约
+        ReplaceService::appointment($userId, $cabinetId);
+
+        return $this->responseOk();
+
+    }
 
 }
