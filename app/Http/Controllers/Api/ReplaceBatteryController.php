@@ -85,7 +85,7 @@ class ReplaceBatteryController extends Controller
         //检查是否可以预约
 
         //是否已经预约
-        if(Appointments::whereUserId($userId)->where('expired_at', '<=', time())->first()){
+        if(Appointments::whereUserId($userId)->where('expired_at', '>', time())->first()){
             return Helper::responeseError(ErrorCode::$appointmentExists);
         }
 
