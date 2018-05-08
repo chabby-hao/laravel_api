@@ -90,7 +90,7 @@ class ReplaceBatteryController extends Controller
         $data['batteryCount'] = 0;
         //是否已经预约
         if($model = Appointments::whereUserId($userId)->whereCabinetId($cabinetId)->where('expired_at', '>', Carbon::now()->toDateTimeString())->first()){
-            $data['appointmentId'] = $model->id;
+            $data['appointmentId'] = intval($model->id);
         }
 
         $data['batteryCount'] = mt_rand(0,10);
