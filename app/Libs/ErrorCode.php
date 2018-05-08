@@ -51,13 +51,14 @@ class ErrorCode
 
     public static $openBoxTimeout = 2019;//箱子状态超时
 
-    public static $cabinetUnuseful = 2020;//柜门不可用
+    public static $cabinetUnuseful = 2020;//柜字不可用
 
     public static $batteryNotEnough = 2021;//无可用电池
 
     public static $batteryNotRegister = 2022;//电池未注册
 
     public static $appointmentExists = 2023;//已预约
+
 
     public static function getErrMsg()
     {

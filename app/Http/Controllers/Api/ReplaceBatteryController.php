@@ -20,6 +20,7 @@ use App\Services\ReplaceService;
 use App\Services\RequestService;
 use App\Services\UserService;
 use Carbon\Carbon;
+use function Hprose\Future\error;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -84,6 +85,9 @@ class ReplaceBatteryController extends Controller
         $cabinetId = $input['cabinetId'];
 
         //检查是否可以预约
+        if(mt_rand(0,1) === 1){
+            return Helper::responeseError(ErrorCode::$batteryNotEnough);
+        }
 
         //是否已经预约
         if(Appointments::whereUserId($userId)->whereCabinetId($cabinetId)->where('expired_at', '>', Carbon::now()->toDateTimeString())->first()){
