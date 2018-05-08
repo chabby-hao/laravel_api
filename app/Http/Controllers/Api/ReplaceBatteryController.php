@@ -106,8 +106,9 @@ class ReplaceBatteryController extends Controller
         $input = $this->checkRequireParams(['appointmentId']);
         $id = $input['appointmentId'];
 
-        $model = Appointments::find($id);
-        $model->delete();
+        if($model = Appointments::find($id)){
+            $model->delete();
+        }
 
         return $this->responseOk();
     }
