@@ -98,6 +98,20 @@ class ReplaceBatteryController extends Controller
         return Helper::response($data);
     }
 
+    public function cancelAppointment(Request $request)
+    {
+        if (!$userId = UserService::getUserId()) {
+            return Helper::responeseError(ErrorCode::$tokenExpire);
+        }
+        $input = $this->checkRequireParams(['appointmentId']);
+        $id = $input['appointmentId'];
+
+        $model = Appointments::find($id);
+        $model->delete();
+
+        return $this->responseOk();
+    }
+
     public function appointment(Request $request)
     {
         if (!$userId = UserService::getUserId()) {
