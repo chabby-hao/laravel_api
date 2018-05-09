@@ -38,6 +38,8 @@ class ReplaceBatteryController extends Controller
         $data = $this->checkRequireParams(['qr']);
         $qr = $data['qr'];
 
+        echo $qr;
+
         $output = [];
 
         //判断是换电还是绑定电池型号
