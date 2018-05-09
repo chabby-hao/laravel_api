@@ -37,8 +37,8 @@ class ReplaceBatteryController extends Controller
         }
         $data = $this->checkRequireParams(['qr']);
         $qr = $data['qr'];
+        $arr = json_decode($qr, true);
 
-        echo $qr;
 
         $output = [];
 
@@ -58,7 +58,7 @@ class ReplaceBatteryController extends Controller
                 return Helper::response($output);//绑定成功
             }
             return Helper::responeseError(ErrorCode::$batteryNotRegister);
-        } elseif ($arr = json_decode($qr, true) && isset($arr['cabinetId'])) {
+        } elseif (isset($arr['cabinetId'])) {
             //换电,这里是柜子二维码,{"cabinetId":'02100434'}
             $cabinetId = $arr['cabinetId'];
 
@@ -148,7 +148,7 @@ class ReplaceBatteryController extends Controller
     public function getAdress()
     {
 
-        if(!UserService::getUserId()){
+        if (!UserService::getUserId()) {
             return Helper::responeseError(ErrorCode::$tokenExpire);
         }
 
@@ -166,21 +166,21 @@ class ReplaceBatteryController extends Controller
 
     public function getStep()
     {
-        if(!$userId = UserService::getUserId()){
+        if (!$userId = UserService::getUserId()) {
             return Helper::responeseError(ErrorCode::$tokenExpire);
         }
 
         $data = [
-            'finish'=>0,//是否可以结束换电，1=可以，0=不可以
+            'finish' => 0,//是否可以结束换电，1=可以，0=不可以
         ];
 
         $model = ReplaceTasks::whereUserId($userId)->orderByDesc('id')->first();
-        if($model){
+        if ($model) {
             $data['step'] = $model->step;
-            if($data['step'] == ReplaceTasks::STEP_20){
+            if ($data['step'] == ReplaceTasks::STEP_20) {
                 $data['finish'] = 1;
             }
-        }else{
+        } else {
             return Helper::responeseError(ErrorCode::$batteryNotEnough);
         }
         return Helper::response($data);
