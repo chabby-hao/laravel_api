@@ -168,8 +168,20 @@ class ReplaceBatteryController extends Controller
             return Helper::responeseError(ErrorCode::$tokenExpire);
         }
 
-        ReplaceTasks::whereUserId($userId)->orderByDesc('id');
+        $data = [
+            'finish'=>0,//是否可以结束换电，1=可以，0=不可以
+        ];
 
+        $model = ReplaceTasks::whereUserId($userId)->orderByDesc('id')->first();
+        if($model){
+            $data['step'] = $model->step;
+            if($data['step'] == ReplaceTasks::STEP_20){
+                $data['finish'] = 1;
+            }
+        }else{
+            return Helper::responeseError(ErrorCode::$batteryNotEnough);
+        }
+        return Helper::response($data);
     }
 
 }

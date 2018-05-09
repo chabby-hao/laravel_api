@@ -57,6 +57,10 @@ Route::any('replaceBattery/appointment','Api\ReplaceBatteryController@appointmen
 Route::any('replaceBattery/appointmentStatus','Api\ReplaceBatteryController@appointmentStatus');
 Route::any('replaceBattery/cancelAppointment','Api\ReplaceBatteryController@cancelAppointment');
 Route::any('replaceBattery/getAdress','Api\ReplaceBatteryController@getAdress');
+Route::any('replaceBattery/getStep','Api\ReplaceBatteryController@getStep');
+
+
+
 
 Route::any('cmd', function (Request $request) {
     $cmd = \App\Services\CommandService::CMD_START_CHARGE;

@@ -59,6 +59,8 @@ class ErrorCode
 
     public static $appointmentExists = 2023;//已预约
 
+    public static $notFindReplaceTask = 2024;//未发现换电任务
+
 
     public static function getErrMsg()
     {
@@ -74,6 +76,7 @@ class ErrorCode
             self::$batteryNotEnough => '无可用电池',
             self::$batteryNotRegister => '电池未注册',
             self::$appointmentExists =>'已预约',
+            self::$notFindReplaceTask =>'未发现换电任务',
         ];
     }
 
