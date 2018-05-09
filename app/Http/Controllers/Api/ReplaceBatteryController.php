@@ -57,7 +57,7 @@ class ReplaceBatteryController extends Controller
             }
             return Helper::responeseError(ErrorCode::$batteryNotRegister);
         } elseif ($arr = json_decode($qr, true) && isset($arr['cabinetId'])) {
-            //换电,这里是柜子二维码,{'cabinetId':'02100434'}
+            //换电,这里是柜子二维码,{"cabinetId":'02100434'}
             $cabinetId = $arr['cabinetId'];
 
             //检查用户余额

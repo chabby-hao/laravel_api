@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 
 use App\Services\UserService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class TokenLogin
 {
@@ -20,6 +21,7 @@ class TokenLogin
         if($token = $request->input('token')){
             UserService::getUserInfoByToken($token);
         }
+        Log::debug('request----------:', $request->input());
         return $next($request);
     }
 
