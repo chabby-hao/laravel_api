@@ -55,6 +55,7 @@ class ReplaceTasks extends Model
         $model->user_id = $userId;
         $model->cabinet_id = $cabinetId;
         $model->save();
+        return $model;
     }
 
 }

@@ -25,10 +25,10 @@ class ReplaceService extends BaseService
     {
 
         //db 入库
-        ReplaceTasks::newTask($userId, $cabinetId);
+        $model = ReplaceTasks::newTask($userId, $cabinetId);
 
         //下发换电指令
-        CabinetService::sendReplaceCommand($cabinetId, $taskId, $batteryId);
+        CabinetService::sendReplaceCommand($cabinetId, $model->id, $model->battery_id1);
 
     }
 
