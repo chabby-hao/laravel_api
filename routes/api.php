@@ -56,6 +56,7 @@ Route::any('replaceBattery/checkQrCode','Api\ReplaceBatteryController@checkQrCod
 Route::any('replaceBattery/appointment','Api\ReplaceBatteryController@appointment');
 Route::any('replaceBattery/appointmentStatus','Api\ReplaceBatteryController@appointmentStatus');
 Route::any('replaceBattery/cancelAppointment','Api\ReplaceBatteryController@cancelAppointment');
+Route::any('replaceBattery/getAdress','Api\ReplaceBatteryController@getAdress');
 
 Route::any('cmd', function (Request $request) {
     $cmd = \App\Services\CommandService::CMD_START_CHARGE;
@@ -149,19 +150,6 @@ Route::get('test', function () {
 Route::get('phpinfo', function () {
     sleep(1);
     phpinfo();
-});
-
-Route::get('request', function(){
-    $request = new \GuzzleHttp\Client();
-    $a = $request->getAsync('https://www.baidu.com');
-    var_dump($a->getState());
-    $b = $request->getAsync("https://www.qq.com");
-    var_dump($b->getState());
-    $c = $request->getAsync("https://anxinchong.vipcare.com/phpinfo");
-    var_dump($c->getState());
-    $a->wait();
-    $b->wait();
-    $c->wait();
 });
 
 //Route::middleware('auth:api')->get('/user', function (Request $request) {
