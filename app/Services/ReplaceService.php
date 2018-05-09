@@ -6,6 +6,7 @@ use App\Libs\WxApi;
 use App\Models\Appointments;
 use App\Models\ChargeTasks;
 use App\Models\DeviceInfo;
+use App\Models\ReplaceTasks;
 use App\Models\User;
 use App\Models\WelfareUsers;
 use Carbon\Carbon;
@@ -20,14 +21,14 @@ class ReplaceService extends BaseService
      * 开始更换电池任务
      * @param $cabinetId
      */
-    public static function startReplaceBattery($cabinetId)
+    public static function startReplaceBattery($userId, $cabinetId)
     {
 
         //db 入库
+        ReplaceTasks::newTask($userId, $cabinetId);
 
         //下发换电指令
-
-
+        CabinetService::sendReplaceCommand($cabinetId, $taskId, $batteryId);
 
     }
 

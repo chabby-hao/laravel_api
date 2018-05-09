@@ -27,7 +27,12 @@ class CabinetService extends BaseService
      * 下发换电指令
      * @param $cabinetId
      */
-    public static function sendReplaceCommand($cabinetId)
+    public static function sendReplaceCommand($cabinetId, $taskId, $batteryId)
+    {
+
+    }
+
+    private function replaceRedisSet($taskId, $batteryId)
     {
 
     }

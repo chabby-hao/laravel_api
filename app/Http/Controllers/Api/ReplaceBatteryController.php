@@ -66,7 +66,7 @@ class ReplaceBatteryController extends Controller
             //是否有可换电的电池
 
             //开始一项新的换电任务
-            ReplaceService::startReplaceBattery($cabinetId);
+            ReplaceService::startReplaceBattery($userId, $cabinetId);
 
             return $this->responseOk();
         } else {
@@ -85,15 +85,15 @@ class ReplaceBatteryController extends Controller
         $input = $this->checkRequireParams(['cabinetId']);
         $cabinetId = $input['cabinetId'];
 
-        $data  = [];
+        $data = [];
         $data['appointmentId'] = 0;
         $data['batteryCount'] = 0;
         //是否已经预约
-        if($model = Appointments::whereUserId($userId)->whereCabinetId($cabinetId)->where('expired_at', '>', Carbon::now()->toDateTimeString())->first()){
+        if ($model = Appointments::whereUserId($userId)->whereCabinetId($cabinetId)->where('expired_at', '>', Carbon::now()->toDateTimeString())->first()) {
             $data['appointmentId'] = intval($model->id);
         }
 
-        $data['batteryCount'] = mt_rand(0,10);
+        $data['batteryCount'] = mt_rand(0, 10);
 
         return Helper::response($data);
     }
@@ -106,7 +106,7 @@ class ReplaceBatteryController extends Controller
         $input = $this->checkRequireParams(['appointmentId']);
         $id = $input['appointmentId'];
 
-        if($model = Appointments::find($id)){
+        if ($model = Appointments::find($id)) {
             $model->delete();
         }
 
@@ -122,12 +122,12 @@ class ReplaceBatteryController extends Controller
         $cabinetId = $input['cabinetId'];
 
         //检查是否可以预约
-        if(mt_rand(0,1) === 1){
+        if (mt_rand(0, 1) === 1) {
             return Helper::responeseError(ErrorCode::$batteryNotEnough);
         }
 
         //是否已经预约
-        if(Appointments::whereUserId($userId)->whereCabinetId($cabinetId)->where('expired_at', '>', Carbon::now()->toDateTimeString())->first()){
+        if (Appointments::whereUserId($userId)->whereCabinetId($cabinetId)->where('expired_at', '>', Carbon::now()->toDateTimeString())->first()) {
             return Helper::responeseError(ErrorCode::$appointmentExists);
         }
 
@@ -136,6 +136,25 @@ class ReplaceBatteryController extends Controller
         ReplaceService::appointment($userId, $cabinetId);
 
         return $this->responseOk();
+
+    }
+
+    public function getAdress()
+    {
+
+        if(!UserService::getUserId()){
+            return Helper::responeseError(ErrorCode::$tokenExpire);
+        }
+
+        $cabinetId = $this->checkRequireParams(['cabinetId'])['cabinetId'];
+
+
+        $data = [
+            'cabinetNo' => '021000019',
+            'address' => '华山公寓1号换电柜',
+        ];
+
+        return Helper::response($data);
 
     }
 

@@ -28,6 +28,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ReplaceTasks whereUserCost($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ReplaceTasks whereUserId($value)
  * @mixin \Eloquent
+ * @property int|null $step 0=扫码下发命令，10=放入旧电池，关闭柜门，20=放入新电池，关闭柜门
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ReplaceTasks whereStep($value)
  */
 class ReplaceTasks extends Model
 {
@@ -38,9 +40,21 @@ class ReplaceTasks extends Model
     const TASK_STATE_COMPLETE = 20;//已完成
     const TASK_STATE_ABNORMAL = 30;//异常
 
+    //$step 0=扫码下发命令，10=放入旧电池，关闭柜门，20=放入新电池，关闭柜门
+    const STEP_INIT = 0;
+    const STEP_10 = 10;
+    const STEP_20 = 20;
 
     protected $table = 'replace_tasks';
     protected $primaryKey = 'id';
     protected $guarded = [];
+
+    public static function newTask($userId, $cabinetId)
+    {
+        $model = new self();
+        $model->user_id = $userId;
+        $model->cabinet_id = $cabinetId;
+        $model->save();
+    }
 
 }
