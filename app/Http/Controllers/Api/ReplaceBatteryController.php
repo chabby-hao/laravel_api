@@ -37,6 +37,9 @@ class ReplaceBatteryController extends Controller
         }
         $data = $this->checkRequireParams(['qr']);
         $qr = $data['qr'];
+
+        $output = [];
+
         //判断是换电还是绑定电池型号
         if (preg_match('/http:\/\/www.vipcare.com\/qr.html#(\d+)/i', $qr, $match)) {
             //绑定电池
@@ -49,7 +52,8 @@ class ReplaceBatteryController extends Controller
                     'user_id' => $userId,
                     'battery_id' => $battery->id,
                 ]);
-                return $this->responseOk();//绑定成功
+                $output['type'] = 1;//绑电池
+                return Helper::response($output);//绑定成功
             }
             return Helper::responeseError(ErrorCode::$batteryNotRegister);
         } elseif ($arr = json_decode($qr, true) && isset($arr['cabinetId'])) {
@@ -68,11 +72,11 @@ class ReplaceBatteryController extends Controller
             //开始一项新的换电任务
             ReplaceService::startReplaceBattery($userId, $cabinetId);
 
-            return $this->responseOk();
+            $output['type'] = 0;//换电池
+            return Helper::response($output);
         } else {
             return Helper::responeseError(ErrorCode::$qrCodeNotFind);//二维码有误
         }
-
 
     }
 
@@ -155,6 +159,16 @@ class ReplaceBatteryController extends Controller
         ];
 
         return Helper::response($data);
+
+    }
+
+    public function getStep()
+    {
+        if(!$userId = UserService::getUserId()){
+            return Helper::responeseError(ErrorCode::$tokenExpire);
+        }
+
+        ReplaceTasks::whereUserId($userId)->orderByDesc('id');
 
     }
 
