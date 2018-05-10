@@ -20,6 +20,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Battery whereUdid($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Battery whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property int|null $battery_level 电池等级
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Battery whereBatteryLevel($value)
  */
 class Battery extends Model
 {

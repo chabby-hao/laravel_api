@@ -14,6 +14,7 @@ use App\Models\UserDevice;
 use App\Models\WelfareDevices;
 use App\Models\WelfareUsers;
 use App\Services\BoxService;
+use App\Services\CabinetService;
 use App\Services\ChargeService;
 use App\Services\DeviceService;
 use App\Services\ReplaceService;
@@ -52,14 +53,21 @@ class ReplaceBatteryController extends Controller
                 UserDevice::whereUserId($userId)->delete();//1个用户只能绑一个，所以这里比较简单粗暴
                 UserDevice::create([
                     'user_id' => $userId,
-                    'battery_id' => $battery->id,
+                    'battery_id' => $battery->battery_id,
                 ]);
                 $output['type'] = 1;//绑电池
                 return Helper::response($output);//绑定成功
             }
             return Helper::responeseError(ErrorCode::$batteryNotRegister);
         } elseif (isset($arr['cabinetId'])) {
-            //换电,这里是柜子二维码,{"cabinetId":'02100434'}
+            //换电,这里是柜子二维码,{"cabinetId":'1'}
+
+            //是否绑定电池
+            if(!$battery = UserService::getUserBattery($userId)){
+                return Helper::responeseError(ErrorCode::$notBindBattery);
+            }
+
+
             $cabinetId = $arr['cabinetId'];
 
             //检查用户余额
@@ -68,8 +76,15 @@ class ReplaceBatteryController extends Controller
             }
 
             //柜子是否可用
+            if(!CabinetService::isCabinetUseful($cabinetId)){
+                return Helper::responeseError(ErrorCode::$cabinetUnuseful);
+            }
 
             //是否有可换电的电池
+            if(!CabinetService::hasAvailableBattery($cabinetId, $battery->battery_id)){
+                return Helper::responeseError(ErrorCode::$batteryNotEnough);
+            }
+
 
             //开始一项新的换电任务
             ReplaceService::startReplaceBattery($userId, $cabinetId);
@@ -204,6 +219,8 @@ class ReplaceBatteryController extends Controller
         Log::debug('taskNotify receive data: ', $input);
 
         //$step 0=扫码下发命令回执，10=放入旧电池，关闭柜门，20=放入新电池，关闭柜门
+
+        //收到通知后，将state存为进行中
 
         return Helper::response([
             'cabinetNo' => $cabinetNo,

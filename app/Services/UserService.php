@@ -2,9 +2,11 @@
 
 namespace App\Services;
 
+use App\Models\Battery;
 use App\Models\Feedbacks;
 use App\Models\Orders;
 use App\Models\User;
+use App\Models\UserDevice;
 use App\Models\UserRefunds;
 use App\Models\UserToken;
 use Illuminate\Support\Facades\Cache;
@@ -66,15 +68,6 @@ class UserService extends BaseService
 
         $user = User::firstOrCreate(['openid' => $openid])->toArray();
 
-        //token缓存
-//        $data = [
-//            //'type' => User::LOGIN_TYPE_WEIXIN,//0微信登录,1手机登录
-//            //'openid' => $openid,
-//            'session_key' => $data['session_key'],
-//            //'user_id' => $user['id'],
-//            'token'=>$token,
-//            //'phone' => !empty($user['phone']) ? $user['phone'] : '',
-//        ];
         $update = [
             'token' => $token,
             'session_key' => $data['session_key'],
@@ -288,5 +281,11 @@ class UserService extends BaseService
         return $feedback->save();
     }
 
+    public static function getUserBattery($userId)
+    {
+        $model = UserDevice::whereUserId($userId)->first();
+        $batteryId = $model->battery_id;
+        return Battery::find($batteryId);
+    }
 
 }

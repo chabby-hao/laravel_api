@@ -25,6 +25,16 @@ class CabinetService extends BaseService
     }
 
     /**
+     * 判断柜子是否有可用的电池
+     * @param $cabinetId
+     * @param $batteryType
+     */
+    public static function hasAvailableBattery($cabinetId, $batteryType)
+    {
+
+    }
+
+    /**
      * 下发换电指令
      * @param $cabinetNo
      */
