@@ -186,4 +186,29 @@ class ReplaceBatteryController extends Controller
         return Helper::response($data);
     }
 
+    public function taskNotify(Request $request)
+    {
+        $inputRequire = ['cabinetNo', 'taskId', 'step', 'timestamp', 'sign'];
+        $input = $this->checkRequireParams($inputRequire, $request->input());
+        if ($input instanceof Response) {
+            return $input;
+        }
+
+        if (!RequestService::checkSign($input)) {
+            return Helper::responeseError(ErrorCode::$errSign);
+        }
+
+        $cabinetNo = $input['cabinetNo'];
+        $step = $input['step'];
+
+        Log::debug('taskNotify receive data: ', $input);
+
+        //$step 0=扫码下发命令回执，10=放入旧电池，关闭柜门，20=放入新电池，关闭柜门
+
+        return Helper::response([
+            'cabinetNo' => $cabinetNo,
+            'step' => $step,
+        ]);
+    }
+
 }

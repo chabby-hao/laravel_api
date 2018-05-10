@@ -30,6 +30,10 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  * @property int|null $step 0=扫码下发命令，10=放入旧电池，关闭柜门，20=放入新电池，关闭柜门
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ReplaceTasks whereStep($value)
+ * @property int|null $battery_id1
+ * @property int|null $battery_id2
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ReplaceTasks whereBatteryId1($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ReplaceTasks whereBatteryId2($value)
  */
 class ReplaceTasks extends Model
 {
@@ -51,9 +55,16 @@ class ReplaceTasks extends Model
 
     public static function newTask($userId, $cabinetId)
     {
+
+        $userDevice = UserDevice::where($userId)->first();
+        if(!$userDevice){
+            return false;
+        }
+
         $model = new self();
         $model->user_id = $userId;
         $model->cabinet_id = $cabinetId;
+        $model->battery_id1 = $userDevice->battery_id;
         $model->save();
         return $model;
     }

@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Libs\WxApi;
 use App\Models\Appointments;
+use App\Models\Cabinets;
 use App\Models\ChargeTasks;
 use App\Models\DeviceInfo;
 use App\Models\ReplaceTasks;
@@ -24,12 +25,16 @@ class ReplaceService extends BaseService
     public static function startReplaceBattery($userId, $cabinetId)
     {
 
+        $cabinet = Cabinets::find($cabinetId);
+        $cabinetNo = $cabinet->cabinet_no;
+
         //db 入库
-        $model = ReplaceTasks::newTask($userId, $cabinetId);
+        if(!$model = ReplaceTasks::newTask($userId, $cabinetId)){
+            return false;
+        }
 
         //下发换电指令
-        CabinetService::sendReplaceCommand($cabinetId, $model->id, $model->battery_id1);
-
+        return CabinetService::sendReplaceCommand($cabinetNo, $model->id, $model->battery_id1);
     }
 
     public static function appointment($userId, $cabinetId)
@@ -40,6 +45,5 @@ class ReplaceService extends BaseService
         $appointment->expired_at = Carbon::now()->addMinutes(30)->toDateTimeString();
         $appointment->save();
     }
-
 
 }

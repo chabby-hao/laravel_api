@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\WelfareUsers;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redis;
 use Psy\Command\WhereamiCommand;
 
 class CabinetService extends BaseService
@@ -25,16 +26,23 @@ class CabinetService extends BaseService
 
     /**
      * 下发换电指令
-     * @param $cabinetId
+     * @param $cabinetNo
      */
-    public static function sendReplaceCommand($cabinetId, $taskId, $batteryId)
+    public static function sendReplaceCommand($cabinetNo, $taskId, $batteryId)
     {
-
+        if(self::replaceRedisSet($cabinetNo, $taskId, $batteryId)){
+            return CommandService::sendStartReplaceCmd($cabinetNo);
+        }
+        return false;
     }
 
-    private function replaceRedisSet($taskId, $batteryId)
+    private function replaceRedisSet($cabinetNo, $taskId, $batteryId)
     {
-
+        $key = 'repalce_' . $cabinetNo;
+        $val1 = Redis::hSet($key, 'taskId', $taskId);
+        $val2 = Redis::hSet($key, 'batteryId', $batteryId);
+        Log::debug("replaceRedisSet, val: $val1,val2:$val2");
+        return $val1 && $val2 ? true : false;
     }
 
 

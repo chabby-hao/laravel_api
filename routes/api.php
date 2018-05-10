@@ -58,6 +58,7 @@ Route::any('replaceBattery/appointmentStatus','Api\ReplaceBatteryController@appo
 Route::any('replaceBattery/cancelAppointment','Api\ReplaceBatteryController@cancelAppointment');
 Route::any('replaceBattery/getAdress','Api\ReplaceBatteryController@getAdress');
 Route::any('replaceBattery/getStep','Api\ReplaceBatteryController@getStep');
+Route::any('replaceBattery/taskNotify','Api\ReplaceBatteryController@taskNotify');
 
 
 

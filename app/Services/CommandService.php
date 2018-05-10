@@ -11,6 +11,8 @@ class CommandService extends BaseService
 
     const LIST_COMMAND_PRE = 'AxcCommandList_';
 
+    const LIST_REPLACE_COMMAND_PRE = 'HdgCommandList';
+
     const CMD_OPEN_BOX = 20001;//开箱
     const CMD_CLOSE_BOX = 20002;//关箱
     const CMD_START_CHARGE = 20003;//开始充电
@@ -18,6 +20,10 @@ class CommandService extends BaseService
     const CMD_SLAVE_UPGRADE = 23333;//从机升级
     const CMD_REMOTE_OPEN_TUNNEL = 24444;//开启远程隧道
     const CMD_REMOTE_CLOSE_TUNNEL = 25555;//关闭远程隧道
+
+
+    const CMD_START_REPLACE = 30001;//开始换电
+    const CMD_OPS = 30002;//运维
 
     /**
      * 下发命令
@@ -34,6 +40,16 @@ class CommandService extends BaseService
         Log::debug("push redis deviceNo: $deviceNo, portNo: $portNo, cmd: $cmd");
         ClientCommandLogs::addLog($deviceNo, $portNo, $cmd);
         return Redis::lPush(self::LIST_COMMAND_PRE . $number, $val);
+    }
+
+    public static function sendReplace($cabinetNo, $cmd)
+    {
+        $cabinetNo = intval($cabinetNo);
+        $a = pack('P', $cabinetNo);
+        $b = pack('V', $cmd);
+        $val = $a . $b;
+        Log::debug("push redis cabinetNo: $cabinetNo, cmd: $cmd");
+        return Redis::lPush(self::LIST_REPLACE_COMMAND_PRE, $val);
     }
 
     /**
@@ -101,6 +117,12 @@ class CommandService extends BaseService
     {
         $cmd = self::CMD_REMOTE_CLOSE_TUNNEL;
         return self::send($deviceNo, 0, $cmd);
+    }
+
+    public static function sendStartReplaceCmd($cabinetNo)
+    {
+        $cmd = Self::CMD_START_REPLACE;
+        return self::sendReplace($cabinetNo, $cmd);
     }
 
 }
