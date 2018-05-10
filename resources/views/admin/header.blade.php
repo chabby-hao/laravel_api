@@ -120,10 +120,20 @@
 
         </li>
 
-        {{--地图--}}
-        <li class="active"><a target="_blank" href="http://bi.vipcare.com/map.html"><i class="icon icon-th-list"></i> <span>地图</span>
+        {{--换电管理--}}
+        <li class="submenu"><a href="#"><i class="icon icon-th-list"></i> <span>换电管理</span>
             </a>
+            <ul>
+                <li><a href="{{ URL::action('Admin\CabinetController@add')  }}">添加充电柜</a></li>
+
+            </ul>
+
         </li>
+
+        {{--地图--}}
+        {{--<li class="active"><a target="_blank" href="http://bi.vipcare.com/map.html"><i class="icon icon-th-list"></i> <span>地图</span>--}}
+            {{--</a>--}}
+        {{--</li>--}}
 
         <!--        报告-->
         {{--<li class="submenu"><a href="#"><i class="icon icon-th-list"></i> <span>报告</span>

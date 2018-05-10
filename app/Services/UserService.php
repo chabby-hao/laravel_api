@@ -285,7 +285,7 @@ class UserService extends BaseService
     {
         $model = UserDevice::whereUserId($userId)->first();
         if(!$model){
-            return false;
+
         }
         $batteryId = $model->battery_id;
         return Battery::find($batteryId);

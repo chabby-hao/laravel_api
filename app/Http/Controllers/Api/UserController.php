@@ -263,11 +263,15 @@ class UserController extends Controller
             return Helper::responeseError(ErrorCode::$tokenExpire);
         }
 
-
         $data = [
-            'bind'=>1,//是否绑定,0=未绑定，1=已绑定
-            'voltage'=>64,
+            'bind'=>0,
+            'voltage'=>0,
         ];
+
+        if($battery = UserService::getUserBattery($userId)){
+            $data['bind'] = 1;
+            $data['voltage'] = $battery->battery_level;
+        }
 
         return Helper::response($data);
     }

@@ -43,6 +43,10 @@ Route::any('/activity/cardsAdd','Admin\ActivityController@cardsAdd');
 Route::any('/activity/cardsEdit','Admin\ActivityController@cardsEdit');
 Route::any('/activity/cardsWhiteListExport','Admin\ActivityController@cardsWhiteListExport');
 
+
+Route::any('/cabinet/add','Admin\CabinetController@add');
+
+
 Route::any('/test', function () {
 
     $a = public_path('demo/ttt.xls');
