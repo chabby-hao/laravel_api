@@ -79,8 +79,9 @@ class AutoCloseBox extends Command
                             BoxService::openBox($deviceNo, $portNo);
                             CommandService::sendCommandChargeEnd($deviceNo, $portNo);
                         }
-                        $row->task_state = ChargeTasks::TASK_STATE_TIMEOUT;
-                        $row->save();
+                        $model = ChargeTasks::find($id);
+                        $model->task_state = ChargeTasks::TASK_STATE_TIMEOUT;
+                        $model->save();
                     }
                     DB::update("update charge_tasks set close_box = $Close where id=$id");
                 }
