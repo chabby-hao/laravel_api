@@ -257,6 +257,19 @@ class UserController extends Controller
 
     }
 
+    public function currentBattery()
+    {
+        if(!$userId = UserService::getUserId()){
+            return Helper::responeseError(ErrorCode::$tokenExpire);
+        }
 
+
+        $data = [
+            'bind'=>1,//是否绑定,0=未绑定，1=已绑定
+            'voltage'=>64,
+        ];
+
+        return Helper::response($data);
+    }
 
 }
