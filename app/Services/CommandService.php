@@ -121,7 +121,7 @@ class CommandService extends BaseService
 
     public static function sendStartReplaceCmd($cabinetNo)
     {
-        $cmd = Self::CMD_START_REPLACE;
+        $cmd = self::CMD_START_REPLACE;
         return self::sendReplace($cabinetNo, $cmd);
     }
 
