@@ -45,6 +45,7 @@ class ChargeTasks extends Model
 {
 
     const TASK_STATE_INIT = 0;//初始化
+    const TASK_STATE_TIMEOUT = 5;//充电超时
     const TASK_STATE_CHARGING = 10;//正在充
     const TASK_STATE_COMPLETE = 20;//充电完成,充满
     const TASK_STATE_END_ABMORMAL = 30;//充电异常中断
@@ -77,6 +78,7 @@ class ChargeTasks extends Model
     {
         $map = [
             self::TASK_STATE_INIT => '初始化，等待通电',
+            self::TASK_STATE_TIMEOUT=>'超时结束',
             self::TASK_STATE_CHARGING => '正在充电中',
             self::TASK_STATE_COMPLETE => '充满已完成',
             self::TASK_STATE_END_ABMORMAL => '充电异常中断',
