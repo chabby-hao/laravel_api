@@ -57,7 +57,7 @@ class ReplaceTasks extends Model
     public static function newTask($userId, $cabinetId)
     {
 
-        $userDevice = UserDevice::where($userId)->first();
+        $userDevice = UserDevice::whereUserId($userId)->first();
         if(!$userDevice){
             return false;
         }
