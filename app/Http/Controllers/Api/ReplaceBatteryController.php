@@ -76,14 +76,14 @@ class ReplaceBatteryController extends Controller
             }
 
             //柜子是否可用
-            if(!CabinetService::isCabinetUseful($cabinetId)){
+            /*if(!CabinetService::isCabinetUseful($cabinetId)){
                 return Helper::responeseError(ErrorCode::$cabinetUnuseful);
-            }
+            }*/
 
             //是否有可换电的电池
-            if(!CabinetService::hasAvailableBattery($cabinetId, $battery->battery_id)){
+            /*if(!CabinetService::hasAvailableBattery($cabinetId, $battery->battery_id)){
                 return Helper::responeseError(ErrorCode::$batteryNotEnough);
-            }
+            }*/
 
 
             //开始一项新的换电任务
