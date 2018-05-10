@@ -284,6 +284,9 @@ class UserService extends BaseService
     public static function getUserBattery($userId)
     {
         $model = UserDevice::whereUserId($userId)->first();
+        if(!$model){
+            return false;
+        }
         $batteryId = $model->battery_id;
         return Battery::find($batteryId);
     }
