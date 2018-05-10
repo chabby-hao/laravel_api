@@ -85,6 +85,8 @@ class ReplaceBatteryController extends Controller
                 return Helper::responeseError(ErrorCode::$batteryNotEnough);
             }*/
 
+            //检查当前柜子是否有未完成的任务，如果有需要等待前一个任务结束
+
 
             //开始一项新的换电任务
             ReplaceService::startReplaceBattery($userId, $cabinetId);
