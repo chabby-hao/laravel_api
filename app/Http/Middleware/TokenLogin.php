@@ -21,7 +21,7 @@ class TokenLogin
         if($token = $request->input('token')){
             UserService::getUserInfoByToken($token);
         }
-        Log::debug('request----------:', $request->input());
+        Log::debug('request----------:' . $request->fullUrl() . '---:', $request->input());
         return $next($request);
     }
 
