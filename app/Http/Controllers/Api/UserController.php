@@ -249,8 +249,8 @@ class UserController extends Controller
         }
 
         $data = [
-            'ops'=>1,//运维
-            'replace'=>1,//换电
+            'ops'=>mt_rand(0,1),//运维
+            'replace'=>mt_rand(0,1),//换电
         ];
 
         return Helper::response($data);
