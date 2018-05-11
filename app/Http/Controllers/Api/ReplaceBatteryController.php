@@ -92,6 +92,7 @@ class ReplaceBatteryController extends Controller
             ReplaceService::startReplaceBattery($userId, $cabinetId);
 
             $output['type'] = 0;//换电池
+            $output['cabinetId'] = $cabinetId;
             return Helper::response($output);
         } else {
             return Helper::responeseError(ErrorCode::$qrCodeNotFind);//二维码有误
