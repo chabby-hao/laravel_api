@@ -63,6 +63,8 @@ class ErrorCode
 
     public static $notBindBattery = 2025;//未绑定电池
 
+    public static $notFindTask = 2026;//未找到task
+
 
     public static function getErrMsg()
     {
@@ -80,6 +82,7 @@ class ErrorCode
             self::$appointmentExists =>'已预约',
             self::$notFindReplaceTask =>'未发现换电任务',
             self::$notBindBattery => '未绑定电池',
+            self::$notFindTask = 'not find task',
         ];
     }
 
