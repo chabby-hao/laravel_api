@@ -39,6 +39,8 @@ class ReplaceService extends BaseService
 
     public static function appointment($userId, $cabinetId)
     {
+        //预约加锁
+
         $appointment = new Appointments();
         $appointment->user_id = $userId;
         $appointment->cabinet_id = $cabinetId;

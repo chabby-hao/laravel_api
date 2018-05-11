@@ -20,6 +20,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Appointments whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Appointments whereUserId($value)
  * @mixin \Eloquent
+ * @property int|null $battery_level
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Appointments whereBatteryLevel($value)
  */
 class Appointments extends Model
 {

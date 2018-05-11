@@ -38,12 +38,13 @@ use Illuminate\Database\Eloquent\Model;
 class ReplaceTasks extends Model
 {
 
-    //0=初始化，10=进行中，20=已完成，30=异常
+    //0=初始化，5=超时，10=进行中，20=已完成，30=异常，40=失败
     const TASK_STATE_INIT = 0;//初始化
     const TASK_STATE_TIMEOUT = 5;//命令超时
     const TASK_STATE_PROCESSING = 10;//命令已下达,进行中
     const TASK_STATE_COMPLETE = 20;//已完成
     const TASK_STATE_ABNORMAL = 30;//异常
+    const TASK_STATE_FAIL = 40;//失败
 
     //$step 0=扫码下发命令，10=放入旧电池，关闭柜门，20=放入新电池，关闭柜门
     const STEP_INIT = 0;

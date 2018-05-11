@@ -88,9 +88,6 @@ class ReplaceBatteryController extends Controller
             //检查当前柜子是否有未完成的任务，如果有需要等待前一个任务结束
 
 
-            //开始一项新的换电任务
-            ReplaceService::startReplaceBattery($userId, $cabinetId);
-
             $output['type'] = 0;//换电池
             $output['cabinetId'] = $cabinetId;
             return Helper::response($output);
@@ -109,15 +106,19 @@ class ReplaceBatteryController extends Controller
         $input = $this->checkRequireParams(['cabinetId']);
         $cabinetId = $input['cabinetId'];
 
+        if(!$battery = UserService::getUserBattery($userId)){
+            return Helper::responeseError(ErrorCode::$notBindBattery);
+        }
+        $batteryLevel = $battery->battery_level;
+
         $data = [];
         $data['appointmentId'] = 0;
-        $data['batteryCount'] = 0;
         //是否已经预约
         if ($model = Appointments::whereUserId($userId)->whereCabinetId($cabinetId)->where('expired_at', '>', Carbon::now()->toDateTimeString())->first()) {
             $data['appointmentId'] = intval($model->id);
         }
 
-        $data['batteryCount'] = mt_rand(0, 10);
+        $data['batteryCount'] = CabinetService::getAvailableAppointmentBatteryCount($cabinetId, $batteryLevel);
 
         return Helper::response($data);
     }

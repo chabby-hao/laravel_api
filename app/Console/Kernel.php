@@ -4,6 +4,7 @@ namespace App\Console;
 
 use App\Console\Commands\AutoCloseBox;
 use App\Console\Commands\AutoFinishCharge;
+use App\Console\Commands\ReplaceTimeout;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -18,6 +19,7 @@ class Kernel extends ConsoleKernel
         //
         AutoFinishCharge::class,
         AutoCloseBox::class,
+        ReplaceTimeout::class,
     ];
 
     /**
@@ -31,6 +33,7 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')
         //          ->hourly();
         $schedule->command(AutoFinishCharge::class)->everyMinute();
+        $schedule->command(ReplaceTimeout::class)->everyMinute();
     }
 
     /**
