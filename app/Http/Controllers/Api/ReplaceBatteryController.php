@@ -257,7 +257,7 @@ class ReplaceBatteryController extends Controller
         $userId = $this->checkUser();
 
         $data = [
-            'cost'=>mt_rand(0,10),
+            'cost'=>mt_rand(0,10). '00',
             'costType'=>'余额付款',
             'createdAt'=>Carbon::now()->toDateTimeString(),
             'cabinetNo'=>'02100004',
