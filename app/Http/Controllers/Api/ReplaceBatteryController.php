@@ -229,15 +229,19 @@ class ReplaceBatteryController extends Controller
             return Helper::responeseError(ErrorCode::$notFindTask);
         }
 
-        //$step 0=扫码下发命令回执，10=放入旧电池，关闭柜门，20=放入新电池，关闭柜门
-        if($step === ReplaceTasks::STEP_INIT){
+        //$step 0=扫码下发命令回执，10=放入旧电池，关闭柜门，20=放入新电池，关闭柜门，30=换电失败
+        if($step === 0){
+            $task->step = ReplaceTasks::STEP_INIT;
             $task->state = ReplaceTasks::TASK_STATE_PROCESSING;//收到命令，进行中
-        }elseif($step === ReplaceTasks::STEP_10){
-
+        }elseif($step === 10){
+            $task->step = ReplaceTasks::STEP_10;
         }elseif($step === ReplaceTasks::STEP_20){
+            $task->step = ReplaceTasks::STEP_20;
+            $task->state = ReplaceTasks::TASK_STATE_COMPLETE;
             $task->battery_id2 = $input['batteryId'];
+        }elseif($step === 30){
+            $task->state = ReplaceTasks::TASK_STATE_FAIL;
         }
-        $task->step = $step;
         $task->save();
 
         //收到通知后，将state存为进行中
