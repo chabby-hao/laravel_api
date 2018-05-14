@@ -67,8 +67,10 @@ class ReplaceBatteryController extends Controller
                 return Helper::responeseError(ErrorCode::$notBindBattery);
             }
 
-
-            //$cabinetId = $arr['cabinetId'];
+            //正在运维
+            if(CabinetService::isOps($cabinetId)){
+                return Helper::responeseError(ErrorCode::$isOpsNow);
+            }
 
             //检查用户余额
             if (UserService::getAvailabelBalance($userId) <= 0) {

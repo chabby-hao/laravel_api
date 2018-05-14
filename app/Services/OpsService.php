@@ -37,9 +37,10 @@ class OpsService extends BaseService
 
     public static function getOpsInfo($cabinetId)
     {
-        $key = CabinetService::getCabinetKey($cabinetId);
-        $waitOps = Redis::hGet($key, '11') ? : 0;
-        $hasOps = Redis::hGet($key, '22') ? : 0;
+        $cabinetNo = CabinetService::getCabinetNoById($cabinetId);
+        $data = CabinetService::getCabinetInfo($cabinetNo);
+        $waitOps = $data['11'] ? : 0;
+        $hasOps = $data['22'] ? : 0;
         return [$waitOps, $hasOps];
     }
 

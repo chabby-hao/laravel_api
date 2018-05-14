@@ -71,6 +71,8 @@ class ErrorCode
 
     public static $isReplacing = 2029;//正在换电
 
+    public static $isOpsNow = 2030;//正在运维
+
     public static function getErrMsg()
     {
         return [
@@ -91,6 +93,7 @@ class ErrorCode
             self::$notOpsUser => '非运维人员',
             self::$operationFail => '操作失败',
             self::$isReplacing => '正在换电中',
+            self::$isOpsNow => '正在运维中',
         ];
     }
 

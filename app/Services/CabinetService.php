@@ -37,6 +37,13 @@ class CabinetService extends BaseService
         return $key;
     }
 
+    public static function getCabinetInfo($cabinetNo)
+    {
+        $key = CabinetService::getCabinetKey($cabinetNo);
+        $data = Redis::hGetAll($key);
+        return $data;
+    }
+
     public static function getDoorInfo($cabinetNo, $doorNo)
     {
         $key = self::getDoorKey($cabinetNo, $doorNo);
@@ -79,8 +86,8 @@ class CabinetService extends BaseService
     {
         //判断在线状态
         $cabinetNo = self::getCabinetNoById($cabinetId);
-        $key = self::getCabinetKey($cabinetNo);
-        $val = Redis::hGet($key, 'attach');
+        $data = self::getCabinetInfo($cabinetNo);
+        $val = $data['attach'];
         Log::debug('cabinet attach : ' . $val);
         return $val;
     }
@@ -183,8 +190,15 @@ class CabinetService extends BaseService
     public static function isReplacing($cabinetId)
     {
         $cabinetNo = self::getCabinetNoById($cabinetId);
-        $key = CabinetService::getCabinetKey($cabinetNo);
-        return Redis::hGet($key, 'charging') ? true : false;
+        $data = self::getCabinetInfo($cabinetNo);
+        return $data['charging'] ? true : false;
+    }
+
+    public static function isOps($cabinetId)
+    {
+        $cabinetNo = self::getCabinetNoById($cabinetId);
+        $data = self::getCabinetInfo($cabinetNo);
+        return $data['ops'] ? true : false;
     }
 
 
