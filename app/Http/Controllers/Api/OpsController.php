@@ -21,25 +21,32 @@ use Illuminate\Support\Facades\Log;
 class OpsController extends Controller
 {
 
+    protected function checkPermis()
+    {
+        $userId = $this->checkUser();
+        //检查用户是否有运维权限
+        if(!UserService::checkOpsPermis($userId)){
+            return Helper::responeseError(ErrorCode::$notOpsUser);
+        }
+        return $userId;
+    }
+
+
     /**
      * 开始运维
      */
     public function startOps(Request $request)
     {
-        if (!$userId = UserService::getUserId()) {
-            return Helper::responeseError(ErrorCode::$tokenExpire);
-        }
-
-        //检查用户是否有运维权限
-        if(!UserService::checkOpsPermis($userId)){
-            return Helper::responeseError(ErrorCode::$notOpsUser);
-        }
-        //{"cabinetId":'1'}
+        $this->checkPermis();
 
         $input = $this->checkRequireParams(['qr'], $request->input());
         $qr = $input['qr'];
 
         $cabinetId = CabinetService::getCabinetIdByQr($qr);
+
+        if(CabinetService::isReplacing($cabinetId)){
+            return Helper::responeseError(ErrorCode::$isReplacing);
+        }
 
         if($cabinetId && OpsService::startOps($cabinetId)){
             return $this->responseOk();
@@ -50,11 +57,7 @@ class OpsController extends Controller
     
     public function endOps(Request $request)
     {
-        $userId = $this->checkUser();
-        //检查用户是否有运维权限
-        if(!UserService::checkOpsPermis($userId)){
-            return Helper::responeseError(ErrorCode::$notOpsUser);
-        }
+        $this->checkPermis();
 
         $input = $this->checkRequireParams(['qr'], $request->input());
         $qr = $input['qr'];
@@ -69,5 +72,21 @@ class OpsController extends Controller
 
     }
 
+    public function opsInfo()
+    {
+        $this->checkPermis();
 
+        $input = $this->checkRequireParams(['qr']);
+        $qr = $input['qr'];
+
+        $cabinetId = CabinetService::getCabinetIdByQr($qr);
+
+        list($waitOps, $hasOps) = OpsService::getOpsInfo($cabinetId);
+
+        return Helper::response([
+            'waitOps'=>$waitOps,
+            'hasOps'=>$hasOps,
+        ]);
+
+    }
 }

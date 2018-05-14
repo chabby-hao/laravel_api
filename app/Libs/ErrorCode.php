@@ -69,6 +69,7 @@ class ErrorCode
 
     public static $operationFail = 2028;//操作失败
 
+    public static $isReplacing = 2029;//正在换电
 
     public static function getErrMsg()
     {
@@ -86,9 +87,10 @@ class ErrorCode
             self::$appointmentExists =>'已预约',
             self::$notFindReplaceTask =>'未发现换电任务',
             self::$notBindBattery => '未绑定电池',
-            self::$notFindTask = 'not find task',
-            self::$notOpsUser = '非运维人员',
-            self::$operationFail = '操作失败',
+            self::$notFindTask => 'not find task',
+            self::$notOpsUser => '非运维人员',
+            self::$operationFail => '操作失败',
+            self::$isReplacing => '正在换电中',
         ];
     }
 

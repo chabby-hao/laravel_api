@@ -19,17 +19,17 @@ use Psy\Command\WhereamiCommand;
 class CabinetService extends BaseService
 {
 
-    const KEY_CABINET_PRE = 'bat:';
+    const KEY_CABINET_PRE = 'cab:';
     const KEY_DOOR_PRE = 'door:';
 
-    private static function getCabinetKey($cabinetNo)
+    public static function getCabinetKey($cabinetNo)
     {
         $no = intval($cabinetNo);
         $key = self::KEY_CABINET_PRE . $no;
         return $key;
     }
 
-    private static function getDoorKey($cabinetNo, $doorNo)
+    public static function getDoorKey($cabinetNo, $doorNo)
     {
         $cabinetNo = intval($cabinetNo);
         $doorNo = intval($doorNo);
@@ -178,6 +178,13 @@ class CabinetService extends BaseService
         }else{
             return false;
         }
+    }
+
+    public static function isReplacing($cabinetId)
+    {
+        $cabinetNo = self::getCabinetNoById($cabinetId);
+        $key = CabinetService::getCabinetKey($cabinetNo);
+        return Redis::hGet($key, 'charging') ? true : false;
     }
 
 
