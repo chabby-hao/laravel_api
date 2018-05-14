@@ -62,6 +62,12 @@ Route::any('replaceBattery/getStep','Api\ReplaceBatteryController@getStep');
 Route::any('replaceBattery/taskNotify','Api\ReplaceBatteryController@taskNotify');
 
 
+Route::any('ops/startOps','Api\OpsController@startOps');
+Route::any('ops/endOps','Api\OpsController@endOps');
+
+
+
+
 
 
 Route::any('cmd', function (Request $request) {

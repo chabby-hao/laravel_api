@@ -28,12 +28,12 @@ class UserController extends Controller
     {
         $code = $request->post('code');
         $token = UserService::loginByCode($code);
-        if(!$token){
+        if (!$token) {
             return Helper::responeseError(ErrorCode::$codeInvalid);
         }
 
         $phone = UserService::getPhoneByToken($token);
-        return Helper::response(['token'=>$token,'phone'=>$phone]);
+        return Helper::response(['token' => $token, 'phone' => $phone]);
     }
 
     /**
@@ -43,19 +43,19 @@ class UserController extends Controller
     public function bindPhoneForWx(Request $request)
     {
         //$data = $request->post();
-        $data = $this->checkRequireParams(['detail','token'], $request->input());
+        $data = $this->checkRequireParams(['detail', 'token'], $request->input());
         if ($data instanceof Response) {
             return $data;
         }
         $detail = $data['detail'];
-        if(empty($detail['iv'])){
+        if (empty($detail['iv'])) {
             return Helper::responeseError(ErrorCode::$errParams);
         }
         $iv = $detail['iv'];
         $encryptedData = $detail['encryptedData'];
         $token = $data['token'];
 
-        if(!$sessonKey = UserService::getSessionKeyByToken($token)){
+        if (!$sessonKey = UserService::getSessionKeyByToken($token)) {
             return Helper::responeseError(ErrorCode::$tokenExpire);
         }
 
@@ -63,7 +63,7 @@ class UserController extends Controller
         //中间会输出奇怪的字符，用ob消除
         ob_start();
         $pc = new \WXBizDataCrypt(\WxPayConfig::APPID, $sessonKey);
-        $errCode = $pc->decryptData($encryptedData, $iv, $output );
+        $errCode = $pc->decryptData($encryptedData, $iv, $output);
         ob_clean();
 
         Log::debug("bindPhone $sessonKey,$encryptedData,$iv,$errCode,$output");
@@ -75,7 +75,7 @@ class UserController extends Controller
             return Helper::responeseError(ErrorCode::$sessionKeyExpire);
         }
 
-        return Helper::response(['phone'=>$phone]);
+        return Helper::response(['phone' => $phone]);
     }
 
     /**
@@ -93,10 +93,10 @@ class UserController extends Controller
             return Helper::responeseError(ErrorCode::$tokenExpire);
         }*/
 
-        if($verifyCodeRow = VerifyCode::getByPhoneAndCode($phone, $verifyCode)){
+        if ($verifyCodeRow = VerifyCode::getByPhoneAndCode($phone, $verifyCode)) {
             UserService::bindPhone($token, $phone, User::LOGIN_TYPE_PHONE);
-            return Helper::response(['phone'=>$phone]);
-        }else{
+            return Helper::response(['phone' => $phone]);
+        } else {
             return Helper::responeseError();
         }
 
@@ -156,7 +156,7 @@ class UserController extends Controller
 
             Log::debug('verify code response:' . $ucpaas);
             $ucpaas = json_decode($ucpaas, true);
-            if($ucpaas['resp']['respCode'] == '000000'){
+            if ($ucpaas['resp']['respCode'] == '000000') {
                 return $this->responseOk();
             }
         }
@@ -167,9 +167,9 @@ class UserController extends Controller
     public function checkToken(Request $request)
     {
         $token = $request->post('token');
-        if($token && $phone = UserService::getPhoneByToken($token)){
-            return Helper::response(['phone'=>$phone]);
-        }else{
+        if ($token && $phone = UserService::getPhoneByToken($token)) {
+            return Helper::response(['phone' => $phone]);
+        } else {
             return Helper::responeseError(ErrorCode::$tokenExpire);
         }
     }
@@ -177,12 +177,12 @@ class UserController extends Controller
     public function balance(Request $request)
     {
         $token = $request->get('token');
-        if(!$userInfo = UserService::getUserInfoByToken($token)){
+        if (!$userInfo = UserService::getUserInfoByToken($token)) {
             return Helper::responeseError(ErrorCode::$tokenExpire);
         }
         $balance = number_format($userInfo['user_balance'], 2);
         $present = number_format($userInfo['present_balance'], 2);
-        return Helper::response(['balance'=>$balance,'present'=>$present]);
+        return Helper::response(['balance' => $balance, 'present' => $present]);
     }
 
     /**
@@ -195,7 +195,7 @@ class UserController extends Controller
             return Helper::responeseError(ErrorCode::$tokenExpire);
         }
 
-        if ($refundId = UserService::userRefund($userId)){
+        if ($refundId = UserService::userRefund($userId)) {
             return $this->responseOk();
         }
 
@@ -210,10 +210,10 @@ class UserController extends Controller
         }
 
         $refund = UserRefunds::whereUserId($userId)->first();
-        if($refund){
-            return Helper::response(['has_refund'=>1]);
-        }else{
-            return Helper::response(['has_refund'=>0]);
+        if ($refund) {
+            return Helper::response(['has_refund' => 1]);
+        } else {
+            return Helper::response(['has_refund' => 0]);
         }
     }
 
@@ -233,7 +233,7 @@ class UserController extends Controller
 
     public function cardsList(Request $request)
     {
-        if(!$userId = UserService::getUserId()){
+        if (!$userId = UserService::getUserId()) {
             return Helper::responeseError(ErrorCode::$tokenExpire);
         }
 
@@ -244,13 +244,18 @@ class UserController extends Controller
 
     public function config()
     {
-        if(!$userId = UserService::getUserId()){
+        if (!$userId = UserService::getUserId()) {
             return Helper::responeseError(ErrorCode::$tokenExpire);
         }
 
         $data = [
-            'ops'=>mt_rand(0,1),//运维
-            'replace'=>mt_rand(0,1),//换电
+            'ops' => UserService::checkOpsPermis($userId) ? 1 : 0,
+            'replace' => UserService::checkReplacePermis($userId) ? 1 : 0,
+        ];
+
+        $data = [
+            'ops' => mt_rand(0, 1),//运维
+            'replace' => mt_rand(0, 1),//换电
         ];
 
         return Helper::response($data);
@@ -259,16 +264,16 @@ class UserController extends Controller
 
     public function currentBattery()
     {
-        if(!$userId = UserService::getUserId()){
+        if (!$userId = UserService::getUserId()) {
             return Helper::responeseError(ErrorCode::$tokenExpire);
         }
 
         $data = [
-            'bind'=>0,
-            'voltage'=>0,
+            'bind' => 0,
+            'voltage' => 0,
         ];
 
-        if($battery = UserService::getUserBattery($userId)){
+        if ($battery = UserService::getUserBattery($userId)) {
             $data['bind'] = 1;
             $data['voltage'] = $battery->battery_level;
         }

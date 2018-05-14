@@ -170,5 +170,15 @@ class CabinetService extends BaseService
         return $val1 && $val2 ? true : false;
     }
 
+    public static function getCabinetIdByQr($qr)
+    {
+        $arr = json_decode($qr, true);
+        if($arr && isset($arr['cabinetId'])){
+            return $arr['cabinetId'];
+        }else{
+            return false;
+        }
+    }
+
 
 }

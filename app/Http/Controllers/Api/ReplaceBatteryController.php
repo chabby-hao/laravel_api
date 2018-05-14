@@ -38,7 +38,7 @@ class ReplaceBatteryController extends Controller
         }
         $data = $this->checkRequireParams(['qr']);
         $qr = $data['qr'];
-        $arr = json_decode($qr, true);
+        //$arr = json_decode($qr, true);
 
 
         $output = [];
@@ -59,7 +59,7 @@ class ReplaceBatteryController extends Controller
                 return Helper::response($output);//绑定成功
             }
             return Helper::responeseError(ErrorCode::$batteryNotRegister);
-        } elseif (isset($arr['cabinetId'])) {
+        } elseif ($cabinetId = CabinetService::getCabinetIdByQr($qr)) {
             //换电,这里是柜子二维码,{"cabinetId":'1'}
 
             //是否绑定电池
@@ -68,7 +68,7 @@ class ReplaceBatteryController extends Controller
             }
 
 
-            $cabinetId = $arr['cabinetId'];
+            //$cabinetId = $arr['cabinetId'];
 
             //检查用户余额
             if (UserService::getAvailabelBalance($userId) <= 0) {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Libs\ErrorCode;
 use App\Libs\Helper;
+use App\Services\UserService;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
@@ -43,6 +44,14 @@ class Controller extends BaseController
             return Helper::responeseError(ErrorCode::$errParams, ['msg'=>"$res is required"]);
         }
         return $res;
+    }
+
+    protected function checkUser()
+    {
+        if (!$userId = UserService::getUserId()) {
+            return Helper::responeseError(ErrorCode::$tokenExpire);
+        }
+        return $userId;
     }
 
 }

@@ -65,6 +65,10 @@ class ErrorCode
 
     public static $notFindTask = 2026;//未找到task
 
+    public static $notOpsUser = 2027;//未运维人员
+
+    public static $operationFail = 2028;//操作失败
+
 
     public static function getErrMsg()
     {
@@ -83,6 +87,8 @@ class ErrorCode
             self::$notFindReplaceTask =>'未发现换电任务',
             self::$notBindBattery => '未绑定电池',
             self::$notFindTask = 'not find task',
+            self::$notOpsUser = '非运维人员',
+            self::$operationFail = '操作失败',
         ];
     }
 

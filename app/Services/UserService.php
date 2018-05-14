@@ -291,4 +291,28 @@ class UserService extends BaseService
         return Battery::find($batteryId);
     }
 
+    /**
+     * 检查是否可以运维
+     */
+    public static function checkOpsPermis($userId)
+    {
+        $user = User::find($userId);
+        if($user && $user->ops){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public static function checkReplacePermis($userId)
+    {
+        $user = User::find($userId);
+        if($user && $user->replace){
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+
 }

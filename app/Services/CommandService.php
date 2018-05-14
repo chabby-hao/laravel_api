@@ -23,7 +23,8 @@ class CommandService extends BaseService
 
 
     const CMD_START_REPLACE = 30001;//开始换电
-    const CMD_OPS = 30002;//运维
+    const CMD_START_OPS = 30002;//运维
+    const CMD_END_OPS = 30003;//结束维护
 
     /**
      * 下发命令
@@ -49,6 +50,7 @@ class CommandService extends BaseService
         $b = pack('V', $cmd);
         $val = $a . $b;
         Log::debug("push redis cabinetNo: $cabinetNo, cmd: $cmd");
+        Redis::select(5);
         return Redis::lPush(self::LIST_REPLACE_COMMAND_PRE, $val);
     }
 
@@ -122,6 +124,18 @@ class CommandService extends BaseService
     public static function sendStartReplaceCmd($cabinetNo)
     {
         $cmd = self::CMD_START_REPLACE;
+        return self::sendReplace($cabinetNo, $cmd);
+    }
+
+    public static function sendStartOps($cabinetNo)
+    {
+        $cmd = self::CMD_START_REPLACE;
+        return self::sendReplace($cabinetNo, $cmd);
+    }
+
+    public static function sendEndOps($cabinetNo)
+    {
+        $cmd = self::CMD_END_OPS;
         return self::sendReplace($cabinetNo, $cmd);
     }
 
