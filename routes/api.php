@@ -60,6 +60,7 @@ Route::any('replaceBattery/cancelAppointment','Api\ReplaceBatteryController@canc
 Route::any('replaceBattery/getAdress','Api\ReplaceBatteryController@getAdress');
 Route::any('replaceBattery/getStep','Api\ReplaceBatteryController@getStep');
 Route::any('replaceBattery/taskNotify','Api\ReplaceBatteryController@taskNotify');
+Route::any('replaceBattery/list','Api\ReplaceBatteryController@list');
 
 
 Route::any('ops/startOps','Api\OpsController@startOps');
