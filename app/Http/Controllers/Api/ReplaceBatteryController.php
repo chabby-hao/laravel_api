@@ -87,6 +87,8 @@ class ReplaceBatteryController extends Controller
 
             //检查当前柜子是否有未完成的任务，如果有需要等待前一个任务结束
 
+            //开始一项新的换电任务
+            ReplaceService::startReplaceBattery($userId, $cabinetId);
 
             $output['type'] = 0;//换电池
             $output['cabinetId'] = $cabinetId;
