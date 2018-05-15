@@ -63,6 +63,7 @@ class ReplaceTimeout extends Command
             foreach ($tasks as $task){
                 if($task->created_at < $timeout){
                     $task->state = ReplaceTasks::TASK_STATE_TIMEOUT;//超时
+                    $task->save();
                     Log::debug('replace timeout : ', $task->toArray());
                 }
             }
