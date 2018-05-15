@@ -155,9 +155,9 @@ class ReplaceBatteryController extends Controller
         $input = $this->checkRequireParams(['cabinetId']);
         $cabinetId = $input['cabinetId'];
 
-        //检查是否可以预约
-        if (mt_rand(0, 1) === 1) {
-            return Helper::responeseError(ErrorCode::$batteryNotEnough);
+        $battery = UserService::getUserBattery($userId);
+        if(!$battery){
+            return Helper::responeseError(ErrorCode::$notBindBattery);
         }
 
         //是否已经预约
@@ -165,6 +165,16 @@ class ReplaceBatteryController extends Controller
             return Helper::responeseError(ErrorCode::$appointmentExists);
         }
 
+        $batteryLevel = $battery->battery_level;
+        //检查是否可以预约
+        if(!CabinetService::getAvailableAppointmentBatteryCount($cabinetId, $batteryLevel)){
+            return Helper::responeseError(ErrorCode::$batteryNotEnough);
+        }
+
+        /*//检查是否可以预约
+        if (mt_rand(0, 1) === 1) {
+            return Helper::responeseError(ErrorCode::$batteryNotEnough);
+        }*/
 
         //预约
         ReplaceService::appointment($userId, $cabinetId);
