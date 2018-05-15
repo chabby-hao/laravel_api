@@ -51,7 +51,7 @@ class ReplaceTimeout extends Command
         Log::info('crontab start ReplaceTimeout ...');
 
         $createdIn = [
-            Carbon::now()->subDay()->toDateTimeString(),
+            Carbon::now()->subWeek()->toDateTimeString(),
             Carbon::now()->toDateTimeString(),
         ];
 
