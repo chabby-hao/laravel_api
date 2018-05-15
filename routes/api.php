@@ -65,6 +65,7 @@ Route::any('replaceBattery/list','Api\ReplaceBatteryController@list');
 
 Route::any('ops/startOps','Api\OpsController@startOps');
 Route::any('ops/endOps','Api\OpsController@endOps');
+Route::any('ops/opsInfo','Api\OpsController@opsInfo');
 
 
 
