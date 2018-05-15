@@ -39,8 +39,8 @@ class OpsService extends BaseService
     {
         $cabinetNo = CabinetService::getCabinetNoById($cabinetId);
         $data = CabinetService::getCabinetInfo($cabinetNo);
-        $waitOps = $data['11'] ? : 0;
-        $hasOps = $data['22'] ? : 0;
+        $waitOps = $data['wait_for_maintenance'] ? : 0;
+        $hasOps = $data['maintenance'] ? : 0;
         return [$waitOps, $hasOps];
     }
 
