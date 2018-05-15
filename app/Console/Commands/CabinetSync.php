@@ -90,7 +90,7 @@ class CabinetSync extends Command
                 'voltage' => $battery->battery_level,
             ];
             $redis->hMset($key, $data);
-            Log::info("battery: $batteryId hmset : ", $redis->hGetAll($key));
+            Log::info("battery: $batteryId hgetall : ", $redis->hGetAll($key));
         }
 
 
