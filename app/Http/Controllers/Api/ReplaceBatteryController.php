@@ -262,6 +262,22 @@ class ReplaceBatteryController extends Controller
     {
         $userId = $this->checkUser();
 
+        $tasks = ReplaceTasks::whereUserId($userId)->whereState(ReplaceTasks::TASK_STATE_COMPLETE)->get();
+
+        $datas = [];
+        if($tasks){
+            foreach ($tasks as $task){
+                $data = [
+                    'cost'=>$task->actual_cost,
+                    'costType'=>'余额付款',
+                    'createdAt'=>$task->created_at,
+                    'cabinetNo'=>CabinetService::getCabinetNoById($task->cabinet_id),
+                    'address'=>CabinetService::getCabinetAddressById($task->cabinet_id),
+                ];
+                $datas[] = $data;
+            }
+        }
+
         $data = [
             'cost'=>mt_rand(0,10). '.00',
             'costType'=>'余额付款',
@@ -269,8 +285,8 @@ class ReplaceBatteryController extends Controller
             'cabinetNo'=>'02100004',
             'address'=>'永和家园1号',
         ];
+        $datas[] = $data;
 
-        $datas = [$data, $data];
         return Helper::response($datas);
     }
 

@@ -78,6 +78,12 @@ class CabinetService extends BaseService
         return $model ? $model->cabinet_no : 0;
     }
 
+    public static function getCabinetAddressById($cabinetId)
+    {
+        $model = Cabinets::find($cabinetId);
+        return $model ? $model->address : '';
+    }
+
     /**
      * 柜子是否可用
      * @param $cabinetId
