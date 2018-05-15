@@ -6,6 +6,7 @@ use App\Libs\ErrorCode;
 use App\Libs\Helper;
 use App\Models\Appointments;
 use App\Models\Battery;
+use App\Models\Cabinets;
 use App\Models\ChargeTasks;
 use App\Models\DeviceInfo;
 use App\Models\ReplaceTasks;
@@ -182,9 +183,14 @@ class ReplaceBatteryController extends Controller
         $cabinetId = $this->checkRequireParams(['cabinetId'])['cabinetId'];
 
 
+        $model = Cabinets::find($cabinetId);
+        if(!$model){
+            return Helper::responeseError(ErrorCode::$cabinetUnuseful);
+        }
+
         $data = [
-            'cabinetNo' => '021000019',
-            'address' => '华山公寓1号换电柜',
+            'cabinetNo' => $model->cabinet_no,
+            'address' => $model->address,
         ];
 
         return Helper::response($data);
@@ -239,16 +245,20 @@ class ReplaceBatteryController extends Controller
         if($step === 0){
             $task->step = ReplaceTasks::STEP_INIT;
             $task->state = ReplaceTasks::TASK_STATE_PROCESSING;//收到命令，进行中
+            $task->save();
         }elseif($step === 10){
             $task->step = ReplaceTasks::STEP_10;
+            $task->save();
         }elseif($step === ReplaceTasks::STEP_20){
             $task->step = ReplaceTasks::STEP_20;
             $task->state = ReplaceTasks::TASK_STATE_COMPLETE;
             $task->battery_id2 = $input['batteryId'];
+            $task->save();
+            ReplaceService::userCost($taskId);
         }elseif($step === 30){
             $task->state = ReplaceTasks::TASK_STATE_FAIL;
+            $task->save();
         }
-        $task->save();
 
         //收到通知后，将state存为进行中
 

@@ -37,6 +37,14 @@ class ReplaceService extends BaseService
         return CabinetService::sendReplaceCommand($cabinetNo, $model->id, $model->battery_id1);
     }
 
+    /**
+     *  用户结费
+     */
+    public static function userCost($taskId)
+    {
+
+    }
+
     public static function appointment($userId, $cabinetId)
     {
         //预约加锁

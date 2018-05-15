@@ -281,4 +281,12 @@ class UserController extends Controller
         return Helper::response($data);
     }
 
+    /**
+     * 打开小程序应该先跳转哪个页面
+     */
+    public function homePage()
+    {
+
+    }
+
 }
