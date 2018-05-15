@@ -253,10 +253,10 @@ class UserController extends Controller
             'replace' => UserService::checkReplacePermis($userId) ? 1 : 0,
         ];
 
-        $data = [
+        /*$data = [
             'ops' => mt_rand(0, 1),//运维
             'replace' => mt_rand(0, 1),//换电
-        ];
+        ];*/
 
         return Helper::response($data);
 
