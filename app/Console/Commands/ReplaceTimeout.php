@@ -57,7 +57,7 @@ class ReplaceTimeout extends Command
 
         $timeout = Carbon::now()->subSeconds(self::TIME_OUT)->toDateTimeString();
 
-        $tasks = ReplaceTasks::whereBetween('created_at',$createdIn)->whereState(ReplaceTasks::TASK_STATE_INIT);
+        $tasks = ReplaceTasks::whereBetween('created_at',$createdIn)->whereState(ReplaceTasks::TASK_STATE_INIT)->get();
         if($tasks){
             /** @var ReplaceTasks $task */
             foreach ($tasks as $task){

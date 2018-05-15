@@ -48,4 +48,15 @@ class ReplaceService extends BaseService
         $appointment->save();
     }
 
+    /**
+     * 是否已经存在进行中的换电任务
+     * @param $cabinetId
+     * @return bool
+     */
+    public static function checkProcessingTask($cabinetId)
+    {
+        $task = ReplaceTasks::whereCabinetId($cabinetId)->whereBetween('state',[ReplaceTasks::TASK_STATE_INIT, ReplaceTasks::TASK_STATE_PROCESSING])->first();
+        return $task ? true : false;
+    }
+
 }

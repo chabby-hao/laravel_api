@@ -73,27 +73,30 @@ class ErrorCode
 
     public static $isOpsNow = 2030;//正在运维
 
+    public static $needWait = 2031;//请等待
+
     public static function getErrMsg()
     {
         return [
             self::$qrCodeNotFind => '二维码有误',
             self::$deviceNotOnline => '设备离线',
             self::$deviceNotUseful => '充电口暂不可用，请稍后再试',
-            self::$balanceNotEnough =>'余额不足，请先充值',
+            self::$balanceNotEnough => '余额不足，请先充值',
             self::$isChargingNow => '充电口被占用，请换一个充电口',
             self::$isChargingAndNeedWait => '充电口被占用，请换一个充电口或等待{mins}分钟',
             self::$hasGotCard => '您已经领取过福利卡，无需再次领取',
             self::$cabinetUnuseful => '充电柜不可用',
             self::$batteryNotEnough => '无可用电池',
             self::$batteryNotRegister => '电池未注册',
-            self::$appointmentExists =>'已预约',
-            self::$notFindReplaceTask =>'未发现换电任务',
+            self::$appointmentExists => '已预约',
+            self::$notFindReplaceTask => '未发现换电任务',
             self::$notBindBattery => '未绑定电池',
             self::$notFindTask => 'not find task',
             self::$notOpsUser => '非运维人员',
             self::$operationFail => '操作失败',
             self::$isReplacing => '正在换电中',
             self::$isOpsNow => '正在运维中',
+            self::$needWait => '请等待，换电柜正在使用中...',
         ];
     }
 

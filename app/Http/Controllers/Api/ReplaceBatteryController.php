@@ -72,6 +72,10 @@ class ReplaceBatteryController extends Controller
                 return Helper::responeseError(ErrorCode::$isOpsNow);
             }
 
+            if(ReplaceService::checkProcessingTask($cabinetId)){
+                return Helper::responeseError(ErrorCode::$isOpsNow);
+            }
+
             //检查用户余额
             if (UserService::getAvailabelBalance($userId) <= 0) {
                 return Helper::responeseError(ErrorCode::$balanceNotEnough);
