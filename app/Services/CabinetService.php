@@ -42,7 +42,7 @@ class CabinetService extends BaseService
         Redis::select(5);
         $key = CabinetService::getCabinetKey($cabinetNo);
         $data = Redis::hGetAll($key);
-        Log::info("cabinet redis hgetall $key info:", $data);
+        //::info("cabinet redis hgetall $key info:", $data);
         return $data;
     }
 
@@ -51,7 +51,7 @@ class CabinetService extends BaseService
         Redis::select(5);
         $key = self::getDoorKey($cabinetNo, $doorNo);
         $data = Redis::hGetAll($key);
-        Log::info("door redis hgetall $key info:", $data);
+        //Log::info("door redis hgetall $key info:", $data);
         return $data;
     }
 
