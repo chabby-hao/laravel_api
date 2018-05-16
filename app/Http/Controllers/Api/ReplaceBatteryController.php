@@ -127,6 +127,7 @@ class ReplaceBatteryController extends Controller
         }
 
         $data['batteryCount'] = CabinetService::getAvailableAppointmentBatteryCount($cabinetId, $batteryLevel);
+        $data['address'] = CabinetService::getCabinetAddressById($cabinetId);
 
         return Helper::response($data);
     }
