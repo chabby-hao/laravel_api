@@ -45,7 +45,7 @@ class OpsController extends Controller
         $cabinetId = CabinetService::getCabinetIdByQr($qr);
 
         if(!CabinetService::isCabinetUseful($cabinetId)){
-            return Helper::response(ErrorCode::$cabinetUnuseful);
+            return Helper::responeseError(ErrorCode::$cabinetUnuseful);
         }
 
         if(CabinetService::isReplacing($cabinetId)){
@@ -69,7 +69,7 @@ class OpsController extends Controller
         $cabinetId = CabinetService::getCabinetIdByQr($qr);
 
         if(!CabinetService::isCabinetUseful($cabinetId)){
-            return Helper::response(ErrorCode::$cabinetUnuseful);
+            return Helper::responeseError(ErrorCode::$cabinetUnuseful);
         }
 
         if($cabinetId && OpsService::endOps($cabinetId)){
