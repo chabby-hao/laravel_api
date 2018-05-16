@@ -58,6 +58,7 @@ class CabinetSync extends Command
         $cabinets = Cabinets::get();
         foreach ($cabinets as $cabinet) {
             $cabinetNo = $cabinet->cabinet_no;
+            $cabinetNo = intval($cabinetNo);
             $key = "cab_door:$cabinetNo";
             $doorsRedis = $redis->sMembers($key);
             $doors = CabinetService::getdoors($cabinet->id);
