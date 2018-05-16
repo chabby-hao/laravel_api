@@ -303,4 +303,25 @@ class ReplaceBatteryController extends Controller
         return Helper::response($datas);
     }
 
+    public function cabinetList()
+    {
+
+
+        $data = [];
+        $cabinets = Cabinets::get();
+        foreach ($cabinets as $cabinet){
+            $tmp = [
+                'lat'=>floatval($cabinet->lat),
+                'lng'=>floatval($cabinet->lng),
+                'address'=>$cabinet->address,
+                //'cabinetNo'=>$cabinet->cabinet_no,
+                'cabinetId'=>$cabinet->id,
+            ];
+            $data[] = $tmp;
+        }
+
+        return Helper::response($data);
+
+    }
+
 }
