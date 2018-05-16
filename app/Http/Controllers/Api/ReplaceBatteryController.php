@@ -294,15 +294,6 @@ class ReplaceBatteryController extends Controller
             }
         }
 
-        $data = [
-            'cost' => mt_rand(0, 10) . '.00',
-            'costType' => '余额付款',
-            'createdAt' => Carbon::now()->toDateTimeString(),
-            'cabinetNo' => '02100004',
-            'address' => '永和家园1号',
-        ];
-        $datas[] = $data;
-
         return Helper::response($datas);
     }
 
