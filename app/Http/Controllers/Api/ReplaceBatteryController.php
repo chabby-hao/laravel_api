@@ -73,6 +73,7 @@ class ReplaceBatteryController extends Controller
                 return Helper::responeseError(ErrorCode::$isOpsNow);
             }
 
+            //检查当前柜子是否有未完成的任务，如果有需要等待前一个任务结束
             if(ReplaceService::checkProcessingTask($cabinetId)){
                 return Helper::responeseError(ErrorCode::$needWait);
             }
@@ -88,11 +89,9 @@ class ReplaceBatteryController extends Controller
             }
 
             //是否有可换电的电池
-            if(!CabinetService::hasAvailableBattery($cabinetId, $battery->battery_id)){
+            if(!CabinetService::hasAvailableBattery($cabinetId, $battery->battery_level)){
                 return Helper::responeseError(ErrorCode::$batteryNotEnough);
             }
-
-            //检查当前柜子是否有未完成的任务，如果有需要等待前一个任务结束
 
             //开始一项新的换电任务
             ReplaceService::startReplaceBattery($userId, $cabinetId);
