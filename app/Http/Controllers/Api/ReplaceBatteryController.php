@@ -74,7 +74,7 @@ class ReplaceBatteryController extends Controller
             }
 
             if(ReplaceService::checkProcessingTask($cabinetId)){
-                return Helper::responeseError(ErrorCode::$isOpsNow);
+                return Helper::responeseError(ErrorCode::$needWait);
             }
 
             //检查用户余额

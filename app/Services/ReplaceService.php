@@ -63,7 +63,7 @@ class ReplaceService extends BaseService
      */
     public static function checkProcessingTask($cabinetId)
     {
-        $task = ReplaceTasks::whereCabinetId($cabinetId)->whereBetween('state',[ReplaceTasks::TASK_STATE_INIT, ReplaceTasks::TASK_STATE_PROCESSING])->first();
+        $task = ReplaceTasks::whereCabinetId($cabinetId)->whereIn('state',[ReplaceTasks::TASK_STATE_INIT, ReplaceTasks::TASK_STATE_PROCESSING])->first();
         return $task ? true : false;
     }
 
