@@ -21,7 +21,7 @@
 //echo 333;exit;
 
 Route::get('/', function(){
-    return '{"code":500}';
+    return ['code'=>500];
 });
 
 //Route::get('/', function () {
