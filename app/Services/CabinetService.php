@@ -210,6 +210,7 @@ class CabinetService extends BaseService
     {
         $cabinetNo = self::getCabinetNoById($cabinetId);
         $data = self::getCabinetInfo($cabinetNo);
+        Log::debug('ops data info:', $data);
         return $data['ops'] ? true : false;
     }
 
