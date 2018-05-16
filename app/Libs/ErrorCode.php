@@ -85,7 +85,7 @@ class ErrorCode
             self::$isChargingNow => '充电口被占用，请换一个充电口',
             self::$isChargingAndNeedWait => '充电口被占用，请换一个充电口或等待{mins}分钟',
             self::$hasGotCard => '您已经领取过福利卡，无需再次领取',
-            self::$cabinetUnuseful => '充电柜不可用',
+            self::$cabinetUnuseful => '充电柜离线不可用',
             self::$batteryNotEnough => '无可用电池',
             self::$batteryNotRegister => '电池未注册',
             self::$appointmentExists => '已预约',
