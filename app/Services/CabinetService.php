@@ -196,7 +196,9 @@ class CabinetService extends BaseService
         $arr = json_decode($qr, true);
         if ($arr && isset($arr['cabinetId'])) {
             return $arr['cabinetId'];
-        } else {
+        } elseif($model = Cabinets::whereQr($qr)->first()){
+            return $model->id;
+        }else{
             return false;
         }
     }
