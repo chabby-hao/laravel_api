@@ -170,11 +170,6 @@ class ReplaceBatteryController extends Controller
             return Helper::responeseError(ErrorCode::$batteryNotEnough);
         }
 
-        /*//检查是否可以预约
-        if (mt_rand(0, 1) === 1) {
-            return Helper::responeseError(ErrorCode::$batteryNotEnough);
-        }*/
-
         //预约
         ReplaceService::appointment($userId, $cabinetId);
 
@@ -211,13 +206,6 @@ class ReplaceBatteryController extends Controller
         if (!$userId = UserService::getUserId()) {
             return Helper::responeseError(ErrorCode::$tokenExpire);
         }
-
-        /*$a = [0,10,20];
-
-        $data = [
-            'step'=>$a[mt_rand(0,2)],
-        ];
-        return Helper::response($data);*/
 
         $model = ReplaceTasks::whereUserId($userId)->orderByDesc('id')->first();
         if ($model && in_array($model->state, [ReplaceTasks::TASK_STATE_FAIL, ReplaceTasks::TASK_STATE_ABNORMAL])) {
