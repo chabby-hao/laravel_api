@@ -286,7 +286,7 @@ class ReplaceBatteryController extends Controller
                 $data = [
                     'cost' => $task->actual_cost,
                     'costType' => '余额付款',
-                    'createdAt' => $task->created_at,
+                    'createdAt' => $task->created_at->toDateTimeString(),
                     'cabinetNo' => CabinetService::getCabinetNoById($task->cabinet_id),
                     'address' => CabinetService::getCabinetAddressById($task->cabinet_id),
                 ];

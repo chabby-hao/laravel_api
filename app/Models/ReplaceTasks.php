@@ -55,8 +55,6 @@ class ReplaceTasks extends Model
     protected $primaryKey = 'id';
     protected $guarded = [];
 
-    protected $dates = [];
-
     public static function newTask($userId, $cabinetId)
     {
 
