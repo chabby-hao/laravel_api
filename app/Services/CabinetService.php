@@ -60,6 +60,7 @@ class CabinetService extends BaseService
         Redis::select(5);
         $key = 'bat:' . $batteryId;
         $data = Redis::hGetAll($key);
+        Log::debug("batteryInfo key: $key", $data);
         return $data;
     }
 
@@ -70,7 +71,7 @@ class CabinetService extends BaseService
             //有电池
             $batteryId = $data['batteryId'];
             $batteryInfo = self::getBatteryInfo($batteryId);
-            if($batteryInfo && intval($batteryInfo['batteryState']) === 1 && $batteryInfo['voltage'] == $batteryLevel){
+            if ($batteryInfo && intval($batteryInfo['batteryState']) === 1 && $batteryInfo['voltage'] == $batteryLevel) {
                 return true;
             }
         }
@@ -123,7 +124,7 @@ class CabinetService extends BaseService
         foreach ($doors as $door) {
             $cabinetNo = self::getCabinetNoById($cabinetId);
             $doorNo = $door->door_no;
-            if(self::isDoorHasUsefulBattery($cabinetNo, $doorNo, $batteryLevel)){
+            if (self::isDoorHasUsefulBattery($cabinetNo, $doorNo, $batteryLevel)) {
                 ++$total;
             }
         }
@@ -137,7 +138,7 @@ class CabinetService extends BaseService
      */
     public static function hasAvailableBattery($cabinetId, $batteryLevel)
     {
-        if(self::getAvalibleBaterrysCount($cabinetId, $batteryLevel) > 0) {
+        if (self::getAvalibleBaterrysCount($cabinetId, $batteryLevel) > 0) {
             return true;
         }
         return false;
@@ -151,7 +152,7 @@ class CabinetService extends BaseService
     public static function getAppointmentCount($cabinetId)
     {
         $now = Carbon::now()->toDateTimeString();
-        return Appointments::whereCabinetId($cabinetId)->where('expired_at','>',$now)->count();
+        return Appointments::whereCabinetId($cabinetId)->where('expired_at', '>', $now)->count();
     }
 
     /**
@@ -192,9 +193,9 @@ class CabinetService extends BaseService
     public static function getCabinetIdByQr($qr)
     {
         $arr = json_decode($qr, true);
-        if($arr && isset($arr['cabinetId'])){
+        if ($arr && isset($arr['cabinetId'])) {
             return $arr['cabinetId'];
-        }else{
+        } else {
             return false;
         }
     }
