@@ -39,6 +39,7 @@ class CabinetService extends BaseService
 
     public static function getCabinetInfo($cabinetNo)
     {
+        Redis::select(5);
         $key = CabinetService::getCabinetKey($cabinetNo);
         $data = Redis::hGetAll($key);
         return $data;
@@ -46,6 +47,7 @@ class CabinetService extends BaseService
 
     public static function getDoorInfo($cabinetNo, $doorNo)
     {
+        Redis::select(5);
         $key = self::getDoorKey($cabinetNo, $doorNo);
         $data = Redis::hGetAll($key);
         return $data;
@@ -53,6 +55,7 @@ class CabinetService extends BaseService
 
     public static function getBatteryInfo($batteryId)
     {
+        Redis::select(5);
         $key = 'bat:' . $batteryId;
         $data = Redis::hGetAll($key);
         return $data;
@@ -176,6 +179,7 @@ class CabinetService extends BaseService
 
     private static function replaceRedisSet($cabinetNo, $taskId, $batteryId)
     {
+        Redis::select(5);
         $key = 'repalce_' . $cabinetNo;
         $val1 = Redis::hSet($key, 'taskId', $taskId);
         $val2 = Redis::hSet($key, 'batteryId', $batteryId);

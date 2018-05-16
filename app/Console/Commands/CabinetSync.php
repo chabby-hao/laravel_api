@@ -52,6 +52,7 @@ class CabinetSync extends Command
 
 
         /** @var \Redis $redis */
+        Redis::select(5);
         $redis = Redis::connection();
 
         $cabinets = Cabinets::get();
