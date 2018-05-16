@@ -18,7 +18,7 @@ class OpsService extends BaseService
     public static function startOps($cabinetId)
     {
         $cabinetNo = CabinetService::getCabinetNoById($cabinetId);
-        if(CommandService::sendStartReplaceCmd($cabinetNo)){
+        if(CommandService::sendStartOps($cabinetNo)){
             Log::info("start ops id:$cabinetId no:$cabinetNo");
             return true;
         }
