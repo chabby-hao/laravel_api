@@ -182,6 +182,7 @@ class CabinetService extends BaseService
 
     private static function replaceRedisSet($cabinetNo, $taskId, $batteryId)
     {
+        $cabinetNo = intval($cabinetNo);
         Redis::select(5);
         $key = 'repalce_' . $cabinetNo;
         $val1 = Redis::hSet($key, 'taskId', $taskId);
