@@ -187,7 +187,7 @@ class CabinetService extends BaseService
         $key = 'repalce_' . $cabinetNo;
         $val1 = Redis::hSet($key, 'taskId', $taskId);
         $val2 = Redis::hSet($key, 'batteryId', $batteryId);
-        Log::debug("replaceRedisSet, val: $val1,val2:$val2");
+        Log::debug("replaceRedisSet, taskId: $taskId, batteryId:$batteryId");
         return $val1 !== false && $val2 !== false ? true : false;
     }
 
