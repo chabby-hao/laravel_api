@@ -212,12 +212,12 @@ class ReplaceBatteryController extends Controller
             return Helper::responeseError(ErrorCode::$tokenExpire);
         }
 
-        $a = [0,10,20];
+        /*$a = [0,10,20];
 
         $data = [
             'step'=>$a[mt_rand(0,2)],
         ];
-        return Helper::response($data);
+        return Helper::response($data);*/
 
         $model = ReplaceTasks::whereUserId($userId)->orderByDesc('id')->first();
         if ($model) {
