@@ -64,17 +64,17 @@ class ReplaceBatteryController extends Controller
             //换电,这里是柜子二维码,{"cabinetId":'1'}
 
             //是否绑定电池
-            if(!$battery = UserService::getUserBattery($userId)){
+            if (!$battery = UserService::getUserBattery($userId)) {
                 return Helper::responeseError(ErrorCode::$notBindBattery);
             }
 
             //正在运维
-            if(CabinetService::isOps($cabinetId)){
+            if (CabinetService::isOps($cabinetId)) {
                 return Helper::responeseError(ErrorCode::$isOpsNow);
             }
 
             //检查当前柜子是否有未完成的任务，如果有需要等待前一个任务结束
-            if(ReplaceService::checkProcessingTask($cabinetId)){
+            if (ReplaceService::checkProcessingTask($cabinetId)) {
                 return Helper::responeseError(ErrorCode::$needWait);
             }
 
@@ -84,12 +84,12 @@ class ReplaceBatteryController extends Controller
             }
 
             //柜子是否可用
-            if(!CabinetService::isCabinetUseful($cabinetId)){
+            if (!CabinetService::isCabinetUseful($cabinetId)) {
                 return Helper::responeseError(ErrorCode::$cabinetUnuseful);
             }
 
             //是否有可换电的电池
-            if(!CabinetService::hasAvailableBattery($cabinetId, $battery->battery_level)){
+            if (!CabinetService::hasAvailableBattery($cabinetId, $battery->battery_level)) {
                 return Helper::responeseError(ErrorCode::$batteryNotEnough);
             }
 
@@ -114,7 +114,7 @@ class ReplaceBatteryController extends Controller
         $input = $this->checkRequireParams(['cabinetId']);
         $cabinetId = $input['cabinetId'];
 
-        if(!$battery = UserService::getUserBattery($userId)){
+        if (!$battery = UserService::getUserBattery($userId)) {
             return Helper::responeseError(ErrorCode::$notBindBattery);
         }
         $batteryLevel = $battery->battery_level;
@@ -155,7 +155,7 @@ class ReplaceBatteryController extends Controller
         $cabinetId = $input['cabinetId'];
 
         $battery = UserService::getUserBattery($userId);
-        if(!$battery){
+        if (!$battery) {
             return Helper::responeseError(ErrorCode::$notBindBattery);
         }
 
@@ -166,7 +166,7 @@ class ReplaceBatteryController extends Controller
 
         $batteryLevel = $battery->battery_level;
         //检查是否可以预约
-        if(!CabinetService::getAvailableAppointmentBatteryCount($cabinetId, $batteryLevel)){
+        if (!CabinetService::getAvailableAppointmentBatteryCount($cabinetId, $batteryLevel)) {
             return Helper::responeseError(ErrorCode::$batteryNotEnough);
         }
 
@@ -193,7 +193,7 @@ class ReplaceBatteryController extends Controller
 
 
         $model = Cabinets::find($cabinetId);
-        if(!$model){
+        if (!$model) {
             return Helper::responeseError(ErrorCode::$cabinetUnuseful);
         }
 
@@ -220,7 +220,9 @@ class ReplaceBatteryController extends Controller
         return Helper::response($data);*/
 
         $model = ReplaceTasks::whereUserId($userId)->orderByDesc('id')->first();
-        if ($model) {
+        if ($model && in_array($model->state, [ReplaceTasks::TASK_STATE_FAIL, ReplaceTasks::TASK_STATE_ABNORMAL])) {
+            return Helper::responeseError(ErrorCode::$replaceFail);
+        } elseif ($model) {
             $data['step'] = $model->step;
         } else {
             return Helper::responeseError(ErrorCode::$batteryNotEnough);
@@ -230,7 +232,7 @@ class ReplaceBatteryController extends Controller
 
     public function taskNotify(Request $request)
     {
-        $inputRequire = ['cabinetNo', 'taskId', 'step','batteryId', 'timestamp', 'sign'];
+        $inputRequire = ['cabinetNo', 'taskId', 'step', 'batteryId', 'timestamp', 'sign'];
         $input = $this->checkRequireParams($inputRequire, $request->input());
         if ($input instanceof Response) {
             return $input;
@@ -246,11 +248,11 @@ class ReplaceBatteryController extends Controller
 
         Log::debug('taskNotify receive data: ', $input);
 
-        if(!$task = ReplaceTasks::find($taskId)){
+        if (!$task = ReplaceTasks::find($taskId)) {
             return Helper::responeseError(ErrorCode::$notFindTask);
         }
 
-        if($task->step > $step){
+        if ($task->step > $step) {
             return Helper::response([
                 'cabinetNo' => $cabinetNo,
                 'step' => $step,
@@ -258,20 +260,20 @@ class ReplaceBatteryController extends Controller
         }
 
         //$step 0=扫码下发命令回执，10=放入旧电池，关闭柜门，20=放入新电池，关闭柜门，30=换电失败
-        if($step === 0){
+        if ($step === 0) {
             $task->step = ReplaceTasks::STEP_INIT;
             $task->state = ReplaceTasks::TASK_STATE_PROCESSING;//收到命令，进行中
             $task->save();
-        }elseif($step === 10){
+        } elseif ($step === 10) {
             $task->step = ReplaceTasks::STEP_10;
             $task->save();
-        }elseif($step === ReplaceTasks::STEP_20){
+        } elseif ($step === ReplaceTasks::STEP_20) {
             $task->step = ReplaceTasks::STEP_20;
             $task->state = ReplaceTasks::TASK_STATE_COMPLETE;
             $task->battery_id2 = $input['batteryId'];
             $task->save();
             ReplaceService::userCost($taskId);
-        }elseif($step === 30){
+        } elseif ($step === 30) {
             $task->state = ReplaceTasks::TASK_STATE_FAIL;
             $task->save();
         }
@@ -291,25 +293,25 @@ class ReplaceBatteryController extends Controller
         $tasks = ReplaceTasks::whereUserId($userId)->whereState(ReplaceTasks::TASK_STATE_COMPLETE)->get();
 
         $datas = [];
-        if($tasks){
-            foreach ($tasks as $task){
+        if ($tasks) {
+            foreach ($tasks as $task) {
                 $data = [
-                    'cost'=>$task->actual_cost,
-                    'costType'=>'余额付款',
-                    'createdAt'=>$task->created_at,
-                    'cabinetNo'=>CabinetService::getCabinetNoById($task->cabinet_id),
-                    'address'=>CabinetService::getCabinetAddressById($task->cabinet_id),
+                    'cost' => $task->actual_cost,
+                    'costType' => '余额付款',
+                    'createdAt' => $task->created_at,
+                    'cabinetNo' => CabinetService::getCabinetNoById($task->cabinet_id),
+                    'address' => CabinetService::getCabinetAddressById($task->cabinet_id),
                 ];
                 $datas[] = $data;
             }
         }
 
         $data = [
-            'cost'=>mt_rand(0,10). '.00',
-            'costType'=>'余额付款',
-            'createdAt'=>Carbon::now()->toDateTimeString(),
-            'cabinetNo'=>'02100004',
-            'address'=>'永和家园1号',
+            'cost' => mt_rand(0, 10) . '.00',
+            'costType' => '余额付款',
+            'createdAt' => Carbon::now()->toDateTimeString(),
+            'cabinetNo' => '02100004',
+            'address' => '永和家园1号',
         ];
         $datas[] = $data;
 

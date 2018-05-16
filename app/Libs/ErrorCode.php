@@ -75,6 +75,8 @@ class ErrorCode
 
     public static $needWait = 2031;//请等待
 
+    public static $replaceFail = 2032;//换电失败
+
     public static function getErrMsg()
     {
         return [
@@ -97,6 +99,7 @@ class ErrorCode
             self::$isReplacing => '正在换电中',
             self::$isOpsNow => '正在运维中',
             self::$needWait => '请等待，换电柜正在使用中...',
+            self::$replaceFail => '换电失败',
         ];
     }
 
