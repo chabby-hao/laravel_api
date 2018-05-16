@@ -18,6 +18,8 @@ use Psy\Command\WhereamiCommand;
 class ReplaceService extends BaseService
 {
 
+    const COST_AMOUNT = 2;
+
     /**
      * 开始更换电池任务
      * @param $cabinetId
@@ -42,7 +44,23 @@ class ReplaceService extends BaseService
      */
     public static function userCost($taskId)
     {
-
+        $task = ReplaceTasks::find($taskId);
+        if($task){
+            $cost = self::COST_AMOUNT;
+            $task->user_cost = $cost;
+            $task->actual_cost = $cost;
+            $task->save();
+            $user = User::find($task->user_id);
+            if ($user->user_balance > 0) {
+                //$charge->cost_type = ChargeTasks::COST_TYPE_BALANCE;
+                $field = 'user_balance';
+            } else {
+                //$charge->cost_type = ChargeTasks::COST_TYPE_PRESNET;
+                $field = 'present_balance';
+            }
+            //扣款
+            User::chargeCost($task->user_id, $cost, $field);
+        }
     }
 
     public static function appointment($userId, $cabinetId)
