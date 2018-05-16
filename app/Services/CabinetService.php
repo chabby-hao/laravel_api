@@ -188,7 +188,7 @@ class CabinetService extends BaseService
         $val1 = Redis::hSet($key, 'taskId', $taskId);
         $val2 = Redis::hSet($key, 'batteryId', $batteryId);
         Log::debug("replaceRedisSet, val: $val1,val2:$val2");
-        return $val1 && $val2 ? true : false;
+        return $val1 !== false && $val2 !== false ? true : false;
     }
 
     public static function getCabinetIdByQr($qr)
