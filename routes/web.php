@@ -20,7 +20,9 @@
 //
 //echo 333;exit;
 
-Route::get('/', 'testController@t');
+Route::get('/', function(){
+    return '{"code":500}';
+});
 
 //Route::get('/', function () {
 //    return view('welcome');
