@@ -250,6 +250,13 @@ class ReplaceBatteryController extends Controller
             return Helper::responeseError(ErrorCode::$notFindTask);
         }
 
+        if($task->step > $step){
+            return Helper::response([
+                'cabinetNo' => $cabinetNo,
+                'step' => $step,
+            ]);
+        }
+
         //$step 0=扫码下发命令回执，10=放入旧电池，关闭柜门，20=放入新电池，关闭柜门，30=换电失败
         if($step === 0){
             $task->step = ReplaceTasks::STEP_INIT;
