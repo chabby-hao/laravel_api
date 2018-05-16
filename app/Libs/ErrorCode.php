@@ -77,6 +77,8 @@ class ErrorCode
 
     public static $replaceFail = 2032;//换电失败
 
+    public static $batteryBindRepeat= 2033;//电池绑定重复
+
     public static function getErrMsg()
     {
         return [
@@ -100,6 +102,7 @@ class ErrorCode
             self::$isOpsNow => '正在运维中',
             self::$needWait => '请等待，换电柜正在使用中...',
             self::$replaceFail => '换电失败',
+            self::$batteryBindRepeat => '电池绑定重复',
         ];
     }
 

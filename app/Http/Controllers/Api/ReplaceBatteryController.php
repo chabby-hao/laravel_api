@@ -51,6 +51,11 @@ class ReplaceBatteryController extends Controller
             $udid = $match[1];
             $battery = Battery::whereUdid($udid)->first();
             if ($battery) {
+
+                if(UserDevice::whereBatteryId($battery->battery_id)->first()){
+                    return Helper::responeseError(ErrorCode::$batteryBindRepeat);
+                }
+
                 UserDevice::whereUserId($userId)->delete();//1个用户只能绑一个，所以这里比较简单粗暴
                 UserDevice::create([
                     'user_id' => $userId,
