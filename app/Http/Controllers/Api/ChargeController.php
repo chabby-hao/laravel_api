@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Libs\ErrorCode;
 use App\Libs\Helper;
+use App\Models\ChargeNotifyLog;
 use App\Models\ChargeTasks;
 use App\Models\DeviceInfo;
 use App\Models\WelfareDevices;
@@ -182,6 +183,8 @@ class ChargeController extends Controller
         $type = $input['type'];
 
         Log::debug('chargeHalt receive data: ' . json_encode($request->input()));
+
+        ChargeNotifyLog::addLog($deviceNo, $portNo, $type);
 
         //$type 0 = 正常充满, 1 = 异常
         if ($type == 0) {
