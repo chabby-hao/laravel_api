@@ -4,6 +4,7 @@ namespace App\Console;
 
 use App\Console\Commands\AutoCloseBox;
 use App\Console\Commands\AutoFinishCharge;
+use App\Console\Commands\BatteryControl;
 use App\Console\Commands\CabinetSync;
 use App\Console\Commands\ReplaceTimeout;
 use Illuminate\Console\Scheduling\Schedule;
@@ -22,6 +23,7 @@ class Kernel extends ConsoleKernel
         AutoCloseBox::class,
         ReplaceTimeout::class,
         CabinetSync::class,
+        BatteryControl::class,
     ];
 
     /**
@@ -37,6 +39,7 @@ class Kernel extends ConsoleKernel
         $schedule->command(AutoFinishCharge::class)->everyMinute();
         $schedule->command(ReplaceTimeout::class)->everyMinute();
         $schedule->command(CabinetSync::class)->everyMinute();
+        $schedule->command(BatteryControl::class)->everyMinute();
     }
 
     /**

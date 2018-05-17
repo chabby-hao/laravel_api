@@ -48,7 +48,7 @@ class BatteryControl extends Command
     public function handle()
     {
         //
-        Log::info('crontab start CabinetSync ...');
+        Log::info('crontab start BatteryControl ...');
 
         /** @var \Redis $redis */
         $redis = Redis::connection();
@@ -75,7 +75,7 @@ class BatteryControl extends Command
         }
 
 
-        Log::info('crontab end CabinetSync ...');
+        Log::info('crontab end BatteryControl ...');
     }
 
 }
