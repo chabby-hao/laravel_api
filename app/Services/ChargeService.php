@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Libs\WxApi;
+use App\Models\ChargeNotifyLog;
 use App\Models\ChargeTasks;
 use App\Models\DeviceInfo;
 use App\Models\User;
@@ -86,6 +87,7 @@ class ChargeService extends BaseService
                 BoxService::closeBox($model->device_no, $model->port_no);
             }
             //}
+            ChargeNotifyLog::addLog($model->device_no, $model->port_no, 10);
             return $model->save();
         } elseif ($model) {
             return true;
