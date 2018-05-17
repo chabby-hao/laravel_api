@@ -220,9 +220,10 @@ class ChargeController extends Controller
 
         $taskId = $input['task_id'];
 
+        Log::debug('power is on .' . json_encode($request->input()));
+
         ChargeService::beginCharingByTaskId($taskId);
 
-        Log::debug('power is on .' . json_encode($request->input()));
 
         return Helper::response([
             'task_id' => $taskId,
