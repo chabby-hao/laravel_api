@@ -326,8 +326,6 @@ class ReplaceBatteryController extends Controller
 
     public function cabinetList()
     {
-
-
         $data = [];
         $cabinets = Cabinets::get();
         foreach ($cabinets as $cabinet) {
