@@ -171,7 +171,7 @@ class CommandService extends BaseService
         $client = new Client();
         $r = $client->post($url, [
             'body' => $post,
-            'headers'=>['Content-Type: application/x-www-form-urlencoded'],
+            'headers' => ['Content-Type' => 'application/x-www-form-urlencoded'],
         ]);
 
         $response = $r->getBody()->getContents();
