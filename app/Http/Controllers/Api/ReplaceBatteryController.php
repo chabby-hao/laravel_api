@@ -130,6 +130,7 @@ class ReplaceBatteryController extends Controller
         //是否已经预约
         if ($model = Appointments::whereUserId($userId)->whereCabinetId($cabinetId)->where('expired_at', '>', Carbon::now()->toDateTimeString())->first()) {
             $data['appointmentId'] = intval($model->id);
+            $data['remain'] = Carbon::parse($model->expired_at)->getTimestamp() - time();
         }
 
         $data['batteryCount'] = CabinetService::getAvailableAppointmentBatteryCount($cabinetId, $batteryLevel);
