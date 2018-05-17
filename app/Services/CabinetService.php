@@ -153,6 +153,7 @@ class CabinetService extends BaseService
      */
     public static function getAvailableAppointmentBatteryCount($cabinetId, $batteryLevel)
     {
+        return 2;
         $total = self::getAvalibleBaterrysCount($cabinetId, $batteryLevel);
         $appoint = self::getAppointmentCount($cabinetId);
         $count = $total - $appoint;
