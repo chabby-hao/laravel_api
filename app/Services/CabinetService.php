@@ -55,23 +55,14 @@ class CabinetService extends BaseService
         return $data;
     }
 
-    public static function getBatteryInfo($batteryId)
-    {
-        Redis::select(5);
-        $key = 'bat:' . $batteryId;
-        $data = Redis::hGetAll($key);
-        Log::debug("batteryInfo key: $key", $data);
-        return $data;
-    }
-
     public static function isDoorHasUsefulBattery($cabinetNo, $doorNo, $batteryLevel)
     {
         $data = self::getDoorInfo($cabinetNo, $doorNo);
         if ($data && $data['hasBattery']) {
             //有电池
             $batteryId = $data['batteryId'];
-            $batteryInfo = self::getBatteryInfo($batteryId);
-            if ($batteryInfo && intval($batteryInfo['batteryState']) === 1 && $batteryInfo['voltage'] == $batteryLevel) {
+            $batteryInfo = BatteryService::getBatteryInfo($batteryId);
+            if ($batteryInfo && intval($batteryInfo['batteryState']) === BatteryService::BATTERY_STATE_USEFUL && $batteryInfo['voltage'] == $batteryLevel) {
                 return true;
             }
         }

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\ClientCommandLogs;
+use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
 
@@ -137,6 +138,42 @@ class CommandService extends BaseService
     {
         $cmd = self::CMD_END_OPS;
         return self::sendReplace($cabinetNo, $cmd);
+    }
+
+    private static $channel = 'anqi';
+    private static $secret = 'HhvjWsb6RkYKAvCdbXtvAraC';
+
+    public static function sendApiCmd($udid, $ctl)
+    {
+
+        $url = 'http://api.vipcare.com/cloud/command';
+
+        $data = [];
+        $data['timestamp'] = time();
+        $data['channel'] = self::$channel;
+        ksort($data);
+
+        $str = '';
+        foreach ($data as $key => $value) {
+            # code...
+            $str .= $value;
+        }
+        $str .= self::$secret;
+
+        $data['sign'] = md5($str);
+        //var_dump($url . "?". http_build_query($data));
+
+        $d = json_encode($data);
+        Log::debug("command api send : $d");
+
+        $client = new Client();
+        $r = $client->post($url, [
+            'body' => http_build_query($data),
+        ]);
+
+        $response = $r->getBody()->getContents();
+        Log::debug('command api response: ' . $response);
+        return $response;
     }
 
 }
