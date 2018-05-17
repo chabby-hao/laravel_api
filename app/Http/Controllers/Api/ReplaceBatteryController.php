@@ -269,6 +269,8 @@ class ReplaceBatteryController extends Controller
             $task->save();
         } elseif ($step === 10) {
             $task->step = ReplaceTasks::STEP_10;
+            //第一步完成，解绑电池
+            UserDevice::whereUserId($task->user_id)->whereBatteryId($task->battery_id1)->delete();
             $task->save();
         } elseif ($step === ReplaceTasks::STEP_20) {
             //结束换电
@@ -277,11 +279,11 @@ class ReplaceBatteryController extends Controller
             $task->battery_id2 = $batteryId;
             $task->save();
             ReplaceService::userCost($taskId);
-            $userDevice = UserDevice::whereUserId($task->user_id)->first();
-            if($userDevice){
-                $userDevice->battery_id = $batteryId;
-                $userDevice->save();
-            }
+
+            UserDevice::create([
+                'battery_id'=>$batteryId,
+                'user_id'=>$task->user_id,
+            ]);
         } elseif ($step === 30) {
             $task->state = ReplaceTasks::TASK_STATE_FAIL;
             $task->save();
