@@ -9,6 +9,7 @@ use App\Models\Battery;
 use App\Models\Cabinets;
 use App\Models\ChargeTasks;
 use App\Models\DeviceInfo;
+use App\Models\ReplaceNotifyLog;
 use App\Models\ReplaceTasks;
 use App\Models\User;
 use App\Models\UserDevice;
@@ -239,8 +240,16 @@ class ReplaceBatteryController extends Controller
         $cabinetNo = $input['cabinetNo'];
         $taskId = $input['taskId'];
         $step = intval($input['step']);
+        $batteryId = $input['batteryId'];
 
         Log::debug('taskNotify receive data: ', $input);
+
+        ReplaceNotifyLog::create([
+            'cabinet_no'=>$cabinetNo,
+            'task_id'=>$taskId,
+            'step'=>$step,
+            'battery_id'=>$batteryId,
+        ]);
 
         if (!$task = ReplaceTasks::find($taskId)) {
             return Helper::responeseError(ErrorCode::$notFindTask);
@@ -264,15 +273,13 @@ class ReplaceBatteryController extends Controller
         } elseif ($step === ReplaceTasks::STEP_20) {
             $task->step = ReplaceTasks::STEP_20;
             $task->state = ReplaceTasks::TASK_STATE_COMPLETE;
-            $task->battery_id2 = $input['batteryId'];
+            $task->battery_id2 = $batteryId;
             $task->save();
             ReplaceService::userCost($taskId);
         } elseif ($step === 30) {
             $task->state = ReplaceTasks::TASK_STATE_FAIL;
             $task->save();
         }
-
-        //收到通知后，将state存为进行中
 
         return Helper::response([
             'cabinetNo' => $cabinetNo,
