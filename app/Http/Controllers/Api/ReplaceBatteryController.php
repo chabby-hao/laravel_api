@@ -53,7 +53,7 @@ class ReplaceBatteryController extends Controller
             $battery = Battery::whereUdid($udid)->first();
             if ($battery) {
 
-                if(UserDevice::whereBatteryId($battery->battery_id)->first()){
+                if (UserDevice::whereBatteryId($battery->battery_id)->first()) {
                     return Helper::responeseError(ErrorCode::$batteryBindRepeat);
                 }
 
@@ -100,7 +100,7 @@ class ReplaceBatteryController extends Controller
             }
 
             //没有可预约，同时也没预约
-            if(!CabinetService::getAvailableAppointmentBatteryCount($cabinetId, $battery->battery_level) && !ReplaceService::isAppointment($cabinetId, $userId)){
+            if (!CabinetService::getAvailableAppointmentBatteryCount($cabinetId, $battery->battery_level) && !ReplaceService::isAppointment($cabinetId, $userId)) {
                 return Helper::responeseError(ErrorCode::$hasNoBatteryForAppointment);
             }
 
@@ -251,10 +251,10 @@ class ReplaceBatteryController extends Controller
         Log::debug('taskNotify receive data: ', $input);
 
         ReplaceNotifyLog::create([
-            'cabinet_no'=>$cabinetNo,
-            'task_id'=>$taskId,
-            'step'=>$step,
-            'battery_id'=>$batteryId,
+            'cabinet_no' => $cabinetNo,
+            'task_id' => $taskId,
+            'step' => $step,
+            'battery_id' => $batteryId,
         ]);
 
         if (!$task = ReplaceTasks::find($taskId)) {
@@ -287,8 +287,8 @@ class ReplaceBatteryController extends Controller
             ReplaceService::userCost($taskId);
 
             UserDevice::create([
-                'battery_id'=>$batteryId,
-                'user_id'=>$task->user_id,
+                'battery_id' => $batteryId,
+                'user_id' => $task->user_id,
             ]);
         } elseif ($step === 30) {
             $task->state = ReplaceTasks::TASK_STATE_FAIL;
@@ -330,19 +330,30 @@ class ReplaceBatteryController extends Controller
 
         $data = [];
         $cabinets = Cabinets::get();
-        foreach ($cabinets as $cabinet){
+        foreach ($cabinets as $cabinet) {
             $tmp = [
-                'lat'=>floatval($cabinet->lat),
-                'lng'=>floatval($cabinet->lng),
-                'address'=>$cabinet->address,
+                'lat' => floatval($cabinet->lat),
+                'lng' => floatval($cabinet->lng),
+                'address' => $cabinet->address,
                 //'cabinetNo'=>$cabinet->cabinet_no,
-                'cabinetId'=>$cabinet->id,
+                'cabinetId' => $cabinet->id,
             ];
             $data[] = $tmp;
         }
 
         return Helper::response($data);
 
+    }
+
+    public function getTaskToast()
+    {
+        $userId = $this->checkUser();
+        $tasks = ReplaceTasks::whereUserId($userId)->whereState(ReplaceTasks::TASK_STATE_COMPLETE)->orderByDesc('id')->first();
+        $data = ['toast'=>'您没有换电记录'];
+        if ($tasks) {
+            $data['toast'] = '您本次换电花费了' . $tasks->actual_cost . '元';
+        }
+        return Helper::response($data);
     }
 
 }
