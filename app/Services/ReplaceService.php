@@ -63,13 +63,14 @@ class ReplaceService extends BaseService
         }
     }
 
-    public static function appointment($userId, $cabinetId)
+    public static function appointment($userId, $cabinetId, $batteryLevel)
     {
         //预约加锁
 
         $appointment = new Appointments();
         $appointment->user_id = $userId;
         $appointment->cabinet_id = $cabinetId;
+        $appointment->battery_level = $batteryLevel;
         $appointment->expired_at = Carbon::now()->addMinutes(30)->toDateTimeString();
         $appointment->save();
     }

@@ -179,7 +179,7 @@ class ReplaceBatteryController extends Controller
         }
 
         //预约
-        ReplaceService::appointment($userId, $cabinetId);
+        ReplaceService::appointment($userId, $cabinetId, $batteryLevel);
 
         return $this->responseOk();
 
