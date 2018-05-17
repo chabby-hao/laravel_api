@@ -151,6 +151,8 @@ class CommandService extends BaseService
         $data = [];
         $data['timestamp'] = time();
         $data['channel'] = self::$channel;
+        $data['udid'] = $udid;
+        $data['ctl'] = $ctl;
         ksort($data);
 
         $str = '';
