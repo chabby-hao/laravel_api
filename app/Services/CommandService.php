@@ -166,11 +166,12 @@ class CommandService extends BaseService
         //var_dump($url . "?". http_build_query($data));
 
         $d = json_encode($data);
-        Log::debug("command api send : $d");
+        $post = http_build_query($data);
+        Log::debug("command api send : $post");
 
         $client = new Client();
         $r = $client->post($url, [
-            'body' => http_build_query($data),
+            'body' => $post,
         ]);
 
         $response = $r->getBody()->getContents();
