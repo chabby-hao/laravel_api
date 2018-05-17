@@ -271,11 +271,17 @@ class ReplaceBatteryController extends Controller
             $task->step = ReplaceTasks::STEP_10;
             $task->save();
         } elseif ($step === ReplaceTasks::STEP_20) {
+            //结束换电
             $task->step = ReplaceTasks::STEP_20;
             $task->state = ReplaceTasks::TASK_STATE_COMPLETE;
             $task->battery_id2 = $batteryId;
             $task->save();
             ReplaceService::userCost($taskId);
+            $userDevice = UserDevice::whereUserId($task->user_id)->first();
+            if($userDevice){
+                $userDevice->battery_id = $batteryId;
+                $userDevice->save();
+            }
         } elseif ($step === 30) {
             $task->state = ReplaceTasks::TASK_STATE_FAIL;
             $task->save();
