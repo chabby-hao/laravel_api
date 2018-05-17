@@ -165,13 +165,13 @@ class CommandService extends BaseService
         $data['sign'] = md5($str);
         //var_dump($url . "?". http_build_query($data));
 
-        $d = json_encode($data);
         $post = http_build_query($data);
         Log::debug("command api send : $post");
 
         $client = new Client();
         $r = $client->post($url, [
             'body' => $post,
+            'headers'=>['Content-Type: application/x-www-form-urlencoded'],
         ]);
 
         $response = $r->getBody()->getContents();
