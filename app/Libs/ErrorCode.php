@@ -79,6 +79,8 @@ class ErrorCode
 
     public static $batteryBindRepeat= 2033;//电池绑定重复
 
+    public static $hasNoBatteryForAppointment = 2034;//可用电池已被预约
+
     public static function getErrMsg()
     {
         return [
@@ -103,6 +105,7 @@ class ErrorCode
             self::$needWait => '请等待，换电柜正在使用中...',
             self::$replaceFail => '换电失败',
             self::$batteryBindRepeat => '电池已有人绑定',
+            self::$hasNoBatteryForAppointment => '可用电池已被预约',
         ];
     }
 

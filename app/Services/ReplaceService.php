@@ -86,4 +86,10 @@ class ReplaceService extends BaseService
         return $task ? true : false;
     }
 
+    public static function isAppointment($cabinetId, $userId)
+    {
+        $model = Appointments::whereUserId($userId)->whereCabinetId($cabinetId)->where('expired_at', '>', Carbon::now()->toDateTimeString())->first();
+        return $model ? true : false;
+    }
+
 }

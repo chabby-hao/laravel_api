@@ -99,6 +99,11 @@ class ReplaceBatteryController extends Controller
                 return Helper::responeseError(ErrorCode::$batteryNotEnough);
             }
 
+            //没有可预约，同时也没预约
+            if(!CabinetService::getAvailableAppointmentBatteryCount($cabinetId, $battery->battery_level) && !ReplaceService::isAppointment($cabinetId, $userId)){
+                return Helper::responeseError(ErrorCode::$hasNoBatteryForAppointment);
+            }
+
             //开始一项新的换电任务
             ReplaceService::startReplaceBattery($userId, $cabinetId);
 
