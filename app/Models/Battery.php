@@ -29,4 +29,6 @@ class Battery extends Model
 
     protected $primaryKey = 'battery_id';
 
+    protected $keyType = 'string';
+
 }
