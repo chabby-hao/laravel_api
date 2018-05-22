@@ -220,10 +220,6 @@ class ReplaceBatteryController extends Controller
             return Helper::responeseError(ErrorCode::$tokenExpire);
         }
 
-        //for test
-        $data['step'] = 20;
-        return Helper::response($data);
-
         $model = ReplaceTasks::whereUserId($userId)->orderByDesc('id')->first();
         if ($model && in_array($model->state, [ReplaceTasks::TASK_STATE_FAIL, ReplaceTasks::TASK_STATE_ABNORMAL])) {
             return Helper::responeseError(ErrorCode::$replaceFail);
