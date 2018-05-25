@@ -412,11 +412,11 @@ class ChargeService extends BaseService
                 $tmp['actual_amount'] = $model->actual_cost;
                 $tmp['cost_type_t'] = ChargeTasks::getCostTypeMap($model->cost_type);
                 //兼容福利卡支付
-                $costType = $model->cost_type;
+                $tmp['cost_type'] = $model->cost_type;
                 /*if($costType == ChargeTasks::COST_TYPE_CARD){
                     $costType = ChargeTasks::COST_TYPE_PRESNET;
                 }*/
-                $tmp['cost_type'] = $costType;
+                //$tmp['cost_type'] = $costType;
                 $ret[] = $tmp;
             }
         }
