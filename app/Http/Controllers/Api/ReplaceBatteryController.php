@@ -293,6 +293,9 @@ class ReplaceBatteryController extends Controller
         } elseif ($step === 30) {
             $task->state = ReplaceTasks::TASK_STATE_FAIL;
             $task->save();
+        } elseif($step === 40){
+            $task->state = ReplaceTasks::TASK_STATE_ABNORMAL;
+            $task->save();
         }
 
         return Helper::response([
