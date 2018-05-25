@@ -103,7 +103,7 @@ class ErrorCode
             self::$isReplacing => '正在换电中',
             self::$isOpsNow => '正在运维中',
             self::$needWait => '请等待，换电柜正在使用中...',
-            self::$replaceFail => '换电失败',
+            self::$replaceFail => '换电失败,请联系客服',
             self::$batteryBindRepeat => '电池已有人绑定',
             self::$hasNoBatteryForAppointment => '可用电池已被预约',
         ];
