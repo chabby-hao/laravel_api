@@ -58,6 +58,7 @@ class ChargeTasks extends Model
     const COST_TYPE_BALANCE = 0;//余额支付
     const COST_TYPE_PRESNET = 1;//赠送金支付
     const COST_TYPE_CARD = 2;//福利卡支付
+    const COST_TYPE_DISCOUNT_40 = 3;//打4折
 
 
     protected $table = 'charge_tasks';
@@ -70,6 +71,7 @@ class ChargeTasks extends Model
             self::COST_TYPE_BALANCE => '余额支付',
             self::COST_TYPE_PRESNET => '赠送金支付',
             self::COST_TYPE_CARD => '福利卡支付',
+            self::COST_TYPE_DISCOUNT_40 => '四折优惠',
         ];
         return $key !== null ? $map[$key] : $map;
     }

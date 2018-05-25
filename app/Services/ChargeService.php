@@ -177,13 +177,16 @@ class ChargeService extends BaseService
             $charge->actual_cost = 0;//实际支付0
         } else {
             $user = User::find($userId);
+            //打4折
+            $costs = $costs * 0.4;
             if ($user->user_balance > 0) {
-                $charge->cost_type = ChargeTasks::COST_TYPE_BALANCE;
+                //$charge->cost_type = ChargeTasks::COST_TYPE_BALANCE;
                 $field = 'user_balance';
             } else {
-                $charge->cost_type = ChargeTasks::COST_TYPE_PRESNET;
+                //$charge->cost_type = ChargeTasks::COST_TYPE_PRESNET;
                 $field = 'present_balance';
             }
+            $charge->cost_type = ChargeTasks::COST_TYPE_DISCOUNT_40;//4折优惠
             $charge->actual_cost = $costs;
             //扣款
             User::chargeCost($userId, $costs, $field);
