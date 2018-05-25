@@ -67,8 +67,8 @@ class ChargeTasks extends Model
     public static function getCostTypeMap($key = null)
     {
         $map = [
-            self::COST_TYPE_BALANCE => '赠送金支付',
-            self::COST_TYPE_PRESNET => '余额支付',
+            self::COST_TYPE_BALANCE => '余额支付',
+            self::COST_TYPE_PRESNET => '赠送金支付',
             self::COST_TYPE_CARD => '福利卡支付',
         ];
         return $key !== null ? $map[$key] : $map;
