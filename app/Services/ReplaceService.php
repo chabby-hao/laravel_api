@@ -86,6 +86,12 @@ class ReplaceService extends BaseService
         return $task ? true : false;
     }
 
+    public static function checkProcessingTaskByUserId($userId)
+    {
+        $task = ReplaceTasks::whereUserId($userId)->whereIn('state',[ReplaceTasks::TASK_STATE_INIT, ReplaceTasks::TASK_STATE_PROCESSING])->first();
+        return $task ? true : false;
+    }
+
     public static function isAppointment($cabinetId, $userId)
     {
         $model = Appointments::whereUserId($userId)->whereCabinetId($cabinetId)->where('expired_at', '>', Carbon::now()->toDateTimeString())->first();

@@ -63,6 +63,7 @@ Route::any('replaceBattery/taskNotify','Api\ReplaceBatteryController@taskNotify'
 Route::any('replaceBattery/list','Api\ReplaceBatteryController@list');
 Route::any('replaceBattery/cabinetList','Api\ReplaceBatteryController@cabinetList');
 Route::any('replaceBattery/getTaskToast','Api\ReplaceBatteryController@getTaskToast');
+Route::any('replaceBattery/hasProcessingTask','Api\ReplaceBatteryController@hasProcessingTask');
 
 
 Route::any('ops/startOps','Api\OpsController@startOps');

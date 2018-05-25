@@ -357,4 +357,19 @@ class ReplaceBatteryController extends Controller
         return Helper::response($data);
     }
 
+    public function hasProcessingTask()
+    {
+        $userId = $this->checkUser();
+
+        $data = [
+            'state'=>0,
+        ];
+        //检查当前柜子是否有未完成的任务
+        if (ReplaceService::checkProcessingTaskByUserId($userId)) {
+            $data['state'] = 1 ;
+        }
+
+        return Helper::response($data);
+    }
+
 }
