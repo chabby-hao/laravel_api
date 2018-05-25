@@ -308,7 +308,7 @@ class ReplaceBatteryController extends Controller
     {
         $userId = $this->checkUser();
 
-        $tasks = ReplaceTasks::whereUserId($userId)->whereState(ReplaceTasks::TASK_STATE_COMPLETE)->get();
+        $tasks = ReplaceTasks::whereUserId($userId)->whereState(ReplaceTasks::TASK_STATE_COMPLETE)->orderByDesc('id')->get();
 
         $datas = [];
         if ($tasks) {
