@@ -409,6 +409,7 @@ class ChargeService extends BaseService
                 $tmp['begin_at'] = $model->begin_at;
                 $tmp['minutes'] = floor($model->actual_time / 60);
                 $tmp['pay_amount'] = $model->user_cost;
+                $tmp['actual_amount'] = $model->actual_cost;
                 $tmp['cost_type_t'] = ChargeTasks::getCostTypeMap($model->cost_type);
                 //兼容福利卡支付
                 $costType = $model->cost_type;
