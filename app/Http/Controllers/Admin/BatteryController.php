@@ -10,7 +10,9 @@ namespace App\Http\Controllers\Admin;
 
 
 use App\Libs\MyPage;
+use App\Models\Battery;
 use App\Models\ChargeTasks;
+use App\Services\BatteryService;
 use Illuminate\Support\Facades\Input;
 
 class BatteryController extends BaseController
@@ -19,21 +21,28 @@ class BatteryController extends BaseController
     {
 
 
-        $where = [];
-        if($deviceNo = Input::get('device_no')){
-            $where['device_no'] = $deviceNo;
+        $paginate = Battery::leftJoin('user_device',function($join){
+            $join->on('user_device.battery_id','=','battery.battery_id');
+        })->leftJoin('users',function($join){
+            $join->on('users.id','=','user_device.user_id');
+        })->select(['battery.*','users.phone'])->orderByDesc('created_at')->paginate();
+
+        $datas = $paginate->items();
+
+        foreach ($datas as $data){
+            $data->belong = '';
+
+            if($data->phone){
+                $data->belong = '用户-' . $data->phone;
+            }elseif($cabDoor = BatteryService::getCabinetDoorNoByBatteryId($data->battery_id)){
+                $data->belong = '柜-' . BatteryService::getCabinetDoorNoByBatteryId($data->battery_id);
+            }else{
+                $data->belong = '维护人员维护中';
+            }
         }
-        if($portNo = Input::get('port_no')){
-            $where['port_no'] = $portNo;
-        }
 
-        $paginate = ChargeTasks::join('users',function($join){
-            $join->on('users.id','=','user_id');
-        })->where($where)->select(['charge_tasks.*','users.phone'])->orderByDesc('id')->paginate();
-
-
-        return view('admin.charge.list',[
-            'charges'=>$paginate->items(),
+        return view('admin.battery.list',[
+            'datas'=>$datas,
             'page_nav'=>MyPage::showPageNav($paginate),
         ]);
     }

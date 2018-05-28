@@ -11,6 +11,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Libs\MyPage;
 use App\Models\ChargeTasks;
+use App\Models\ReplaceTasks;
 use Illuminate\Support\Facades\Input;
 
 class ReplaceController extends BaseController
@@ -18,22 +19,17 @@ class ReplaceController extends BaseController
     public function list()
     {
 
-
         $where = [];
-        if($deviceNo = Input::get('device_no')){
-            $where['device_no'] = $deviceNo;
-        }
-        if($portNo = Input::get('port_no')){
-            $where['port_no'] = $portNo;
-        }
 
-        $paginate = ChargeTasks::join('users',function($join){
+        $paginate = ReplaceTasks::join('users',function($join){
             $join->on('users.id','=','user_id');
-        })->where($where)->select(['charge_tasks.*','users.phone'])->orderByDesc('id')->paginate();
+        })->join('cabinets',function($join){
+            $join->on('cabinets.id','=','cabinet_id');
+        })->where($where)->select(['replace_tasks.*','users.phone','cabinets.cabinet_no'])->orderByDesc('id')->paginate();
 
 
-        return view('admin.charge.list',[
-            'charges'=>$paginate->items(),
+        return view('admin.replace.list',[
+            'datas'=>$paginate->items(),
             'page_nav'=>MyPage::showPageNav($paginate),
         ]);
     }

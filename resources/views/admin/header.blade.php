@@ -124,8 +124,9 @@
         <li class="submenu"><a href="#"><i class="icon icon-th-list"></i> <span>换电管理</span>
             </a>
             <ul>
-                <li><a href="{{ URL::action('Admin\CabinetController@add')  }}">添加充电柜</a></li>
-
+{{--                <li><a href="{{ URL::action('Admin\CabinetController@add')  }}">添加充电柜</a></li>--}}
+                <li><a href="{{ URL::action('Admin\BatteryController@list')  }}">电池列表</a></li>
+                <li><a href="{{ URL::action('Admin\ReplaceController@list')  }}">换电任务</a></li>
             </ul>
 
         </li>

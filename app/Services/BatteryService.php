@@ -20,6 +20,41 @@ class BatteryService extends BaseService
     const BATTERY_STATE_USING = 2;//使用中
     const BATTERY_STATE_OPS = 3;//维护中
 
+    public static function getStateMap($type = null)
+    {
+        $map = [
+            self::BATTERY_STATE_UNUSEFUL=>'不可用',
+            self::BATTERY_STATE_USEFUL=>'可用',
+            self::BATTERY_STATE_USING=>'使用中',
+            self::BATTERY_STATE_OPS=>'维护中',
+        ];
+        return $type === null ? $map : $map[$type];
+    }
+
+    public static function getStateByBatteryByBatteryId($batteryId)
+    {
+        $batteryInfo = BatteryService::getBatteryInfo($batteryId);
+        if($batteryInfo && array_key_exists('batteryState', $batteryInfo)){
+            return $batteryInfo['batteryState'];
+        }
+        return BatteryService::BATTERY_STATE_UNUSEFUL;
+    }
+
+    public static function getStateNameByBatteryId($batteryId)
+    {
+        $state = BatteryService::getStateByBatteryByBatteryId($batteryId);
+        return BatteryService::getStateMap($state);
+    }
+
+    public static function getCabinetDoorNoByBatteryId($batteryId)
+    {
+        $batteryInfo = BatteryService::getBatteryInfo($batteryId);
+        if($batteryInfo['cabinetNo'] && $batteryInfo['doorNo']){
+            return $batteryInfo['cabinetNo'] . '-' . $batteryInfo['doorNo'];
+        }
+        return false;
+    }
+
     public static function getBatteryInfo($batteryId)
     {
         Redis::select(5);
@@ -27,6 +62,17 @@ class BatteryService extends BaseService
         $data = Redis::hGetAll($key);
         Log::debug("batteryInfo key: $key", $data);
         return $data;
+    }
+
+    /**
+     * 是否打开电池输出
+     * @param $batteryId
+     * @return bool
+     */
+    public static function isBatteryOutputByBatteryId($batteryId)
+    {
+        $zhangfei = BatteryService::getZhangfeiByBatteryId($batteryId);
+        return $zhangfei['batteryIOState'] ? true : false;
     }
 
     public static function getZhangfeiByBatteryId($batteryId)

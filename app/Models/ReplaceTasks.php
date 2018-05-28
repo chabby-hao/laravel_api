@@ -55,6 +55,30 @@ class ReplaceTasks extends Model
     protected $primaryKey = 'id';
     protected $guarded = [];
 
+    public static function getStateMap($type = null)
+    {
+        $map = [
+            self::TASK_STATE_INIT => '初始化',
+            self::TASK_STATE_TIMEOUT => '命令超时',
+            self::TASK_STATE_PROCESSING=>'命令已收到，进行中',
+            self::TASK_STATE_COMPLETE=>'已完成',
+            self::TASK_STATE_ABNORMAL=>'异常',
+            self::TASK_STATE_FAIL=>'失败',
+        ];
+        return $type === null ? $map : $map[$type];
+    }
+
+    public static function getStepMap($type = null)
+    {
+        $map = [
+            self::STEP_INIT => '扫码下发命令',
+            self::STEP_10 => '放入旧电池',
+            self::STEP_20 => '取出新电池',
+        ];
+        return $type === null ? $map : $map[$type];
+    }
+
+
     public static function newTask($userId, $cabinetId)
     {
 
