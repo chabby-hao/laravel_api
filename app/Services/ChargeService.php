@@ -362,7 +362,7 @@ class ChargeService extends BaseService
             //欠费提醒
             $desc = '您已欠费' . abs($userBalance) . '元，为了不影响下次充电，请及时充值';
         } elseif($task->cost_type == ChargeTasks::COST_TYPE_DISCOUNT_40) {
-            $desc = '已享受4折优惠，为您省下了￥' . number_format($task->user_cost - $task->actual_cost) . '元';
+            $desc = '已享受4折优惠，为您省下了￥' . number_format($task->user_cost - $task->actual_cost, 2) . '元';
         } else{
             $desc = '无';
         }
