@@ -45,6 +45,8 @@ Route::any('/activity/cardsWhiteListExport','Admin\ActivityController@cardsWhite
 
 
 Route::any('/cabinet/add','Admin\CabinetController@add');
+Route::any('/cabinet/list','Admin\CabinetController@list');
+Route::any('/cabinet/doorList','Admin\CabinetController@doorList');
 
 Route::any('/replace/list','Admin\ReplaceController@list');
 

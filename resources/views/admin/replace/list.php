@@ -18,6 +18,7 @@
                             <table class="table table-bordered data-table">
                                 <thead>
                                 <tr>
+                                    <th>任务Id</th>
                                     <th>手机号</th>
                                     <th>换电状态</th>
                                     <th>换电完成步骤</th>
@@ -35,6 +36,7 @@
                                 <?php /** @var \App\Models\ReplaceTasks $data */
                                 foreach ($datas as $data) { ?>
                                     <tr class="gradeX">
+                                        <td><?php echo $data->id ?></td>
                                         <td><?php echo $data->phone ?></td>
                                         <td><?php echo \App\Models\ReplaceTasks::getStateMap($data->state); ?></td>
                                         <td><?php echo \App\Models\ReplaceTasks::getStepMap($data->step); ?></td>

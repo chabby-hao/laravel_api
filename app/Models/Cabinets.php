@@ -26,7 +26,15 @@ use Illuminate\Database\Eloquent\Model;
 class Cabinets extends Model
 {
 
-    protected $guarded = [];
+    protected $fillable = [
+        'cabinet_no',
+        'address',
+        'qr',
+        'lat',
+        'lng',
+    ];
+
+    //protected $guarded = [];
 
     protected $table = 'cabinets';
 

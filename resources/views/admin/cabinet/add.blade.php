@@ -13,21 +13,21 @@
                         <h5>详情</h5>
                     </div>
                     <div class="widget-content">
-                        <form id="myform" action="<?php ?>" method="post" class="form-horizontal">
+                        <form id="myform" action="" method="post" class="form-horizontal">
                             <!--                                <input type="hidden" name="id" value=""/>-->
                             <div class="control-group">
                                 <label class="control-label"><span class="text-error">*</span>柜子编号 :</label>
                                 <div class="controls">
-                                    <input name="cabinet_noo" value="" type="text" class="span11"/>
+                                    <input name="cabinet_no" value="" type="text" class="span11"/>
                                     <span class="help-block">例：10000000</span>
                                 </div>
                             </div>
 
                             <div class="control-group">
-                                <label class="control-label"><span class="text-error">*</span>端口号 :</label>
+                                <label class="control-label"><span class="text-error">*</span>柜门数量 :</label>
                                 <div class="controls">
-                                    <input name="port_no" type="text" class="span11"/>
-                                    <span class="help-block">一般为1-10的纯数字,例：7</span>
+                                    <input name="cabinet_num" type="text" class="span11"/>
+                                    <span class="help-block">例：7</span>
                                 </div>
                             </div>
                             <div class="control-group">
@@ -35,6 +35,22 @@
                                 <div class="controls">
                                     <input name="address" type="text" class="span11"/>
                                     <span class="help-block">例：万和家园110号充电棚</span>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label"><span class="text-error">*</span>经度(lng) :</label>
+                                <div class="controls">
+                                    <input name="lng" type="text" class="span11"/>
+                                    <span class="help-block">例：121.4141178131</span>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label"><span class="text-error">*</span>纬度(lat) :</label>
+                                <div class="controls">
+                                    <input name="lat" type="text" class="span11"/>
+                                    <span class="help-block">例：31.1704363853</span>
                                 </div>
                             </div>
 
