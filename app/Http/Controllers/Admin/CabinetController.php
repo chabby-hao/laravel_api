@@ -83,7 +83,7 @@ class CabinetController extends BaseController
             $doorinfo = CabinetService::getDoorInfo($cabinets->cabinet_no, $data->door_no);
             $data->openState = $doorinfo['openState'] ? '开' : '关';
             $data->hasBattery = $doorinfo['hasBattery'] ? '有' : '无';
-            $data->batteryId = $doorinfo['batteryId'];
+            $data->batteryId = $doorinfo['hasBattery'] ? $doorinfo['batteryId'] : '';
         }
 
         return view('admin.cabinet.doorlist', [
