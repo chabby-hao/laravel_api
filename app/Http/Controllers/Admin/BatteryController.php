@@ -24,7 +24,7 @@ class BatteryController extends BaseController
     {
 
         if ($request->isXmlHttpRequest()) {
-            $data = $this->_checkParams(['battery_id', 'imei'], $request->input());
+            $data = $this->_checkParams(['battery_id', 'imei','battery_level'], $request->input());
 
             if ($udid = BatteryService::getUdidByImei($data['imei'])) {
                 try {
@@ -32,6 +32,7 @@ class BatteryController extends BaseController
                         'udid' => $udid,
                         'imei' => $data['imei'],
                         'battery_id' => $data['battery_id'],
+                        'battery_level'=>$data['battery_level'],
                     ]);
                 } catch (\Exception $e) {
                     return $this->_outPutError('添加失败，请确认是否电池Id是否重复');
