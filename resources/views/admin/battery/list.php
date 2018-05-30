@@ -12,7 +12,7 @@
                     <div class="widget-box">
                         <div class="widget-title"><span class="icon"><i class="icon-th"></i></span>
                             <h5>列表</h5>
-                            <span class="pull-right"><a href="<?php URL::action('Admin\BatteryController@add') ?>" class="btn btn-info">添加电池</a></span>
+                            <span class="pull-right"><a href="<?php echo URL::action('Admin\BatteryController@add') ?>" class="btn btn-info">添加电池</a></span>
                         </div>
                         <div class="widget-content nopadding">
                             <table class="table table-bordered data-table">
