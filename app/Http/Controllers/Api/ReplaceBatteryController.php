@@ -133,7 +133,7 @@ class ReplaceBatteryController extends Controller
         $data = [];
         $data['appointmentId'] = 0;
         //是否已经预约
-        if ($model = Appointments::whereUserId($userId)->whereCabinetId($cabinetId)->where('expired_at', '>', Carbon::now()->toDateTimeString())->first()) {
+        if ($model = Appointments::whereUserId($userId)->whereState(0)->whereCabinetId($cabinetId)->where('expired_at', '>', Carbon::now()->toDateTimeString())->first()) {
             $data['appointmentId'] = intval($model->id);
             $data['remain'] = Carbon::parse($model->expired_at)->getTimestamp() - time();
         }
@@ -173,7 +173,7 @@ class ReplaceBatteryController extends Controller
         }
 
         //是否已经预约
-        if (Appointments::whereUserId($userId)->whereCabinetId($cabinetId)->where('expired_at', '>', Carbon::now()->toDateTimeString())->first()) {
+        if (Appointments::whereUserId($userId)->whereState(0)->whereCabinetId($cabinetId)->where('expired_at', '>', Carbon::now()->toDateTimeString())->first()) {
             return Helper::responeseError(ErrorCode::$appointmentExists);
         }
 

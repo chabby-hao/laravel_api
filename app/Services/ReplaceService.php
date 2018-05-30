@@ -35,6 +35,12 @@ class ReplaceService extends BaseService
             return false;
         }
 
+        $appo = Appointments::whereUserId($userId)->whereCabinetId($cabinetId)->where('expired_at', '>', Carbon::now()->toDateTimeString());
+        if($appo){
+            $appo->state = 1;
+            $appo->save();
+        }
+
         //下发换电指令
         return CabinetService::sendReplaceCommand($cabinetNo, $model->id, $model->battery_id1);
     }
