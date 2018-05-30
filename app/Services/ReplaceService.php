@@ -35,7 +35,7 @@ class ReplaceService extends BaseService
             return false;
         }
 
-        $appo = Appointments::whereUserId($userId)->whereCabinetId($cabinetId)->where('expired_at', '>', Carbon::now()->toDateTimeString());
+        $appo = Appointments::whereUserId($userId)->whereCabinetId($cabinetId)->where('expired_at', '>', Carbon::now()->toDateTimeString())->first();
         if($appo){
             $appo->state = 1;
             $appo->save();
