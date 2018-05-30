@@ -31,6 +31,15 @@
                                 </div>
                             </div>
 
+
+                            <div class="control-group">
+                                <label class="control-label"><span class="text-error">*</span>电压等级(V) :</label>
+                                <div class="controls">
+                                    <input name="battery_level" type="text" class="span11"/>
+                                    <span class="help-block">例：60</span>
+                                </div>
+                            </div>
+
                             <div class="form-actions">
                                 <button type="button" id="mysubmit" class="btn btn-success">保存</button>
                             </div>
