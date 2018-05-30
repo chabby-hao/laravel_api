@@ -51,6 +51,7 @@ Route::any('/cabinet/doorList','Admin\CabinetController@doorList');
 Route::any('/replace/list','Admin\ReplaceController@list');
 
 Route::any('/battery/list','Admin\BatteryController@list');
+Route::any('/battery/add','Admin\BatteryController@add');
 
 
 Route::any('/test', function () {

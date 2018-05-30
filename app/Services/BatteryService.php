@@ -113,4 +113,12 @@ class BatteryService extends BaseService
         return CommandService::sendApiCmd($udid, $ctl);
     }
 
+    public static function getUdidByImei($imei)
+    {
+        Redis::select(1);
+        $key = 'IMEItoUDID';
+        $udid = Redis::hGet($key, $imei);
+        return $udid;
+    }
+
 }

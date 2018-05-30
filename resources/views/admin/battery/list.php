@@ -12,7 +12,7 @@
                     <div class="widget-box">
                         <div class="widget-title"><span class="icon"><i class="icon-th"></i></span>
                             <h5>列表</h5>
-                            <!--                            <span class="pull-right"><a href="" class="btn btn-info"></a></span>-->
+                            <span class="pull-right"><a href="<?php URL::action('Admin\BatteryController@add') ?>" class="btn btn-info">添加电池</a></span>
                         </div>
                         <div class="widget-content nopadding">
                             <table class="table table-bordered data-table">
@@ -42,10 +42,10 @@
                                         <td><?php echo \App\Services\BatteryService::getStateNameByBatteryId($data->battery_id); ?></td>
                                         <td><?php echo \App\Services\BatteryService::isBatteryOutputByBatteryId($data->battery_id) ? '开' : '关'; ?></td>
                                         <td><?php echo $data->created_at; ?></td>
-<!--                                        <td>-->
-<!--                                            <a href="" class="btn btn-info">设置</a>-->
-<!--                                            <!-- <a href="javascript:;" class="btn btn-danger del">删除</a>-->
-<!--                                        </td>-->
+                                        <!--                                        <td>-->
+                                        <!--                                            <a href="" class="btn btn-info">设置</a>-->
+                                        <!--                                            <!-- <a href="javascript:;" class="btn btn-danger del">删除</a>-->
+                                        <!--                                        </td>-->
                                     </tr>
                                 <?php } ?>
                                 </tbody>
