@@ -72,7 +72,7 @@ class BatteryService extends BaseService
     public static function isBatteryOutputByBatteryId($batteryId)
     {
         $zhangfei = BatteryService::getZhangfeiByBatteryId($batteryId);
-        return $zhangfei['batteryIOState'] ? true : false;
+        return $zhangfei['abkBatteryLockStatus'] ? false : true;
     }
 
     public static function getZhangfeiByBatteryId($batteryId)

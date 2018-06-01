@@ -61,11 +61,11 @@ class BatteryControl extends Command
             $zhangfei = BatteryService::getZhangfeiByBatteryId($batteryId);
             if(array_key_exists('batteryState', $batteryInfo)){
                 $state = $batteryInfo['batteryState'];
-                if(in_array($state, [BatteryService::BATTERY_STATE_UNUSEFUL]) && $zhangfei['batteryIOState'] == 1){
+                if(in_array($state, [BatteryService::BATTERY_STATE_UNUSEFUL]) && $zhangfei['abkBatteryLockStatus'] == 0){
                     //不可用，实际状态开了,要关闭输出
                     BatteryService::closeBatteryOutput($battery->udid);
                 }elseif(in_array($state, [BatteryService::BATTERY_STATE_USEFUL, BatteryService::BATTERY_STATE_USING,BatteryService::BATTERY_STATE_OPS]) &&
-                    $zhangfei['batteryIOState'] == 0
+                    $zhangfei['abkBatteryLockStatus'] == 1
                 ){
                     //可用，使用中，维护中，实际状态没开,要打开输出
                     BatteryService::openBatteryOutput($battery->udid);
