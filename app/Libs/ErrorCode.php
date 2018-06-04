@@ -87,7 +87,7 @@ class ErrorCode
             self::$qrCodeNotFind => '二维码有误',
             self::$deviceNotOnline => '设备离线',
             self::$deviceNotUseful => '充电口暂不可用，请稍后再试',
-            self::$balanceNotEnough => '余额不足，请先充值',
+            self::$balanceNotEnough => '余额不足，请充值',
             self::$isChargingNow => '充电口被占用，请换一个充电口',
             self::$isChargingAndNeedWait => '充电口被占用，请换一个充电口或等待{mins}分钟',
             self::$hasGotCard => '您已经领取过福利卡，无需再次领取',
@@ -96,7 +96,7 @@ class ErrorCode
             self::$batteryNotRegister => '电池未注册',
             self::$appointmentExists => '已预约',
             self::$notFindReplaceTask => '未发现换电任务',
-            self::$notBindBattery => '请扫描电池上的二维码绑定电池',
+            self::$notBindBattery => '请先扫描电池上的二维码',
             self::$notFindTask => 'not find task',
             self::$notOpsUser => '非运维人员',
             self::$operationFail => '操作失败',
@@ -104,7 +104,7 @@ class ErrorCode
             self::$isOpsNow => '正在运维中',
             self::$needWait => '请等待，换电柜正在使用中...',
             self::$replaceFail => '换电失败,请联系客服',
-            self::$batteryBindRepeat => '电池已有人绑定',
+            self::$batteryBindRepeat => '电池已被绑定',
             self::$hasNoBatteryForAppointment => '可用电池已被预约',
         ];
     }
