@@ -96,7 +96,7 @@ class ErrorCode
             self::$batteryNotRegister => '电池未注册',
             self::$appointmentExists => '已预约',
             self::$notFindReplaceTask => '未发现换电任务',
-            self::$notBindBattery => '未绑定电池',
+            self::$notBindBattery => '请扫描电池上的二维码绑定电池',
             self::$notFindTask => 'not find task',
             self::$notOpsUser => '非运维人员',
             self::$operationFail => '操作失败',
