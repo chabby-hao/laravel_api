@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Log;
 class ChargeController extends Controller
 {
 
-    public function getMapList()
+    public function mapList()
     {
         $datas = MapServices::getLocList();
 

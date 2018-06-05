@@ -33,6 +33,7 @@ Route::any('/weixinPay/payJoinfee', 'Api\WeixinPayController@payJoinfee');
 Route::any('/weixinPay/wxNotify', 'Api\WeixinPayController@wxNotify')->name('wxnotify');
 
 
+Route::any('/charge/mapList', 'Api\ChargeController@mapList');
 Route::any('/charge/openBox', 'Api\ChargeController@openBox');
 Route::any('/charge/chargeBegin', 'Api\ChargeController@chargeBegin');
 Route::any('/charge/chargeEnd', 'Api\ChargeController@chargeEnd');
