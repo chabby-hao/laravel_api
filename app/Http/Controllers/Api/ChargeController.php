@@ -12,6 +12,7 @@ use App\Models\WelfareUsers;
 use App\Services\BoxService;
 use App\Services\ChargeService;
 use App\Services\DeviceService;
+use App\Services\MapServices;
 use App\Services\RequestService;
 use App\Services\UserService;
 use Illuminate\Database\Query\JoinClause;
@@ -22,6 +23,22 @@ use Illuminate\Support\Facades\Log;
 
 class ChargeController extends Controller
 {
+
+    public function getMapList()
+    {
+        $datas = MapServices::getLocList();
+
+        foreach ($datas as &$data){
+            $deviceNo = $data['device_no'];
+            $device = DeviceInfo::whereDeviceNo($deviceNo)->first();
+            if($device){
+                $data['address'] = $device->address;
+            }
+        }
+
+        return Helper::response($datas);
+    }
+
 
     /**
      * 获取充电口地址信息

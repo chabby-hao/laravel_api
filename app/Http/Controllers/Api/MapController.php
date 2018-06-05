@@ -12,6 +12,7 @@ use App\Models\WelfareUsers;
 use App\Models\WelfareWhiteLists;
 use App\Services\ActivityService;
 use App\Services\DeviceService;
+use App\Services\MapServices;
 use App\Services\UserService;
 use function Hprose\Future\error;
 use Illuminate\Http\Request;
@@ -23,49 +24,7 @@ class MapController extends Controller
 
     public function deviceData()
     {
-        $datas = [
-            [
-                'device_no'=>'002100001',
-                'value' => [
-                    floatval(121.370286),
-                    floatval(31.114697),
-                    1,//数量
-                ],
-            ],
-            [
-                'device_no'=>'002100002',
-                'value' => [
-                    floatval(121.370142),
-                    floatval(31.114655),
-                    1,//数量
-                ],
-            ],
-            [
-                'device_no'=>'002100003',
-                'value' => [//31.3258162649,121.4503672876
-                    floatval(121.4508015117),
-                    floatval(31.3262709538),
-                    1,//数量
-                ],
-            ],
-            [
-                'device_no'=>'002100004',
-                'value' => [//31.3258162649,121.4503672876
-                    floatval(121.4523635039),
-                    floatval(31.3241817395),
-                    1,//数量
-                ],
-            ],
-            [
-                'device_no'=>'002100005',
-                'value' => [//31.3258162649,121.4503672876
-                    floatval(121.4523259530),
-                    floatval(31.3240717519),
-                    1,//数量
-                ],
-            ],
-
-        ];
+        $datas = MapServices::getLocList();
 
         foreach ($datas as &$data){
             $data['charging_nums'] = 0;
