@@ -256,7 +256,7 @@ class ChargeService extends BaseService
      * @param $userId
      * @return array|bool
      */
-    public static function getLastTaskInfo($userId)
+    public static function  getLastTaskInfo($userId)
     {
 
         $model = ChargeTasks::getLastTaskByUserId($userId);
@@ -274,7 +274,7 @@ class ChargeService extends BaseService
             $data['status'] = 1;//异常终止
         } elseif (in_array($model->task_state, ChargeTasks::getFinishStateMap())) {
             $data['status'] = 2;//充电完成
-        } elseif ($model->task_state == ChargeTasks::TASK_STATE_INIT && $model->close_box == ChargeTasks::CLOSE_BOX_HAS_SENT) {
+        } elseif ($model->task_state == ChargeTasks::TASK_STATE_TIMEOUT && $model->close_box == ChargeTasks::CLOSE_BOX_HAS_SENT) {
             $data['status'] = 4;//舒适化，未通电，但已超时
         } elseif ($model->task_state == ChargeTasks::TASK_STATE_INIT) {
             $data['status'] = 3;//初始化，还没通电
