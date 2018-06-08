@@ -26,7 +26,7 @@ class ChargeController extends Controller
 
     public function mapList()
     {
-        $datas = MapServices::getLocList();
+        $datas = MapServices::getLocList(true);
 
         foreach ($datas as &$data){
             $deviceNo = $data['device_no'];
