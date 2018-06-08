@@ -58,7 +58,7 @@ class MapServices extends BaseService
         if($tencent){
             //如果是腾讯要转一下
             foreach ($datas as $k => $data){
-                $loc = self::ConvertBD09ToGCJ02($data['value'][1], $data['value'[0]]);
+                $loc = self::ConvertBD09ToGCJ02($data['value'][0], $data['value'[1]]);
                 $datas[$k]['value'] = [$loc['lng'], $loc['lat']];
             }
         }
