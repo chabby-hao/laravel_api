@@ -59,7 +59,7 @@ class MapServices extends BaseService
             //如果是腾讯要转一下
             foreach ($datas as $k => $data){
                 $loc = self::ConvertBD09ToGCJ02($data['value'][1], $data['value'[0]]);
-                $datas[$k]['value'] = [$loc['lng'], $loc['lat']];
+                //$datas[$k]['value'] = [$loc['lng'], $loc['lat']];
             }
         }
         return $datas;
