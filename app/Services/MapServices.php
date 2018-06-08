@@ -53,6 +53,13 @@ class MapServices extends BaseService
                     floatval(31.3236600000),
                 ],
             ],
+            [
+                'device_no' => '002100006',
+                'value' => [//31.3238440000,121.4468100000
+                    floatval(121.4468100000),
+                    floatval(31.3238440000),
+                ],
+            ],
 
         ];
         if($tencent){
