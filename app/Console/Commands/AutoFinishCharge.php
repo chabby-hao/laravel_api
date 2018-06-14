@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\ChargeTasks;
 use App\Services\ChargeService;
 use Illuminate\Console\Command;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use PhpParser\Node\Stmt\Foreach_;
@@ -57,6 +58,14 @@ class AutoFinishCharge extends Command
                     //充电时间已满，可以终止充电
                     ChargeService::endChargeByTimeOver($row->device_no,$row->port_no);
                 }
+
+                //充10小时自动结束
+                if(time() - Carbon::parse($row->begin_at) > 3600 * 10){
+
+                    Log::info('crontab autoFinishCharge for 10 hours ' . json_encode($row));
+                    ChargeService::endChargeByTimeOver($row->device_no,$row->port_no);
+                }
+
             }
         }
         Log::info('crontab end AutoFinishCharge ...');
