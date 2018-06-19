@@ -60,7 +60,7 @@ class AutoFinishCharge extends Command
                 }
 
                 //充10小时自动结束
-                if(time() - Carbon::parse($row->begin_at) > 3600 * 10){
+                if(time() - Carbon::parse($row->begin_at)->getTimestamp() > 3600 * 10){
 
                     Log::info('crontab autoFinishCharge for 10 hours ' . json_encode($row));
                     ChargeService::endChargeByTimeOver($row->device_no,$row->port_no);
