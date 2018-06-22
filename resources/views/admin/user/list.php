@@ -42,7 +42,7 @@
                                     <th>余额</th>
                                     <th>赠送金</th>
                                     <th>福利卡</th>
-<!--                                    <th>操作</th>-->
+                                    <th>操作</th>
                                 </tr>
                                 </thead>
                                 <tbody>
