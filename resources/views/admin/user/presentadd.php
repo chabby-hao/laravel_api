@@ -18,7 +18,7 @@
                                 <div class="control-group">
                                     <label class="control-label"><span class="text-error">*</span>赠送金 :</label>
                                     <div class="controls">
-                                        <input name="present_money" value="<?php echo $user->present_balace ?>" type="text" class="span11"/>
+                                        <input name="present_money" value="<?php echo $user->present_balance ?>" type="text" class="span11"/>
                                         <span class="help-block">例：5</span>
                                     </div>
                                 </div>
