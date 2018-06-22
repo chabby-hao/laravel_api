@@ -14,6 +14,8 @@ use App\Libs\MyPage;
 use App\Models\Feedbacks;
 use App\Models\User;
 use App\Services\ActivityService;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
 
 class UserController extends BaseController
 {
@@ -31,6 +33,26 @@ class UserController extends BaseController
         return view('admin.user.list',[
             'users'=>$usersList,
             'page_nav'=>MyPage::showPageNav($users),
+        ]);
+    }
+
+    public function presentSet(Request $request)
+    {
+        $userId = $request->input('id');
+
+        $user = User::find($userId);
+
+        if($request->isXmlHttpRequest()){
+            $money = $request->input('present_money');
+            $user->present_balance = $money;
+            if($user->save()){
+                return $this->_outPutRedirect(URL::action('Admin\UserController@list'));
+            }
+            return $this->_outPutError('设置失败');
+        }
+
+        return view('admin.user.presentadd',[
+            'user'=>$user,
         ]);
     }
 

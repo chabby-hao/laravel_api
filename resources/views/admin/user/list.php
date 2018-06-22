@@ -56,10 +56,9 @@
                                         <td><?php echo $user->user_balance ?></td>
                                         <td><?php echo $user->present_balance ?></td>
                                         <td><?php echo implode('<br/>', $user->card_name); ?></td>
-<!--                                        <td>-->
-<!--                                            <a href="" class="btn btn-info">设置</a>-->
-<!--<!--                                            <a href="javascript:;" class="btn btn-danger del">删除</a>-->
-<!--                                        </td>-->
+                                        <td>
+                                            <a href="<?php echo URL::action('Admin\UserController@presentSet',['id'=>$user->id]) ?>" class="btn btn-info">配置赠送金</a>
+                                        </td>
                                     </tr>
                                 <?php } ?>
                                 </tbody>

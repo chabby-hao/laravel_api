@@ -26,6 +26,7 @@ Route::any('/device/remoteTunnel', 'Admin\DeviceController@remoteTunnel');
 
 Route::any('/user/list', 'Admin\UserController@list');
 Route::any('/user/feedback', 'Admin\UserController@feedback');
+Route::any('/user/presentSet', 'Admin\UserController@presentSet');
 
 Route::any('/orders/list', 'Admin\OrdersController@list');
 
