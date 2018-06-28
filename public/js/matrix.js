@@ -61,7 +61,8 @@ $(document).ready(function(){
 		}
 		if($(window).width() < 479)
 		{
-			ul.css({'display':'none'});
+			//ul.css({'display':'none'});
+			//修复小屏bug
 			fix_position();
 		}
 		if($(window).width() > 768)
@@ -73,7 +74,7 @@ $(document).ready(function(){
 	
 	if($(window).width() < 468)
 	{
-		ul.css({'display':'none'});
+		//ul.css({'display':'none'});
 		fix_position();
 	}
 	
