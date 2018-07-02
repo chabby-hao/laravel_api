@@ -68,7 +68,7 @@ class LogController extends BaseController
         if($request->has('port_no')){
             $where['port'] = $request->input('port_no');
         }
-        $paginate = PortPluginChanges::where($where)->orderByDesc('create_time')->paginate();
+        $paginate = PortPluginChanges::where($where)->orderByDesc('id')->paginate();
 
         return view('admin.log.port_plugin_change_list', [
             'datas' => $paginate->items(),
