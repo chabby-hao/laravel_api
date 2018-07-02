@@ -63,7 +63,7 @@ class LogController extends BaseController
     {
         $where = [];
         if($udid = $request->input('device_no')){
-            $where['udid'] = $udid;
+            $where['device_id'] = $udid;
         }
         if($request->has('port_no')){
             $where['port'] = $request->input('port_no');
