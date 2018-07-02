@@ -14,13 +14,24 @@
                         <div class="controls controls-row">
                             <div class="inline-block">
                                 <label>设备号</label>
-                                <input value="<?php echo Request::input('device_no') ?>" name="device_no" type="text"/>
+                                <select name="device_no">
+                                    <?php foreach (\App\Models\DeviceInfo::getAllDeviceNo() as $deviceNo){ ?>
+                                        <option <?php if(Request::input('device_no') == $deviceNo) echo 'checked' ?> value="<?php echo $deviceNo; ?>"><?php echo $deviceNo; ?></option>
+                                    <?php } ?>
+                                </select>
+<!--                                <input value="--><?php //echo Request::input('device_no') ?><!--" name="device_no" type="text"/>-->
                             </div>
 
                             <div class="inline-block">
                                 <label>端口号</label>
                                 <input value="<?php echo Request::input('port_no') ?>"  name="port_no" type="text"/>
                             </div>
+
+                            <div class="inline-block">
+                                <label>手机号</label>
+                                <input value="<?php echo Request::input('phone') ?>"  name="phone" type="text"/>
+                            </div>
+
 
                             <div class="inline-block">
                                 <input class="btn btn-success" id="btn-search" type="submit" value="确定"/>

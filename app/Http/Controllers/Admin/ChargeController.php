@@ -26,6 +26,9 @@ class ChargeController extends BaseController
         if($portNo = Input::get('port_no')){
             $where['port_no'] = $portNo;
         }
+        if($phone = Input::get('phone')){
+            $where['phone'] = $phone;
+        }
 
         $paginate = ChargeTasks::join('users',function($join){
             $join->on('users.id','=','user_id');
