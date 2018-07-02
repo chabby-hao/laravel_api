@@ -19,12 +19,20 @@
                                         <option <?php if(Request::input('device_no') == $deviceNo) echo 'selected' ?>  value="<?php echo $deviceNo; ?>"><?php echo $deviceNo; ?></option>
                                     <?php } ?>
                                 </select>
-<!--                                <input value="--><?php //echo Request::input('device_no') ?><!--" name="device_no" type="text"/>-->
                             </div>
 
                             <div class="inline-block">
                                 <label>端口号</label>
                                 <input value="<?php echo Request::input('port_no') ?>"  name="port_no" type="text"/>
+                            </div>
+
+                            <div class="inline-block">
+                                <label>充电状态</label>
+                                <select name="task_state">
+                                    <?php foreach (\App\Models\ChargeTasks::getStateMap() as $k => $val){ ?>
+                                        <option <?php if(Request::input('task_state') == $k) echo 'selected' ?>  value="<?php echo $k; ?>"><?php echo $val; ?></option>
+                                    <?php } ?>
+                                </select>
                             </div>
 
                             <div class="inline-block">
