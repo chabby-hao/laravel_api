@@ -15,6 +15,7 @@
                             <div class="inline-block">
                                 <label>设备号</label>
                                 <select name="device_no">
+                                    <option value="">全部</option>
                                     <?php foreach (\App\Models\DeviceInfo::getAllDeviceNo() as $deviceNo){ $deviceNo = intval($deviceNo); ?>
                                         <option <?php if(Request::input('device_no') == $deviceNo) echo 'selected' ?>  value="<?php echo $deviceNo; ?>"><?php echo $deviceNo; ?></option>
                                     <?php } ?>
@@ -29,6 +30,7 @@
                             <div class="inline-block">
                                 <label>充电状态</label>
                                 <select name="task_state">
+                                    <option value="">全部</option>
                                     <?php foreach (\App\Models\ChargeTasks::getStateMap() as $k => $val){ ?>
                                         <option <?php if(Request::input('task_state') == $k) echo 'selected' ?>  value="<?php echo $k; ?>"><?php echo $val; ?></option>
                                     <?php } ?>
