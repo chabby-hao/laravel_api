@@ -25,7 +25,7 @@ class LogController extends BaseController
 
     public function hostList()
     {
-        $paginate = HostPortInfos::orderByDesc('id')->paginate();
+        $paginate = HostPortInfos::orderByDesc('create_time')->paginate();
 
         return view('admin.log.host_port_info_list', [
             'datas' => $paginate->items(),
