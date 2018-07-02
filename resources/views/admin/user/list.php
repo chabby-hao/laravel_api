@@ -8,13 +8,13 @@
         <div class="container-fluid">
             <hr>
             <div></div>
-            <!--<div class="widget-content">
+            <div class="widget-content">
                 <form class="form-search">
                     <div class="control-group">
                         <div class="controls controls-row">
                             <div class="inline-block">
-                                <label>时间范围</label>
-                                <input name="date_range" id="daterange" type="text"/>
+                                <label>手机号</label>
+                                <input value="<?php echo Request::input('phone') ?>" name="phone" type="text"/>
                             </div>
 
                             <div class="inline-block">
@@ -24,7 +24,7 @@
                         </div>
                     </div>
                 </form>
-            </div>-->
+            </div>
             <div class="row-fluid">
                 <div class="span12">
                     <div class="widget-box">

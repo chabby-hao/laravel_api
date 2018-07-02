@@ -19,10 +19,14 @@ use Illuminate\Support\Facades\URL;
 
 class UserController extends BaseController
 {
-    public function list()
+    public function list(Request $request)
     {
 
-        $users = User::where('phone','<>','')->orderByDesc('id')->paginate();
+        $where = [];
+        if($phone = $request->input('phone')){
+            $where['phone'] = $phone;
+        }
+        $users = User::where($where)->where('phone','<>','')->orderByDesc('id')->paginate();
         $usersList = $users->items();
         /** @var User $user */
         foreach ($usersList as $user){
