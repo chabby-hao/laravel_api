@@ -2,8 +2,8 @@
     <div id="content">
         <div id="content-header">
             <div id="breadcrumb"><a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a>
-                <a href="#" class="current">设备列表</a></div>
-            <h1>设备列表</h1>
+                <a href="#" class="current">列表</a></div>
+            <h1>列表</h1>
         </div>
         <div class="container-fluid">
             <hr>
@@ -51,23 +51,23 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <?php /** @var \App\Models\HostPortInfos $row */
-                                foreach ($datas as $row) { ?>
-                                    <tr class="gradeX">
-                                        <?php echo $row->udid;?>
-                                        <?php echo $row->port;?>
-                                        <?php echo $row->create_time;?>
-                                        <?php echo $row->node_rely_status1;?>
-                                        <?php echo $row->node_rely_status2;?>
-                                        <?php echo $row->ammeter_energy;?>
-                                        <?php echo $row->ammeter_volt;?>
-                                        <?php echo $row->ammeter_cur;?>
-                                        <?php echo $row->ammeter_power;?>
-                                        <?php echo $row->ammeter_power_scale;?>
-                                        <?php echo $row->battery_volt;?>
-                                        <?php echo $row->port_usable;?>
-                                    </tr>
-                                <?php } ?>
+                                {{--<?php /** @var \App\Models\HostPortInfos $row */--}}
+                                {{--foreach ($datas as $row) { ?>--}}
+                                    {{--<tr class="gradeX">--}}
+                                        {{--<?php echo $row->udid;?>--}}
+                                        {{--<?php echo $row->port;?>--}}
+                                        {{--<?php echo $row->create_time;?>--}}
+                                        {{--<?php echo $row->node_rely_status1;?>--}}
+                                        {{--<?php echo $row->node_rely_status2;?>--}}
+                                        {{--<?php echo $row->ammeter_energy;?>--}}
+                                        {{--<?php echo $row->ammeter_volt;?>--}}
+                                        {{--<?php echo $row->ammeter_cur;?>--}}
+                                        {{--<?php echo $row->ammeter_power;?>--}}
+                                        {{--<?php echo $row->ammeter_power_scale;?>--}}
+                                        {{--<?php echo $row->battery_volt;?>--}}
+                                        {{--<?php echo $row->port_usable;?>--}}
+                                    {{--</tr>--}}
+                                {{--<?php } ?>--}}
                                 </tbody>
                             </table>
                         </div>
