@@ -29,6 +29,9 @@ class ChargeController extends BaseController
         if($phone = Input::get('phone')){
             $where['phone'] = $phone;
         }
+        if($taskState = Input::get('task_state')){
+            $where['task_state'] = $taskState;
+        }
 
         $paginate = ChargeTasks::join('users',function($join){
             $join->on('users.id','=','user_id');
