@@ -35,36 +35,24 @@
                         <table class="table table-bordered data-table">
                             <thead>
                             <tr>
+                                <th>ID</th>
                                 <th>设备号</th>
                                 <th>端口号</th>
-                                <th>时间戳</th>
-                                <th>干接点继电器状态1</th>
-                                <th>干接点继电器状态2</th>
-                                <th>电表当前电量</th>
-                                <th>电能</th>
-                                <th>电表当前电压</th>
-                                <th>电表当前电流</th>
-                                <th>电表当前功率因素</th>
-                                <th>设备用电池电量备号</th>
-                                <th>端口可用性</th>
+                                <th>上次异物状态</th>
+                                <th>当前异物状态</th>
+                                <th>时间戳(设备上报的)</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <?php /** @var \App\Models\HostPortInfos $row */?>
+                            <?php /** @var \App\Models\PortPluginChanges $row */?>
                             @foreach ($datas as $row)
                                 <tr class="gradeX">
-                                    <td>{{ $row->udid }}               </td>
+                                    <td>{{ $row->id }}               </td>
+                                    <td>{{ $row->device_id }}               </td>
                                     <td>{{ $row->port }}               </td>
-                                    <td>{{ \Illuminate\Support\Carbon::createFromTimestamp($row->create_time)->toDateTimeString() }}        </td>
-                                    <td>{{ $row->node_rely_status1 }}  </td>
-                                    <td>{{ $row->node_rely_status2 }}  </td>
-                                    <td>{{ $row->ammeter_energy }}     </td>
-                                    <td>{{ $row->ammeter_volt }}       </td>
-                                    <td>{{ $row->ammeter_cur }}        </td>
-                                    <td>{{ $row->ammeter_power }}      </td>
-                                    <td>{{ $row->ammeter_power_scale }}</td>
-                                    <td>{{ $row->battery_volt }}       </td>
-                                    <td>{{ $row->port_usable }}        </td>
+                                    <td>{{ $row->pre_plugin }}               </td>
+                                    <td>{{ $row->plugin }}               </td>
+                                    <td>{{ \Illuminate\Support\Carbon::createFromTimestamp($row->time_stamp)->toDateTimeString() }}        </td>
                                 </tr>
                             @endforeach
                             </tbody>

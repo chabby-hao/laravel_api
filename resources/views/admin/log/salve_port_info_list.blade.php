@@ -38,33 +38,51 @@
                                 <th>设备号</th>
                                 <th>端口号</th>
                                 <th>时间戳</th>
-                                <th>干接点继电器状态1</th>
-                                <th>干接点继电器状态2</th>
-                                <th>电表当前电量</th>
+                                <th>从机版本</th>
+                                <th>输入电压</th>
+                                <th>输出电压</th>
+                                <th>电流</th>
                                 <th>电能</th>
-                                <th>电表当前电压</th>
-                                <th>电表当前电流</th>
-                                <th>电表当前功率因素</th>
-                                <th>设备用电池电量备号</th>
+                                <th>功率</th>
+                                <th>打开/关闭电源配置</th>
+                                <th>功率因子</th>
+                                <th>丝杆状态</th>
+                                <th>丝杆配置</th>
+                                <th>丝杆位置</th>
+                                <th>继电器开关状态</th>
+                                <th>继电器粘连告警</th>
+                                <th>过流保护告警</th>
+                                <th>丝杠不到位告警</th>
+                                <th>漏电告警</th>
                                 <th>端口可用性</th>
+                                <th>是否在充电</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <?php /** @var \App\Models\HostPortInfos $row */?>
+                            <?php /** @var \App\Models\SalvePortInfos $row */?>
                             @foreach ($datas as $row)
                                 <tr class="gradeX">
-                                    <td>{{ $row->udid }}               </td>
-                                    <td>{{ $row->port }}               </td>
+                                    <td>{{ $row->udid }}</td>
+                                    <td>{{ $row->port }}</td>
                                     <td>{{ \Illuminate\Support\Carbon::createFromTimestamp($row->create_time)->toDateTimeString() }}        </td>
-                                    <td>{{ $row->node_rely_status1 }}  </td>
-                                    <td>{{ $row->node_rely_status2 }}  </td>
-                                    <td>{{ $row->ammeter_energy }}     </td>
-                                    <td>{{ $row->ammeter_volt }}       </td>
-                                    <td>{{ $row->ammeter_cur }}        </td>
-                                    <td>{{ $row->ammeter_power }}      </td>
-                                    <td>{{ $row->ammeter_power_scale }}</td>
-                                    <td>{{ $row->battery_volt }}       </td>
-                                    <td>{{ $row->port_usable }}        </td>
+                                    <td>{{ $row->sw_ver }}</td>
+                                    <td>{{ $row->volt_input }}</td>
+                                    <td>{{ $row->volt_output }}</td>
+                                    <td>{{ $row->cur }}</td>
+                                    <td>{{ $row->cap }}</td>
+                                    <td>{{ $row->power }}</td>
+                                    <td>{{ $row->power_on }}</td>
+                                    <td>{{ $row->power_scale }}</td>
+                                    <td>{{ $row->screw_status }}</td>
+                                    <td>{{ $row->screw_on }}</td>
+                                    <td>{{ $row->screw_pos }}</td>
+                                    <td>{{ $row->rely_status }}</td>
+                                    <td>{{ $row->rely_alarm }}</td>
+                                    <td>{{ $row->cur_alarm }}</td>
+                                    <td>{{ $row->screw_alarm }}</td>
+                                    <td>{{ $row->loudian_alarml }}</td>
+                                    <td>{{ $row->port_usable }}</td>
+                                    <td>{{ $row->is_charge }}</td>
                                 </tr>
                             @endforeach
                             </tbody>
