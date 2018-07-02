@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  * @property int|null $battery_level 电池等级
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Battery whereBatteryLevel($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Battery whereImei($value)
  */
 class Battery extends Model
 {

@@ -23,6 +23,10 @@ use Illuminate\Support\Facades\Log;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereUserBalance($value)
  * @property float|null $present_balance 赠送金额余额
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User wherePresentBalance($value)
+ * @property int|null $ops 是否可以运维，0=不可，1=可
+ * @property int|null $replace 是否可以换电，0=不可，1-可
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereOps($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereReplace($value)
  */
 class User extends Model
 {

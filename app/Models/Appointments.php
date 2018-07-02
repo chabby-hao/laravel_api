@@ -22,6 +22,8 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  * @property int|null $battery_level
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Appointments whereBatteryLevel($value)
+ * @property int $state
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Appointments whereState($value)
  */
 class Appointments extends Model
 {

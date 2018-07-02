@@ -14,6 +14,10 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserDevice whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserDevice whereUserId($value)
  * @mixin \Eloquent
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserDevice whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserDevice whereUpdatedAt($value)
  */
 class UserDevice extends Model
 {

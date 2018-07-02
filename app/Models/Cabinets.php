@@ -22,6 +22,12 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  * @property string|null $cabinet_no 编号
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Cabinets whereCabinetNo($value)
+ * @property string|null $url
+ * @property string|null $lat
+ * @property string|null $lng
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Cabinets whereLat($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Cabinets whereLng($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Cabinets whereUrl($value)
  */
 class Cabinets extends Model
 {
