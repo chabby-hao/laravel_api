@@ -54,18 +54,18 @@
                                 <?php /** @var \App\Models\HostPortInfos $row */?>
                                 @foreach ($datas as $row)
                                     <tr class="gradeX">
-                                        {{$row->udid}}
-                                        {{$row->port}}
-                                        {{$row->create_time}}
-                                        {{$row->node_rely_status1}}
-                                        {{$row->node_rely_status2}}
-                                        {{$row->ammeter_energy}}
-                                        {{$row->ammeter_volt}}
-                                        {{$row->ammeter_cur}}
-                                        {{$row->ammeter_power}}
-                                        {{$row->ammeter_power_scale}}
-                                        {{$row->battery_volt}}
-                                        {{$row->port_usable}}
+                                        {{ $row->udid }}
+                                        {{ $row->port }}
+                                        {{ $row->create_time }}
+                                        {{ $row->node_rely_status1 }}
+                                        {{ $row->node_rely_status2 }}
+                                        {{ $row->ammeter_energy }}
+                                        {{ $row->ammeter_volt }}
+                                        {{ $row->ammeter_cur }}
+                                        {{ $row->ammeter_power }}
+                                        {{ $row->ammeter_power_scale }}
+                                        {{ $row->battery_volt }}
+                                        {{ $row->port_usable }}
                                     </tr>
                                 @endforeach
                                 </tbody>
