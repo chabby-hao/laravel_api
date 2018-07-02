@@ -11,8 +11,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Libs\MyPage;
 use App\Models\ChargeTasks;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Request;
 
 class ChargeController extends BaseController
 {
