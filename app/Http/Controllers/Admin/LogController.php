@@ -25,9 +25,16 @@ class LogController extends BaseController
 {
 
 
-    public function hostList()
+    public function hostList(Request $request)
     {
-        $paginate = HostPortInfos::orderByDesc('create_time')->paginate();
+        $where = [];
+        if($udid = $request->input('device_no')){
+            $where['udid'] = $udid;
+        }
+        if($port = $request->input['port_no']){
+            $where['port'] = $port;
+        }
+        $paginate = HostPortInfos::where($where)->orderByDesc('create_time')->paginate();
 
         return view('admin.log.host_port_info_list', [
             'datas' => $paginate->items(),
@@ -35,9 +42,16 @@ class LogController extends BaseController
         ]);
     }
 
-    public function slaveList()
+    public function slaveList(Request $request)
     {
-        $paginate = SalvePortInfos::orderByDesc('create_time')->paginate();
+        $where = [];
+        if($udid = $request->input('device_no')){
+            $where['udid'] = $udid;
+        }
+        if($port = $request->input['port_no']){
+            $where['port'] = $port;
+        }
+        $paginate = SalvePortInfos::where($where)->orderByDesc('create_time')->paginate();
 
         return view('admin.log.salve_port_info_list', [
             'datas' => $paginate->items(),
@@ -45,9 +59,16 @@ class LogController extends BaseController
         ]);
     }
 
-    public function pluginList()
+    public function pluginList(Request $request)
     {
-        $paginate = PortPluginChanges::orderByDesc('create_time')->paginate();
+        $where = [];
+        if($udid = $request->input('device_no')){
+            $where['device_id'] = $udid;
+        }
+        if($port = $request->input['port_no']){
+            $where['port'] = $port;
+        }
+        $paginate = PortPluginChanges::where($where)->orderByDesc('create_time')->paginate();
 
         return view('admin.log.port_plugin_change_list', [
             'datas' => $paginate->items(),
