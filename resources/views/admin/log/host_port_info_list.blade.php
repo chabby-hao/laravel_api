@@ -51,23 +51,23 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {{--<?php /** @var \App\Models\HostPortInfos $row */--}}
-                                {{--foreach ($datas as $row) { ?>--}}
-                                    {{--<tr class="gradeX">--}}
-                                        {{--<?php echo $row->udid;?>--}}
-                                        {{--<?php echo $row->port;?>--}}
-                                        {{--<?php echo $row->create_time;?>--}}
-                                        {{--<?php echo $row->node_rely_status1;?>--}}
-                                        {{--<?php echo $row->node_rely_status2;?>--}}
-                                        {{--<?php echo $row->ammeter_energy;?>--}}
-                                        {{--<?php echo $row->ammeter_volt;?>--}}
-                                        {{--<?php echo $row->ammeter_cur;?>--}}
-                                        {{--<?php echo $row->ammeter_power;?>--}}
-                                        {{--<?php echo $row->ammeter_power_scale;?>--}}
-                                        {{--<?php echo $row->battery_volt;?>--}}
-                                        {{--<?php echo $row->port_usable;?>--}}
-                                    {{--</tr>--}}
-                                {{--<?php } ?>--}}
+                                <?php /** @var \App\Models\HostPortInfos $row */?>
+                                @foreach ($datas as $row)
+                                    <tr class="gradeX">
+                                        {{$row->udid}}
+                                        {{$row->port}}
+                                        {{$row->create_time}}
+                                        {{$row->node_rely_status1}}
+                                        {{$row->node_rely_status2}}
+                                        {{$row->ammeter_energy}}
+                                        {{$row->ammeter_volt}}
+                                        {{$row->ammeter_cur}}
+                                        {{$row->ammeter_power}}
+                                        {{$row->ammeter_power_scale}}
+                                        {{$row->battery_volt}}
+                                        {{$row->port_usable}}
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>
