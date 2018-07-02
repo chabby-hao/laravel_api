@@ -15,8 +15,8 @@
                             <div class="inline-block">
                                 <label>设备号</label>
                                 <select name="device_no">
-                                    <?php foreach (\App\Models\DeviceInfo::getAllDeviceNo() as $deviceNo){ ?>
-                                        <option <?php if(Request::input('device_no') == $deviceNo) echo 'checked' ?> value="<?php echo $deviceNo; ?>"><?php echo $deviceNo; ?></option>
+                                    <?php foreach (\App\Models\DeviceInfo::getAllDeviceNo() as $deviceNo){ $deviceNo = intval($deviceNo); ?>
+                                        <option <?php if(Request::input('device_no') == $deviceNo) echo 'selected' ?>  value="<?php echo $deviceNo; ?>"><?php echo $deviceNo; ?></option>
                                     <?php } ?>
                                 </select>
 <!--                                <input value="--><?php //echo Request::input('device_no') ?><!--" name="device_no" type="text"/>-->
