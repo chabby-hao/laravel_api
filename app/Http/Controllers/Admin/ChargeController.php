@@ -12,10 +12,11 @@ namespace App\Http\Controllers\Admin;
 use App\Libs\MyPage;
 use App\Models\ChargeTasks;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Request;
 
 class ChargeController extends BaseController
 {
-    public function list()
+    public function list(Request $request)
     {
 
 
@@ -29,8 +30,8 @@ class ChargeController extends BaseController
         if($phone = Input::get('phone')){
             $where['phone'] = $phone;
         }
-        if($taskState = Input::get('task_state')){
-            $where['task_state'] = $taskState;
+        if($request->has('task_state')){
+            $where['task_state'] = Input::get('task_state');
         }
 
         $paginate = ChargeTasks::join('users',function($join){
