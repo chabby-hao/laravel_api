@@ -23,7 +23,7 @@ class LogController extends BaseController
 {
 
 
-    public function HostList()
+    public function hostList()
     {
         $paginate = HostPortInfos::orderByDesc('id')->paginate();
 

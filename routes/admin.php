@@ -55,6 +55,11 @@ Route::any('/battery/list','Admin\BatteryController@list');
 Route::any('/battery/add','Admin\BatteryController@add');
 
 
+Route::any('/log/hostList','Admin\LogController@hostList');
+Route::any('/log/slaveList','Admin\LogController@slaveList');
+Route::any('/log/pluginList','Admin\LogController@pluginList');
+
+
 Route::any('/test', function () {
 
     $a = public_path('demo/ttt.xls');

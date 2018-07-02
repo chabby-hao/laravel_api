@@ -131,6 +131,17 @@
 
         </li>
 
+        {{--日志--}}
+        <li class="submenu"><a href="#"><i class="icon icon-th-list"></i> <span>日志列表</span>
+            </a>
+            <ul>
+                <li><a href="{{ URL::action('Admin\LogController@hostList')  }}">主机日志</a></li>
+                <li><a href="{{ URL::action('Admin\LogController@slaveList')  }}">从机日志</a></li>
+                <li><a href="{{ URL::action('Admin\LogController@pluginList')  }}">异物日志</a></li>
+            </ul>
+
+        </li>
+
         {{--地图--}}
         {{--<li class="active"><a target="_blank" href="http://bi.vipcare.com/map.html"><i class="icon icon-th-list"></i> <span>地图</span>--}}
             {{--</a>--}}
