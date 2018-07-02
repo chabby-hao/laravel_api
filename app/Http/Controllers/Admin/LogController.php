@@ -31,8 +31,8 @@ class LogController extends BaseController
         if($udid = $request->input('device_no')){
             $where['udid'] = $udid;
         }
-        if($port = $request->input('port_no')){
-            $where['port'] = $port;
+        if($request->has('port_no')){
+            $where['port'] = $request->input('port_no');
         }
         $paginate = HostPortInfos::where($where)->orderByDesc('create_time')->paginate();
 
@@ -48,8 +48,8 @@ class LogController extends BaseController
         if($udid = $request->input('device_no')){
             $where['udid'] = $udid;
         }
-        if($port = $request->input('port_no')){
-            $where['port'] = $port;
+        if($request->has('port_no')){
+            $where['port'] = $request->input('port_no');
         }
         $paginate = SalvePortInfos::where($where)->orderByDesc('create_time')->paginate();
 
@@ -65,8 +65,8 @@ class LogController extends BaseController
         if($udid = $request->input('device_no')){
             $where['udid'] = $udid;
         }
-        if($port = $request->input('port_no')){
-            $where['port'] = $port;
+        if($request->has('port_no')){
+            $where['port'] = $request->input('port_no');
         }
         $paginate = PortPluginChanges::where($where)->orderByDesc('create_time')->paginate();
 
