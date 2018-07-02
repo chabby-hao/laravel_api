@@ -30,7 +30,7 @@ class ChargeController extends BaseController
         if($phone = Input::get('phone')){
             $where['phone'] = $phone;
         }
-        if($request->has('task_state')){
+        if(is_numeric($request->input('task_state'))){
             $where['task_state'] = Input::get('task_state');
         }
 
