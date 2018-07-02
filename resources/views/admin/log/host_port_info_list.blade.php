@@ -56,7 +56,7 @@
                                 <tr class="gradeX">
                                     <td>{{ $row->udid }}               </td>
                                     <td>{{ $row->port }}               </td>
-                                    <td>{{ \Illuminate\Support\Carbon::createFromTimestamp($row->create_time)->toDateTimeString(); }}        </td>
+                                    <td>{{ \Illuminate\Support\Carbon::createFromTimestamp($row->create_time)->toDateTimeString() }}        </td>
                                     <td>{{ $row->node_rely_status1 }}  </td>
                                     <td>{{ $row->node_rely_status2 }}  </td>
                                     <td>{{ $row->ammeter_energy }}     </td>
