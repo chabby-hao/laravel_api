@@ -19,7 +19,6 @@ class ChargeController extends BaseController
     public function list(Request $request)
     {
 
-
         $where = [];
         if($deviceNo = Input::get('device_no')){
             $where['device_no'] = $deviceNo;
