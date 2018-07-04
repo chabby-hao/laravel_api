@@ -72,7 +72,7 @@
         <li class="submenu"><a href="#"><i class="icon icon-th-list"></i> <span>设备管理</span>
             </a>
             <ul>
-                <li><a href="{{ URL::action('Admin\DeviceController@list')  }}">设备列表</a></li>
+                <li><a href="{{ URL::action('Admin\DeviceController@deviceList')  }}">设备列表</a></li>
                 <li><a href="{{ URL::action('Admin\DeviceController@add')  }}">添加设备</a></li>
                 <li><a href="{{ URL::action('Admin\DeviceController@remoteUpgrade')  }}">远程升级</a></li>
                 <li><a href="{{ URL::action('Admin\DeviceController@slaveBinManage')  }}">升级文件管理</a></li>

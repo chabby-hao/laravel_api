@@ -19,10 +19,27 @@ use Illuminate\Support\Facades\URL;
 
 class DeviceController extends BaseController
 {
-    public function list()
+
+    public function deviceList()
+    {
+        $devices = DeviceInfo::groupBy('device_no')->orderByDesc('id')->paginate();
+
+        return view('admin.device.devicelist', [
+            'devices' => $devices->items(),
+            'page_nav'=>MyPage::showPageNav($devices),
+        ]);
+    }
+
+    public function list(Request $request)
     {
 
-        $devices = DeviceInfo::orderByDesc('id')->paginate();
+        $where = [];
+
+        if($deviceNo = $request->input('device_no')){
+            $where['device_no'] = $deviceNo;
+        }
+
+        $devices = DeviceInfo::where($where)->orderByDesc('id')->paginate();
 
         return view('admin.device.list', [
             'devices' => $devices->items(),
