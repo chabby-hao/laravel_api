@@ -58,7 +58,7 @@
                                         --><?php /*} */?>
 
                                         <td><?php echo $row['address'] ?></td>
-                                        <td><?php echo URL::action('Admin\DeviceController@list',['device_no'=>$row->device_no]) ?></td>
+                                        <td><a href="<?php echo URL::action('Admin\DeviceController@list',['device_no'=>$row->device_no]) ?>">点击查看 <a/></td>
                                         <!--<td><?php /*echo $row['created_at'] */?></td>-->
 <!--                                        <td>-->
 <!--                                            <a href="--><?php //echo url('admin/device/add') ?><!--" class="btn btn-info">设置</a>-->
