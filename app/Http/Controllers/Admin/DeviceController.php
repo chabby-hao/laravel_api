@@ -22,7 +22,7 @@ class DeviceController extends BaseController
 
     public function deviceList()
     {
-        $devices = DeviceInfo::groupBy('device_no')->orderByDesc('id')->paginate();
+        $devices = DeviceInfo::groupBy('device_no')->select(['device_no','address'])->paginate();
 
         return view('admin.device.devicelist', [
             'devices' => $devices->items(),
