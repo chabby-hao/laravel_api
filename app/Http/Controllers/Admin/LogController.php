@@ -16,6 +16,7 @@ use App\Models\CabinetDoors;
 use App\Models\Cabinets;
 use App\Models\HostPortInfos;
 use App\Models\PortPluginChanges;
+use App\Models\PortStatueChanges;
 use App\Models\SalvePortInfos;
 use App\Services\CabinetService;
 use Illuminate\Http\Request;
@@ -69,6 +70,23 @@ class LogController extends BaseController
             $where['port'] = $request->input('port_no');
         }
         $paginate = PortPluginChanges::where($where)->orderByDesc('id')->paginate();
+
+        return view('admin.log.port_plugin_change_list', [
+            'datas' => $paginate->items(),
+            'page_nav' => MyPage::showPageNav($paginate),
+        ]);
+    }
+
+    public function portChange(Request $request)
+    {
+        $where = [];
+        if($udid = $request->input('device_no')){
+            $where['device_id'] = $udid;
+        }
+        if(is_numeric($request->input('port_no'))){
+            $where['port'] = $request->input('port_no');
+        }
+        $paginate = PortStatueChanges::where($where)->orderByDesc('id')->paginate();
 
         return view('admin.log.port_plugin_change_list', [
             'datas' => $paginate->items(),

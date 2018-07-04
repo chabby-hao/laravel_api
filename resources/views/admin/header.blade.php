@@ -138,6 +138,7 @@
                 <li><a href="{{ URL::action('Admin\LogController@hostList')  }}">主机日志</a></li>
                 <li><a href="{{ URL::action('Admin\LogController@slaveList')  }}">从机日志</a></li>
                 <li><a href="{{ URL::action('Admin\LogController@pluginList')  }}">异物日志</a></li>
+                <li><a href="{{ URL::action('Admin\LogController@portChange')  }}">充电口状态变化</a></li>
             </ul>
 
         </li>
