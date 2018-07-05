@@ -106,7 +106,7 @@ class LogController extends BaseController
         }
         $paginate = UserEventLogs::where($where)->orderByDesc('id')->paginate();
 
-        return view('admin.log.port_plugin_change_list', [
+        return view('admin.log.user_event_log_list', [
             'datas' => $paginate->items(),
             'page_nav' => MyPage::showPageNav($paginate),
         ]);
