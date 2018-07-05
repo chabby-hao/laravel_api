@@ -32,7 +32,7 @@ class AdminBeforeCheck
 
         // 如果已经登录过了，直接调新页面
         if($isLogin && $routeName == 'login'){
-            return Redirect::action('Admin\DeviceController@list');
+            return Redirect::action('Admin\DeviceController@deviceList');
         }
 
         Log::debug('admin route : ' . $request->route()->getActionName());
