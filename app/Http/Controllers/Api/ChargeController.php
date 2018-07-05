@@ -7,6 +7,7 @@ use App\Libs\Helper;
 use App\Models\ChargeNotifyLog;
 use App\Models\ChargeTasks;
 use App\Models\DeviceInfo;
+use App\Models\UserEventLogs;
 use App\Models\WelfareDevices;
 use App\Models\WelfareUsers;
 use App\Services\BoxService;
@@ -121,6 +122,8 @@ class ChargeController extends Controller
         BoxService::openBox($deviceNo, $portNo);
         //}
 
+        UserEventLogs::addLog(UserEventLogs::TYPE_SCAN_CODE);
+
         return Helper::response(['device_id' => $deviceId, 'address' => $deviceInfo['address']]);
     }
 
@@ -158,6 +161,8 @@ class ChargeController extends Controller
             return Helper::responeseError(ErrorCode::$qrCodeNotFind);
         }
 
+        UserEventLogs::addLog(UserEventLogs::TYPE_START_CHARGE);
+
         return Helper::response(['task_id' => $taskId]);
     }
 
@@ -175,6 +180,7 @@ class ChargeController extends Controller
             ChargeService::endChargeByUser(['device_no' => $device->device_no, 'port_no' => $device->port_no]);
         }
 
+        UserEventLogs::addLog(UserEventLogs::TYPE_END_CHARGE);
 
         return $this->responseOk();
     }

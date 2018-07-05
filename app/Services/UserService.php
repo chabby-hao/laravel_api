@@ -31,6 +31,14 @@ class UserService extends BaseService
         return false;
     }
 
+    public static function getUserPhone()
+    {
+        if (!empty(static::$userInfo['phone'])) {
+            return static::$userInfo['phone'];
+        }
+        return false;
+    }
+
 
     public static function getOpenid($code)
     {
