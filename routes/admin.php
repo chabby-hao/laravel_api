@@ -60,6 +60,7 @@ Route::any('/log/hostList','Admin\LogController@hostList');
 Route::any('/log/slaveList','Admin\LogController@slaveList');
 Route::any('/log/pluginList','Admin\LogController@pluginList');
 Route::any('/log/portChange','Admin\LogController@portChange');
+Route::any('/log/userEventLog','Admin\LogController@userEventLog');
 
 
 Route::any('/test', function () {
