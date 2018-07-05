@@ -18,6 +18,7 @@ use App\Models\HostPortInfos;
 use App\Models\PortPluginChanges;
 use App\Models\PortStatueChanges;
 use App\Models\SalvePortInfos;
+use App\Models\UserEventLogs;
 use App\Services\CabinetService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
@@ -87,6 +88,23 @@ class LogController extends BaseController
             $where['port'] = $request->input('port_no');
         }
         $paginate = PortStatueChanges::where($where)->orderByDesc('id')->paginate();
+
+        return view('admin.log.port_plugin_change_list', [
+            'datas' => $paginate->items(),
+            'page_nav' => MyPage::showPageNav($paginate),
+        ]);
+    }
+
+    public function userEventLog(Request $request)
+    {
+        $where = [];
+        if($udid = $request->input('device_no')){
+            $where['device_no'] = $udid;
+        }
+        if(is_numeric($request->input('port_no'))){
+            $where['port_no'] = $request->input('port_no');
+        }
+        $paginate = UserEventLogs::where($where)->orderByDesc('id')->paginate();
 
         return view('admin.log.port_plugin_change_list', [
             'datas' => $paginate->items(),

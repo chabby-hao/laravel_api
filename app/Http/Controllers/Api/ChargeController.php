@@ -92,8 +92,6 @@ class ChargeController extends Controller
 
 
         //用户余额是否充足
-
-
         if (UserService::getAvailabelBalance($userId) <= 0) {
 
             if (!WelfareUsers::join('welfare_devices', function ($join) {
