@@ -122,7 +122,7 @@ class ChargeController extends Controller
         BoxService::openBox($deviceNo, $portNo);
         //}
 
-        UserEventLogs::addLog(UserEventLogs::TYPE_SCAN_CODE);
+        UserEventLogs::addLog(UserEventLogs::TYPE_SCAN_CODE, $deviceNo, $portNo);
 
         return Helper::response(['device_id' => $deviceId, 'address' => $deviceInfo['address']]);
     }
@@ -161,7 +161,7 @@ class ChargeController extends Controller
             return Helper::responeseError(ErrorCode::$qrCodeNotFind);
         }
 
-        UserEventLogs::addLog(UserEventLogs::TYPE_START_CHARGE);
+        UserEventLogs::addLog(UserEventLogs::TYPE_START_CHARGE, $deviceInfo['device_no'], $deviceInfo['port_no']);
 
         return Helper::response(['task_id' => $taskId]);
     }
@@ -180,7 +180,7 @@ class ChargeController extends Controller
             ChargeService::endChargeByUser(['device_no' => $device->device_no, 'port_no' => $device->port_no]);
         }
 
-        UserEventLogs::addLog(UserEventLogs::TYPE_END_CHARGE);
+        UserEventLogs::addLog(UserEventLogs::TYPE_END_CHARGE, $device->device_no, $device->port_no);
 
         return $this->responseOk();
     }

@@ -21,6 +21,10 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserEventLogs whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserEventLogs whereUserId($value)
  * @mixin \Eloquent
+ * @property string|null $device_no
+ * @property int|null $port_no
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserEventLogs whereDeviceNo($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserEventLogs wherePortNo($value)
  */
 class UserEventLogs extends Model
 {
@@ -43,12 +47,14 @@ class UserEventLogs extends Model
         return $map === null ? $map : $map[$type];
     }
 
-    public static function addLog($type)
+    public static function addLog($type,$deviceNo, $portNo)
     {
         $model = new UserEventLogs();
         $model->user_id = UserService::getUserId();
         $model->phone = UserService::getUserPhone();
         $model->type = $type;
+        $model->device_no = $deviceNo;
+        $model->port_no = $portNo;
         return $model->save();
     }
 
