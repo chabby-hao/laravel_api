@@ -53,7 +53,7 @@ class UserEventLogs extends Model
         $model->user_id = $userId ?: UserService::getUserId();
         $model->phone = $phone ?: UserService::getUserPhone();
         $model->type = $type;
-        $model->device_no = $deviceNo;
+        $model->device_no = intval($deviceNo);
         $model->port_no = $portNo;
         return $model->save();
     }
