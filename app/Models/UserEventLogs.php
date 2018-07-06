@@ -47,11 +47,11 @@ class UserEventLogs extends Model
         return $map === null ? $map : $map[$type];
     }
 
-    public static function addLog($type,$deviceNo, $portNo)
+    public static function addLog($type, $deviceNo, $portNo, $userId = '', $phone = '')
     {
         $model = new UserEventLogs();
-        $model->user_id = UserService::getUserId();
-        $model->phone = UserService::getUserPhone();
+        $model->user_id = $userId ?: UserService::getUserId();
+        $model->phone = $phone ?: UserService::getUserPhone();
         $model->type = $type;
         $model->device_no = $deviceNo;
         $model->port_no = $portNo;

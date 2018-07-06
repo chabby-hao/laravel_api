@@ -7,6 +7,7 @@ use App\Libs\Helper;
 use App\Models\ChargeNotifyLog;
 use App\Models\ChargeTasks;
 use App\Models\DeviceInfo;
+use App\Models\User;
 use App\Models\UserEventLogs;
 use App\Models\WelfareDevices;
 use App\Models\WelfareUsers;
@@ -178,7 +179,8 @@ class ChargeController extends Controller
             ChargeService::endChargeByUser(['device_no' => $device->device_no, 'port_no' => $device->port_no]);
         }
 
-        UserEventLogs::addLog(UserEventLogs::TYPE_END_CHARGE, $device->device_no, $device->port_no);
+        $user = User::find($device->user_id);
+        UserEventLogs::addLog(UserEventLogs::TYPE_END_CHARGE, $device->device_no, $device->port_no, $device->user_id, $user->phone);
 
         return $this->responseOk();
     }
