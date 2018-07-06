@@ -31,8 +31,15 @@ class DeviceController extends BaseController
 
         $devices = DeviceInfo::where($where)->groupBy('device_no')->orderByDesc('id')->paginate();
 
+        $datas = $devices->items();
+        /** @var DeviceInfo $data */
+        foreach ($datas as $data){
+            $data->attach = DeviceService::isDeviceOnline($data->device_no) ? '在线' : '离线';
+        }
+
+
         return view('admin.device.devicelist', [
-            'devices' => $devices->items(),
+            'devices' => $datas,
             'page_nav'=>MyPage::showPageNav($devices),
         ]);
     }
@@ -48,8 +55,14 @@ class DeviceController extends BaseController
 
         $devices = DeviceInfo::where($where)->orderByDesc('id')->paginate();
 
+        $datas = $devices->items();
+        /** @var DeviceInfo $data */
+        foreach ($datas as $data){
+            $data->portUseful = DeviceService::isPortUseful($data->device_no, $data->port_no) ? '可用' : '不可用';
+        }
+
         return view('admin.device.list', [
-            'devices' => $devices->items(),
+            'devices' => $datas,
             'page_nav'=>MyPage::showPageNav($devices),
         ]);
     }

@@ -40,6 +40,7 @@
                                     <!--<th>端口号</th>
                                     <th>二维码</th>-->
                                     <th>安装地址</th>
+                                    <th>状态</th>
                                     <th>端口详情</th>
                                     <!--<th>添加时间</th>-->
 <!--                                    <th>操作</th>-->
@@ -58,6 +59,7 @@
                                         --><?php /*} */?>
 
                                         <td><?php echo $row['address'] ?></td>
+                                        <td><?php echo $row->attach ?></td>
                                         <td><a href="<?php echo URL::action('Admin\DeviceController@list',['device_no'=>$row->device_no]) ?>">点击查看 <a/></td>
                                         <!--<td><?php /*echo $row['created_at'] */?></td>-->
 <!--                                        <td>-->

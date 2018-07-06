@@ -53,7 +53,7 @@ class AdminController extends BaseController
             $check = ['name','pwd'];
             $data = $this->_checkParams($check, $request->input());
             if(AdminService::login($data['name'], $data['pwd'])){
-                return $this->_outPutRedirect(URL::action('Admin\DeviceController@list'), 0);
+                return $this->_outPutRedirect(URL::action('Admin\DeviceController@deviceList'), 0);
             }
             return $this->_outPutError('用户名或者密码错误');
         }

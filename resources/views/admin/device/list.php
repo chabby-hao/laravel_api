@@ -38,6 +38,7 @@
                                 <tr>
                                     <th>设备号</th>
                                     <th>端口号</th>
+                                    <th>状态</th>
                                     <th>二维码</th>
                                     <th>安装地址</th>
                                     <th>添加时间</th>
@@ -49,6 +50,7 @@
                                     <tr class="gradeX">
                                         <td><?php echo $row['device_no'] ?></td>
                                         <td><?php echo $row['port_no'] ?></td>
+                                        <td><?php echo $row->portUseful; ?></td>
                                         <?php if ($row['qr_img']) { ?>
                                             <td><img width="100" height="100" src="<?php echo $row['qr_img'] ?>" alt="未设置"></td>
                                         <?php } else { ?>
