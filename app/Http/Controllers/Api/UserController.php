@@ -182,7 +182,8 @@ class UserController extends Controller
         }
         $balance = number_format($userInfo['user_balance'], 2);
         $present = number_format($userInfo['present_balance'], 2);
-        return Helper::response(['balance' => $balance, 'present' => $present]);
+        $total = number_format($userInfo['user_balance'] + $userInfo['present_balance'], 2);
+        return Helper::response(['balance' => $balance, 'present' => $present, 'total'=>$total]);
     }
 
     /**
