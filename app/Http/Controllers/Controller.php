@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Log;
 
 class Controller extends BaseController
@@ -52,6 +54,22 @@ class Controller extends BaseController
             return Helper::responeseError(ErrorCode::$tokenExpire);
         }
         return $userId;
+    }
+
+    protected function getDaterange($preDay = null)
+    {
+        $dateRange = Input::get('daterange');
+        if ($dateRange) {
+            if (strpos($dateRange, '~') !== false) {
+                list($startDatetime, $endDatetime) = explode('~', $dateRange);
+            } else {
+                list($startDatetime, $endDatetime) = explode('-', $dateRange);
+            }
+        } else {
+            $preDay = $preDay ?: Carbon::now()->startOfDay()->toDateTimeString();
+            list($startDatetime, $endDatetime) = [$preDay, Carbon::now()->endOfDay()->toDateTimeString()];
+        }
+        return [trim($startDatetime), trim($endDatetime)];
     }
 
 }
