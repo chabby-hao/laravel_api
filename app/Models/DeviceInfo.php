@@ -40,7 +40,7 @@ class DeviceInfo extends Model
     public static function getAllDeviceNo($whereIn = [])
     {
 var_dump($whereIn);
-        $model = self::where([]);
+        $model = new self();
         if($whereIn){
             var_dump($whereIn);
             $model->whereIn('device_no', $whereIn);
