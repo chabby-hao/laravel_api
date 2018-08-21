@@ -80,6 +80,7 @@ class AdminService extends BaseService
     public static function getDeviceNos($isInt = false)
     {
         $config = session()->get('user_config');
+        var_dump($config);
         if($config) {
             $config = json_decode($config, true);
             $data = $config['device_nos'] ?: [];
@@ -88,7 +89,7 @@ class AdminService extends BaseService
                     $v = intval($v);
                 });
             }
-            return $config['device_nos'] ?: [];
+            return $data;
         }
         return [];
 
