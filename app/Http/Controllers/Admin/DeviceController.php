@@ -12,6 +12,7 @@ use App\Http\Controllers\Controller;
 use App\Libs\Helper;
 use App\Libs\MyPage;
 use App\Models\DeviceInfo;
+use App\Services\AdminService;
 use App\Services\DeviceService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -29,7 +30,13 @@ class DeviceController extends BaseController
             $where['device_no'] = $deviceNo;
         }
 
-        $devices = DeviceInfo::where($where)->groupBy('device_no')->orderByDesc('id')->paginate();
+        $model = DeviceInfo::where($where);
+
+        if($deviceNos = AdminService::getDeviceNos()){
+            $model->whereIn('device_no', $deviceNos);
+        }
+
+        $devices = $model->groupBy('device_no')->orderByDesc('id')->paginate();
 
         $datas = $devices->items();
         /** @var DeviceInfo $data */
@@ -53,7 +60,13 @@ class DeviceController extends BaseController
             $where['device_no'] = $deviceNo;
         }
 
-        $devices = DeviceInfo::where($where)->orderByDesc('id')->paginate();
+        $model = DeviceInfo::where($where);
+
+        if($deviceNos = AdminService::getDeviceNos()){
+            $model->whereIn('device_no', $deviceNos);
+        }
+
+        $devices = $model->orderByDesc('id')->paginate();
 
         $datas = $devices->items();
         /** @var DeviceInfo $data */

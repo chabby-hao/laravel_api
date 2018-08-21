@@ -11,6 +11,11 @@ class AdminService extends BaseService
     public static function addAdmin($name, $pwd, $userType, $deviceNos)
     {
         try {
+
+            if($userType == Admins::USER_TYPE_CHANNEL && !$deviceNos){
+                return false;
+            }
+
             $admin = new Admins();
             $admin->name = $name;
             $admin->pwd = self::_encrypt($pwd);
@@ -72,11 +77,17 @@ class AdminService extends BaseService
         return false;
     }
 
-    public static function getDeviceNos()
+    public static function getDeviceNos($isInt = false)
     {
         $config = session()->get('user_config');
         if($config) {
             $config = json_decode($config, true);
+            $data = $config['device_nos'] ?: [];
+            if($isInt && $data){
+                array_walk($data, function(&$v){
+                    $v = intval($v);
+                });
+            }
             return $config['device_nos'] ?: [];
         }
         return [];
