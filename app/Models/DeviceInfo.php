@@ -42,6 +42,7 @@ class DeviceInfo extends Model
 
         $model = new self();
         if($whereIn){
+            var_dump($whereIn);
             $model->whereIn('device_no', $whereIn);
         }
 
