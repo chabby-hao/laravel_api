@@ -89,8 +89,7 @@
         var deviceNos = $("#device_nos");
         
         $("select[name='user_type']").change(function () {
-            console.log($(this).val());
-            if($(this).val() === '<?php \App\Models\Admins::USER_TYPE_CHANNEL ?>'){
+            if($(this).val() === '<?php echo \App\Models\Admins::USER_TYPE_CHANNEL ?>'){
                 deviceNos.show();
             }else{
                 deviceNos.hide();
