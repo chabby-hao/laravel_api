@@ -21,7 +21,7 @@ class AdminService extends BaseService
             $admin->pwd = self::_encrypt($pwd);
             $admin->user_type = $userType;
             if($deviceNos){
-                $admin->user_config = json_encode(['deviceNos'=>$deviceNos]);
+                $admin->user_config = json_encode(['device_nos'=>$deviceNos]);
             }
 
             $res = $admin->save();
@@ -80,7 +80,6 @@ class AdminService extends BaseService
     public static function getDeviceNos($isInt = false)
     {
         $config = session()->get('user_config');
-        var_dump($config);
         if($config) {
             $config = json_decode($config, true);
             $data = $config['device_nos'] ?: [];
