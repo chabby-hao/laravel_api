@@ -32,7 +32,7 @@ class DeviceController extends BaseController
 
         $model = DeviceInfo::where($where);
 
-        if($deviceNos = AdminService::getDeviceNos()){
+        if($deviceNos = AdminService::getCurrentDeviceNos()){
             $model->whereIn('device_no', $deviceNos);
         }
 
@@ -62,7 +62,7 @@ class DeviceController extends BaseController
 
         $model = DeviceInfo::where($where);
 
-        if($deviceNos = AdminService::getDeviceNos()){
+        if($deviceNos = AdminService::getCurrentDeviceNos()){
             $model->whereIn('device_no', $deviceNos);
         }
 

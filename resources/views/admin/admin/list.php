@@ -37,6 +37,8 @@
                                 <thead>
                                 <tr>
                                     <th>账号</th>
+                                    <th>权限</th>
+                                    <th>设备号</th>
                                     <th>创建日期</th>
                                 </tr>
                                 </thead>
@@ -45,6 +47,8 @@
                                 foreach ($admins as $admin) { ?>
                                     <tr class="gradeX">
                                         <td><?php echo $admin->name ?></td>
+                                        <td><?php echo \App\Models\Admins::getUserType($admin->user_type) ?></td>
+                                        <td><?php echo \App\Services\AdminService::getDeviceNosByAdminId($admin->id) ?></td>
                                         <td><?php echo $admin->created_at ?></td>
                                     </tr>
                                 <?php } ?>

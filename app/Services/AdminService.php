@@ -77,7 +77,7 @@ class AdminService extends BaseService
         return false;
     }
 
-    public static function getDeviceNos($isInt = false)
+    public static function getCurrentDeviceNos($isInt = false)
     {
         $config = session()->get('user_config');
         if($config) {
@@ -91,8 +91,17 @@ class AdminService extends BaseService
             return $data;
         }
         return [];
+    }
 
-
+    public static function getDeviceNosByAdminId($adminId)
+    {
+        $model = Admins::find($adminId);
+        $config = $model->user_config;
+        if($config){
+            $config = json_decode($config, true);
+            return implode(',', $config['device_nos']);
+        }
+        return '';
     }
 
 }

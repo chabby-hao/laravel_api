@@ -37,7 +37,7 @@ class ChargeController extends BaseController
             $join->on('users.id','=','user_id');
         })->where($where);
 
-        if($deviceNos = AdminService::getDeviceNos(true)){
+        if($deviceNos = AdminService::getCurrentDeviceNos(true)){
             $model->whereIn('device_no', $deviceNos);
         }
 
