@@ -79,7 +79,7 @@ class CabinetSync extends Command
                     $redis->sRem($key, $doorNo);
                 }
             }
-            Log::info("cabinetId:{$cabinet->id}, cabinetNo: $cabinetNo smember $key", $redis->sMembers($key));
+            //Log::info("cabinetId:{$cabinet->id}, cabinetNo: $cabinetNo smember $key", $redis->sMembers($key));
         }
 
         $batterys = Battery::get();
@@ -92,7 +92,7 @@ class CabinetSync extends Command
                 'voltage' => $battery->battery_level,
             ];
             $redis->hMset($key, $data);
-            Log::info("battery: $batteryId hgetall : ", $redis->hGetAll($key));
+            //Log::info("battery: $batteryId hgetall : ", $redis->hGetAll($key));
         }
 
 

@@ -71,7 +71,7 @@ class BatteryControl extends Command
                     BatteryService::openBatteryOutput($battery->udid);
                 }
             }
-            Log::info("battery: $batteryId hgetall : ", $redis->hGetAll($key));
+            //Log::info("battery: $batteryId hgetall : ", $redis->hGetAll($key));
         }
 
 
