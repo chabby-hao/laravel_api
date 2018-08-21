@@ -60,11 +60,11 @@
         <!--<li class="active"><a href=""><i class="icon icon-home"></i>
                 <span>Dashboard</span></a></li>-->
         <!--        用户参数配置，用于集成api-->
-        <li class="submenu"><a href="#"><i class="icon icon-th-list"></i> <span>管理员</span>
+        <li class="submenu"><a href="#"><i class="icon icon-th-list"></i> <span>账户管理</span>
             </a>
             <ul>
-                <li><a href="{{ URL::action('Admin\AdminController@list') }}">管理员列表</a></li>
-                <li><a href="{{ URL::action('Admin\AdminController@add') }}">添加管理员</a></li>
+                <li><a href="{{ URL::action('Admin\AdminController@list') }}">账户列表</a></li>
+                <li><a href="{{ URL::action('Admin\AdminController@add') }}">添加账户</a></li>
             </ul>
 
         </li>

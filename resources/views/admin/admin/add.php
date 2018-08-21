@@ -39,8 +39,6 @@
                                                 <option value="<?php echo $k; ?>"><?php echo $v; ?></option>
                                             <?php } ?>
                                         </select>
-                                        <input name="name" value="" type="text" class="span11"/>
-                                        <span class="help-block">例：chabby</span>
                                     </div>
                                 </div>
 
