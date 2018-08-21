@@ -11,6 +11,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Libs\MyPage;
 use App\Models\ChargeTasks;
+use App\Services\AdminService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 
@@ -32,10 +33,15 @@ class ChargeController extends BaseController
         if(is_numeric($request->input('task_state'))){
             $where['task_state'] = Input::get('task_state');
         }
-
-        $paginate = ChargeTasks::join('users',function($join){
+        $model = ChargeTasks::join('users',function($join){
             $join->on('users.id','=','user_id');
-        })->where($where)->select(['charge_tasks.*','users.phone'])->orderByDesc('id')->paginate();
+        })->where($where);
+
+        if($deviceNos = AdminService::getDeviceNos(true)){
+            $model->whereIn('device_no', $deviceNos);
+        }
+
+        $paginate = $model->select(['charge_tasks.*','users.phone'])->orderByDesc('id')->paginate();
 
 
         return view('admin.charge.list',[
