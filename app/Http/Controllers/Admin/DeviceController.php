@@ -35,7 +35,6 @@ class DeviceController extends BaseController
         if($deviceNos = AdminService::getDeviceNos()){
             $model->whereIn('device_no', $deviceNos);
         }
-        var_dump($deviceNos);
 
         $devices = $model->groupBy('device_no')->orderByDesc('id')->paginate();
 
