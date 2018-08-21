@@ -48,6 +48,7 @@ var_dump($whereIn);
 
         $m = $model->orderByDesc('id')->get()->unique('device_no');
         $devices = $m->toArray();
+        var_dump($devices);
         $data = [];
         foreach ($devices as $device){
             $data[] = $device['device_no'];
