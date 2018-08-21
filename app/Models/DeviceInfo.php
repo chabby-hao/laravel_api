@@ -37,9 +37,15 @@ class DeviceInfo extends Model
     /**
      * @return array
      */
-    public static function getAllDeviceNo()
+    public static function getAllDeviceNo($whereIn = [])
     {
-        $m = self::orderByDesc('id')->get()->unique('device_no');
+
+        $model = new self();
+        if($whereIn){
+            $model->whereIn('device_no', $whereIn);
+        }
+
+        $m = $model->orderByDesc('id')->get()->unique('device_no');
         $devices = $m->toArray();
         $data = [];
         foreach ($devices as $device){

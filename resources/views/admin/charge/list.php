@@ -16,7 +16,7 @@
                                 <label>设备号</label>
                                 <select name="device_no">
                                     <option value="">全部</option>
-                                    <?php foreach (\App\Models\DeviceInfo::getAllDeviceNo() as $deviceNo){ $deviceNo = intval($deviceNo); ?>
+                                    <?php foreach (\App\Models\DeviceInfo::getAllDeviceNo(\App\Services\AdminService::getDeviceNos()) as $deviceNo){ $deviceNo = intval($deviceNo); ?>
                                         <option <?php if(Request::input('device_no') == $deviceNo) echo 'selected' ?>  value="<?php echo $deviceNo; ?>"><?php echo $deviceNo; ?></option>
                                     <?php } ?>
                                 </select>
