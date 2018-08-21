@@ -8,12 +8,17 @@ use App\Models\Admins;
 class AdminService extends BaseService
 {
 
-    public static function addAdmin($name, $pwd)
+    public static function addAdmin($name, $pwd, $userType, $deviceNos)
     {
         try {
             $admin = new Admins();
             $admin->name = $name;
             $admin->pwd = self::_encrypt($pwd);
+            $admin->user_type = $userType;
+            if($deviceNos){
+                $admin->user_config = json_encode(['deviceNos'=>$deviceNos]);
+            }
+
             $res = $admin->save();
         } catch (\Exception $e) {
             \Log::error('add admin db error : ' . $e->getMessage());
@@ -32,6 +37,8 @@ class AdminService extends BaseService
                 session()->put('is_login', 1);
                 session()->put('admin_name', $name);
                 session()->put('admin_id', $admin->id);
+                session()->put('user_config',$admin->user_config);
+                session()->put('user_type',$admin->user_type);
                 session()->save();
                 return true;
             }
@@ -49,6 +56,32 @@ class AdminService extends BaseService
     private static function _encrypt($pwd)
     {
         return md5($pwd);
+    }
+
+    public static function getCurrentUserType()
+    {
+        $type = session()->get('user_type');
+        return $type;
+    }
+
+    public static function isChannelAdmin()
+    {
+        if(self::getCurrentUserType() == Admins::USER_TYPE_CHANNEL){
+            return true;
+        }
+        return false;
+    }
+
+    public static function getDeviceNos()
+    {
+        $config = session()->get('user_config');
+        if($config) {
+            $config = json_decode($config, true);
+            return $config['device_nos'] ?: [];
+        }
+        return [];
+
+
     }
 
 }

@@ -2,8 +2,8 @@
     <div id="content">
         <div id="content-header">
             <div id="breadcrumb"><a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a>
-                <a href="#" class="current">添加管理员</a></div>
-            <h1>添加管理员</h1>
+                <a href="#" class="current">添加账户</a></div>
+            <h1>添加账户</h1>
         </div>
         <div class="container-fluid">
             <div class="row-fluid">
@@ -29,6 +29,33 @@
                                         <input name="pwd" type="text" class="span11"/>
                                     </div>
                                 </div>
+
+                                <div class="control-group">
+                                    <label class="control-label"><span class="text-error">*</span>权限 :</label>
+                                    <div class="controls">
+                                        <select name="user_type" >
+                                            <option value="">请选择</option>
+                                            <?php foreach (\App\Models\Admins::getUserType() as $k=>$v){ ?>
+                                                <option value="<?php echo $k; ?>"><?php echo $v; ?></option>
+                                            <?php } ?>
+                                        </select>
+                                        <input name="name" value="" type="text" class="span11"/>
+                                        <span class="help-block">例：chabby</span>
+                                    </div>
+                                </div>
+
+                                <div id="device_nos" class="control-group hide">
+                                    <label class="control-label"><span class="text-error">*</span>设备号（棚号） :</label>
+                                    <div class="controls">
+                                        <?php $deviceNos = \App\Models\DeviceInfo::getAllDeviceNo();?>
+                                        <?php foreach (\App\Models\DeviceInfo::getAllDeviceStr() as $k=> $deviceStr) {$deviceNo = $deviceNos[$k]; ?>
+                                            <label>
+                                                <input type="checkbox" name="device_nos[]" value="<?php echo $deviceNo; ?>"/>
+                                                <?php echo $deviceStr; ?></label>
+                                        <?php } ?>
+                                    </div>
+                                </div>
+
 
 
                                 <div class="form-actions">
@@ -60,6 +87,16 @@
                 }
             }
         });
+
+        var deviceNos = $("#device_nos");
+        
+        $("select[name='user_type']").change(function () {
+            if($(this).val() === '<?php \App\Models\Admins::USER_TYPE_CHANNEL ?>'){
+                deviceNos.show();
+            }else{
+                deviceNos.hide();
+            }
+        })
     });
 
 </script>

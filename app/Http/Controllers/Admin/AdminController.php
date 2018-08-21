@@ -35,9 +35,10 @@ class AdminController extends BaseController
 
         if($request->isXmlHttpRequest()){
             //添加管理员
-            $check = ['name','pwd'];
-            $data = $this->_checkParams($check, $request->input());
-            if(AdminService::addAdmin($data['name'], $data['pwd'])){
+            $check = ['name','pwd','user_type','device_nos'];
+            $data = $this->_checkParams($check, $request->input(),['device_nos']);
+
+            if(AdminService::addAdmin($data['name'], $data['pwd'], $data['user_type'], $data['device_nos'])){
                 $this->_outPutRedirect(URL::action('Admin\AdminController@list'));
             }
             $this->_outPutError('添加失败,请确认信息再次输入');
