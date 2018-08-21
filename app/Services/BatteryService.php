@@ -60,7 +60,7 @@ class BatteryService extends BaseService
         Redis::select(5);
         $key = 'bat:' . $batteryId;
         $data = Redis::hGetAll($key);
-        Log::debug("batteryInfo key: $key", $data);
+        //Log::debug("batteryInfo key: $key", $data);
         return $data;
     }
 
