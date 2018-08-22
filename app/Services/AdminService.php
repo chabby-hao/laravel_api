@@ -20,13 +20,39 @@ class AdminService extends BaseService
             $admin->name = $name;
             $admin->pwd = self::_encrypt($pwd);
             $admin->user_type = $userType;
-            if($deviceNos){
+            if($userType == Admins::USER_TYPE_CHANNEL && deviceNos){
                 $admin->user_config = json_encode(['device_nos'=>$deviceNos]);
             }
 
             $res = $admin->save();
         } catch (\Exception $e) {
             \Log::error('add admin db error : ' . $e->getMessage());
+            return false;
+        }
+        return $res;
+    }
+
+    public static function editAdmin($id, $deviceNos)
+    {
+        try {
+            $admin = Admins::find($id);
+
+            if(!$admin){
+                return false;
+            }
+            $userType = $admin->user_type;
+
+            if($userType != Admins::USER_TYPE_CHANNEL){
+                return false;
+            }
+
+            if($deviceNos){
+                $admin->user_config = json_encode(['device_nos'=>$deviceNos]);
+            }
+
+            $res = $admin->save();
+        } catch (\Exception $e) {
+            \Log::error('edit admin deviceNos db error : ' . $e->getMessage());
             return false;
         }
         return $res;
@@ -93,13 +119,19 @@ class AdminService extends BaseService
         return [];
     }
 
-    public static function getDeviceNosByAdminId($adminId)
+    public static function getDeviceNosByAdminId($adminId, $isArr = false)
     {
         $model = Admins::find($adminId);
         $config = $model->user_config;
         if($config){
             $config = json_decode($config, true);
+            if($isArr){
+                return $config['device_nos'] ? : [];
+            }
             return implode(',', $config['device_nos']);
+        }
+        if($isArr){
+            return [];
         }
         return '';
     }

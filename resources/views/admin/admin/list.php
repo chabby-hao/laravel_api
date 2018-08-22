@@ -40,6 +40,7 @@
                                     <th>权限</th>
                                     <th>设备号</th>
                                     <th>创建日期</th>
+                                    <th>操作</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -50,6 +51,11 @@
                                         <td><?php echo \App\Models\Admins::getUserType($admin->user_type) ?></td>
                                         <td><?php echo \App\Services\AdminService::getDeviceNosByAdminId($admin->id) ?></td>
                                         <td><?php echo $admin->created_at ?></td>
+                                        <td>
+                                            <?php if($admin->user_type == \App\Models\Admins::USER_TYPE_CHANNEL){ ?>
+                                                <a href="">编辑</a>
+                                            <?php } ?>
+                                        </td>
                                     </tr>
                                 <?php } ?>
                                 </tbody>

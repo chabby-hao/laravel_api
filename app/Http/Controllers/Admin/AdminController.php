@@ -47,6 +47,29 @@ class AdminController extends BaseController
         return view('admin.admin.add');
     }
 
+    public function edit(Request $request)
+    {
+
+        $id = $request->input('id');
+        $user = Admins::find($id);
+
+        if($request->isXmlHttpRequest()){
+            //添加管理员
+            $check = ['device_nos'];
+            $data = $this->_checkParams($check, $request->input());
+
+            if(AdminService::editAdmin($id, $data['device_nos'])){
+                $this->_outPutRedirect(URL::action('Admin\AdminController@list'));
+            }
+            $this->_outPutError('操作失败');
+        }
+
+        return view('admin.admin.edit',[
+            'user'=>$user,
+            'deviceNos'=>AdminService::getDeviceNosByAdminId($id, true),
+        ]);
+    }
+
     public function login(Request $request)
     {
 
