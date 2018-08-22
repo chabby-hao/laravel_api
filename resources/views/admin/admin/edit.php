@@ -14,11 +14,11 @@
                         </div>
                         <div class="widget-content">
                             <form id="myform" method="post" class="form-horizontal">
-                                <input type="hidden" name="id" value="<?php $user->id ?>"/>
+                                <input type="hidden" name="id" value="<?php echo $user->id ?>"/>
                                 <div class="control-group">
                                     <label class="control-label"><span class="text-error">*</span>账号 :</label>
                                     <div class="controls">
-                                        <input name="name" value="<?php echo $user->name ?>" readonly type="text" class="span11"/>
+                                        <input value="<?php echo $user->name ?>" readonly type="text" class="span11"/>
                                         <span class="help-block">例：chabby</span>
                                     </div>
                                 </div>
@@ -38,7 +38,7 @@
 
 
                                 <div class="form-actions">
-                                    <button type="button" id="mysubmit" class="btn btn-success">添加</button>
+                                    <button type="button" id="mysubmit" class="btn btn-success">提交</button>
                                 </div>
                             </form>
                         </div>
