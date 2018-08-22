@@ -29,7 +29,7 @@
                                         <?php $deviceNos = \App\Models\DeviceInfo::getAllDeviceNo();?>
                                         <?php foreach (\App\Models\DeviceInfo::getAllDeviceStr() as $k=> $deviceStr) {$deviceNo = $deviceNos[$k]; ?>
                                             <label>
-                                                <input type="checkbox" name="device_nos[]"  <?php if(in_array($deviceNo, $deviceNos)) echo 'checked' ?> value="<?php echo $deviceNo; ?>"/>
+                                                <input type="checkbox" name="device_nos[]"  <?php if(in_array($deviceNo, $user->device_nos)) echo 'checked' ?> value="<?php echo $deviceNo; ?>"/>
                                                 <?php echo $deviceStr; ?></label>
                                         <?php } ?>
                                     </div>

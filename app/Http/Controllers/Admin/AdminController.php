@@ -64,9 +64,9 @@ class AdminController extends BaseController
             $this->_outPutError('操作失败');
         }
 
+        $user->device_nos = AdminService::getDeviceNosByAdminId($id, true);
         return view('admin.admin.edit',[
             'user'=>$user,
-            'deviceNos'=>AdminService::getDeviceNosByAdminId($id, true),
         ]);
     }
 
