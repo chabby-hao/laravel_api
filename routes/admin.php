@@ -37,6 +37,7 @@ Route::any('/refunds/list', 'Admin\RefundsController@list');
 
 Route::any('/admins/list', 'Admin\AdminController@list');
 Route::any('/admins/add', 'Admin\AdminController@add');
+Route::any('/admins/edit', 'Admin\AdminController@edit');
 Route::any('/admins/login', 'Admin\AdminController@login')->name('login');
 Route::any('/admins/logout', 'Admin\AdminController@logout');
 
