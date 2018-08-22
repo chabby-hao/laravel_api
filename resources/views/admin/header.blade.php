@@ -59,90 +59,98 @@
     <ul>
         <!--<li class="active"><a href=""><i class="icon icon-home"></i>
                 <span>Dashboard</span></a></li>-->
+
+        @if(\App\Services\AdminService::getCurrentUserType() == \App\Models\Admins::USER_TYPE_CHANNEL)
+            <li class=""><a href="{{ URL::action('Admin\DeviceController@deviceList')  }}">设备列表</a></li>
+            <li class=""><a href="{{ URL::action('Admin\ChargeController@list')  }}">充电列表</a></li>
+        @else
         <!--        用户参数配置，用于集成api-->
-        <li class="submenu"><a href="#"><i class="icon icon-th-list"></i> <span>账户管理</span>
-            </a>
-            <ul>
-                <li><a href="{{ URL::action('Admin\AdminController@list') }}">账户列表</a></li>
-                <li><a href="{{ URL::action('Admin\AdminController@add') }}">添加账户</a></li>
-            </ul>
+            <li class="submenu"><a href="#"><i class="icon icon-th-list"></i> <span>账户管理</span>
+                </a>
+                <ul>
+                    <li><a href="{{ URL::action('Admin\AdminController@list') }}">账户列表</a></li>
+                    <li><a href="{{ URL::action('Admin\AdminController@add') }}">添加账户</a></li>
+                </ul>
 
-        </li>
-        <!--        设备配置-->
-        <li class="submenu"><a href="#"><i class="icon icon-th-list"></i> <span>设备管理</span>
-            </a>
-            <ul>
-                <li><a href="{{ URL::action('Admin\DeviceController@deviceList')  }}">设备列表</a></li>
-                <li><a href="{{ URL::action('Admin\DeviceController@add')  }}">添加设备</a></li>
-                <li><a href="{{ URL::action('Admin\DeviceController@remoteUpgrade')  }}">远程升级</a></li>
-                <li><a href="{{ URL::action('Admin\DeviceController@slaveBinManage')  }}">升级文件管理</a></li>
-                <li><a href="{{ URL::action('Admin\DeviceController@remoteTunnel')  }}">设备远程隧道配置</a></li>
-            </ul>
+            </li>
+            <!--        设备配置-->
+            <li class="submenu"><a href="#"><i class="icon icon-th-list"></i> <span>设备管理</span>
+                </a>
+                <ul>
+                    <li><a href="{{ URL::action('Admin\DeviceController@deviceList')  }}">设备列表</a></li>
+                    <li><a href="{{ URL::action('Admin\DeviceController@add')  }}">添加设备</a></li>
+                    <li><a href="{{ URL::action('Admin\DeviceController@remoteUpgrade')  }}">远程升级</a></li>
+                    <li><a href="{{ URL::action('Admin\DeviceController@slaveBinManage')  }}">升级文件管理</a></li>
+                    <li><a href="{{ URL::action('Admin\DeviceController@remoteTunnel')  }}">设备远程隧道配置</a></li>
+                </ul>
 
-        </li>
+            </li>
 
-        {{--用户管理--}}
-        <li class="submenu"><a href="#"><i class="icon icon-th-list"></i> <span>用户管理</span>
-            </a>
-            <ul>
-                <li><a href="{{ URL::action('Admin\UserController@list')  }}">用户列表</a></li>
-                <li><a href="{{ URL::action('Admin\UserController@feedback')  }}">用户反馈</a></li>
-            </ul>
+            {{--用户管理--}}
+            <li class="submenu"><a href="#"><i class="icon icon-th-list"></i> <span>用户管理</span>
+                </a>
+                <ul>
+                    <li><a href="{{ URL::action('Admin\UserController@list')  }}">用户列表</a></li>
+                    <li><a href="{{ URL::action('Admin\UserController@feedback')  }}">用户反馈</a></li>
+                </ul>
 
-        </li>
+            </li>
 
-        {{--订单管理--}}
-        <li class="submenu"><a href="#"><i class="icon icon-th-list"></i> <span>订单管理</span>
-            </a>
-            <ul>
-                <li><a href="{{ URL::action('Admin\OrdersController@list')  }}">充值列表</a></li>
-                <li><a href="{{ URL::action('Admin\RefundsController@list')  }}">退款列表</a></li>
-            </ul>
+            {{--订单管理--}}
+            <li class="submenu"><a href="#"><i class="icon icon-th-list"></i> <span>订单管理</span>
+                </a>
+                <ul>
+                    <li><a href="{{ URL::action('Admin\OrdersController@list')  }}">充值列表</a></li>
+                    <li><a href="{{ URL::action('Admin\RefundsController@list')  }}">退款列表</a></li>
+                </ul>
 
-        </li>
+            </li>
 
-        {{--充电列表--}}
-        <li class="submenu"><a href="#"><i class="icon icon-th-list"></i> <span>充电管理</span>
-            </a>
-            <ul>
-                <li><a href="{{ URL::action('Admin\ChargeController@list')  }}">充电列表</a></li>
-            </ul>
+            {{--充电列表--}}
+            <li class="submenu"><a href="#"><i class="icon icon-th-list"></i> <span>充电管理</span>
+                </a>
+                <ul>
+                    <li><a href="{{ URL::action('Admin\ChargeController@list')  }}">充电列表</a></li>
+                </ul>
 
-        </li>
+            </li>
 
-        {{--活动管理--}}
-        <li class="submenu"><a href="#"><i class="icon icon-th-list"></i> <span>活动管理</span>
-            </a>
-            <ul>
-                <li><a href="{{ URL::action('Admin\ActivityController@cardsList')  }}">福利卡列表</a></li>
-                <li><a href="{{ URL::action('Admin\ActivityController@cardsAdd')  }}">福利卡添加</a></li>
-            </ul>
+            {{--活动管理--}}
+            <li class="submenu"><a href="#"><i class="icon icon-th-list"></i> <span>活动管理</span>
+                </a>
+                <ul>
+                    <li><a href="{{ URL::action('Admin\ActivityController@cardsList')  }}">福利卡列表</a></li>
+                    <li><a href="{{ URL::action('Admin\ActivityController@cardsAdd')  }}">福利卡添加</a></li>
+                </ul>
 
-        </li>
+            </li>
 
-        {{--换电管理--}}
-        <li class="submenu"><a href="#"><i class="icon icon-th-list"></i> <span>换电管理</span>
-            </a>
-            <ul>
-                <li><a href="{{ URL::action('Admin\CabinetController@list')  }}">换电柜</a></li>
-                <li><a href="{{ URL::action('Admin\BatteryController@list')  }}">电池列表</a></li>
-                <li><a href="{{ URL::action('Admin\ReplaceController@list')  }}">换电任务</a></li>
-            </ul>
+            {{--换电管理--}}
+            <li class="submenu"><a href="#"><i class="icon icon-th-list"></i> <span>换电管理</span>
+                </a>
+                <ul>
+                    <li><a href="{{ URL::action('Admin\CabinetController@list')  }}">换电柜</a></li>
+                    <li><a href="{{ URL::action('Admin\BatteryController@list')  }}">电池列表</a></li>
+                    <li><a href="{{ URL::action('Admin\ReplaceController@list')  }}">换电任务</a></li>
+                </ul>
 
-        </li>
+            </li>
 
-        {{--日志--}}
-        <li class="submenu"><a href="#"><i class="icon icon-th-list"></i> <span>日志列表</span>
-            </a>
-            <ul>
-                <li><a href="{{ URL::action('Admin\LogController@hostList')  }}">主机日志</a></li>
-                <li><a href="{{ URL::action('Admin\LogController@slaveList')  }}">从机日志</a></li>
-                <li><a href="{{ URL::action('Admin\LogController@pluginList')  }}">异物日志</a></li>
-                <li><a href="{{ URL::action('Admin\LogController@portChange')  }}">充电口状态变化</a></li>
-                <li><a href="{{ URL::action('Admin\LogController@userEventLog')  }}">用户事件日志</a></li>
-            </ul>
+            {{--日志--}}
+            <li class="submenu"><a href="#"><i class="icon icon-th-list"></i> <span>日志列表</span>
+                </a>
+                <ul>
+                    <li><a href="{{ URL::action('Admin\LogController@hostList')  }}">主机日志</a></li>
+                    <li><a href="{{ URL::action('Admin\LogController@slaveList')  }}">从机日志</a></li>
+                    <li><a href="{{ URL::action('Admin\LogController@pluginList')  }}">异物日志</a></li>
+                    <li><a href="{{ URL::action('Admin\LogController@portChange')  }}">充电口状态变化</a></li>
+                    <li><a href="{{ URL::action('Admin\LogController@userEventLog')  }}">用户事件日志</a></li>
+                </ul>
 
-        </li>
+            </li>
+        @endif
+
+
 
         {{--地图--}}
         {{--<li class="active"><a target="_blank" href="http://bi.vipcare.com/map.html"><i class="icon icon-th-list"></i> <span>地图</span>--}}
