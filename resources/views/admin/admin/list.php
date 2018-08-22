@@ -53,7 +53,7 @@
                                         <td><?php echo $admin->created_at ?></td>
                                         <td>
                                             <?php if($admin->user_type == \App\Models\Admins::USER_TYPE_CHANNEL){ ?>
-                                                <a class="btn btn-warning" href="<?php URL::action('Admin\AdminController@edit',['id'=>$admin->id]) ?>">编辑</a>
+                                                <a class="btn btn-warning" href="<?php echo URL::action('Admin\AdminController@edit',['id'=>$admin->id]) ?>">编辑</a>
                                             <?php } ?>
                                         </td>
                                     </tr>
