@@ -23,20 +23,7 @@
                                     </div>
                                 </div>
 
-
-                                <div<!-- class="control-group">
-                                    <label class="control-label"><span class="text-error">*</span>权限 :</label>
-                                    <div class="controls">
-                                        <select name="user_type" >
-                                            <option value="">请选择</option>
-                                            <?php /*foreach (\App\Models\Admins::getUserType() as $k=>$v){ */?>
-                                                <option value="<?php /*echo $k; */?>"><?php /*echo $v; */?></option>
-                                            <?php /*} */?>
-                                        </select>
-                                    </div>
-                                </div>-->
-
-                                <div id="device_nos" class="control-group hide">
+                                <div id="device_nos" class="control-group">
                                     <label class="control-label"><span class="text-error">*</span>设备号（棚号） :</label>
                                     <div class="controls">
                                         <?php $deviceNos = \App\Models\DeviceInfo::getAllDeviceNo();?>
@@ -80,15 +67,6 @@
             }
         });
 
-        var deviceNos = $("#device_nos");
-        
-        $("select[name='user_type']").change(function () {
-            if($(this).val() === '<?php echo \App\Models\Admins::USER_TYPE_CHANNEL ?>'){
-                deviceNos.show();
-            }else{
-                deviceNos.hide();
-            }
-        })
     });
 
 </script>
