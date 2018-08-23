@@ -85,7 +85,7 @@ class ErrorCode
     {
         return [
             self::$qrCodeNotFind => '二维码有误',
-            self::$deviceNotOnline => '设备离线',
+            self::$deviceNotOnline => '设备离线,{device_no}-{port_no}',
             self::$deviceNotUseful => '充电口暂不可用，请稍后再试，{device_no}-{port_no}',
             self::$balanceNotEnough => '余额不足，请充值',
             self::$isChargingNow => '充电口被占用，请换一个充电口',
