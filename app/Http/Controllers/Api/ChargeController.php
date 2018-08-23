@@ -88,7 +88,7 @@ class ChargeController extends Controller
         }
         //检查设备端口是否可用
         if (!DeviceService::isPortUseful($deviceNo, $portNo)) {
-            return Helper::responeseError(ErrorCode::$deviceNotUseful);
+            return Helper::responeseError(ErrorCode::$deviceNotUseful,[],['device_no'=>$deviceNo,'port_no'=>$portNo]);
         }
 
 
