@@ -82,6 +82,7 @@
                     <li><a href="{{ URL::action('Admin\DeviceController@remoteUpgrade')  }}">远程升级</a></li>
                     <li><a href="{{ URL::action('Admin\DeviceController@slaveBinManage')  }}">升级文件管理</a></li>
                     <li><a href="{{ URL::action('Admin\DeviceController@remoteTunnel')  }}">设备远程隧道配置</a></li>
+                    <li><a href="{{ URL::action('Admin\DeviceController@rebootSlave')  }}">重启从机</a></li>
                 </ul>
 
             </li>
