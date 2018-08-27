@@ -1724,11 +1724,12 @@ form {
 
     #user-nav > ul {
         right: 0px;
-        margin-left: 20% !important;
         margin-top: 0px;
         width: 100%;
         background: #000;
-        position: relative;
+        position: absolute;
+        left: 50%;
+        border:0;
     }
 
     #user-nav > ul > li {
@@ -2165,4 +2166,12 @@ form {
 
 .myalert {
     background-color: initial;
+}
+
+/*8.27 legend 增加样式*/
+@media (max-width: 480px) {
+	.w1{width: 12%;}
+	.container-fluid{width: 320%;}
+	#content-header {width: 305%;}
+	#content {overflow-x: scroll;}
 }
