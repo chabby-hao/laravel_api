@@ -21,6 +21,7 @@ class CommandService extends BaseService
     const CMD_SLAVE_UPGRADE = 23333;//从机升级
     const CMD_REMOTE_OPEN_TUNNEL = 24444;//开启远程隧道
     const CMD_REMOTE_CLOSE_TUNNEL = 25555;//关闭远程隧道
+    const CMD_REBOOT_SLAVE = 20011;//重启从机
 
 
     const CMD_START_REPLACE = 30001;//开始换电
@@ -63,6 +64,12 @@ class CommandService extends BaseService
     {
         $number = Redis::hGet('axc_device_server', $deviceNo);
         return $number ? $number - 1 : 0;
+    }
+
+    public static function sendCommandRebootSlave($deviceNo, $portNo)
+    {
+        $cmd = self::CMD_REBOOT_SLAVE;
+        return self::send($deviceNo, $portNo, $cmd);
     }
 
     /**

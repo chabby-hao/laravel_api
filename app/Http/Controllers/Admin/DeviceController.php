@@ -13,6 +13,7 @@ use App\Libs\Helper;
 use App\Libs\MyPage;
 use App\Models\DeviceInfo;
 use App\Services\AdminService;
+use App\Services\CommandService;
 use App\Services\DeviceService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -209,6 +210,25 @@ class DeviceController extends BaseController
         }
 
         return view('admin.device.remoteTunnel');
+    }
+
+    public function rebootSlave(Request $request)
+    {
+        if($request->isXmlHttpRequest()){
+            //重启
+            $this->_checkParams(['device_no', 'port_no'], $request->input());
+            $deviceNo = $request->input('device_no');
+            $portNo = $request->input('port_no');
+
+            if(!DeviceService::isDeviceOnline($deviceNo)){
+                return $this->_outPutError('设备不在线');
+            }
+
+            CommandService::sendCommandRebootSlave($deviceNo, $portNo);
+            return $this->_outPutSuccess();
+        }
+
+        return view('admin.device.rebootSlave');
     }
 
 }
