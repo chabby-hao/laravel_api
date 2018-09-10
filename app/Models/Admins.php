@@ -20,6 +20,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Admins wherePwd($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Admins whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Admins whereUserConfig($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Admins whereUserType($value)
  */
 class Admins extends Model
 {
