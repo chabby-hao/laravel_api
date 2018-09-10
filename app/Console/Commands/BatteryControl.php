@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
+use Predis\Client;
 
 class BatteryControl extends Command
 {
@@ -21,7 +22,7 @@ class BatteryControl extends Command
      *
      * @var string
      */
-    protected $signature = 'BatteryControl';
+    protected $signature = 'BatteryControl {--clear=}';
 
     /**
      * The console command description.
@@ -50,13 +51,17 @@ class BatteryControl extends Command
         //
         Log::info('crontab start BatteryControl ...');
 
-        /** @var \Redis $redis */
+        /** @var Client $redis */
         $redis = Redis::connection();
 
         $batterys = Battery::get();
         foreach ($batterys as $battery) {
             $batteryId = $battery->battery_id;
             $key = 'bat:' . $batteryId;
+            if($this->option('clear')){
+                $redis->select(5);
+                $redis->del($key);
+            }
             $batteryInfo = BatteryService::getBatteryInfo($batteryId);
             $zhangfei = BatteryService::getZhangfeiByBatteryId($batteryId);
             if(array_key_exists('batteryState', $batteryInfo)){
