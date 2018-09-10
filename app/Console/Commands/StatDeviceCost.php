@@ -103,6 +103,8 @@ class StatDeviceCost extends Command
 
                 $shareMoney = $profit * DeviceConfig::getProportion($deviceNo);
 
+                echo "userCost: $userCost, diff1 : $diff1, diff2 : $diff2, diffLow : $diffLow , deviceCostHigh: $deviceCostHigh, deviceCostLow:$deviceCostLow, deviceCost: $deviceCost"  . "\n";
+
                 DeviceCostDetail::updateOrCreate([
                     'device_no' => $deviceNo,
                     'date' => $date,
