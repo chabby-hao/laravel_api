@@ -99,7 +99,9 @@ class StatDeviceCost extends Command
 
                 $deviceCost = $deviceCostHigh + $deviceCostLow;
 
-                $shareMoney = ($userCost - $deviceCost > 0) ? ($userCost - $deviceCost) : 0;
+                $profit = ($userCost - $deviceCost > 0) ? ($userCost - $deviceCost) : 0;
+
+                $shareMoney = $profit * DeviceConfig::getProportion($deviceNo);
 
                 DeviceCostDetail::updateOrCreate([
                     'device_no' => $deviceNo,
