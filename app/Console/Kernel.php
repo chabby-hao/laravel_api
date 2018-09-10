@@ -7,6 +7,7 @@ use App\Console\Commands\AutoFinishCharge;
 use App\Console\Commands\BatteryControl;
 use App\Console\Commands\CabinetSync;
 use App\Console\Commands\ReplaceTimeout;
+use App\Console\Commands\StatDeviceCost;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -40,6 +41,7 @@ class Kernel extends ConsoleKernel
         $schedule->command(ReplaceTimeout::class)->everyMinute();
         $schedule->command(CabinetSync::class)->everyMinute();
         $schedule->command(BatteryControl::class)->everyMinute();
+        $schedule->command(StatDeviceCost::class)->daily();
     }
 
     /**
