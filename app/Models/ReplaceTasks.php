@@ -34,6 +34,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null $battery_id2
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ReplaceTasks whereBatteryId1($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ReplaceTasks whereBatteryId2($value)
+ * @property int $error
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ReplaceTasks whereError($value)
  */
 class ReplaceTasks extends Model
 {

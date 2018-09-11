@@ -248,7 +248,7 @@ class ReplaceBatteryController extends Controller
         $step = intval($input['step']);
         $batteryId = $input['batteryId'];
 
-        Log::debug('taskNotify receive data: ', $input);
+        Log::debug('taskNotify receive data: ', $request->input());
 
         ReplaceNotifyLog::create([
             'cabinet_no' => $cabinetNo,
@@ -292,6 +292,7 @@ class ReplaceBatteryController extends Controller
             ]);
         } elseif ($step === 30) {
             $task->state = ReplaceTasks::TASK_STATE_FAIL;
+            $task->error = $request->input('error', 0);
             $task->save();
         } elseif($step === 40){
             $task->state = ReplaceTasks::TASK_STATE_ABNORMAL;
