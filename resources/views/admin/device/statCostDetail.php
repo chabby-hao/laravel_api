@@ -2,8 +2,8 @@
     <div id="content">
         <div id="content-header">
             <div id="breadcrumb"><a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a>
-                <a href="#" class="current">设备列表</a></div>
-            <h1>设备列表</h1>
+                <a href="#" class="current">流水统计</a></div>
+            <h1>流水统计</h1>
         </div>
         <div class="container-fluid">
             <hr>
@@ -30,7 +30,6 @@
                     <div class="widget-box">
                         <div class="widget-title"><span class="icon"><i class="icon-th"></i></span>
                             <h5>列表</h5>
-                            <span class="pull-right"><a href="<?php echo URL::action('Admin\DeviceController@add') ?>" class="btn btn-info">新增设备</a></span>
                         </div>
                         <div class="widget-content nopadding">
                             <table class="table table-bordered data-table">
