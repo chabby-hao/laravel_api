@@ -240,7 +240,7 @@ class DeviceController extends BaseController
             $where['device_no'] = $deviceNo;
         }
         $model = DeviceCostDetail::where($where);
-        $devices = $model->orderByDesc('device_no')->orderByDesc('date')->paginate();
+        $devices = $model->orderByDesc('date')->orderByDesc('device_no')->paginate();
 
         $datas = $devices->items();
         /** @var DeviceCostDetail $data */
