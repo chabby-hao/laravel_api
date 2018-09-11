@@ -280,6 +280,8 @@ class DeviceController extends BaseController
                 'proportion'=>$input['proportion'],
             ]);
 
+            return $this->_outPutRedirect(URL::action('Admin\DeviceController@deviceList'));
+
         }
 
         return view('admin.device.deviceConfig', [
