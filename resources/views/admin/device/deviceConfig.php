@@ -12,6 +12,7 @@
                         <div class="widget-title"><span class="icon"> <i class="icon-align-justify"></i> </span>
                             <h5>详情</h5>
                         </div>
+                        <?php var_dump($data); ?>
                         <div class="widget-content">
                             <form id="myform" method="post" class="form-horizontal">
                                 <input type="hidden" name="device_no" value="<?php echo Request::input('device_no') ?>"/>
