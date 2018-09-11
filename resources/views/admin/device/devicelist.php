@@ -63,7 +63,7 @@
                                             <a class="btn-link" href="<?php echo URL::action('Admin\DeviceController@list',['device_no'=>$row->device_no]) ?>">点击查看 </a>
                                         </td>
                                         <td>
-                                            <a class="btn btn-warning" href="<?php echo URL::action('Admin\DeviceController@statCostDetail',['device_no'=>$row->device_no]) ?>">点击配置 </a>
+                                            <a class="btn btn-warning" href="<?php echo URL::action('Admin\DeviceController@deviceConfig',['device_no'=>$row->device_no]) ?>">点击配置 </a>
                                         </td>
                                     </tr>
                                 <?php } ?>
