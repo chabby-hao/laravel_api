@@ -285,7 +285,7 @@ class DeviceController extends BaseController
         }
 
         return view('admin.device.deviceConfig', [
-            'data'>$data,
+            'data'=>$data,
         ]);
 
     }
