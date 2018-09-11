@@ -26,6 +26,7 @@ Route::any('/device/slaveBinManage', 'Admin\DeviceController@slaveBinManage');
 Route::any('/device/remoteTunnel', 'Admin\DeviceController@remoteTunnel');
 Route::any('/device/rebootSlave', 'Admin\DeviceController@rebootSlave');
 Route::any('/device/statCostDetail', 'Admin\DeviceController@statCostDetail');
+Route::any('/device/deviceConfig', 'Admin\DeviceController@deviceConfig');
 
 Route::any('/user/list', 'Admin\UserController@list');
 Route::any('/user/feedback', 'Admin\UserController@feedback');

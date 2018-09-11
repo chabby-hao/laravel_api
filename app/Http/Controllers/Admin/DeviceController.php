@@ -11,6 +11,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Libs\Helper;
 use App\Libs\MyPage;
+use App\Models\DeviceConfig;
 use App\Models\DeviceCostDetail;
 use App\Models\DeviceInfo;
 use App\Services\AdminService;
@@ -252,6 +253,39 @@ class DeviceController extends BaseController
             'datas' => $datas,
             'page_nav'=>MyPage::showPageNav($devices),
         ]);
+    }
+
+    public function deviceConfig(Request $request)
+    {
+
+        $deviceNo = $request->input('device_no');
+        if(!$deviceNo){
+            abort(403);
+        }
+        $model = DeviceConfig::find($deviceNo);
+        $data = $model ? $model->toArray() : [];
+
+        if($request->isXmlHttpRequest()){
+            //配置
+            $input = $this->checkRequireParams(['univalence1','univalence2','proportion'], $request->input());
+            if($input['proportion'] > 1){
+                return $this->_outPutError('分成比例不能大于1');
+            }
+
+            DeviceConfig::updateOrCreate([
+                'device_no'=>$deviceNo,
+            ],[
+                'univalence1'=>$input['univalence1'],
+                'univalence2'=>$input['univalence2'],
+                'proportion'=>$input['proportion'],
+            ]);
+
+        }
+
+        return view('admin.device.deviceConfig', [
+            'data'>$data,
+        ]);
+
     }
 
 }

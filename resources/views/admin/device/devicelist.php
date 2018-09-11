@@ -42,8 +42,7 @@
                                     <th>安装地址</th>
                                     <th>状态</th>
                                     <th>端口详情</th>
-                                    <!--<th>添加时间</th>-->
-<!--                                    <th>操作</th>-->
+                                    <th>配置</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -60,12 +59,12 @@
 
                                         <td><?php echo $row['address'] ?></td>
                                         <td><?php echo $row->attach ?></td>
-                                        <td><a href="<?php echo URL::action('Admin\DeviceController@list',['device_no'=>$row->device_no]) ?>">点击查看 <a/></td>
-                                        <!--<td><?php /*echo $row['created_at'] */?></td>-->
-<!--                                        <td>-->
-<!--                                            <a href="--><?php //echo url('admin/device/add') ?><!--" class="btn btn-info">设置</a>-->
-<!--                                            <a href="javascript:;" class="btn btn-danger del">删除</a>-->
-<!--                                        </td>-->
+                                        <td>
+                                            <a class="btn " href="<?php echo URL::action('Admin\DeviceController@list',['device_no'=>$row->device_no]) ?>">点击查看 </a>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-warning" href="<?php echo URL::action('Admin\DeviceController@statCostDetail',['device_no'=>$row->device_no]) ?>">点击配置 </a>
+                                        </td>
                                     </tr>
                                 <?php } ?>
                                 </tbody>
