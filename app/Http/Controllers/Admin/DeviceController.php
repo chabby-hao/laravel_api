@@ -11,6 +11,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Libs\Helper;
 use App\Libs\MyPage;
+use App\Models\DeviceCostDetail;
 use App\Models\DeviceInfo;
 use App\Services\AdminService;
 use App\Services\CommandService;
@@ -229,6 +230,27 @@ class DeviceController extends BaseController
         }
 
         return view('admin.device.rebootSlave');
+    }
+
+    public function statCostDetail(Request $request)
+    {
+
+        if($deviceNo = $request->input('device_no')){
+            $where['device_no'] = $deviceNo;
+        }
+        $model = DeviceCostDetail::where($where);
+        $devices = $model->orderByDesc('device_no')->orderByDesc('date')->paginate();
+
+        $datas = $devices->items();
+        /** @var DeviceCostDetail $data */
+        foreach ($datas as $data){
+
+        }
+
+        return view('admin.device.statCostDetail', [
+            'datas' => $datas,
+            'page_nav'=>MyPage::showPageNav($devices),
+        ]);
     }
 
 }
