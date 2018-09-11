@@ -60,7 +60,7 @@
                                         <td><?php echo $row['address'] ?></td>
                                         <td><?php echo $row->attach ?></td>
                                         <td>
-                                            <a class="alert-link" href="<?php echo URL::action('Admin\DeviceController@list',['device_no'=>$row->device_no]) ?>">点击查看 </a>
+                                            <a class="btn-link" href="<?php echo URL::action('Admin\DeviceController@list',['device_no'=>$row->device_no]) ?>">点击查看 </a>
                                         </td>
                                         <td>
                                             <a class="btn btn-warning" href="<?php echo URL::action('Admin\DeviceController@statCostDetail',['device_no'=>$row->device_no]) ?>">点击配置 </a>
