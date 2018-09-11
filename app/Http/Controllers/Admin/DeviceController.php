@@ -235,6 +235,7 @@ class DeviceController extends BaseController
     public function statCostDetail(Request $request)
     {
 
+        $where = [];
         if($deviceNo = $request->input('device_no')){
             $where['device_no'] = $deviceNo;
         }
