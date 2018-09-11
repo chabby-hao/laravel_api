@@ -83,7 +83,7 @@
                     <li><a href="{{ URL::action('Admin\DeviceController@slaveBinManage')  }}">升级文件管理</a></li>
                     <li><a href="{{ URL::action('Admin\DeviceController@remoteTunnel')  }}">设备远程隧道配置</a></li>
                     <li><a href="{{ URL::action('Admin\DeviceController@rebootSlave')  }}">重启从机</a></li>
-                    <li><a href="{{ URL::action('Admin\DeviceController@shared_amount')  }}">流水统计</a></li>
+                    <li><a href="{{ URL::action('Admin\DeviceController@statCostDetail')  }}">流水统计</a></li>
                 </ul>
 
             </li>
