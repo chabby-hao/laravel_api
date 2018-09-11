@@ -263,6 +263,7 @@ class DeviceController extends BaseController
             abort(403);
         }
         $model = DeviceConfig::find($deviceNo);
+        dd($model);
         $data = $model ? $model->toArray() : [];
 
         if($request->isXmlHttpRequest()){
