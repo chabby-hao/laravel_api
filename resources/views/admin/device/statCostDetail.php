@@ -8,13 +8,13 @@
         <div class="container-fluid">
             <hr>
             <div></div>
-            <!--<div class="widget-content">
+            <div class="widget-content">
                 <form class="form-search">
                     <div class="control-group">
                         <div class="controls controls-row">
                             <div class="inline-block">
-                                <label>时间范围</label>
-                                <input name="date_range" id="daterange" type="text"/>
+                                <label>设备号</label>
+                                <input value="<?php echo Request::input('device_no') ?>" name="device_no" type="text"/>
                             </div>
 
                             <div class="inline-block">
@@ -24,7 +24,7 @@
                         </div>
                     </div>
                 </form>
-            </div>-->
+            </div>
             <div class="row-fluid">
                 <div class="span12">
                     <div class="widget-box">
@@ -38,9 +38,9 @@
                                     <th>序号</th>
                                     <th>设备号</th>
                                     <th>日期</th>
-                                    <th>流水</th>
-                                    <th>成本</th>
-                                    <th>分成</th>
+                                    <th>流水（元）</th>
+                                    <th>成本（元）</th>
+                                    <th>分成（元）</th>
                                 </tr>
                                 </thead>
                                 <tbody>
