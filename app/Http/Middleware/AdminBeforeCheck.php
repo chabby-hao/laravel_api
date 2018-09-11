@@ -22,8 +22,6 @@ class AdminBeforeCheck
     public function handle(Request $request, \Closure $next)
     {
 
-        dd(Route::getRoutes());
-
         $isLogin = session('is_login', 0);
         $routeName = $request->route()->getName();
         if(!in_array($routeName, $this->noLoginRoutes)){
