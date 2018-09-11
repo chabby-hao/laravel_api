@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Route;
 
 class AdminBeforeCheck
 {
@@ -20,6 +21,8 @@ class AdminBeforeCheck
      */
     public function handle(Request $request, \Closure $next)
     {
+
+        var_dump(Route::getRoutes());
 
         $isLogin = session('is_login', 0);
         $routeName = $request->route()->getName();
