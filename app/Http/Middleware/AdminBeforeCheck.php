@@ -22,7 +22,7 @@ class AdminBeforeCheck
     public function handle(Request $request, \Closure $next)
     {
 
-        var_dump(Route::getRoutes());
+        dd(Route::getRoutes());
 
         $isLogin = session('is_login', 0);
         $routeName = $request->route()->getName();
