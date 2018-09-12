@@ -72,7 +72,7 @@ class StatDeviceCost extends Command
 
                 $userCost = ChargeTasks::whereDeviceNo($udid)
                     ->whereIn('task_state',ChargeTasks::getFinishStateMap())
-                    ->whereBetween('created_at', [Carbon::createFromTimestamp($begin1)->toDateTimeString(), Carbon::createFromTimestamp($end1)->toDateTimeString()])
+                    ->whereBetween('updated_at', [Carbon::createFromTimestamp($begin1)->toDateTimeString(), Carbon::createFromTimestamp($end1)->toDateTimeString()])
                     ->sum('actual_cost') ?: 0;
 
                 $begin1Row = HostPortInfos::whereUdid($udid)->whereBetween('create_time', [$begin1, $end1])->orderBy('create_time')->first();
