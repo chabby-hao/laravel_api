@@ -74,6 +74,8 @@ class StatDeviceCost extends Command
                     ->whereBetween('created_at', [Carbon::createFromTimestamp($begin1)->toDateTimeString(), Carbon::createFromTimestamp($end1)->toDateTimeString()])
                     ->sum('actual_cost');
 
+                dd([Carbon::createFromTimestamp($begin1)->toDateTimeString(), Carbon::createFromTimestamp($end1)->toDateTimeString()]);
+
                 $begin1Row = HostPortInfos::whereUdid($udid)->whereBetween('create_time', [$begin1, $end1])->orderBy('create_time')->first();
                 $end1Row = HostPortInfos::whereUdid($udid)->whereBetween('create_time', [$begin1, $end1])->orderByDesc('create_time')->first();
 
