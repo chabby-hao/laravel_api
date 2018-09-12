@@ -75,10 +75,6 @@ class StatDeviceCost extends Command
                     ->whereBetween('created_at', [Carbon::createFromTimestamp($begin1)->toDateTimeString(), Carbon::createFromTimestamp($end1)->toDateTimeString()])
                     ->sum('actual_cost') ?: 0;
 
-                if($udid == 2100005){
-                    dd($userCost, $begin1);
-                }
-
                 $begin1Row = HostPortInfos::whereUdid($udid)->whereBetween('create_time', [$begin1, $end1])->orderBy('create_time')->first();
                 $end1Row = HostPortInfos::whereUdid($udid)->whereBetween('create_time', [$begin1, $end1])->orderByDesc('create_time')->first();
 
@@ -108,7 +104,7 @@ class StatDeviceCost extends Command
 
                 $shareMoney = $profit * DeviceConfig::getProportion($deviceNo);
 
-                echo "userCost: $userCost, diff1 : $diff1, diff2 : $diff2, diffLow : $diffLow , deviceCostHigh: $deviceCostHigh, deviceCostLow:$deviceCostLow, deviceCost: $deviceCost"  . "\n";
+                echo "device: $deviceNo, userCost: $userCost, diff1 : $diff1, diff2 : $diff2, diffLow : $diffLow , deviceCostHigh: $deviceCostHigh, deviceCostLow:$deviceCostLow, deviceCost: $deviceCost"  . "\n";
 
                 DeviceCostDetail::updateOrCreate([
                     'device_no' => $deviceNo,
