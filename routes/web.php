@@ -20,9 +20,7 @@
 //
 //echo 333;exit;
 
-Route::get('/', function(){
-    return ['code'=>500];
-});
+Route::get('/', 'Admin\AdminController@login');
 
 //Route::get('/', function () {
 //    return view('welcome');
