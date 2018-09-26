@@ -21,6 +21,7 @@ Route::middlewareGroup('admin', [
 Route::any('/device/deviceList', 'Admin\DeviceController@deviceList');
 Route::any('/device/list', 'Admin\DeviceController@list');
 Route::any('/device/add', 'Admin\DeviceController@add');
+Route::any('/device/edit', 'Admin\DeviceController@edit');
 Route::any('/device/remoteUpgrade', 'Admin\DeviceController@remoteUpgrade');
 Route::any('/device/slaveBinManage', 'Admin\DeviceController@slaveBinManage');
 Route::any('/device/remoteTunnel', 'Admin\DeviceController@remoteTunnel');

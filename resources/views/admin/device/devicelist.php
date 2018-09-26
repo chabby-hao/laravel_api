@@ -67,7 +67,8 @@
                                             <a class="btn-link" href="<?php echo URL::action('Admin\DeviceController@statCostDetail',['device_no'=>$row->device_no]) ?>">流水统计 </a>
                                         </td>
                                         <td>
-                                            <a class="btn btn-warning" href="<?php echo URL::action('Admin\DeviceController@deviceConfig',['device_no'=>$row->device_no]) ?>">点击配置 </a>
+                                            <a class="btn btn-warning" href="<?php echo URL::action('Admin\DeviceController@deviceConfig',['device_no'=>$row->device_no]) ?>">价格配置 </a>
+                                            <a class="btn btn-info" href="<?php echo URL::action('Admin\DeviceController@edit',['device_no'=>$row->device_no]) ?>">编辑 </a>
                                         </td>
 
                                     </tr>

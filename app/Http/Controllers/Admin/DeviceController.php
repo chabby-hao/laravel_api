@@ -255,6 +255,28 @@ class DeviceController extends BaseController
         ]);
     }
 
+    public function edit(Request $request)
+    {
+        $deviceNo = $request->input('device_no');
+        if(!$deviceNo){
+            abort(403);
+        }
+
+        if($request->isXmlHttpRequest()){
+            //配置
+            $input = $this->checkRequireParams(['lat','lng','address'], $request->input());
+            DeviceInfo::whereDeviceNo($deviceNo)->update($input);
+
+            return $this->_outPutRedirect(URL::action('Admin\DeviceController@deviceList'));
+
+        }
+        $model = DeviceInfo::whereDeviceNo($deviceNo)->first();
+
+        return view('admin.device.edit', [
+            'data'=>$model,
+        ]);
+    }
+
     public function deviceConfig(Request $request)
     {
 
