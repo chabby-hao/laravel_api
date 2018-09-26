@@ -8,6 +8,7 @@
 
 namespace App\Services;
 
+use App\Models\DeviceInfo;
 use App\Models\VerifyCode;
 use Illuminate\Support\Facades\Cache;
 use Ramsey\Uuid\Uuid;
@@ -17,7 +18,23 @@ class MapServices extends BaseService
 
     public static function getLocList($tencent = false)
     {
-        $datas = [
+        
+        $rs = DeviceInfo::groupBy('device_no')->get();
+
+        $datas = [];
+        foreach ($rs as $row){
+            if($row->lat && $row->lng){
+                $datas[] = [
+                    'device_no'=>$row->device_no,
+                    'value'=>[
+                        floatval($row->lng),
+                        floatval($row->lat),
+                    ],
+                ];
+            }
+        }
+        
+        /*$datas = [
             [
                 'device_no' => '002100001',
                 'value' => [
@@ -89,7 +106,7 @@ class MapServices extends BaseService
                 ],
             ],
 
-        ];
+        ];*/
         if($tencent){
             //如果是腾讯要转一下
             foreach ($datas as $k => $data){
