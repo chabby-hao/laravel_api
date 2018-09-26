@@ -18,21 +18,21 @@
                                 <div class="control-group">
                                     <label class="control-label"><span class="text-error">*</span>地址 :</label>
                                     <div class="controls">
-                                        <input name="univalence1" value="<?php echo $data->address ?>" type="text" class="span11"/>
+                                        <input name="address" value="<?php echo $data->address ?>" type="text" class="span11"/>
                                     </div>
                                 </div>
 
                                 <div class="control-group">
                                     <label class="control-label"><span class="text-error">*</span> lat:</label>
                                     <div class="controls">
-                                        <input name="univalence2" value="<?php echo $data->lat ?>" type="text" class="span11"/>
+                                        <input name="lat" value="<?php echo $data->lat ?>" type="text" class="span11"/>
                                     </div>
                                 </div>
 
                                 <div class="control-group">
                                     <label class="control-label"><span class="text-error">*</span> lng :</label>
                                     <div class="controls">
-                                        <input name="proportion" value="<?php echo $data->lng ?>" type="text" class="span11"/>
+                                        <input name="lng" value="<?php echo $data->lng ?>" type="text" class="span11"/>
                                     </div>
                                 </div>
 
