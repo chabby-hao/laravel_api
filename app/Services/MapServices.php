@@ -23,7 +23,7 @@ class MapServices extends BaseService
 
         $datas = [];
         foreach ($rs as $row){
-            if($row->lat && $row->lng){
+            if($row->lat > 0 && $row->lng > 0){
                 $datas[] = [
                     'device_no'=>$row->device_no,
                     'value'=>[
