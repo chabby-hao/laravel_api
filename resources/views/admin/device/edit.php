@@ -23,16 +23,18 @@
                                 </div>
 
                                 <div class="control-group">
-                                    <label class="control-label"><span class="text-error">*</span> lat:</label>
+                                    <label class="control-label"><span class="text-error">*</span> 纬度lat:</label>
                                     <div class="controls">
                                         <input name="lat" value="<?php echo $data->lat ?>" type="text" class="span11"/>
+                                        <span class="help-block">请输入百度坐标系</span>
                                     </div>
                                 </div>
 
                                 <div class="control-group">
-                                    <label class="control-label"><span class="text-error">*</span> lng :</label>
+                                    <label class="control-label"><span class="text-error">*</span> 经度lng :</label>
                                     <div class="controls">
                                         <input name="lng" value="<?php echo $data->lng ?>" type="text" class="span11"/>
+                                        <span class="help-block">请输入百度坐标系</span>
                                     </div>
                                 </div>
 
