@@ -20,7 +20,7 @@
 //
 //echo 333;exit;
 
-Route::get('/', 'Admin\AdminController@login');
+Route::any('/', 'Admin\AdminController@login');
 
 //Route::get('/', function () {
 //    return view('welcome');
