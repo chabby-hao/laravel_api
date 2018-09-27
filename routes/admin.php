@@ -18,6 +18,8 @@ Route::middlewareGroup('admin', [
     \App\Http\Middleware\AdminBeforeCheck::class,
 ]);
 
+Route::any('/home/index', 'Admin\HomeController@index');
+
 Route::any('/device/deviceList', 'Admin\DeviceController@deviceList');
 Route::any('/device/list', 'Admin\DeviceController@list');
 Route::any('/device/add', 'Admin\DeviceController@add');
