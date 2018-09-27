@@ -8,10 +8,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Libs\Helper;
-use App\Libs\MyPage;
-use App\Models\DeviceConfig;
 use App\Models\DeviceCostDetail;
 use App\Models\DeviceInfo;
 use App\Services\AdminService;
@@ -60,8 +56,6 @@ class HomeController extends BaseController
                 'month'=>$month,
             ]);
 
-
-
         }
 
         return view('admin.home.index' );
@@ -69,6 +63,14 @@ class HomeController extends BaseController
 
     public function show(Request $request)
     {
+
+        if($request->isXmlHttpRequest() || $request->input('a') == 1) {
+
+            $cdpCount = DeviceInfo::groupBy('device_no')->count('device_no');
+            var_dump($cdpCount);
+
+        }
+
         return view('admin.home.show');
     }
 
