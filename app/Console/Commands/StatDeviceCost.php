@@ -80,6 +80,18 @@ class StatDeviceCost extends Command
                     ->whereBetween('updated_at', [Carbon::createFromTimestamp($begin1)->toDateTimeString(), Carbon::createFromTimestamp($end1)->toDateTimeString()])
                     ->count();
 
+                $chargeDuration = ChargeTasks::whereDeviceNo($udid)
+                    ->whereIn('task_state',ChargeTasks::getFinishStateMap())
+                    ->whereBetween('updated_at', [Carbon::createFromTimestamp($begin1)->toDateTimeString(), Carbon::createFromTimestamp($end1)->toDateTimeString()])
+                    ->sum('actual_time') ? : 0;
+                $chargeDuration = $chargeDuration / 60 / 60;
+
+                $userCount = ChargeTasks::whereDeviceNo($udid)
+                    ->whereIn('task_state',ChargeTasks::getFinishStateMap())
+                    ->whereBetween('updated_at', [Carbon::createFromTimestamp($begin1)->toDateTimeString(), Carbon::createFromTimestamp($end1)->toDateTimeString()])
+                    ->groupBy('user_id')
+                    ->count('user_id');
+
                 $begin1Row = HostPortInfos::whereUdid($udid)->whereBetween('create_time', [$begin1, $end1])->orderBy('create_time')->first();
                 $end1Row = HostPortInfos::whereUdid($udid)->whereBetween('create_time', [$begin1, $end1])->orderByDesc('create_time')->first();
 
@@ -120,6 +132,8 @@ class StatDeviceCost extends Command
                     'user_cost_amount' => $userCost,
                     'charge_times'=>$chargeTimes,//充电次数
                     'electric_quantity'=>$diff1,//电量
+                    'charge_duration'=>$chargeDuration,
+                    'user_count'=>$userCount,
                 ]);
 
             }
