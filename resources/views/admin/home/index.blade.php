@@ -2,7 +2,7 @@
     <div id="content">
         <div id="content-header">
             <div id="breadcrumb"><a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a>
-                <a href="#" class="current">图表统计</a></div>
+                <a href="#" class="current">充电棚统计</a></div>
         </div>
         <div class="container-fluid">
 
