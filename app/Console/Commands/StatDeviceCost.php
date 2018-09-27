@@ -75,6 +75,11 @@ class StatDeviceCost extends Command
                     ->whereBetween('updated_at', [Carbon::createFromTimestamp($begin1)->toDateTimeString(), Carbon::createFromTimestamp($end1)->toDateTimeString()])
                     ->sum('actual_cost') ?: 0;
 
+                $chargeTimes = ChargeTasks::whereDeviceNo($udid)
+                    ->whereIn('task_state',ChargeTasks::getFinishStateMap())
+                    ->whereBetween('updated_at', [Carbon::createFromTimestamp($begin1)->toDateTimeString(), Carbon::createFromTimestamp($end1)->toDateTimeString()])
+                    ->count();
+
                 $begin1Row = HostPortInfos::whereUdid($udid)->whereBetween('create_time', [$begin1, $end1])->orderBy('create_time')->first();
                 $end1Row = HostPortInfos::whereUdid($udid)->whereBetween('create_time', [$begin1, $end1])->orderByDesc('create_time')->first();
 
@@ -113,6 +118,8 @@ class StatDeviceCost extends Command
                     'shared_amount' => $shareMoney,
                     'device_cost_amount' => $deviceCost,
                     'user_cost_amount' => $userCost,
+                    'charge_times'=>$chargeTimes,//充电次数
+                    'electric_quantity'=>$diff1,//电量
                 ]);
 
             }
