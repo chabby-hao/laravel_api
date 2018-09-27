@@ -66,7 +66,7 @@ class HomeController extends BaseController
 
         if($request->isXmlHttpRequest() || $request->input('a') == 1) {
 
-            $cdpCount = DeviceInfo::groupBy('device_no')->count('device_no');
+            $cdpCount = DeviceInfo::selectRaw('count(distinct device_no) as mycount')->value('mycount');
             var_dump($cdpCount);
 
         }
