@@ -28,7 +28,7 @@ class HomeController extends BaseController
         if($request->isXmlHttpRequest() || $request->input('a') == 1){
 
             $date = Carbon::now()->toDateString();
-            $model = DeviceCostDetail::whereDate($date)->first();
+            $model = DeviceCostDetail::where('date', $date)->first();
             $today = [];
             if($model){
                 $today['charge_times'] = $model->charge_times;
