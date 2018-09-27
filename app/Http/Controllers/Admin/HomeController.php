@@ -11,13 +11,8 @@ namespace App\Http\Controllers\Admin;
 use App\Models\ChargeTasks;
 use App\Models\DeviceCostDetail;
 use App\Models\DeviceInfo;
-use App\Services\AdminService;
-use App\Services\CommandService;
-use App\Services\DeviceService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\URL;
 
 class HomeController extends BaseController
 {
