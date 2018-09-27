@@ -28,15 +28,26 @@ class HomeController extends BaseController
         if($request->isXmlHttpRequest() || $request->input('a') == 1){
 
             $date = Carbon::now()->toDateString();
-            $model = DeviceCostDetail::where('date', $date)->first();
+            $rs = DeviceCostDetail::where('date', $date)->get();
             $today = [];
-            if($model){
-                $today['charge_times'] = $model->charge_times;
-                $today['electric_quantity'] = $model->electric_quantity;
-                $today['charge_duration'] = $model->charge_duration;
-                $today['user_cost_amount'] = $model->user_cost_amount;
-                $today['user_count'] = $model->user_count;
-                $today['shared_amount'] = $model->shared_amount;
+            $today['charge_times'] = 0;
+            $today['electric_quantity'] = 0;
+            $today['charge_duration'] = 0;
+            $today['user_cost_amount'] = 0;
+            $today['user_count'] = 0;
+            $today['shared_amount'] = 0;
+            if ($rs) {
+
+                foreach ($rs as $model) {
+                    $today['charge_times'] += $model->charge_times;
+                    $today['electric_quantity'] += $model->electric_quantity;
+                    $today['charge_duration'] += $model->charge_duration;
+                    $today['user_cost_amount'] += $model->user_cost_amount;
+                    $today['user_count'] += $model->user_count;
+                    $today['shared_amount'] += $model->shared_amount;
+                }
+
+
             }
 
             $monthStart = Carbon::now()->startOfMonth()->toDateString();
