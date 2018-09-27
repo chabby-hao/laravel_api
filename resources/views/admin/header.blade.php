@@ -73,6 +73,19 @@
                 </ul>
 
             </li>
+
+            <!--        报表管理-->
+            <li class="submenu"><a href="#"><i class="icon icon-th-list"></i> <span>报表管理</span>
+                </a>
+                <ul>
+                    <li><a href="{{ URL::action('Admin\HomeController@index')  }}">每日数据</a></li>
+                    <li><a href="{{ URL::action('Admin\HomeController@show')  }}">充电棚概况</a></li>
+                    <li><a href="{{ URL::action('Admin\DeviceController@statCostDetail')  }}">流水统计</a></li>
+                </ul>
+
+            </li>
+
+
             <!--        设备配置-->
             <li class="submenu"><a href="#"><i class="icon icon-th-list"></i> <span>设备管理</span>
                 </a>
@@ -83,7 +96,6 @@
                     <li><a href="{{ URL::action('Admin\DeviceController@slaveBinManage')  }}">升级文件管理</a></li>
                     <li><a href="{{ URL::action('Admin\DeviceController@remoteTunnel')  }}">设备远程隧道配置</a></li>
                     <li><a href="{{ URL::action('Admin\DeviceController@rebootSlave')  }}">重启从机</a></li>
-                    <li><a href="{{ URL::action('Admin\DeviceController@statCostDetail')  }}">流水统计</a></li>
                 </ul>
 
             </li>
