@@ -13,6 +13,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property float $shared_amount 分成
  * @property float|null $device_cost_amount 设备花费
  * @property float|null $user_cost_amount 用户流水
+ * @property float|null $charge_times
+ * @property float|null $electric_quantity
+ * @property float|null $charge_duration
+ * @property float|null $user_count
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\DeviceCostDetail whereCreatedAt($value)
