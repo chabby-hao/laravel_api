@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\ChargeTasks;
 use App\Models\DeviceCostDetail;
 use App\Models\DeviceInfo;
 use App\Services\AdminService;
@@ -66,8 +67,17 @@ class HomeController extends BaseController
 
         if($request->isXmlHttpRequest() || $request->input('a') == 1) {
 
-            $cdpCount = DeviceInfo::selectRaw('count(distinct device_no) as mycount')->value('mycount');
-            var_dump($cdpCount);
+            $cdpCount = DeviceInfo::where('lat','>',0)->selectRaw('count(distinct device_no) as mycount')->value('mycount');
+
+            $cdkCount = DeviceInfo::where('lat','>',0)->count();
+
+            $userCount = ChargeTasks::selectRaw('count(distinct user_id) as mycount')->value('mycount');
+
+            return $this->_outPut([
+                'cdpCount'=>$cdpCount,
+                'cdkCount'=>$cdkCount,
+                'userCount'=>$userCount,
+            ]);
 
         }
 
