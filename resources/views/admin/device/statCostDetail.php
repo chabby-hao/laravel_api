@@ -41,6 +41,8 @@
                                     <th>流水（元）</th>
                                     <th>成本（元）</th>
                                     <th>分成（元）</th>
+                                    <th>充电次数（次）</th>
+                                    <th>电量</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -54,6 +56,8 @@
                                         <td><?php echo $row->user_cost_amount; ?></td>
                                         <td><?php echo $row->device_cost_amount; ?></td>
                                         <td><?php echo $row->shared_amount; ?></td>
+                                        <td><?php echo $row->charge_times; ?></td>
+                                        <td><?php echo $row->electric_quantity; ?></td>
                                     </tr>
                                 <?php } ?>
                                 </tbody>
