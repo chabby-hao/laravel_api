@@ -32,5 +32,11 @@ class HomeController extends BaseController
         return view('admin.home.index' );
     }
 
+    public function show(Request $request)
+    {
+
+        return view('admin.home.show');
+    }
+
 
 }
