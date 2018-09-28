@@ -107,7 +107,17 @@ class HomeController extends BaseController
         /** @var DeviceCostDetail $data */
         $list = [];
         foreach ($datas as $data){
-            $list[] = $data->toArray();
+            $list[] = [
+                'date'=>$data->date,
+                'device_no'=>$data->device_no,
+                'shared_amount'=>$data->shared_amount,
+                'device_cost_amount'=>$data->device_cost_amount,
+                'user_cost_amount'=>$data->user_cost_amount,
+                'charge_times'=>$data->charge_times,
+                'electric_quantity'=>$data->electric_quantity,
+                'charge_duration'=>$data->charge_duration,
+                'user_count'=>$data->user_count,
+            ];
         }
 
         return $this->_outPut(['list'=>$list]);
