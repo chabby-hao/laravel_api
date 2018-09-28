@@ -105,6 +105,7 @@ class AdminService extends BaseService
 
     public static function getCurrentDeviceNos($isInt = false)
     {
+
         $config = session()->get('user_config');
         if($config) {
             $config = json_decode($config, true);

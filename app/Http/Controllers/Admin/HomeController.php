@@ -37,15 +37,18 @@ class HomeController extends BaseController
 
                 foreach ($rs as $model) {
                     $today['charge_times'] += $model->charge_times;
-                    $today['electric_quantity'] += number_format($model->electric_quantity, 2);
-                    $today['charge_duration'] += number_format($model->charge_duration, 2);
-                    $today['user_cost_amount'] += number_format($model->user_cost_amount, 2);
+                    $today['electric_quantity'] += $model->electric_quantity;
+                    $today['charge_duration'] += $model->charge_duration;
+                    $today['user_cost_amount'] += $model->user_cost_amount;
                     $today['user_count'] += $model->user_count;
-                    $today['shared_amount'] += number_format($model->shared_amount, 2);
+                    $today['shared_amount'] += $model->shared_amount;
                 }
-
-
             }
+
+            $today['electric_quantity'] = number_format($today['electric_quantity'], 2);
+            $today['charge_duration'] = number_format($today['charge_duration'], 2);
+            $today['user_cost_amount'] = number_format($today['user_cost_amount'], 2);
+            $today['shared_amount'] = number_format($today['shared_amount'], 2);
 
             $monthStart = Carbon::now()->startOfMonth()->toDateString();
             $monthEnd = Carbon::now()->endOfMonth()->toDateString();
@@ -80,11 +83,23 @@ class HomeController extends BaseController
 
             $deviceNosInt = AdminService::getCurrentDeviceNos(true);
 
-            $cdpCount = DeviceInfo::whereIn('device_no', $deviceNos)->where('lat','>',0)->selectRaw('count(distinct device_no) as mycount')->value('mycount');
+            $model = DeviceInfo::where([]);
+            if($deviceNos){
+                $model->whereIn('device_no', $deviceNos);
+            }
+            $cdpCount = $model->where('lat','>',0)->selectRaw('count(distinct device_no) as mycount')->value('mycount');
 
-            $cdkCount = DeviceInfo::whereIn('device_no', $deviceNos)->where('lat','>',0)->count();
+            $model = DeviceInfo::where([]);
+            if($deviceNos){
+                $model->whereIn('device_no', $deviceNos);
+            }
+            $cdkCount = $model->where('lat','>',0)->count();
 
-            $userCount = ChargeTasks::whereIn('device_no', $deviceNosInt)->selectRaw('count(distinct user_id) as mycount')->value('mycount');
+            $model = ChargeTasks::where([]);
+            if($deviceNosInt){
+                $model->whereIn('device_no', $deviceNosInt);
+            }
+            $userCount = $model->selectRaw('count(distinct user_id) as mycount')->value('mycount');
 
             return $this->_outPut([
                 'cdpCount'=>$cdpCount,
