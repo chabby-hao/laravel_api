@@ -99,6 +99,7 @@ class HomeController extends BaseController
     {
         $where = [];
         $model = new DeviceCostDetail();
+        $model = DeviceCostDetail::where([]);
         if($deviceNo = $request->input('device_no')){
             $where['device_no'] = $deviceNo;
             $model->where($where);
