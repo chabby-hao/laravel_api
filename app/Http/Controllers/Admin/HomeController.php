@@ -101,8 +101,8 @@ class HomeController extends BaseController
         $model = new DeviceCostDetail();
         if($deviceNo = $request->input('device_no')){
             $where['device_no'] = $deviceNo;
+            $model->where($where);
         }
-       // $model = DeviceCostDetail::where($where);
         if($deviceNos = AdminService::getCurrentDeviceNos()){
             $model->whereIn('device_no', $deviceNos);
         }
