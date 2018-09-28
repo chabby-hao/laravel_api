@@ -24,6 +24,10 @@ class HomeController extends BaseController
         if($request->isXmlHttpRequest() || $request->input('a') == 1){
 
             $date = Carbon::now()->toDateString();
+            $model = DeviceCostDetail::where([]);
+            if($deviceNos = AdminService::getCurrentDeviceNos()){
+                $model->whereIn('device_no', $deviceNos);
+            }
             $rs = DeviceCostDetail::where('date', $date)->get();
             $today = [];
             $today['charge_times'] = 0;
@@ -94,10 +98,11 @@ class HomeController extends BaseController
     public function detailData(Request $request)
     {
         $where = [];
+        $model = new DeviceCostDetail();
         if($deviceNo = $request->input('device_no')){
             $where['device_no'] = $deviceNo;
         }
-        $model = DeviceCostDetail::where($where);
+       // $model = DeviceCostDetail::where($where);
         if($deviceNos = AdminService::getCurrentDeviceNos()){
             $model->whereIn('device_no', $deviceNos);
         }
