@@ -46,7 +46,7 @@ class AutoFinishCharge extends Command
         //
         Log::info('crontab start AutoFinishCharge ...');
         $state = ChargeTasks::TASK_STATE_CHARGING;
-        $datePre = date('Y-m-d H:i:s', strtotime('-1 days'));
+        $datePre = date('Y-m-d H:i:s', strtotime('-20 days'));
         $result = DB::select("select * from charge_tasks where task_state = $state and created_at >= '$datePre'");
         $dateNow = date('Y-m-d H:i:s');
         if($result){
