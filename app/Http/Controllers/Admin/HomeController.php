@@ -24,11 +24,8 @@ class HomeController extends BaseController
         if($request->isXmlHttpRequest() || $request->input('a') == 1){
 
             $date = Carbon::now()->toDateString();
-            $model = DeviceCostDetail::where([]);
-            if($deviceNos = AdminService::getCurrentDeviceNos()){
-                $model->whereIn('device_no', $deviceNos);
-            }
-            $rs = DeviceCostDetail::where('date', $date)->get();
+            $model = $this->getModel();
+            $rs = $model->where('date', $date)->get();
             $today = [];
             $today['charge_times'] = 0;
             $today['electric_quantity'] = 0;
@@ -56,12 +53,12 @@ class HomeController extends BaseController
             $month = [];
 
 
-            $month['charge_times'] = DeviceCostDetail::whereBetween('date',[$monthStart, $monthEnd])->sum('charge_times');
-            $month['electric_quantity'] = DeviceCostDetail::whereBetween('date',[$monthStart, $monthEnd])->sum('electric_quantity');
-            $month['charge_duration'] = DeviceCostDetail::whereBetween('date',[$monthStart, $monthEnd])->sum('charge_duration');
-            $month['user_cost_amount'] = DeviceCostDetail::whereBetween('date',[$monthStart, $monthEnd])->sum('user_cost_amount');
-            $month['user_count'] = DeviceCostDetail::whereBetween('date',[$monthStart, $monthEnd])->sum('user_count');
-            $month['shared_amount'] = DeviceCostDetail::whereBetween('date',[$monthStart, $monthEnd])->sum('shared_amount');
+            $month['charge_times'] = $this->getModel()->whereBetween('date',[$monthStart, $monthEnd])->sum('charge_times');
+            $month['electric_quantity'] = $this->getModel()->whereBetween('date',[$monthStart, $monthEnd])->sum('electric_quantity');
+            $month['charge_duration'] = $this->getModel()->whereBetween('date',[$monthStart, $monthEnd])->sum('charge_duration');
+            $month['user_cost_amount'] = $this->getModel()->whereBetween('date',[$monthStart, $monthEnd])->sum('user_cost_amount');
+            $month['user_count'] = $this->getModel()->whereBetween('date',[$monthStart, $monthEnd])->sum('user_count');
+            $month['shared_amount'] = $this->getModel()->whereBetween('date',[$monthStart, $monthEnd])->sum('shared_amount');
 
             return $this->_outPut([
                 'today'=>$today,
@@ -78,11 +75,15 @@ class HomeController extends BaseController
 
         if($request->isXmlHttpRequest() || $request->input('a') == 1) {
 
-            $cdpCount = DeviceInfo::where('lat','>',0)->selectRaw('count(distinct device_no) as mycount')->value('mycount');
+            $deviceNos = AdminService::getCurrentDeviceNos();
 
-            $cdkCount = DeviceInfo::where('lat','>',0)->count();
+            $deviceNosInt = AdminService::getCurrentDeviceNos(true);
 
-            $userCount = ChargeTasks::selectRaw('count(distinct user_id) as mycount')->value('mycount');
+            $cdpCount = DeviceInfo::whereIn('device_no', $deviceNos)->where('lat','>',0)->selectRaw('count(distinct device_no) as mycount')->value('mycount');
+
+            $cdkCount = DeviceInfo::whereIn('device_no', $deviceNos)->where('lat','>',0)->count();
+
+            $userCount = ChargeTasks::whereIn('device_no', $deviceNosInt)->selectRaw('count(distinct user_id) as mycount')->value('mycount');
 
             return $this->_outPut([
                 'cdpCount'=>$cdpCount,
@@ -98,13 +99,10 @@ class HomeController extends BaseController
     public function detailData(Request $request)
     {
         $where = [];
-        $model = new DeviceCostDetail();
+        $model = $this->getModel();
         if($deviceNo = $request->input('device_no')){
             $where['device_no'] = $deviceNo;
             $model->where($where);
-        }
-        if($deviceNos = AdminService::getCurrentDeviceNos()){
-            $model->whereIn('device_no', $deviceNos);
         }
         $devices = $model->orderByDesc('date')->orderByDesc('device_no')->paginate();
 
@@ -126,6 +124,15 @@ class HomeController extends BaseController
         }
 
         return $this->_outPut(['list'=>$list]);
+    }
+
+    protected function getModel()
+    {
+        $model = DeviceCostDetail::where([]);
+        if($deviceNos = AdminService::getCurrentDeviceNos()){
+            $model->whereIn('device_no', $deviceNos);
+        }
+        return $model;
     }
 
 }
