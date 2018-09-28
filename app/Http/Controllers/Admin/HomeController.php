@@ -37,11 +37,11 @@ class HomeController extends BaseController
 
                 foreach ($rs as $model) {
                     $today['charge_times'] += $model->charge_times;
-                    $today['electric_quantity'] += $model->electric_quantity;
-                    $today['charge_duration'] += $model->charge_duration;
-                    $today['user_cost_amount'] += $model->user_cost_amount;
+                    $today['electric_quantity'] += number_format($model->electric_quantity, 2);
+                    $today['charge_duration'] += number_format($model->charge_duration, 2);
+                    $today['user_cost_amount'] += number_format($model->user_cost_amount, 2);
                     $today['user_count'] += $model->user_count;
-                    $today['shared_amount'] += $model->shared_amount;
+                    $today['shared_amount'] += number_format($model->shared_amount, 2);
                 }
 
 
@@ -59,6 +59,7 @@ class HomeController extends BaseController
             $month['user_cost_amount'] = $this->getModel()->whereBetween('date',[$monthStart, $monthEnd])->sum('user_cost_amount');
             $month['user_count'] = $this->getModel()->whereBetween('date',[$monthStart, $monthEnd])->sum('user_count');
             $month['shared_amount'] = $this->getModel()->whereBetween('date',[$monthStart, $monthEnd])->sum('shared_amount');
+
 
             return $this->_outPut([
                 'today'=>$today,
