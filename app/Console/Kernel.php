@@ -41,7 +41,7 @@ class Kernel extends ConsoleKernel
         $schedule->command(ReplaceTimeout::class)->everyMinute();
         $schedule->command(CabinetSync::class)->everyMinute();
         $schedule->command(BatteryControl::class)->everyMinute();
-        $schedule->command(StatDeviceCost::class)->hourly();
+        $schedule->command(StatDeviceCost::class)->everyFifteenMinutes();
     }
 
     /**
