@@ -11,6 +11,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\ChargeTasks;
 use App\Models\DeviceCostDetail;
 use App\Models\DeviceInfo;
+use App\Services\AdminService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -88,6 +89,28 @@ class HomeController extends BaseController
         }
 
         return view('admin.home.show');
+    }
+
+    public function detailData(Request $request)
+    {
+        $where = [];
+        if($deviceNo = $request->input('device_no')){
+            $where['device_no'] = $deviceNo;
+        }
+        $model = DeviceCostDetail::where($where);
+        if($deviceNos = AdminService::getCurrentDeviceNos()){
+            $model->whereIn('device_no', $deviceNos);
+        }
+        $devices = $model->orderByDesc('date')->orderByDesc('device_no')->paginate();
+
+        $datas = $devices->items();
+        /** @var DeviceCostDetail $data */
+        $list = [];
+        foreach ($datas as $data){
+            $list[] = $data->toArray();
+        }
+
+        return $this->_outPut(['list'=>$list]);
     }
 
 }

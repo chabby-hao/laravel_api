@@ -20,6 +20,7 @@ Route::middlewareGroup('admin', [
 
 Route::any('/home/index', 'Admin\HomeController@index');
 Route::any('/home/show', 'Admin\HomeController@show');
+Route::any('/home/detailData', 'Admin\HomeController@detailData');
 
 Route::any('/device/deviceList', 'Admin\DeviceController@deviceList');
 Route::any('/device/list', 'Admin\DeviceController@list');
