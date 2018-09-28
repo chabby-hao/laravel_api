@@ -55,7 +55,8 @@ class StatDeviceCost extends Command
         Log::info('crontab start StatDeviceCost ...');
 
         $date = $this->option('date');
-        $date || $date = Carbon::now()->subDay()->toDateString();
+        //$date || $date = Carbon::now()->subDay()->toDateString();
+        $date || $date = Carbon::now()->toDateString();
 
         /*电价谷时段 22:00:00-23:59:59 和 00:00:00～06:00:00  电价峰时段 06:00:01～21:59:59*/
         $begin1 = Carbon::parse($date)->startOfDay()->getTimestamp();
