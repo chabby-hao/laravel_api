@@ -166,13 +166,13 @@
       		success:function(res2){
       			console.log(res2);
       			if(res2.code==200){
-      				$('#scree').html('');
+//    				$('#scree').html('');
       				//列表
       				var item2='';
 			        $.each(res2.list, function(i,result) {
 			        		item2+='<option value="'+result+'">'+result+'</option>';
 			        });
-			        $('#scree').appendTo(item2);
+			        $('#scree').append(item2);
 			        $('.big_bg').css({'display':'none'});
       			}
       		},
