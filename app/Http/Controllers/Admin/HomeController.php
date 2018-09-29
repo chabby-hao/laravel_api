@@ -169,7 +169,7 @@ class HomeController extends BaseController
         }
 
         if($date = $request->input('date')){
-            $model->where("substr('date',1,7)",$date);
+            $model->whereRaw("substr(date,1,7) = '$date'");
         }
 
 
