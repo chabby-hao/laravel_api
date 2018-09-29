@@ -168,7 +168,7 @@
 			data:{},
         		success:function(res){
         			console.log(res);
-        			if(res.data.code==200){
+        			if(res.code==200){
         				$.each(res.data.today,function(i,result){
 						$('p[data-day-info='+i+']').html(result);
 					});
