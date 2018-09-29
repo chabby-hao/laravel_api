@@ -148,6 +148,45 @@ class HomeController extends BaseController
         return $this->_outPut(['list'=>$list]);
     }
 
+    public function detailDataByMonth(Request $request)
+    {
+        $where = [];
+        $model = $this->getModel();
+        if($deviceNo = $request->input('device_no')){
+            $where['device_no'] = $deviceNo;
+            $model->where($where);
+        }
+
+        if($date = $request->input('date')){
+            $model->where("substr('date',1,7)",$date);
+        }
+
+        $devices = $model
+            ->groupBy(["substr('date',1,7)","device_no"])
+            ->orderByDesc('date')
+            ->selectRaw('sum(shared_amount) as shared_amount, sum(device_cost_amount) as device_cost_amount, sum(user_cost_amount) as user_cost_amount, sum(charge_times) as charge_times, sum(electric_quantity) as electric_quantity, sum(charge_duration) as charge_duration, sum(user_count) as user_count')
+            ->orderByDesc('device_no')->paginate();
+
+        $datas = $devices->items();
+        /** @var DeviceCostDetail $data */
+        $list = [];
+        foreach ($datas as $data){
+            $list[] = [
+                'date'=>$data->date,
+                'device_no'=>$data->device_no,
+                'shared_amount'=>$data->shared_amount,
+                'device_cost_amount'=>$data->device_cost_amount,
+                'user_cost_amount'=>$data->user_cost_amount,
+                'charge_times'=>$data->charge_times,
+                'electric_quantity'=>$data->electric_quantity,
+                'charge_duration'=>$data->charge_duration,
+                'user_count'=>$data->user_count,
+            ];
+        }
+
+        return $this->_outPut(['list'=>$list]);
+    }
+
     public function deviceNoList()
     {
         if(AdminService::getCurrentUserType() === Admins::USER_TYPE_ADMIN){
