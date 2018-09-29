@@ -42,10 +42,17 @@ class HomeController extends BaseController
                     $today['electric_quantity'] += $model->electric_quantity;
                     $today['charge_duration'] += $model->charge_duration;
                     $today['user_cost_amount'] += $model->user_cost_amount;
-                    $today['user_count'] += $model->user_count;
+                    //$today['user_count'] += $model->user_count;
                     $today['shared_amount'] += $model->shared_amount;
                 }
             }
+            $model = ChargeTasks::where([]);
+
+            $today['user_count'] = $model
+                ->whereIn('task_state',ChargeTasks::getFinishStateMap())
+                ->whereBetween('updated_at', [Carbon::today()->startOfDay()->toDateTimeString(), Carbon::today()->endOfDay()->toDateTimeString()])
+                ->selectRaw('count(distinct user_id) as mycount')
+                ->value('mycount');
 
             $today['electric_quantity'] = number_format($today['electric_quantity'], 2);
             $today['charge_duration'] = number_format($today['charge_duration'], 2);
@@ -62,8 +69,17 @@ class HomeController extends BaseController
             $month['electric_quantity'] = $this->getModel()->whereBetween('date',[$monthStart, $monthEnd])->sum('electric_quantity');
             $month['charge_duration'] = $this->getModel()->whereBetween('date',[$monthStart, $monthEnd])->sum('charge_duration');
             $month['user_cost_amount'] = $this->getModel()->whereBetween('date',[$monthStart, $monthEnd])->sum('user_cost_amount');
-            $month['user_count'] = $this->getModel()->whereBetween('date',[$monthStart, $monthEnd])->sum('user_count');
+            //$month['user_count'] = $this->getModel()->whereBetween('date',[$monthStart, $monthEnd])->sum('user_count');
             $month['shared_amount'] = $this->getModel()->whereBetween('date',[$monthStart, $monthEnd])->sum('shared_amount');
+            $model = ChargeTasks::where([]);
+            if($deviceNosInt = AdminService::getCurrentDeviceNos(true)){
+                $model->whereIn('device_no', $deviceNosInt);
+            }
+            $month['user_count'] = $model
+                ->whereIn('task_state',ChargeTasks::getFinishStateMap())
+                ->whereBetween('updated_at', [Carbon::now()->startOfMonth()->toDateTimeString(), Carbon::today()->endOfMonth()->toDateTimeString()])
+                ->selectRaw('count(distinct user_id) as mycount')
+                ->value('mycount');
 
 
             return $this->_outPut([
@@ -97,16 +113,16 @@ class HomeController extends BaseController
             }
             $cdkCount = $model->where('lat','>',0)->count();
 
-            $model = ChargeTasks::where([]);
-            if($deviceNosInt){
-                $model->whereIn('device_no', $deviceNosInt);
+            $model = DeviceCostDetail::where([]);
+            if($deviceNos){
+                $model->whereIn('device_no', $deviceNos);
             }
-            $userCount = $model->selectRaw('count(distinct user_id) as mycount')->value('mycount');
+            $shareAmount = DeviceCostDetail::sum('shared_amount');
 
             return $this->_outPut([
                 'cdpCount'=>$cdpCount,
                 'cdkCount'=>$cdkCount,
-                'userCount'=>$userCount,
+                'shareAmount'=>$shareAmount,
             ]);
 
         }
@@ -136,6 +152,15 @@ class HomeController extends BaseController
         /** @var DeviceCostDetail $data */
         $list = [];
         foreach ($datas as $data){
+            $model = ChargeTasks::where([]);
+            if($deviceNosInt = AdminService::getCurrentDeviceNos(true)){
+                $model->whereIn('device_no', $deviceNosInt);
+            }
+            $userCount = $model
+                ->whereIn('task_state',ChargeTasks::getFinishStateMap())
+                ->whereBetween('updated_at', [Carbon::parse($data->date)->startOfDay()->toDateTimeString(), Carbon::today()->endOfDay()->toDateTimeString()])
+                ->selectRaw('count(distinct user_id) as mycount')
+                ->value('mycount');
             $list[] = [
                 'date'=>$data->date,
                 //'device_no'=>$data->device_no,
@@ -145,7 +170,7 @@ class HomeController extends BaseController
                 'charge_times'=>$data->charge_times,
                 'electric_quantity'=>$data->electric_quantity,
                 'charge_duration'=>$data->charge_duration,
-                'user_count'=>$data->user_count,
+                'user_count'=>$userCount,
             ];
         }
 
@@ -187,6 +212,15 @@ class HomeController extends BaseController
         /** @var DeviceCostDetail $data */
         $list = [];
         foreach ($datas as $data){
+            $model = ChargeTasks::where([]);
+            if($deviceNosInt = AdminService::getCurrentDeviceNos(true)){
+                $model->whereIn('device_no', $deviceNosInt);
+            }
+            $userCount = $model
+                ->whereIn('task_state',ChargeTasks::getFinishStateMap())
+                ->whereBetween('updated_at', [Carbon::parse($data->date)->startOfMonth()->toDateTimeString(), Carbon::today()->endOfMonth()->toDateTimeString()])
+                ->selectRaw('count(distinct user_id) as mycount')
+                ->value('mycount');
             $list[] = [
                 'date'=>$data->date,
                 'shared_amount'=>$data->shared_amount,
@@ -195,7 +229,7 @@ class HomeController extends BaseController
                 'charge_times'=>$data->charge_times,
                 'electric_quantity'=>$data->electric_quantity,
                 'charge_duration'=>$data->charge_duration,
-                'user_count'=>$data->user_count,
+                'user_count'=>$userCount,
             ];
         }
 
