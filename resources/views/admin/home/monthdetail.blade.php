@@ -165,8 +165,8 @@
 									
 			},
       		success:function(res2){
-      			console.log(res);
-      			if(res.code==200){
+      			console.log(res2);
+      			if(res2.code==200){
       				$('#scree').html('');
       				//列表
       				var item2='';
