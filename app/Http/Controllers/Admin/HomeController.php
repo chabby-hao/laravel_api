@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Admins;
 use App\Models\ChargeTasks;
 use App\Models\DeviceCostDetail;
 use App\Models\DeviceInfo;
@@ -120,6 +121,11 @@ class HomeController extends BaseController
             $where['device_no'] = $deviceNo;
             $model->where($where);
         }
+
+        if($date = $request->input('date')){
+            $model->where('date',$date);
+        }
+
         $devices = $model->orderByDesc('date')->orderByDesc('device_no')->paginate();
 
         $datas = $devices->items();
@@ -137,6 +143,17 @@ class HomeController extends BaseController
                 'charge_duration'=>$data->charge_duration,
                 'user_count'=>$data->user_count,
             ];
+        }
+
+        return $this->_outPut(['list'=>$list]);
+    }
+
+    public function deviceNoList()
+    {
+        if(AdminService::getCurrentUserType() === Admins::USER_TYPE_ADMIN){
+            $list = DeviceInfo::getAllDeviceNo();
+        }else{
+            $list = AdminService::getCurrentDeviceNos();
         }
 
         return $this->_outPut(['list'=>$list]);
