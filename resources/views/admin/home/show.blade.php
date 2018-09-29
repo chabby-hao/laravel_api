@@ -1,11 +1,3 @@
-<?php echo view('admin.header')->render() ?>
-    <div id="content">
-        <div id="content-header">
-            <div id="breadcrumb"><a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a>
-                <a href="#" class="current">数据统计</a></div>
-        </div>
-        <div class="container-fluid">
-
 <!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -23,7 +15,7 @@
 				<img src="{{ asset('images/legendImages/axc_logo.png') }}"/>
 			</a>		  
 		    <div class="form-inline">
-		    		<div class="user">adminadmin</div>
+		    		<a href="http://anxinchong.vipcare.com/admin/home/show" class="user">adminadmin</a>
 		      	<a href="javascript:;" class="login_out"><img src="{{ asset('images/legendImages/login_out.png') }}"/></a>
 		    </div>
 		</nav>
@@ -113,6 +105,4 @@
 
 
 
-        </div>
-    </div>
-<?php echo view('admin.footer')->render() ?>
+      

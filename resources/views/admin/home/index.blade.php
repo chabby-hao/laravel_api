@@ -1,10 +1,3 @@
-<?php echo view('admin.header')->render() ?>
-    <div id="content">
-        <div id="content-header">
-            <div id="breadcrumb"><a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a>
-                <a href="#" class="current">充电棚统计</a></div>
-        </div>
-        <div class="container-fluid">
 			
 <!DOCTYPE html>
 <html lang="zh">
@@ -23,7 +16,7 @@
 				<img src="{{ asset('images/legendImages/axc_logo.png') }}"/>
 			</a>		  
 		    <div class="form-inline">
-		    		<a href="mine.html" class="user">adminadmin</a>
+		    		<a href="http://anxinchong.vipcare.com/admin/home/show" class="user">adminadmin</a>
 		      	<a href="javascript:;" class="login_out"><img src="{{ asset('images/legendImages/login_out.png') }}"/></a>
 		    </div>
 		</nav>
@@ -33,7 +26,7 @@
 		<div class="clearfix" style="padding: 40px 0 20px;">
 			<p class="fl today_data">今日数据</p>
 			<p class="fl today">(2018/09/28)</p>
-			<a class="fr see_more" href="day_detail.html">查看更多 <img style="margin-bottom: 4px;" src="{{ asset('images/legendImages/triangle.png') }}"/></a>
+			<a class="fr see_more" href="http://anxinchong.vipcare.com/admin/home/dailyDetail">查看更多 <img style="margin-bottom: 4px;" src="{{ asset('images/legendImages/triangle.png') }}"/></a>
 		</div>
 		<div class="row comm_row">
 			<div class="col comm_col">
@@ -95,7 +88,7 @@
 		<div class="clearfix" style="padding: 40px 0 20px;">
 			<p class="fl today_data">本月数据</p>
 			<p class="fl today">(2018/09)</p>
-			<a class="fr see_more" href="month_detail.html">查看更多 <img style="margin-bottom: 4px;" src="{{ asset('images/legendImages/triangle.png') }}"/></a>
+			<a class="fr see_more" href="http://anxinchong.vipcare.com/admin/home/monthDetail">查看更多 <img style="margin-bottom: 4px;" src="{{ asset('images/legendImages/triangle.png') }}"/></a>
 		</div>
 		<div class="row comm_row">
 			<div class="col comm_col">
@@ -197,9 +190,3 @@
 	
 </script>
 </html>
-
-			
-			
-        </div>
-    </div>
-<?php echo view('admin.footer')->render() ?>
