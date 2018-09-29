@@ -127,7 +127,10 @@ class HomeController extends BaseController
             $model->where('date',$date);
         }
 
-        $devices = $model->orderByDesc('date')->orderByDesc('device_no')->paginate();
+        $devices = $model->orderByDesc('date')
+            ->groupBy('date')
+            ->selectRaw('date,sum(shared_amount) as shared_amount, sum(device_cost_amount) as device_cost_amount, sum(user_cost_amount) as user_cost_amount, sum(charge_times) as charge_times, sum(electric_quantity) as electric_quantity, sum(charge_duration) as charge_duration, sum(user_count) as user_count')
+            ->paginate();
 
         $datas = $devices->items();
         /** @var DeviceCostDetail $data */
@@ -135,7 +138,7 @@ class HomeController extends BaseController
         foreach ($datas as $data){
             $list[] = [
                 'date'=>$data->date,
-                'device_no'=>$data->device_no,
+                //'device_no'=>$data->device_no,
                 'shared_amount'=>$data->shared_amount,
                 'device_cost_amount'=>$data->device_cost_amount,
                 'user_cost_amount'=>$data->user_cost_amount,
@@ -174,9 +177,9 @@ class HomeController extends BaseController
 
 
         $devices = $model
-            ->groupBy(DB::raw("substr(date,1,7),device_no"))
+            ->groupBy(DB::raw("substr(date,1,7)"))
             ->orderByDesc('date')
-            ->selectRaw('substr(date,1,7) as date,device_no,sum(shared_amount) as shared_amount, sum(device_cost_amount) as device_cost_amount, sum(user_cost_amount) as user_cost_amount, sum(charge_times) as charge_times, sum(electric_quantity) as electric_quantity, sum(charge_duration) as charge_duration, sum(user_count) as user_count')
+            ->selectRaw('substr(date,1,7) as date,sum(shared_amount) as shared_amount, sum(device_cost_amount) as device_cost_amount, sum(user_cost_amount) as user_cost_amount, sum(charge_times) as charge_times, sum(electric_quantity) as electric_quantity, sum(charge_duration) as charge_duration, sum(user_count) as user_count')
             ->paginate();
 
         $datas = $devices->items();
@@ -186,7 +189,6 @@ class HomeController extends BaseController
         foreach ($datas as $data){
             $list[] = [
                 'date'=>$data->date,
-                'device_no'=>$data->device_no,
                 'shared_amount'=>$data->shared_amount,
                 'device_cost_amount'=>$data->device_cost_amount,
                 'user_cost_amount'=>$data->user_cost_amount,
