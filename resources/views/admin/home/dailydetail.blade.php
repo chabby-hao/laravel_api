@@ -257,7 +257,7 @@
 			}else{
 				pageNum--;
 				$('.page_num').html(pageNum);
-				return page;
+				
 				page(pageNum);
 			}
 		});
@@ -265,7 +265,7 @@
 			if(pageNum<lastPage){
 				pageNum++;
 				$('.page_num').html(pageNum);
-				return page;
+				
 				page(pageNum);
 			}else if(pageNum==lastPage){
 				pageNum==lastPage;
