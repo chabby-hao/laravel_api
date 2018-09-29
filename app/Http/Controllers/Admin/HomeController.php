@@ -149,6 +149,16 @@ class HomeController extends BaseController
         return $this->_outPut(['list'=>$list,'lastPage'=>$devices->lastPage()]);
     }
 
+    public function dailyDetail()
+    {
+        return view('admin.home.daily.detail');
+    }
+
+    public function monthDetail()
+    {
+        return view('admin.home.month.detail');
+    }
+
     public function detailDataByMonth(Request $request)
     {
         $where = [];

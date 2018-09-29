@@ -23,6 +23,8 @@ Route::any('/home/show', 'Admin\HomeController@show');
 Route::any('/home/detailData', 'Admin\HomeController@detailData');
 Route::any('/home/deviceNoList', 'Admin\HomeController@deviceNoList');
 Route::any('/home/detailDataByMonth', 'Admin\HomeController@detailDataByMonth');
+Route::any('/home/dailyDetail', 'Admin\HomeController@dailyDetail');
+Route::any('/home/monthDetail', 'Admin\HomeController@monthDetail');
 
 Route::any('/device/deviceList', 'Admin\DeviceController@deviceList');
 Route::any('/device/list', 'Admin\DeviceController@list');
