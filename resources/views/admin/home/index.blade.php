@@ -169,10 +169,10 @@
         		success:function(res){
         			console.log(res);
         			if(res.code==200){
-        				$.each(res.data.today,function(i,result){
+        				$.each(res.today,function(i,result){
 						$('p[data-day-info='+i+']').html(result);
 					});
-					$.each(res.data.month,function(i,result){
+					$.each(res.month,function(i,result){
 						$('p[data-month-info='+i+']').html(result);
 					});
 					$('.big_bg').css({'display':'none'});
