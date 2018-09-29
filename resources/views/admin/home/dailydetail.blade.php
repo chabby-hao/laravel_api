@@ -112,7 +112,7 @@
 	      				$('.myTbody').html('');
 	      				//列表
 	      				var innerHtml='';
-				        $.each(data.list, function(i,result) {
+				        $.each(res.list, function(i,result) {
 				        		innerHtml+='<tr><td>'+result.date+'</td><td>'+result.charge_times+'</td><td>'+result.electric_quantity+'</td><td>'+result.charge_duration+'</td><td>'+result.user_cost_amount+'</td><td>'+result.user_count+'</td><td>'+result.shared_amount+'</td></tr>';
 				        });
 				        $('.myTbody').append(innerHtml);
@@ -141,11 +141,11 @@
       				$('.myTbody').html('');
       				//列表
       				var item='';
-			        $.each(res.data.list, function(i,result) {
+			        $.each(res.list, function(i,result) {
 			        		item+='<tr><td>'+result.date+'</td><td>'+result.charge_times+'</td><td>'+result.electric_quantity+'</td><td>'+result.charge_duration+'</td><td>'+result.user_cost_amount+'</td><td>'+result.user_count+'</td><td>'+result.shared_amount+'</td></tr>';
 			        });
 			        $('.myTbody').append(item);
-			        lastPage=res.data.lastPage;
+			        lastPage=res.lastPage;
 			        $('.big_bg').css({'display':'none'});
       			}
       		},
@@ -164,12 +164,12 @@
 									
 			},
       		success:function(res2){
-      			console.log(res);
-      			if(res.code==200){
-      				$('#scree').html('');
+      			console.log(res2);
+      			if(res2.code==200){
+//    				$('#scree').html('');
       				//列表
       				var item2='';
-			        $.each(res2.data.list, function(i,result) {
+			        $.each(res2.list, function(i,result) {
 			        		item2+='<option value="'+result+'">'+result+'</option>';
 			        });
 			        $('#scree').append(item2);
@@ -202,7 +202,7 @@
 		      				$('.myTbody').html('');
 		      				//列表
 		      				var innerHtml='';
-					        $.each(data.list, function(i,result) {
+					        $.each(res.list, function(i,result) {
 					        		innerHtml+='<tr><td>'+result.date+'</td><td>'+result.charge_times+'</td><td>'+result.electric_quantity+'</td><td>'+result.charge_duration+'</td><td>'+result.user_cost_amount+'</td><td>'+result.user_count+'</td><td>'+result.shared_amount+'</td></tr>';
 					        });
 					        $('.myTbody').append(innerHtml);
@@ -234,7 +234,7 @@
 	      				$('.myTbody').html('');
 	      				//列表
 	      				var innerHtml='';
-				        $.each(data.list, function(i,result) {
+				        $.each(res.list, function(i,result) {
 				        		innerHtml+='<tr><td>'+result.date+'</td><td>'+result.charge_times+'</td><td>'+result.electric_quantity+'</td><td>'+result.charge_duration+'</td><td>'+result.user_cost_amount+'</td><td>'+result.user_count+'</td><td>'+result.shared_amount+'</td></tr>';
 				        });
 				        $('.myTbody').append(innerHtml);
