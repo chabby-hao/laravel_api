@@ -206,7 +206,7 @@
 					        $.each(res.list, function(i,result) {
 					        		innerHtml+='<tr><td>'+result.date+'</td><td>'+result.charge_times+'</td><td>'+result.electric_quantity+'</td><td>'+result.charge_duration+'</td><td>'+result.user_cost_amount+'</td><td>'+result.user_count+'</td><td>'+result.shared_amount+'</td></tr>';
 					        });
-					        $('.myTbody').append(innerHtml);
+					        $('.myTbody').appendTo(innerHtml);
 					        $('.big_bg').css({'display':'none'});
 		      			}
 		      		},
