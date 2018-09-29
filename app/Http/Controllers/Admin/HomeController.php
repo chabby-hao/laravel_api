@@ -151,12 +151,12 @@ class HomeController extends BaseController
 
     public function dailyDetail()
     {
-        return view('admin.home.daily.detail');
+        return view('admin.home.dailydetail');
     }
 
     public function monthDetail()
     {
-        return view('admin.home.month.detail');
+        return view('admin.home.monthdetail);
     }
 
     public function detailDataByMonth(Request $request)

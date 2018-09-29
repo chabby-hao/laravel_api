@@ -77,6 +77,9 @@ class AdminController extends BaseController
             $check = ['name','pwd'];
             $data = $this->_checkParams($check, $request->input());
             if(AdminService::login($data['name'], $data['pwd'])){
+                if(AdminService::getCurrentUserType() ==  Admins::USER_TYPE_CHANNEL){
+                    return $this->_outPutRedirect(URL::action('Admin\HomeController@index'), 0);
+                }
                 return $this->_outPutRedirect(URL::action('Admin\DeviceController@deviceList'), 0);
             }
             return $this->_outPutError('用户名或者密码错误');
