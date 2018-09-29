@@ -162,6 +162,8 @@ class HomeController extends BaseController
             $model->where("substr('date',1,7)",$date);
         }
 
+        var_dump(DB::raw("substr('date',1,7),device_no"));
+
         $devices = $model
             ->groupBy(DB::raw("substr('date',1,7),device_no"))
             ->orderByDesc('date')
