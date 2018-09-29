@@ -50,8 +50,8 @@
 		<div class="row comm_row">
 			<div class="col comm_col">
 				<div class="comm_col_top clearfix">
-					<p class="fl">充电用户</p>
-					<p class="fr">个</p>
+					<p class="fl">分成金额</p>
+					<p class="fr">元</p>
 				</div>
 				<p class="mine_comm_col_mid color_pink" data-mine-info = "userCount"></p>
 				<p class="mine_comm_col_foot"></p>
