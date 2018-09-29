@@ -167,7 +167,7 @@ class HomeController extends BaseController
         $devices = $model
             ->groupBy(DB::raw("substr('date',1,7),device_no"))
             ->orderByDesc('date')
-            ->selectRaw('sum(shared_amount) as shared_amount, sum(device_cost_amount) as device_cost_amount, sum(user_cost_amount) as user_cost_amount, sum(charge_times) as charge_times, sum(electric_quantity) as electric_quantity, sum(charge_duration) as charge_duration, sum(user_count) as user_count')
+            ->selectRaw('substr("date",1,7)as date,device_no,sum(shared_amount) as shared_amount, sum(device_cost_amount) as device_cost_amount, sum(user_cost_amount) as user_cost_amount, sum(charge_times) as charge_times, sum(electric_quantity) as electric_quantity, sum(charge_duration) as charge_duration, sum(user_count) as user_count')
             ->orderByDesc('device_no')->toSql();
         var_dump($devices);exit;
 
