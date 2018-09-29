@@ -162,18 +162,14 @@ class HomeController extends BaseController
             $model->where("substr('date',1,7)",$date);
         }
 
-        var_dump(DB::raw("substr('date',1,7),device_no"));
 
         $devices = $model
             ->groupBy(DB::raw("substr('date',1,7),device_no"))
             ->orderByDesc('date')
-            ->selectRaw('substr("date",1,7)as date,device_no,sum(shared_amount) as shared_amount, sum(device_cost_amount) as device_cost_amount, sum(user_cost_amount) as user_cost_amount, sum(charge_times) as charge_times, sum(electric_quantity) as electric_quantity, sum(charge_duration) as charge_duration, sum(user_count) as user_count')
-            ->orderByDesc('device_no')->toSql();
-        var_dump($devices);exit;
+            ->selectRaw('substr(\'date\',1,7)as date,device_no,sum(shared_amount) as shared_amount, sum(device_cost_amount) as device_cost_amount, sum(user_cost_amount) as user_cost_amount, sum(charge_times) as charge_times, sum(electric_quantity) as electric_quantity, sum(charge_duration) as charge_duration, sum(user_count) as user_count')
+            ->paginate();
 
         $datas = $devices->items();
-
-        dd($datas);
 
         /** @var DeviceCostDetail $data */
         $list = [];
