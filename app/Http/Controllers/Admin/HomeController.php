@@ -99,7 +99,7 @@ class HomeController extends BaseController
 
             $deviceNos = AdminService::getCurrentDeviceNos();
 
-            $deviceNosInt = AdminService::getCurrentDeviceNos(true);
+            //$deviceNosInt = AdminService::getCurrentDeviceNos(true);
 
             $model = DeviceInfo::where([]);
             if($deviceNos){
@@ -117,7 +117,7 @@ class HomeController extends BaseController
             if($deviceNos){
                 $model->whereIn('device_no', $deviceNos);
             }
-            $shareAmount = DeviceCostDetail::sum('shared_amount');
+            $shareAmount = $model->sum('shared_amount');
 
             return $this->_outPut([
                 'cdpCount'=>$cdpCount,
