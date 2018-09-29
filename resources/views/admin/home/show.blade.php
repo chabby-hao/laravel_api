@@ -16,7 +16,7 @@
 			</a>		  
 		    <div class="form-inline">
 		    		<a href="http://anxinchong.vipcare.com/admin/home/show" class="user">{{session('admin_name')}}</a>
-		      	<a href="javascript:;" class="login_out"><img src="{{ asset('images/legendImages/login_out.png') }}"/></a>
+		      	<a href="/admin/admins/logout" class="login_out"><img src="{{ asset('images/legendImages/login_out.png') }}"/></a>
 		    </div>
 		</nav>
 	</div>

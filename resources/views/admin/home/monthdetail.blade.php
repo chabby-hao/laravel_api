@@ -17,7 +17,7 @@
 			</a>		  
 		    <div class="form-inline">
 		    		<a href="http://anxinchong.vipcare.com/admin/home/show" class="user">{{session('admin_name')}}</a>
-		      	<a href="javascript:;" class="login_out"><img src="{{ asset('images/legendImages/login_out.png') }}"/></a>
+		      	<a href="/admin/admins/logout" class="login_out"><img src="{{ asset('images/legendImages/login_out.png') }}"/></a>
 		    </div>
 		</nav>
 	</div>
@@ -235,7 +235,7 @@
 	      				$('.myTbody').html('');
 	      				//列表
 	      				var innerHtml='';
-				        $.each(data.list, function(i,result) {
+				        $.each(res.list, function(i,result) {
 				        		innerHtml+='<tr><td>'+result.date+'</td><td>'+result.charge_times+'</td><td>'+result.electric_quantity+'</td><td>'+result.charge_duration+'</td><td>'+result.user_cost_amount+'</td><td>'+result.user_count+'</td><td>'+result.shared_amount+'</td></tr>';
 				        });
 				        $('.myTbody').append(innerHtml);
@@ -258,7 +258,7 @@
 			}else{
 				pageNum--;
 				$('.page_num').html(pageNum);
-				return page;
+			
 				page(pageNum);
 			}
 		});
@@ -266,7 +266,7 @@
 			if(pageNum<lastPage){
 				pageNum++;
 				$('.page_num').html(pageNum);
-				return page;
+				
 				page(pageNum);
 			}else if(pageNum==lastPage){
 				pageNum==lastPage;
