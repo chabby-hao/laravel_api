@@ -168,6 +168,8 @@ class HomeController extends BaseController
             ->selectRaw('sum(shared_amount) as shared_amount, sum(device_cost_amount) as device_cost_amount, sum(user_cost_amount) as user_cost_amount, sum(charge_times) as charge_times, sum(electric_quantity) as electric_quantity, sum(charge_duration) as charge_duration, sum(user_count) as user_count')
             ->orderByDesc('device_no')->get();
 
+        dd($devices);
+
 
         $datas = $devices->items();
         /** @var DeviceCostDetail $data */
