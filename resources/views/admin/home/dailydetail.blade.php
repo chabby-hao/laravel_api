@@ -141,7 +141,7 @@
       				$('.myTbody').html('');
       				//列表
       				var item='';
-			        $.each(res.data, function(i,result) {
+			        $.each(res.list, function(i,result) {
 			        		item+='<tr><td>'+result.date+'</td><td>'+result.charge_times+'</td><td>'+result.electric_quantity+'</td><td>'+result.charge_duration+'</td><td>'+result.user_cost_amount+'</td><td>'+result.user_count+'</td><td>'+result.shared_amount+'</td></tr>';
 			        });
 			        $('.myTbody').append(item);
@@ -169,7 +169,7 @@
       				$('#scree').html('');
       				//列表
       				var item2='';
-			        $.each(res2.data, function(i,result) {
+			        $.each(res2.list, function(i,result) {
 			        		item2+='<option value="'+result+'">'+result+'</option>';
 			        });
 			        $('#scree').append(item2);
