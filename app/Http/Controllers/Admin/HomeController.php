@@ -15,6 +15,7 @@ use App\Models\DeviceInfo;
 use App\Services\AdminService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends BaseController
 {
@@ -162,7 +163,7 @@ class HomeController extends BaseController
         }
 
         $devices = $model
-            ->groupBy("substr('date',1,7),device_no")
+            ->groupBy(DB::raw("substr('date',1,7),device_no"))
             ->orderByDesc('date')
             ->selectRaw('sum(shared_amount) as shared_amount, sum(device_cost_amount) as device_cost_amount, sum(user_cost_amount) as user_cost_amount, sum(charge_times) as charge_times, sum(electric_quantity) as electric_quantity, sum(charge_duration) as charge_duration, sum(user_count) as user_count')
             ->orderByDesc('device_no')->paginate();
