@@ -156,7 +156,7 @@ class HomeController extends BaseController
 
     public function monthDetail()
     {
-        return view('admin.home.monthdetail);
+        return view('admin.home.monthdetail');
     }
 
     public function detailDataByMonth(Request $request)
