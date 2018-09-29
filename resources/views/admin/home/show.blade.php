@@ -82,8 +82,8 @@
 			data:{},
         		success:function(res){
         			console.log(res);
-        			if(res.data.code==200){
-        				$.each(res.data,function(i,result){
+        			if(res.code==200){
+        				$.each(res,function(i,result){
 						$('p[data-mine-info='+i+']').html(result);
 					});
 					$('.big_bg').css({'display':'none'});
