@@ -60,7 +60,10 @@
 	</div>
 	
 	
-	
+	<!--loading-->
+	<div class="big_bg">
+		<img class="load" src="{{ asset('images/legendImages/loading.gif') }}"/>
+	</div>
 
 	
 	

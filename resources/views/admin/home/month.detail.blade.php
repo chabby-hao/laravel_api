@@ -70,7 +70,10 @@
 		</div>
 	</div>
 	<div class="errortips" style="display: none;"></div>
-
+<!--loading-->
+	<div class="big_bg">
+		<img class="load" src="{{ asset('images/legendImages/loading.gif') }}"/>
+	</div>
 </body>
 <script src="{{ asset('js/legendJs/jquery-3.3.1.min.js') }}" type="text/javascript" charset="utf-8"></script>
 <script src="{{ asset('js/legendJs/bootstrapV4.min.js') }}" type="text/javascript" charset="utf-8"></script>
