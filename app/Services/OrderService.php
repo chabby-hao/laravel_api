@@ -16,9 +16,20 @@ class OrderService extends BaseService
      */
     public static function getPresentMoney($money)
     {
-        if(ActivityService::isOpenPaySendActivity()){
+        /*if(ActivityService::isOpenPaySendActivity()){
             return $money;
+        }*/
+
+        if($money == 10){
+            return 0.2;
+        }elseif ($money == 30){
+            return 1.2;
+        }elseif ($money == 100){
+            return 4.5;
+        }elseif ($money == 200){
+            return 10;
         }
+
         return 0;
     }
 

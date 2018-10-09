@@ -10,6 +10,7 @@ use App\Models\WelfareCards;
 use App\Models\WelfareUsers;
 use App\Models\WelfareWhiteLists;
 use App\Services\ActivityService;
+use App\Services\ChargeService;
 use App\Services\UserService;
 use function Hprose\Future\error;
 use Illuminate\Http\Request;
@@ -26,6 +27,7 @@ class ActivityController extends Controller
         if(ActivityService::isOpenPaySendActivity()){
             $output['open'] = 1;
         }
+
         return Helper::response($output);
     }
 
