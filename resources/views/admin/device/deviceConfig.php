@@ -18,7 +18,7 @@
                                 <div class="control-group">
                                     <label class="control-label"><span class="text-error">*</span>低谷端价位 :</label>
                                     <div class="controls">
-                                        <input name="univalence1" value="<?php echo $data['univalence1'] ?>" type="text" class="span11"/>
+                                        <input name="univalence1" value="<?php echo $data['univalence1'] ?>" type="text" />
                                         <span class="help-block">例：1.2</span>
                                     </div>
                                 </div>
@@ -26,7 +26,7 @@
                                 <div class="control-group">
                                     <label class="control-label"><span class="text-error">*</span>高锋端价位 :</label>
                                     <div class="controls">
-                                        <input name="univalence2" value="<?php echo $data['univalence2'] ?>" type="text" class="span11"/>
+                                        <input name="univalence2" value="<?php echo $data['univalence2'] ?>" type="text" />
                                         <span class="help-block">例：1.2</span>
                                     </div>
                                 </div>
