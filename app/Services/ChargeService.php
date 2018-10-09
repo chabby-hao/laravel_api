@@ -191,6 +191,8 @@ class ChargeService extends BaseService
             //扣款
             User::chargeCost($userId, $costs, $field);
         }
+        $charge->user_cost = 0;
+        $charge->actual_cost = 0;
         //更新充电任务
         return $charge->save();
     }
