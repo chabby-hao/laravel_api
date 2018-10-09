@@ -120,7 +120,8 @@ class StatDeviceCost extends Command
 
                 if(DeviceConfig::getShareType($deviceNo) == DeviceConfig::SHARE_TYPE_INCOME){
                     //收益分成
-                    $profit = ($userCost - $deviceCost > 0) ? ($userCost - $deviceCost) : 0;
+                    //$profit = ($userCost - $deviceCost > 0) ? ($userCost - $deviceCost) : 0;
+                    $profit = $userCost - $deviceCost;
                     $shareMoney = $profit * DeviceConfig::getProportion($deviceNo);
                 }else{
                     //消费分成
