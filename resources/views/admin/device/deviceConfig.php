@@ -34,7 +34,10 @@
                                 <div class="control-group">
                                     <label class="control-label"><span class="text-error">*</span>分成比例 :</label>
                                     <div class="controls">
-                                        <input name="proportion" value="<?php echo $data['proportion'] ?>" type="text" class="span11"/>
+                                        <select name="proportion" id="">
+                                            <option value="0.3">0.3</option>
+                                            <option value="0.5">0.5</option>
+                                        </select>
                                         <span class="help-block">例：0.5</span>
                                     </div>
                                 </div>

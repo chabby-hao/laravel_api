@@ -25,7 +25,7 @@ class DeviceConfig extends Model
 {
 
     const DEFAULT_UNIVALENCE = 1.2;//单价
-    const DEFAULT_PROPORTION = 0.5;//分成比例
+    const DEFAULT_PROPORTION = 0.3;//分成比例
 
     //表明
     protected $table = 'device_config';
