@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\DeviceConfig whereProportion($value)
  * @property float $univalence1 单价1
  * @property float $univalence2 单价2
+ * @property int share_type
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\DeviceConfig whereCreatedAt($value)
@@ -26,6 +27,7 @@ class DeviceConfig extends Model
 
     const DEFAULT_UNIVALENCE = 1.2;//单价
     const DEFAULT_PROPORTION = 0.3;//分成比例
+    const DETAULT_SHARE_TYPE = 0;//分成方式，默认收益凤城
 
     //表明
     protected $table = 'device_config';
@@ -34,6 +36,17 @@ class DeviceConfig extends Model
 
     protected $guarded = [];
 
+    const SHARE_TYPE_INCOME = 0;//收益分成
+    const SHARE_TYPE_COST = 1;// 消费分成
+
+    public static function getShareTypeMap($type = null)
+    {
+        $map = [
+            self::SHARE_TYPE_INCOME =>'收益分成',
+            self::SHARE_TYPE_COST =>'消费分成',
+        ];
+        return $type === null ? $map : $map[$type];
+    }
 
     /**
      * 获取充电棚单价

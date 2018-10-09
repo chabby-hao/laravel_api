@@ -289,7 +289,7 @@ class DeviceController extends BaseController
 
         if($request->isXmlHttpRequest()){
             //配置
-            $input = $this->checkRequireParams(['univalence1','univalence2','proportion'], $request->input());
+            $input = $this->checkRequireParams(['univalence1','univalence2','proportion','share_type'], $request->input());
             if($input['proportion'] > 1){
                 return $this->_outPutError('分成比例不能大于1');
             }
@@ -300,6 +300,7 @@ class DeviceController extends BaseController
                 'univalence1'=>$input['univalence1'],
                 'univalence2'=>$input['univalence2'],
                 'proportion'=>$input['proportion'],
+                'share_type'=>$input['share_type'],
             ]);
 
             return $this->_outPutRedirect(URL::action('Admin\DeviceController@deviceList'));
