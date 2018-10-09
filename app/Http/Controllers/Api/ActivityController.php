@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Libs\ErrorCode;
 use App\Libs\Helper;
+use App\Models\ChargeTasks;
 use App\Models\WelfareCards;
 use App\Models\WelfareUsers;
 use App\Models\WelfareWhiteLists;
@@ -26,6 +27,11 @@ class ActivityController extends Controller
         ];
         if(ActivityService::isOpenPaySendActivity()){
             $output['open'] = 1;
+        }
+        if($userId = UserService::getUserId()){
+            if(ChargeTasks::getLastTaskByUserId($userId)){
+                $output['show_modal'] = 0;
+            }
         }
 
         return Helper::response($output);
