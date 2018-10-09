@@ -118,9 +118,17 @@ class StatDeviceCost extends Command
 
                 $deviceCost = $deviceCostHigh + $deviceCostLow;
 
-                $profit = ($userCost - $deviceCost > 0) ? ($userCost - $deviceCost) : 0;
+                if(DeviceConfig::getShareType($deviceNo) == DeviceConfig::SHARE_TYPE_INCOME){
+                    //收益分成
+                    $profit = ($userCost - $deviceCost > 0) ? ($userCost - $deviceCost) : 0;
+                    $shareMoney = $profit * DeviceConfig::getProportion($deviceNo);
+                }else{
+                    //消费分成
+                    $shareMoney = $userCost * DeviceConfig::getProportion($deviceNo);
+                }
 
-                $shareMoney = $profit * DeviceConfig::getProportion($deviceNo);
+
+
 
                 echo "device: $deviceNo, userCost: $userCost, diff1 : $diff1, diff2 : $diff2, diffLow : $diffLow , deviceCostHigh: $deviceCostHigh, deviceCostLow:$deviceCostLow, deviceCost: $deviceCost"  . "\n";
 

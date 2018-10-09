@@ -66,4 +66,10 @@ class DeviceConfig extends Model
         return $row && $row->proportion ? $row->proportion : self::DEFAULT_PROPORTION;
     }
 
+    public static function getShareType($deviceNo)
+    {
+        $row = self::whereDeviceNo($deviceNo)->first();
+        return $row && $row->share_type ? $row->share_type : self::DETAULT_SHARE_TYPE;
+    }
+
 }
