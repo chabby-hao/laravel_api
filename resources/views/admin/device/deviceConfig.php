@@ -35,6 +35,7 @@
                                     <label class="control-label"><span class="text-error">*</span>分成比例 :</label>
                                     <div class="controls">
                                         <select name="proportion" >
+                                            <option value="">请选择</option>
                                             <option value="0.3" <?php if($data['proportion'] == 0.3) echo 'selected' ?>>0.3</option>
                                             <option value="0.5" <?php if($data['proportion'] == 0.5) echo 'selected' ?>>0.5</option>
                                         </select>
@@ -46,9 +47,10 @@
                                     <label class="control-label"><span class="text-error">*</span>分成方式 :</label>
                                     <div class="controls">
                                         <select name="share_type" >
-                                        <?php foreach (\App\Models\DeviceConfig::getShareTypeMap() as $k => $v){ ?>
-                                            <option <?php if($data['share_type'] == $k) echo 'selected' ?> value="<?php echo $k ?>"><?php echo $v; ?></option>
-                                        <?php }?>
+                                            <option value="">请选择</option>
+                                            <?php foreach (\App\Models\DeviceConfig::getShareTypeMap() as $k => $v){ ?>
+                                                <option <?php if($data['share_type'] == $k) echo 'selected' ?> value="<?php echo $k ?>"><?php echo $v; ?></option>
+                                            <?php }?>
                                         </select>
                                     </div>
                                 </div>
