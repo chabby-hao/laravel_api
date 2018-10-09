@@ -49,7 +49,7 @@
                                         <select name="share_type" >
                                             <option value="">请选择</option>
                                             <?php foreach (\App\Models\DeviceConfig::getShareTypeMap() as $k => $v){ ?>
-                                                <option <?php if($data['share_type'] == $k) echo 'selected' ?> value="<?php echo $k ?>"><?php echo $v; ?></option>
+                                                <option <?php if($data && $data['share_type'] == $k) echo 'selected' ?> value="<?php echo $k ?>"><?php echo $v; ?></option>
                                             <?php }?>
                                         </select>
                                     </div>
