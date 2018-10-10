@@ -59,6 +59,14 @@ class ChargeService extends BaseService
         if (!$taskId) {
             return false;
         }
+
+        //记录常用充电棚
+        $user = User::find($userId);
+        if($user){
+            $user->common_device = $deviceNo;
+            $user->save();
+        }
+
         self::sendCmdToStartCharge($deviceNo, $portNo, $taskId);
         return $taskId;
     }

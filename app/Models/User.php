@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Log;
  * @property int $id
  * @property string|null $phone
  * @property string|null $openid
+ * @property string|null $common_device
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereCreatedAt($value)
