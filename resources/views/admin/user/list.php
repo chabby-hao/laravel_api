@@ -42,6 +42,7 @@
                                     <th>余额</th>
                                     <th>赠送金</th>
                                     <th>福利卡</th>
+                                    <th>常用棚</th>
                                     <th>操作</th>
                                 </tr>
                                 </thead>
@@ -56,6 +57,7 @@
                                         <td><?php echo $user->user_balance ?></td>
                                         <td><?php echo $user->present_balance ?></td>
                                         <td><?php echo implode('<br/>', $user->card_name); ?></td>
+                                        <td><?php echo $user->common_device; ?></td>
                                         <td>
                                             <a href="<?php echo URL::action('Admin\UserController@presentSet',['id'=>$user->id]) ?>" class="btn btn-info">配置赠送金</a>
                                         </td>
