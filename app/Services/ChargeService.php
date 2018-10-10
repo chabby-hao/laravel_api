@@ -62,13 +62,6 @@ class ChargeService extends BaseService
 
         self::sendCmdToStartCharge($deviceNo, $portNo, $taskId);
 
-        //记录常用充电棚
-        $user = User::find($userId);
-        if($user){
-            $user->common_device = $deviceNo;
-            $user->save();
-        }
-
         return $taskId;
     }
 

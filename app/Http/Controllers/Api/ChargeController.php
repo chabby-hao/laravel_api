@@ -123,6 +123,13 @@ class ChargeController extends Controller
 
         UserEventLogs::addLog(UserEventLogs::TYPE_SCAN_CODE, $deviceNo, $portNo);
 
+        //记录常用充电棚
+        $user = User::find($userId);
+        if($user){
+            $user->common_device = $deviceNo;
+            $user->save();
+        }
+
         return Helper::response(['device_id' => $deviceId, 'address' => $deviceInfo['address']]);
     }
 
